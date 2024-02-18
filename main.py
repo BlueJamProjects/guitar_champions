@@ -4,6 +4,10 @@ import pygame
 # Import random for random numbers
 import random
 
+
+# Import the menu library to more easily make menu selction
+import pygame_menu
+
 # Import pygame.locals for easier access to key coordinates
 # Updated to conform to flake8 and black standards
 # from pygame.locals import *
@@ -80,81 +84,105 @@ pygame.mixer.init()
 # Initialize pygame
 pygame.init()
 
-# Setup the clock for a decent framerate
+    # Setup the clock for a decent framerate
 clock = pygame.time.Clock()
 
-# Create the screen object
-# The size is determined by the constant SCREEN_WIDTH and SCREEN_HEIGHT
-screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
-
-bg_img = pygame.image.load('assets/images/backgrounds/mario level.png')
-bg_img = pygame.transform.scale(bg_img,(SCREEN_WIDTH,SCREEN_HEIGHT))
-
-# Create custom events for adding a Note
-ADDNote = pygame.USEREVENT + 2
-pygame.time.set_timer(ADDNote, 2500)
-
-# Create our 'player'
-player = Player()
-
-# Create groups to hold Note sprites, and all sprites
-# - Notes is used for position updates
-# - all_sprites isused for rendering
-Notes = pygame.sprite.Group()
-all_sprites = pygame.sprite.Group()
-all_sprites.add(player)
-
-# Load and play our background music
-pygame.mixer.music.load("assets/sounds/background-music/smoke-on-water.mp3")
-pygame.mixer.music.play(loops=-1)
 
 
-# Variable to keep our main loop running
-running = True
+def set_difficulty(value, difficulty):
+    # Do the job here !
+    pass
 
-# Our main loop
-while running:
-    # Look at every event in the queue
-    for event in pygame.event.get():
-        # Did the user hit a key?
-        if event.type == KEYDOWN:
-            # Was it the Escape key? If so, stop the loop
-            if event.key == K_ESCAPE:
+def first_level():
+
+    # Create the screen object
+    # The size is determined by the constant SCREEN_WIDTH and SCREEN_HEIGHT
+    screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+
+    bg_img = pygame.image.load('assets/images/backgrounds/mario level.png')
+    bg_img = pygame.transform.scale(bg_img,(SCREEN_WIDTH,SCREEN_HEIGHT))
+
+    # Create custom events for adding a Note
+    ADDNote = pygame.USEREVENT + 2
+    pygame.time.set_timer(ADDNote, 2500)
+
+    # Create our 'player'
+    player = Player()
+
+    # Create groups to hold Note sprites, and all sprites
+    # - Notes is used for position updates
+    # - all_sprites isused for rendering
+    Notes = pygame.sprite.Group()
+    all_sprites = pygame.sprite.Group()
+    all_sprites.add(player)
+
+    # Load and play our background music
+    pygame.mixer.music.load("assets/sounds/background-music/smoke-on-water.mp3")
+    pygame.mixer.music.play(loops=-1)
+
+
+    
+
+
+    # Variable to keep our main loop running
+    running = True
+
+    # Our main loop
+    while running:
+        # Look at every event in the queue
+        for event in pygame.event.get():
+            # Did the user hit a key?
+            if event.type == KEYDOWN:
+                # Was it the Escape key? If so, stop the loop
+                if event.key == K_ESCAPE:
+                    running = False
+
+            # Did the user click the window close button? If so, stop the loop
+            elif event.type == QUIT:
                 running = False
 
-        # Did the user click the window close button? If so, stop the loop
-        elif event.type == QUIT:
-            running = False
+            # Should we add a new Note?
+            elif event.type == ADDNote:
+                # Create the new Note, and add it to our sprite groups
+                new_Note = Note()
+                Notes.add(new_Note)
+                all_sprites.add(new_Note)
 
-        # Should we add a new Note?
-        elif event.type == ADDNote:
-            # Create the new Note, and add it to our sprite groups
-            new_Note = Note()
-            Notes.add(new_Note)
-            all_sprites.add(new_Note)
+        # Get the set of keys pressed and check for user input
+        pressed_keys = pygame.key.get_pressed()
+        player.update(pressed_keys)
 
-    # Get the set of keys pressed and check for user input
-    pressed_keys = pygame.key.get_pressed()
-    player.update(pressed_keys)
+        # Update the position of our enemies and Notes
+        Notes.update()
 
-    # Update the position of our enemies and Notes
-    Notes.update()
-
-    # Fill the screen with the background image
-    screen.blit(bg_img,(0,0))
+        # Fill the screen with the background image
+        screen.blit(bg_img,(0,0))
 
 
-    # Draw all our sprites
-    for entity in all_sprites:
-        screen.blit(entity.surf, entity.rect)
+        # Draw all our sprites
+        for entity in all_sprites:
+            screen.blit(entity.surf, entity.rect)
 
 
-    # Flip everything to the display
-    pygame.display.flip()
+        # Flip everything to the display
+        pygame.display.flip()
 
-    # Ensure we maintain a 30 frames per second rate
-    clock.tick(30)
+        # Ensure we maintain a 30 frames per second rate
+        clock.tick(30)
 
-# At this point, we're done, so we can stop and quit the mixer
-pygame.mixer.music.stop()
-pygame.mixer.quit()
+    # At this point, we're done, so we can stop and quit the mixer
+    pygame.mixer.music.stop()
+    pygame.mixer.quit()
+
+
+
+
+surface = pygame.display.set_mode((600, 400))
+
+menu = pygame_menu.Menu('Welcome', 400, 300,theme=pygame_menu.themes.THEME_BLUE)
+
+menu.add.text_input('Name :', default='John Doe')
+menu.add.selector('Difficulty :', [('Hard', 1), ('Easy', 2)], onchange=set_difficulty)
+menu.add.button('Play', first_level)
+menu.add.button('Quit', pygame_menu.events.EXIT)
+menu.mainloop(surface)
