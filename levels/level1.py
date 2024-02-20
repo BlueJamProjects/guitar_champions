@@ -20,6 +20,8 @@ from pygame.locals import (
     QUIT,
 )
 
+import partials.player.jasonmain as jasonmain
+
 def start():
 
     # Define constants for the screen width and height
@@ -29,32 +31,7 @@ def start():
 
     # Define the Player object extending pygame.sprite.Sprite
     # Instead of a surface, we use an image for a better looking sprite
-    class Player(pygame.sprite.Sprite):
-        def __init__(self):
-            super(Player, self).__init__()
-            self.surf = pygame.image.load("assets/images/characters/protaganist.png").convert()
-            self.surf.set_colorkey((255, 255, 255), RLEACCEL)
-            self.rect = self.surf.get_rect()
-
-            #sets the top at an offset of 340 to get him to look like he's standing on the ground
-            self.rect.top = 340
-
-        # Move the sprite based on keypresses
-        def update(self, pressed_keys):
-            if pressed_keys[K_LEFT]:
-                self.rect.move_ip(-5, 0)
-            if pressed_keys[K_RIGHT]:
-                self.rect.move_ip(5, 0)
-
-            # Keep player on the screen
-            if self.rect.left < 0:
-                self.rect.left = 0
-            elif self.rect.right > SCREEN_WIDTH:
-                self.rect.right = SCREEN_WIDTH
-            if self.rect.top <= 0:
-                self.rect.top = 0
-            elif self.rect.bottom >= SCREEN_HEIGHT:
-                self.rect.bottom = SCREEN_HEIGHT
+    
 
 
     class Note(pygame.sprite.Sprite):
@@ -100,7 +77,7 @@ def start():
     ADDNote = pygame.USEREVENT + 2
     pygame.time.set_timer(ADDNote, 2500)
     # Create our 'player'
-    player = Player()
+    player = jasonmain.Player()
     # Create groups to hold Note sprites, and all sprites
     # - Notes is used for position updates
     # - all_sprites isused for rendering

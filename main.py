@@ -22,12 +22,12 @@ from pygame.locals import (
 
 
 # Import levels
-import level1
-import level2
+import levels.level1 as level1
+import levels.level2 as level2
 
 
 
-current_level = 0
+current_level = 1
 
 def select_level(name, index):
         # Do the job here !
