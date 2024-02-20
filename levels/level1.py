@@ -29,6 +29,14 @@ def start():
     SCREEN_HEIGHT = 600
 
 
+    # Variable to keep our main loop running
+    running = True
+
+
+    paused = False
+
+
+
     # Define the Player object extending pygame.sprite.Sprite
     # Instead of a surface, we use an image for a better looking sprite
     
@@ -66,6 +74,8 @@ def start():
         # Setup the clock for a decent framerate
     clock = pygame.time.Clock()
 
+    
+
 
 
     # Create the screen object
@@ -87,40 +97,53 @@ def start():
     # Load and play our background music
     pygame.mixer.music.load("assets/sounds/background-music/smoke-on-water.mp3")
     pygame.mixer.music.play(loops=-1)
-    # Variable to keep our main loop running
-    running = True
+    
     # Our main loop
     while running:
-        # Look at every event in the queue
-        for event in pygame.event.get():
-            # Did the user hit a key?
-            if event.type == KEYDOWN:
-                # Was it the Escape key? If so, stop the loop
-                if event.key == K_ESCAPE:
+        if paused == True:
+            pygame.mixer.music.pause()
+            for event in pygame.event.get():
+                # Did the user hit a key?
+                if event.type == KEYDOWN:
+                    # Was it the Escape key? If so, stop the loop
+                    if event.key == K_ESCAPE:
+                        # running = False
+                        pygame.mixer.music.unpause()
+                        paused = False
+    
+        else:
+            
+            # Look at every event in the queue
+            for event in pygame.event.get():
+                # Did the user hit a key?
+                if event.type == KEYDOWN:
+                    # Was it the Escape key? If so, stop the loop
+                    if event.key == K_ESCAPE:
+                        # running = False
+                        paused = True
+                # Did the user click the window close button? If so, stop the loop
+                elif event.type == QUIT:
                     running = False
-            # Did the user click the window close button? If so, stop the loop
-            elif event.type == QUIT:
-                running = False
-            # Should we add a new Note?
-            elif event.type == ADDNote:
-                # Create the new Note, and add it to our sprite groups
-                new_Note = Note()
-                Notes.add(new_Note)
-                all_sprites.add(new_Note)
-        # Get the set of keys pressed and check for user input
-        pressed_keys = pygame.key.get_pressed()
-        player.update(pressed_keys)
-        # Update the position of our enemies and Notes
-        Notes.update()
-        # Fill the screen with the background image
-        screen.blit(bg_img,(0,0))
-        # Draw all our sprites
-        for entity in all_sprites:
-            screen.blit(entity.surf, entity.rect)
-        # Flip everything to the display
-        pygame.display.flip()
-        # Ensure we maintain a 30 frames per second rate
-        clock.tick(30)
+                # Should we add a new Note?
+                elif event.type == ADDNote:
+                    # Create the new Note, and add it to our sprite groups
+                    new_Note = Note()
+                    Notes.add(new_Note)
+                    all_sprites.add(new_Note)
+            # Get the set of keys pressed and check for user input
+            pressed_keys = pygame.key.get_pressed()
+            player.update(pressed_keys)
+            # Update the position of our enemies and Notes
+            Notes.update()
+            # Fill the screen with the background image
+            screen.blit(bg_img,(0,0))
+            # Draw all our sprites
+            for entity in all_sprites:
+                screen.blit(entity.surf, entity.rect)
+            # Flip everything to the display
+            pygame.display.flip()
+            # Ensure we maintain a 30 frames per second rate
+            clock.tick(30)
     # At this point, we're done, so we can stop and quit the mixer
     pygame.mixer.music.stop()
     pygame.mixer.quit()
