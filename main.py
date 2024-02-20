@@ -1,5 +1,7 @@
+# import pygame asprite package, download by typing "pip3 install pygame_aseprite_animation" into your terminal
+from pygame_aseprite_animation import *
 # Import the pygame module
-import pygame
+import os, pygame
 
 # Import random for random numbers
 import random
@@ -80,12 +82,20 @@ pygame.mixer.init()
 # Initialize pygame
 pygame.init()
 
-# Setup the clock for a decent framerate
-clock = pygame.time.Clock()
-
 # Create the screen object
 # The size is determined by the constant SCREEN_WIDTH and SCREEN_HEIGHT
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+
+# set aseprite file directory
+dirname = os.path.dirname(__file__)
+aseprite_file_directory = str(dirname) + '/TheHarvester.aseprite'
+
+# initialize animations
+test_animation = Animation(aseprite_file_directory)
+animationmanager = AnimationManager([test_animation], screen)
+
+# Setup the clock for a decent framerate
+clock = pygame.time.Clock()
 
 bg_img = pygame.image.load('assets/images/backgrounds/mario level.png')
 bg_img = pygame.transform.scale(bg_img,(SCREEN_WIDTH,SCREEN_HEIGHT))
@@ -148,7 +158,7 @@ while running:
     for entity in all_sprites:
         screen.blit(entity.surf, entity.rect)
 
-
+    animationmanager.update_self(0, 0)
     # Flip everything to the display
     pygame.display.flip()
 
