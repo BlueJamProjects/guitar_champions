@@ -64,7 +64,7 @@ if __name__ == "__main__":
 
     menu.add.selector('Level Select:', [('One', 1), ('Two', 2)], onchange=select_level)
     menu.add.button('Play', start_level)
-    menu.add.button('Tutorial', tutorials_main.get_tutorials_menu)
+    menu.add.button('Tutorial', tutorials_main.tutorials_menu)
     menu.add.button('Quit', pygame_menu.events.EXIT)
     menu.mainloop(surface)
 
