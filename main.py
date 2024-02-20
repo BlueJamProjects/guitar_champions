@@ -30,8 +30,11 @@ import tutorials.maintutorial as tutorialscreen
 
 current_level = 1
 
+
+
 def select_level(name, index):
         # Do the job here !
+    global current_level
     current_level = index
     print(current_level)
 
@@ -51,14 +54,20 @@ def start_level():
 def print_level():
     print(current_level)
 
-pygame.init()
 
-surface = pygame.display.set_mode((800, 600))
+if __name__ == "__main__":
 
-menu = pygame_menu.Menu('Guitar Champions', 800, 600,theme=pygame_menu.themes.THEME_BLUE)
+    pygame.init()
 
-menu.add.selector('Level Select:', [('One', 1), ('Two', 2)], onchange=select_level)
-menu.add.button('Play', start_level)
-menu.add.button('Tutorial', tutorialscreen.start)
-menu.add.button('Quit', pygame_menu.events.EXIT)
-menu.mainloop(surface)
+    surface = pygame.display.set_mode((800, 600))
+
+    menu = pygame_menu.Menu('Guitar Champions', 800, 600,theme=pygame_menu.themes.THEME_BLUE)
+
+    menu.add.selector('Level Select:', [('One', 1), ('Two', 2)], onchange=select_level)
+    menu.add.button('Play', start_level)
+    menu.add.button('Tutorial', tutorialscreen.start)
+    menu.add.button('Quit', pygame_menu.events.EXIT)
+    menu.mainloop(surface)
+
+
+
