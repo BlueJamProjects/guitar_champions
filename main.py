@@ -24,7 +24,7 @@ from pygame.locals import (
 # Import levels
 import levels.level1 as level1
 import levels.level2 as level2
-import tutorials.maintutorial as tutorialscreen
+import tutorials.tutorials_main as tutorials_main
 
 
 
@@ -33,10 +33,9 @@ current_level = 1
 
 
 def select_level(name, index):
-        # Do the job here !
+    # This updates current level to the index of the selected level
     global current_level
     current_level = index
-    print(current_level)
 
 
 def start_level():
@@ -51,8 +50,6 @@ def start_level():
         case _:
             level1.start()
 
-def print_level():
-    print(current_level)
 
 
 if __name__ == "__main__":
@@ -63,9 +60,11 @@ if __name__ == "__main__":
 
     menu = pygame_menu.Menu('Guitar Champions', 800, 600,theme=pygame_menu.themes.THEME_BLUE)
 
+    
+
     menu.add.selector('Level Select:', [('One', 1), ('Two', 2)], onchange=select_level)
     menu.add.button('Play', start_level)
-    menu.add.button('Tutorial', tutorialscreen.start)
+    menu.add.button('Tutorial', tutorials_main.get_tutorials_menu)
     menu.add.button('Quit', pygame_menu.events.EXIT)
     menu.mainloop(surface)
 
