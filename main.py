@@ -24,6 +24,7 @@ from pygame.locals import (
 # Import levels
 import levels.level1 as level1
 import levels.level2 as level2
+import tutorials.maintutorial as tutorialscreen
 
 
 
@@ -58,6 +59,6 @@ menu = pygame_menu.Menu('Guitar Champions', 800, 600,theme=pygame_menu.themes.TH
 
 menu.add.selector('Level Select:', [('One', 1), ('Two', 2)], onchange=select_level)
 menu.add.button('Play', start_level)
-menu.add.button('Tutorial', print_level)
+menu.add.button('Tutorial', tutorialscreen.start)
 menu.add.button('Quit', pygame_menu.events.EXIT)
 menu.mainloop(surface)
