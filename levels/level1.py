@@ -4,6 +4,8 @@ import pygame
 # Import random for random numbers
 import random
 
+import sys
+
 
 # Import the menu library to more easily make menu selction
 import pygame_menu
@@ -31,8 +33,6 @@ def start():
 
     # Variable to keep our main loop running
     running = True
-
-
     paused = False
 
 
@@ -98,6 +98,11 @@ def start():
     pygame.mixer.music.load("assets/sounds/background-music/smoke-on-water.mp3")
     pygame.mixer.music.play(loops=-1)
     
+
+
+
+
+
     # Our main loop
     while running:
         if paused == True:
@@ -110,6 +115,10 @@ def start():
                         # running = False
                         pygame.mixer.music.unpause()
                         paused = False
+
+                # Did the user click the window close button? If so, exit
+                elif event.type == QUIT:
+                    exit()
     
         else:
             
@@ -117,13 +126,13 @@ def start():
             for event in pygame.event.get():
                 # Did the user hit a key?
                 if event.type == KEYDOWN:
-                    # Was it the Escape key? If so, stop the loop
+                    # Was it the Escape key? If so, pause the loop
                     if event.key == K_ESCAPE:
-                        # running = False
                         paused = True
-                # Did the user click the window close button? If so, stop the loop
+
+                # Did the user click the window close button? If so, exit
                 elif event.type == QUIT:
-                    running = False
+                    exit()
                 # Should we add a new Note?
                 elif event.type == ADDNote:
                     # Create the new Note, and add it to our sprite groups
