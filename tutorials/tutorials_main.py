@@ -25,4 +25,5 @@ pygame.init()
 surface = pygame.display.set_mode((800, 600))
 
 tutorials_menu = pygame_menu.Menu('Tutorials', 800, 600,theme=pygame_menu.themes.THEME_ORANGE)
+tutorials_menu.add.button('Back', pygame_menu.events.BACK)
 tutorials_menu.add.button('Quit', pygame_menu.events.EXIT)
