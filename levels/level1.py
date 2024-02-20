@@ -89,16 +89,63 @@ def start():
     # Load and play our background music
     pygame.mixer.music.load("assets/sounds/background-music/smoke-on-water.mp3")
     pygame.mixer.music.play(loops=-1)
+
+     # left padding, top padding, width, height
+    dark_blue=(38,80,115)
+    light_blue = (73, 127, 170)
+
+    class TextButton():
+        def __init__(self, text, left_padding, top_padding):
+            super(TextButton, self).__init__()
+            self.button_position=pygame.Rect(SCREEN_WIDTH/2 - SCREEN_HEIGHT/8,SCREEN_HEIGHT/2,SCREEN_HEIGHT/4,SCREEN_HEIGHT/16)
+            self.button_color=dark_blue
+            self.white = (255, 255, 255)
+            self.font = pygame.font.Font('freesansbold.ttf', 32)
+ 
+            # create a text surface object,
+            # on which text is drawn on it.
+            self.text = self.font.render('Resume', True, self.white, self.button_color)
+
+        
+        # def update(self):
+        #     mouse_position=pygame.mouse.get_pos()
+        #     for event in pygame.event.get():
+        #         if event.type==pygame.MOUSEMOTION:
+        #             if self.button_position.collidepoint(mouse_position):
+        #                 print("Hover")
+        #                 button_color=light_blue
+        #             else:
+        #                 print("Not hovering")
+        #                 button_color=dark_blue
+
+        #         if event.type==pygame.MOUSEBUTTONDOWN:
+        #             if self.button_position.collidepoint(mouse_position):
+        #                 print("Clicked")
+        #                 paused = False
+        #                 pygame.mixer.music.unpause()
+
+   
     
 
-    # left padding, top padding, width, height
-    button_position=pygame.Rect(SCREEN_WIDTH/2 - SCREEN_HEIGHT/8,SCREEN_HEIGHT/2,SCREEN_HEIGHT/4,SCREEN_HEIGHT/16)
-    cornflower_blue=(128,149,255)
-    button_color=cornflower_blue
 
     
+ 
 
+# create a font object.
+# 1st parameter is the font file
+# which is present in pygame.
+# 2nd parameter is size of the font
+    
+ 
+# create a rectangular object for the
+# text surface object
+    # textRect = text.get_rect()
+ 
+# set the center of the rectangular object.
+    # textRect.center = (100, 100)
+    
 
+    resume_button = TextButton("R", 100, 100)
 
     # Our main loop
     while running:
@@ -119,18 +166,25 @@ def start():
                     exit()
 
                 mouse_position=pygame.mouse.get_pos()
-
+            
                 if event.type==pygame.MOUSEMOTION:
-                    if button_position.collidepoint(mouse_position):
-                      print("Hover")
+                    if resume_button.button_position.collidepoint(mouse_position):
+                        print("Hover")
+                        resume_button.button_color=light_blue
+                        
                     else:
-                        print("Other hover")
+                        print("Not hovering")
+                        resume_button.button_color=dark_blue
+                    resume_button.text = resume_button.font.render('Resume', True, resume_button.white, resume_button.button_color)
 
                 if event.type==pygame.MOUSEBUTTONDOWN:
-                    if button_position.collidepoint(mouse_position):
+                    if resume_button.button_position.collidepoint(mouse_position):
                         print("Clicked")
-            pygame.draw.rect(screen,(button_color),(button_position))
+                        paused = False
+                        pygame.mixer.music.unpause()
+            
             pygame.display.update()
+            screen.blit(resume_button.text, resume_button.button_position)
 		
     
         else:
