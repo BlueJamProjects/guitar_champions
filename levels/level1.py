@@ -21,15 +21,18 @@ from pygame.locals import (
     KEYDOWN,
     QUIT,
 )
-
+# width=pygame.display.get_surface().get_size()[1]/4, height=pygame.display.get_surface().get_size()[1]/16, left_padding = pygame.display.get_surface().get_size()[0]/2 - pygame.display.get_surface().get_size()[1]/8, top_padding=pygame.display.get_surface().get_size()[1]/2
 import partials.player.jason_main as jason_main
 import partials.notes.c_note as c_note
+import partials.buttons.text_button as text_button
+
+
 
 def start():
 
     # Define constants for the screen width and height
-    SCREEN_WIDTH = 800
-    SCREEN_HEIGHT = 600
+    SCREEN_WIDTH = pygame.display.get_surface().get_size()[0]
+    SCREEN_HEIGHT = pygame.display.get_surface().get_size()[1]
 
 
     # Variable to keep our main loop running
@@ -57,7 +60,6 @@ def start():
     # Create the screen object
     # The size is determined by the constant SCREEN_WIDTH and SCREEN_HEIGHT
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
-    # screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
     bg_img = pygame.image.load('assets/images/backgrounds/mario level.png')
     bg_img = pygame.transform.scale(bg_img,(SCREEN_WIDTH,SCREEN_HEIGHT))
 
@@ -89,58 +91,14 @@ def start():
     # Load and play our background music
     pygame.mixer.music.load("assets/sounds/background-music/smoke-on-water.mp3")
     pygame.mixer.music.play(loops=-1)
-
-     # left padding, top padding, width, height
-    dark_blue=(38,80,115)
-    light_blue = (73, 127, 170)
-
-    class TextButton():
-        
-        def __init__(self, text, left_padding, top_padding):
-            super(TextButton, self).__init__()
-            self.button_position=pygame.Rect(SCREEN_WIDTH/2 - SCREEN_HEIGHT/8,SCREEN_HEIGHT/2,SCREEN_HEIGHT/4,SCREEN_HEIGHT/16)
-            self.button_color=dark_blue
-            self.text_color = (255, 255, 255)
-
-            # create a font to select font and size
-            self.font = pygame.font.Font('freesansbold.ttf', 32)
- 
-            # create a text surface object using the font
-            # on which text is drawn on it.
-            self.text = self.font.render(text, True, self.text_color, self.button_color)
-
-        def check_hover(self):
-            mouse_position=pygame.mouse.get_pos()
-            if self.button_position.collidepoint(mouse_position):
-                print("Hover")
-                self.button_color=light_blue
-                        
-            else:
-                print("Not hovering")
-                self.button_color=dark_blue
-
-            self.text = self.font.render('Resume', True, self.text_color, self.button_color)
-
-
-        def check_pressed(self):
-            
-            mouse_position=pygame.mouse.get_pos()
-            if self.button_position.collidepoint(mouse_position):
-                print("Clicked")
-                global paused
-                # print(paused)
-                paused = False
-                print(paused)
-                pygame.mixer.music.unpause()
-   
-    
-
-
     
  
-    
+    # Custom buttons
 
-    resume_button = TextButton("Resume", 100, 100)
+    resume_button = text_button.TextButton(text="Resume", width= 100,height= 50, left_padding= SCREEN_WIDTH/2 - 50, top_padding= SCREEN_HEIGHT/2 - 50)
+    main_menu_button = text_button.TextButton(text="Main Menu", width= 100,height= 50, left_padding= SCREEN_WIDTH/2 - 50, top_padding= SCREEN_HEIGHT/2 +20)
+    quit_button = text_button.TextButton(text="Quit", width= 100,height= 50, left_padding= SCREEN_WIDTH/2 - 50, top_padding= SCREEN_HEIGHT/2 + 90)
+
 
     # Our main loop
     while running:
@@ -161,21 +119,27 @@ def start():
                     exit()
             
                 if event.type==pygame.MOUSEMOTION:
-                    resume_button.check_hover()
+                    resume_button.on_hover()
+                    main_menu_button.on_hover()
+                    quit_button.on_hover()
                    
                 if event.type==pygame.MOUSEBUTTONDOWN:
-                    # resume_button.check_pressed()
-                    # print(paused)
-                    mouse_position=pygame.mouse.get_pos()
-                    if resume_button.button_position.collidepoint(mouse_position):
-                        print("Clicked")
-                
+                    if (resume_button.is_pressed() == True):
                         paused = False
                         pygame.mixer.music.unpause()
-   
-            
+
+                    elif(main_menu_button.is_pressed() == True):
+                        pass
+
+                    elif(quit_button.is_pressed() == True):
+                        exit()
+                    
+            screen.blit(resume_button.render, resume_button.button_position)
+            screen.blit(main_menu_button.render, main_menu_button.button_position)
+            screen.blit(quit_button.render, quit_button.button_position)
+
             pygame.display.update()
-            screen.blit(resume_button.text, resume_button.button_position)
+            
 		
     
         else:
