@@ -95,57 +95,52 @@ def start():
     light_blue = (73, 127, 170)
 
     class TextButton():
+        
         def __init__(self, text, left_padding, top_padding):
             super(TextButton, self).__init__()
             self.button_position=pygame.Rect(SCREEN_WIDTH/2 - SCREEN_HEIGHT/8,SCREEN_HEIGHT/2,SCREEN_HEIGHT/4,SCREEN_HEIGHT/16)
             self.button_color=dark_blue
-            self.white = (255, 255, 255)
+            self.text_color = (255, 255, 255)
+
+            # create a font to select font and size
             self.font = pygame.font.Font('freesansbold.ttf', 32)
  
-            # create a text surface object,
+            # create a text surface object using the font
             # on which text is drawn on it.
-            self.text = self.font.render('Resume', True, self.white, self.button_color)
+            self.text = self.font.render(text, True, self.text_color, self.button_color)
 
-        
-        # def update(self):
-        #     mouse_position=pygame.mouse.get_pos()
-        #     for event in pygame.event.get():
-        #         if event.type==pygame.MOUSEMOTION:
-        #             if self.button_position.collidepoint(mouse_position):
-        #                 print("Hover")
-        #                 button_color=light_blue
-        #             else:
-        #                 print("Not hovering")
-        #                 button_color=dark_blue
+        def check_hover(self):
+            mouse_position=pygame.mouse.get_pos()
+            if self.button_position.collidepoint(mouse_position):
+                print("Hover")
+                self.button_color=light_blue
+                        
+            else:
+                print("Not hovering")
+                self.button_color=dark_blue
 
-        #         if event.type==pygame.MOUSEBUTTONDOWN:
-        #             if self.button_position.collidepoint(mouse_position):
-        #                 print("Clicked")
-        #                 paused = False
-        #                 pygame.mixer.music.unpause()
+            self.text = self.font.render('Resume', True, self.text_color, self.button_color)
 
+
+        def check_pressed(self):
+            
+            mouse_position=pygame.mouse.get_pos()
+            if self.button_position.collidepoint(mouse_position):
+                print("Clicked")
+                global paused
+                # print(paused)
+                paused = False
+                print(paused)
+                pygame.mixer.music.unpause()
    
     
 
 
     
  
-
-# create a font object.
-# 1st parameter is the font file
-# which is present in pygame.
-# 2nd parameter is size of the font
-    
- 
-# create a rectangular object for the
-# text surface object
-    # textRect = text.get_rect()
- 
-# set the center of the rectangular object.
-    # textRect.center = (100, 100)
     
 
-    resume_button = TextButton("R", 100, 100)
+    resume_button = TextButton("Resume", 100, 100)
 
     # Our main loop
     while running:
@@ -164,24 +159,20 @@ def start():
                 # Did the user click the window close button? If so, exit
                 elif event.type == QUIT:
                     exit()
-
-                mouse_position=pygame.mouse.get_pos()
             
                 if event.type==pygame.MOUSEMOTION:
-                    if resume_button.button_position.collidepoint(mouse_position):
-                        print("Hover")
-                        resume_button.button_color=light_blue
-                        
-                    else:
-                        print("Not hovering")
-                        resume_button.button_color=dark_blue
-                    resume_button.text = resume_button.font.render('Resume', True, resume_button.white, resume_button.button_color)
-
+                    resume_button.check_hover()
+                   
                 if event.type==pygame.MOUSEBUTTONDOWN:
+                    # resume_button.check_pressed()
+                    # print(paused)
+                    mouse_position=pygame.mouse.get_pos()
                     if resume_button.button_position.collidepoint(mouse_position):
                         print("Clicked")
+                
                         paused = False
                         pygame.mixer.music.unpause()
+   
             
             pygame.display.update()
             screen.blit(resume_button.text, resume_button.button_position)
