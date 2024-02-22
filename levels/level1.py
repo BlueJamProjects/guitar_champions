@@ -129,7 +129,7 @@ def start():
                         pygame.mixer.music.unpause()
 
                     elif(main_menu_button.is_pressed() == True):
-                        pass
+                        running = False
 
                     elif(quit_button.is_pressed() == True):
                         exit()
