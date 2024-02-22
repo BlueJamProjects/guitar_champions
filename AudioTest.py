@@ -9,6 +9,7 @@ from scipy.datasets import electrocardiogram
 from scipy.signal import find_peaks
 import numpy as np
 from collections import Counter
+from music21 import note
 import switchblade
 import nnAudio
 
