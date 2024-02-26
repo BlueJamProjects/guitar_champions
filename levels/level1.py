@@ -22,8 +22,8 @@ from pygame.locals import (
     QUIT,
 )
 # width=pygame.display.get_surface().get_size()[1]/4, height=pygame.display.get_surface().get_size()[1]/16, left_padding = pygame.display.get_surface().get_size()[0]/2 - pygame.display.get_surface().get_size()[1]/8, top_padding=pygame.display.get_surface().get_size()[1]/2
-import partials.player.jason_main as jason_main
-import partials.notes.c_note as c_note
+import partials.player.movable_player as movable_player
+import partials.notes.note as note
 import partials.buttons.text_button as text_button
 
 
@@ -70,7 +70,7 @@ def start():
 
    
     # Create our 'player'
-    player = jason_main.Player()
+    player = movable_player.Player()
 
 
 
@@ -95,10 +95,26 @@ def start():
  
     # Custom buttons
 
+    # color = (255,0,0)
+
+    # transparent_surface = pygame.Surface((100, 100), pygame.SRCALPHA)
+    # transparent_surface.fill((255, 255, 255, 0))
+    # pygame.draw.rect(transparent_surface, color, (0, 0, 100, 100))
+ 
+    # Drawing Rectangle
+    
+
     resume_button = text_button.TextButton(text="Resume", width= 100,height= 50, left_padding= SCREEN_WIDTH/2 - 50, top_padding= SCREEN_HEIGHT/2 - 50)
     main_menu_button = text_button.TextButton(text="Main Menu", width= 100,height= 50, left_padding= SCREEN_WIDTH/2 - 50, top_padding= SCREEN_HEIGHT/2 +20)
     quit_button = text_button.TextButton(text="Quit", width= 100,height= 50, left_padding= SCREEN_WIDTH/2 - 50, top_padding= SCREEN_HEIGHT/2 + 90)
 
+
+    transparent_surface = pygame.Surface((SCREEN_WIDTH - 60, SCREEN_HEIGHT - 60), pygame.SRCALPHA)
+    transparent_surface.fill((109,110,112, 10))
+            # pygame.draw.rect(transparent_surface, (255, 0, 0, 100), (0, 0, 100, 100))
+    pygame.Surface.set_alpha(transparent_surface, 140)
+            # transparent_surface.set_alpha(28)
+    print(transparent_surface.get_alpha())
 
     # Our main loop
     while running:
@@ -138,6 +154,10 @@ def start():
             screen.blit(main_menu_button.render, main_menu_button.button_position)
             screen.blit(quit_button.render, quit_button.button_position)
 
+
+            
+            screen.blit(transparent_surface, (30, 30))
+
             pygame.display.update()
             
 		
@@ -160,7 +180,7 @@ def start():
                 # Should we add a new Note?
                 elif event.type == ADDNote:
                     # Create the new Note, and add it to our sprite groups
-                    new_Note = c_note.Note(Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT)
+                    new_Note = note.Note(asset_path="assets/images/notes/C.png",Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT)
                     Notes.add(new_Note)
                     all_sprites.add(new_Note)
 

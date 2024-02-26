@@ -17,10 +17,10 @@ from pygame.locals import (
 )
 
 class Note(pygame.sprite.Sprite):
-        def __init__(self, Screen_Width, Screen_Height):
+        def __init__(self, asset_path="assets/images/notes/C.png", Screen_Width =800, Screen_Height=600):
             super(Note, self).__init__()
 
-            self.surf = pygame.image.load("assets/images/notes/C.png").convert()
+            self.surf = pygame.image.load(asset_path).convert()
 
             self.surf.set_colorkey((0, 0, 0), RLEACCEL)
             # The starting position is randomly generated

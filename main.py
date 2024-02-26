@@ -28,7 +28,12 @@ import tutorials.tutorials_main as tutorials_main
 
 
 
-current_level = 1
+
+
+
+current_level = 0
+
+level_list = [("Mario", level1), ("Mountains", level2)]
 
 
 
@@ -38,17 +43,11 @@ def select_level(name, index):
     current_level = index
 
 
+
+
 def start_level():
-    print(current_level)
-    match current_level:
-        case 1:
-            level1.start()
-
-        case 2:
-            level2.start()
-
-        case _:
-            level1.start()
+    # This 
+    level_list[current_level][1].start()
 
 
 
@@ -62,7 +61,7 @@ if __name__ == "__main__":
 
     
 
-    menu.add.selector('Level Select:', [('One', 1), ('Two', 2)], onchange=select_level)
+    menu.add.selector('Level Select:', [(level[0], index) for index, level in enumerate(level_list)], onchange=select_level)
     menu.add.button('Play', start_level)
     menu.add.button('Tutorial', tutorials_main.tutorials_menu)
     menu.add.button('Quit', pygame_menu.events.EXIT)

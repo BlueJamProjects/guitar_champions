@@ -8,17 +8,16 @@ from pygame.locals import (
     QUIT,
 )
 
- # Define constants for the screen width and height
-SCREEN_WIDTH = 800
-SCREEN_HEIGHT = 600
 
 
 class Player(pygame.sprite.Sprite):
-        def __init__(self):
+        def __init__(self, asset_path="assets/images/characters/protaganist.png", screen_height=800, screen_width=600):
             super(Player, self).__init__()
-            self.surf = pygame.image.load("assets/images/characters/protaganist.png").convert()
+            self.surf = pygame.image.load(asset_path).convert()
             self.surf.set_colorkey((255, 255, 255), RLEACCEL)
             self.rect = self.surf.get_rect()
+            self.screen_height = screen_height
+            self.screen_width = screen_width
 
             #sets the top at an offset of 340 to get him to look like he's standing on the ground
             self.rect.top = 340
@@ -33,9 +32,9 @@ class Player(pygame.sprite.Sprite):
             # Keep player on the screen
             if self.rect.left < 0:
                 self.rect.left = 0
-            elif self.rect.right > SCREEN_WIDTH:
-                self.rect.right = SCREEN_WIDTH
+            elif self.rect.right > self.screen_width:
+                self.rect.right = self.screen_width
             if self.rect.top <= 0:
                 self.rect.top = 0
-            elif self.rect.bottom >= SCREEN_HEIGHT:
-                self.rect.bottom = SCREEN_HEIGHT
+            elif self.rect.bottom >= self.screen_height:
+                self.rect.bottom = self.screen_height

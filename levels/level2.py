@@ -22,8 +22,8 @@ from pygame.locals import (
     QUIT,
 )
 # width=pygame.display.get_surface().get_size()[1]/4, height=pygame.display.get_surface().get_size()[1]/16, left_padding = pygame.display.get_surface().get_size()[0]/2 - pygame.display.get_surface().get_size()[1]/8, top_padding=pygame.display.get_surface().get_size()[1]/2
-import partials.player.jason_main as jason_main
-import partials.notes.c_note as c_note
+import partials.player.movable_player as movable_player
+import partials.notes.note as note
 import partials.buttons.text_button as text_button
 
 
@@ -70,7 +70,7 @@ def start():
 
    
     # Create our 'player'
-    player = jason_main.Player()
+    player = movable_player.Player()
 
 
 
@@ -160,7 +160,7 @@ def start():
                 # Should we add a new Note?
                 elif event.type == ADDNote:
                     # Create the new Note, and add it to our sprite groups
-                    new_Note = c_note.Note(Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT)
+                    new_Note = note.Note(asset_path="assets/images/notes/C.png", Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT)
                     Notes.add(new_Note)
                     all_sprites.add(new_Note)
 
