@@ -1,5 +1,7 @@
+# import pygame asprite package, download by typing "pip3 install pygame_aseprite_animation" into your terminal
+from pygame_aseprite_animation import *
 # Import the pygame module
-import pygame
+import os, pygame
 
 # Import random for random numbers
 import random
@@ -31,6 +33,89 @@ import tutorials.tutorials_main as tutorials_main
 
 
 
+        self.surf.set_colorkey((0, 0, 0), RLEACCEL)
+        # The starting position is randomly generated
+        self.rect = self.surf.get_rect(
+            center=(
+                random.randint(SCREEN_WIDTH + 20, SCREEN_WIDTH + 100),
+                random.randint(0, SCREEN_HEIGHT-200),
+            )
+        )
+
+    # Move the Note based on a constant speed
+    # Remove it when it passes the left edge of the screen
+    def update(self):
+        self.rect.move_ip(-5, 0)
+        if self.rect.right < 0:
+            self.kill()
+
+
+# Setup for sounds, defaults are good
+pygame.mixer.init()
+
+# Initialize pygame
+pygame.init()
+
+# Create the screen object
+# The size is determined by the constant SCREEN_WIDTH and SCREEN_HEIGHT
+screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+
+# set aseprite file directory
+dirname = os.path.dirname(__file__)
+aseprite_file_directory = str(dirname) + '/TheHarvester.aseprite'
+
+# initialize animations - To add new animations, create a new animationmanager the same way its created here and put the Animation in its list
+test_animation = Animation(aseprite_file_directory)
+animationmanager = AnimationManager([test_animation], screen)
+
+# Setup the clock for a decent framerate
+clock = pygame.time.Clock()
+
+bg_img = pygame.image.load('assets/images/backgrounds/mario level.png')
+bg_img = pygame.transform.scale(bg_img,(SCREEN_WIDTH,SCREEN_HEIGHT))
+
+# Create custom events for adding a Note
+ADDNote = pygame.USEREVENT + 2
+pygame.time.set_timer(ADDNote, 2500)
+
+# Create our 'player'
+player = Player()
+
+# Create groups to hold Note sprites, and all sprites
+# - Notes is used for position updates
+# - all_sprites isused for rendering
+Notes = pygame.sprite.Group()
+all_sprites = pygame.sprite.Group()
+all_sprites.add(player)
+
+# Load and play our background music
+pygame.mixer.music.load("assets/sounds/background-music/smoke-on-water.mp3")
+pygame.mixer.music.play(loops=-1)
+
+
+# Variable to keep our main loop running
+running = True
+
+# Our main loop
+while running:
+    # Look at every event in the queue
+    for event in pygame.event.get():
+        # Did the user hit a key?
+        if event.type == KEYDOWN:
+            # Was it the Escape key? If so, stop the loop
+            if event.key == K_ESCAPE:
+                running = False
+
+        # Did the user click the window close button? If so, stop the loop
+        elif event.type == QUIT:
+            running = False
+
+        # Should we add a new Note?
+        elif event.type == ADDNote:
+            # Create the new Note, and add it to our sprite groups
+            new_Note = Note()
+            Notes.add(new_Note)
+            all_sprites.add(new_Note)
 
 
 current_level = 0
@@ -38,12 +123,14 @@ current_level = 0
 level_list = [("Mario", level1), ("Mountains", level2)]
 
 
-
 def select_level(name, index):
     # This updates current level to the index of the selected level
     global current_level
     current_level = index
 
+    animationmanager.update_self(0, 0)
+    # Flip everything to the display
+    pygame.display.flip()
 
 def redraw(widget, decos):
     decos.add_rect(-widget.get_width()/2,-widget.get_height()/2+1,pygame.Rect(0,0 , widget.get_width(),widget.get_height()),[255,187,68])
