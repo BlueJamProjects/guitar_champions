@@ -41,6 +41,13 @@ pygame.mixer.init()
 # Initialize pygame
 pygame.init()
 
+# Create the screen object
+# The size is determined by the constant SCREEN_WIDTH and SCREEN_HEIGHT
+screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+
+
+
+
 
 current_level = 0
 
@@ -51,20 +58,20 @@ def select_level(name, index):
     # This updates current level to the index of the selected level
     global current_level
     current_level = index
-    
+
     # Flip everything to the display
     pygame.display.flip()
 
-def redraw(widget, decos,color):
-    decos.add_rect(-widget.get_width()/2,-widget.get_height()/2+1,pygame.Rect(0,0 , widget.get_width(),widget.get_height()),color)
+def redraw(widget, decos):
+    decos.add_rect(-widget.get_width()/2,-widget.get_height()/2+1,pygame.Rect(0,0 , widget.get_width(),widget.get_height()),[255,187,68])
     decos.add_line((-widget.get_width()/2,-widget.get_height()/2+1),(widget.get_width()/2,-widget.get_height()/2+1),[255,255,255],2)
     decos.add_line((-widget.get_width()/2,-widget.get_height()/2+1),(-widget.get_width()/2,widget.get_height()/2+1),[255,255,255],2)
     decos.add_line((widget.get_width()/2,-widget.get_height()/2+1),(widget.get_width()/2,widget.get_height()/2+1),[255,255,255],2)
     decos.add_line((-widget.get_width()/2,widget.get_height()/2+1),(widget.get_width()/2,widget.get_height()/2+1),[255,255,255],2)
-    decos.add_circle(-widget.get_width()/2,-widget.get_height()/2+1,10,color,True)
-    decos.add_circle(widget.get_width()/2,-widget.get_height()/2+1,10,color,True)
-    decos.add_circle(-widget.get_width()/2,widget.get_height()/2+1,10,color,True)
-    decos.add_circle(widget.get_width()/2,widget.get_height()/2+1,10,color,True)
+    decos.add_circle(-widget.get_width()/2,-widget.get_height()/2+1,10,[255,187,68],True)
+    decos.add_circle(widget.get_width()/2,-widget.get_height()/2+1,10,[255,187,68],True)
+    decos.add_circle(-widget.get_width()/2,widget.get_height()/2+1,10,[255,187,68],True)
+    decos.add_circle(widget.get_width()/2,widget.get_height()/2+1,10,[255,187,68],True)
     decos.add_circle(-widget.get_width()/2,-widget.get_height()/2+1,10,[255,255,255],False,2)
     decos.add_circle(widget.get_width()/2,-widget.get_height()/2+1,10,[255,255,255],False,2)
     decos.add_circle(-widget.get_width()/2,widget.get_height()/2+1,10,[255,255,255],False,2)
@@ -81,23 +88,14 @@ if __name__ == "__main__":
 
     pygame.init()   
 
-
     surface = pygame.display.set_mode((800, 600))
-
-    mytheme = pygame_menu.themes.Theme(
-                title_background_color=[255,187,68],
+    mytheme = pygame_menu.themes.Theme( # transparent background
+                title_background_color=(255, 40, 40),
                 title_font_color=(255,255,255),
                 widget_font_color=(0,0,0),
                 background_color=pygame_menu.baseimage.BaseImage("Oreng.jpg"), 
-                widget_selection_effect = pygame_menu.widgets.NoneSelection(),
-                title_bar_style= pygame_menu.widgets.MENUBAR_STYLE_NONE,
-                title_offset= (120,20),
-                title_font_shadow=True,
-                title_font='script',
-                title_font_size=80,
-                title_floating=True,
+                widget_selection_effect = pygame_menu.widgets.NoneSelection()
                 )
-    
     menu = pygame_menu.Menu('Guitar Champions', 800, 600,theme=mytheme)
     def draw_update_function(widget, menu):
 
@@ -165,4 +163,4 @@ if __name__ == "__main__":
         decos.add_circle(widget.get_width()/2,widget.get_height()/2+1,10,[255,255,255],False,2)
     
     menu.mainloop(surface)
-   
+    
