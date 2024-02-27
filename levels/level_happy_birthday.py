@@ -30,7 +30,7 @@ from pygame.locals import (
 )
 # width=pygame.display.get_surface().get_size()[1]/4, height=pygame.display.get_surface().get_size()[1]/16, left_padding = pygame.display.get_surface().get_size()[0]/2 - pygame.display.get_surface().get_size()[1]/8, top_padding=pygame.display.get_surface().get_size()[1]/2
 import partials.player.playing_player as playing_player
-import partials.notes.note as note
+import partials.notes.text_note as note
 import partials.buttons.text_button as text_button
 
 
@@ -83,7 +83,7 @@ def start():
 
    
     # Create our 'player'
-    player = playing_player.Player(top_padding=10)
+    player = playing_player.Player(top_padding=400)
 
 
 
@@ -102,7 +102,7 @@ def start():
 
 
     # Load and play our background music
-    pygame.mixer.music.load("assets/sounds/background-music/smoke-on-water.mp3")
+    pygame.mixer.music.load("assets/sounds/background-music/metro-34-60bpm.mp3")
     pygame.mixer.music.play(loops=-1)
     
     
@@ -196,7 +196,7 @@ def start():
                 # Should we add a new Note?
                 elif event.type == ADDNote:
                     # Create the new Note, and add it to our sprite groups
-                    new_Note = note.Note(asset_path="assets/images/notes/C.png",Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT)
+                    new_Note = note.Note(text="D",Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT)
                     Notes.add(new_Note)
                     all_sprites.add(new_Note)
 
