@@ -84,7 +84,7 @@ def main():
     print("start recording... ")
     total = 0
     count = 0
-    seconds = 3
+    seconds = 5
     for i in range(0, int(audio.RATE / audio.CHUNK * seconds)):
         # data = stream.read(CHUNK)
         # frames.append(data)
