@@ -92,13 +92,16 @@ def start():
     pygame.mixer.music.load("assets/sounds/background-music/smoke-on-water.mp3")
     pygame.mixer.music.play(loops=-1)
     
- 
-    # Custom buttons
-
+    
+    # These are the buttons for the pause menu
     resume_button = text_button.TextButton(text="Resume", width= 100,height= 50, left_padding= SCREEN_WIDTH/2 - 50, top_padding= SCREEN_HEIGHT/2 - 50)
     main_menu_button = text_button.TextButton(text="Main Menu", width= 100,height= 50, left_padding= SCREEN_WIDTH/2 - 50, top_padding= SCREEN_HEIGHT/2 +20)
     quit_button = text_button.TextButton(text="Quit", width= 100,height= 50, left_padding= SCREEN_WIDTH/2 - 50, top_padding= SCREEN_HEIGHT/2 + 90)
 
+    # This is the transparent background for the pause menu
+    transparent_surface = pygame.Surface((SCREEN_WIDTH - 60, SCREEN_HEIGHT - 60), pygame.SRCALPHA)
+    transparent_surface.fill((109,110,112, 10))
+    pygame.Surface.set_alpha(transparent_surface, 140)
 
     # Our main loop
     while running:
@@ -118,11 +121,13 @@ def start():
                 elif event.type == QUIT:
                     exit()
             
+                # Here we check for hover events 
                 if event.type==pygame.MOUSEMOTION:
                     resume_button.on_hover()
                     main_menu_button.on_hover()
                     quit_button.on_hover()
                    
+                # Here we check for clicks events 
                 if event.type==pygame.MOUSEBUTTONDOWN:
                     if (resume_button.is_pressed() == True):
                         paused = False
@@ -133,10 +138,14 @@ def start():
 
                     elif(quit_button.is_pressed() == True):
                         exit()
-                    
+
+            # This visually updates the buttons on the pause screen
             screen.blit(resume_button.render, resume_button.button_position)
             screen.blit(main_menu_button.render, main_menu_button.button_position)
             screen.blit(quit_button.render, quit_button.button_position)
+
+            # This is the transparent background for the pause screen
+            screen.blit(transparent_surface, (30, 30))
 
             pygame.display.update()
             
@@ -160,7 +169,7 @@ def start():
                 # Should we add a new Note?
                 elif event.type == ADDNote:
                     # Create the new Note, and add it to our sprite groups
-                    new_Note = note.Note(asset_path="assets/images/notes/C.png", Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT)
+                    new_Note = note.Note(asset_path="assets/images/notes/C.png",Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT)
                     Notes.add(new_Note)
                     all_sprites.add(new_Note)
 
