@@ -5,7 +5,7 @@
 Use the package manager [pip](https://pip.pypa.io/en/stable/) to install foobar.
 
 ```bash
-pip install librosa, pandas, music21, numpy
+pip3 install librosa, pandas, music21, numpy
 ```
 
 ### Usage
