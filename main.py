@@ -45,7 +45,20 @@ def select_level(name, index):
     current_level = index
 
 
-
+def redraw(widget, decos):
+    decos.add_rect(-widget.get_width()/2,-widget.get_height()/2+1,pygame.Rect(0,0 , widget.get_width(),widget.get_height()),[255,187,68])
+    decos.add_line((-widget.get_width()/2,-widget.get_height()/2+1),(widget.get_width()/2,-widget.get_height()/2+1),[255,255,255],2)
+    decos.add_line((-widget.get_width()/2,-widget.get_height()/2+1),(-widget.get_width()/2,widget.get_height()/2+1),[255,255,255],2)
+    decos.add_line((widget.get_width()/2,-widget.get_height()/2+1),(widget.get_width()/2,widget.get_height()/2+1),[255,255,255],2)
+    decos.add_line((-widget.get_width()/2,widget.get_height()/2+1),(widget.get_width()/2,widget.get_height()/2+1),[255,255,255],2)
+    decos.add_circle(-widget.get_width()/2,-widget.get_height()/2+1,10,[255,187,68],True)
+    decos.add_circle(widget.get_width()/2,-widget.get_height()/2+1,10,[255,187,68],True)
+    decos.add_circle(-widget.get_width()/2,widget.get_height()/2+1,10,[255,187,68],True)
+    decos.add_circle(widget.get_width()/2,widget.get_height()/2+1,10,[255,187,68],True)
+    decos.add_circle(-widget.get_width()/2,-widget.get_height()/2+1,10,[255,255,255],False,2)
+    decos.add_circle(widget.get_width()/2,-widget.get_height()/2+1,10,[255,255,255],False,2)
+    decos.add_circle(-widget.get_width()/2,widget.get_height()/2+1,10,[255,255,255],False,2)
+    decos.add_circle(widget.get_width()/2,widget.get_height()/2+1,10,[255,255,255],False,2)
         
 
 def start_level():
@@ -79,6 +92,8 @@ def draw_update_function(widget, menu):
             "color": (255,255,255),
             "antialias": True
         }
+        widget.get_decorator().remove_all()
+        redraw(widget,widget.get_decorator())
     else:
         widget.set_font_shadow(False,(0,0,0),None,1)
         widget.set_background_color([255,187,68])
@@ -104,7 +119,7 @@ playbutt.add_draw_callback(draw_update_function)
 playbutt.translate(0,-70)
 widgets.append(playbutt)
 
-tutbutt=menu.add.button('Tutorial', tutorialscreen.start, float=True,font_name='script')
+tutbutt=menu.add.button('Tutorial', tutorials_main.tutorials_menu, float=True,font_name='script')
 tutbutt.add_draw_callback(draw_update_function)
 tutbutt.translate(0,30)
 widgets.append(tutbutt)
