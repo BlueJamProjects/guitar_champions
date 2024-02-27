@@ -17,8 +17,13 @@ import pygame_menu
 # from pygame.locals import *
 from pygame.locals import (
     RLEACCEL,
-    K_LEFT,
-    K_RIGHT,
+    K_a,
+    K_b,
+    K_c,
+    K_d,
+    K_e,
+    K_f,
+    K_g,
     K_ESCAPE,
     KEYDOWN,
     QUIT,
@@ -56,13 +61,7 @@ def start():
     # The size is determined by the constant SCREEN_WIDTH and SCREEN_HEIGHT
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 
-    # set aseprite file directory
-    dirname = os.path.dirname(__file__)
-    aseprite_file_directory = str(dirname) + '/TheHarvester.aseprite'
 
-    # initialize animations - To add new animations, create a new animationmanager the same way its created here and put the Animation in its list
-    test_animation = Animation(aseprite_file_directory)
-    animationmanager = AnimationManager([test_animation], screen)
 
     # Setup the clock for a decent framerate
     clock = pygame.time.Clock()
@@ -74,7 +73,7 @@ def start():
     # Create the screen object
     # The size is determined by the constant SCREEN_WIDTH and SCREEN_HEIGHT
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
-    bg_img = pygame.image.load('assets/images/backgrounds/mario level.png')
+    bg_img = pygame.image.load('assets/images/backgrounds/park.jpeg')
     bg_img = pygame.transform.scale(bg_img,(SCREEN_WIDTH,SCREEN_HEIGHT))
 
 
@@ -84,7 +83,7 @@ def start():
 
    
     # Create our 'player'
-    player = playing_player.Player()
+    player = playing_player.Player(top_padding=10)
 
 
 
@@ -174,6 +173,20 @@ def start():
                     # Was it the Escape key? If so, pause the loop
                     if event.key == K_ESCAPE:
                         paused = True
+                    elif event.key == K_a:
+                        print("Pressed A")
+                    elif event.key == K_b:
+                        print("Pressed B")
+                    elif event.key == K_c:
+                        print("Pressed C")
+                    elif event.key == K_d:
+                        print("Pressed D")
+                    elif event.key == K_e:
+                        print("Pressed E")
+                    elif event.key == K_f:
+                        print("Pressed F")
+                    elif event.key == K_g:
+                        print("Pressed G")
 
                 # Did the user click the window close button? If so, exit
                 elif event.type == QUIT:
@@ -208,9 +221,6 @@ def start():
             for entity in all_sprites:
                 screen.blit(entity.surf, entity.rect)
 
-
-
-            animationmanager.update_self(0, 0)
 
             # Flip everything to the display
             pygame.display.flip()
