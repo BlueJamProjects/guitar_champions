@@ -56,26 +56,8 @@ def start_level():
 
 if __name__ == "__main__":
 
-    pygame.init()
+    pygame.init()   
 
-    surface = pygame.display.set_mode((800, 600))
-
-    menu = pygame_menu.Menu('Guitar Champions', 800, 600,theme=pygame_menu.themes.THEME_BLUE)
-
-    
-
-    menu.add.selector('Level Select:', [(level[0], index) for index, level in enumerate(level_list)], onchange=select_level)
-    menu.add.button('Play', start_level)
-    menu.add.button('Tutorial', tutorials_main.tutorials_menu)
-    menu.add.button('Quit', pygame_menu.events.EXIT)
-
-
-    menu.mainloop(surface)
-
-<<<<<<< Updated upstream
-
-
-=======
 surface = pygame.display.set_mode((800, 600))
 mytheme = pygame_menu.themes.Theme( # transparent background
                 title_background_color=(255, 40, 40),
@@ -112,7 +94,7 @@ def draw_update_function(widget, menu):
 widgets=[]
 
 #all widgets, must have an update function, be moved into position, and added to the array
-levbutt=menu.add.selector('Level Select:', [('One', 1), ('Two', 2)], onchange=select_level, float=True,font_name='script')
+levbutt=menu.add.selector('Level Select:', [(level[0], index) for index, level in enumerate(level_list)],float=True, font_name='script', onchange=select_level)
 levbutt.add_draw_callback(draw_update_function)
 levbutt.translate(0,-170)
 widgets.append(levbutt)
@@ -150,4 +132,3 @@ for widget in widgets:
 
 menu.mainloop(surface)
 
->>>>>>> Stashed changes
