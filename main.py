@@ -41,18 +41,6 @@ pygame.mixer.init()
 # Initialize pygame
 pygame.init()
 
-# Create the screen object
-# The size is determined by the constant SCREEN_WIDTH and SCREEN_HEIGHT
-screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
-
-# set aseprite file directory
-dirname = os.path.dirname(__file__)
-aseprite_file_directory = str(dirname) + '/TheHarvester.aseprite'
-
-# initialize animations - To add new animations, create a new animationmanager the same way its created here and put the Animation in its list
-test_animation = Animation(aseprite_file_directory)
-animationmanager = AnimationManager([test_animation], screen)
-
 
 current_level = 0
 
@@ -63,8 +51,7 @@ def select_level(name, index):
     # This updates current level to the index of the selected level
     global current_level
     current_level = index
-
-    animationmanager.update_self(0, 0)
+    
     # Flip everything to the display
     pygame.display.flip()
 
