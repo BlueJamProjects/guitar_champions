@@ -90,7 +90,7 @@ screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 dirname = os.path.dirname(__file__)
 aseprite_file_directory = str(dirname) + '/TheHarvester.aseprite'
 
-# initialize animations
+# initialize animations - To add new animations, create a new animationmanager the same way its created here and put the Animation in its list
 test_animation = Animation(aseprite_file_directory)
 animationmanager = AnimationManager([test_animation], screen)
 
