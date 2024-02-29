@@ -11,7 +11,7 @@ import sys
 
 # Import the menu library to more easily make menu selction
 import pygame_menu
-
+ 
 # Import pygame.locals for easier access to key coordinates
 # Updated to conform to flake8 and black standards
 # from pygame.locals import *
@@ -24,11 +24,21 @@ from pygame.locals import (
     K_e,
     K_f,
     K_g,
+    K_0,
+    K_1,
+    K_2,
+    K_3,
+    K_4,
+    K_5,
+    K_6,
+    K_7,
+    K_8,
+    K_9,
     K_ESCAPE,
     KEYDOWN,
     QUIT,
 )
-# width=pygame.display.get_surface().get_size()[1]/4, height=pygame.display.get_surface().get_size()[1]/16, left_padding = pygame.display.get_surface().get_size()[0]/2 - pygame.display.get_surface().get_size()[1]/8, top_padding=pygame.display.get_surface().get_size()[1]/2
+
 import partials.player.playing_player as playing_player
 import partials.notes.text_note as note
 import partials.buttons.text_button as text_button
@@ -41,6 +51,7 @@ def start():
     SCREEN_WIDTH = pygame.display.get_surface().get_size()[0]
     SCREEN_HEIGHT = pygame.display.get_surface().get_size()[1]
 
+    PLAY_LINE_LOCATION = 290
 
     # Variable to keep our main loop running
     running = True
@@ -77,8 +88,11 @@ def start():
     bg_img = pygame.transform.scale(bg_img,(SCREEN_WIDTH,SCREEN_HEIGHT))
 
 
+    transparent_surface = pygame.Surface((SCREEN_WIDTH, SCREEN_HEIGHT - 200), pygame.SRCALPHA)
+    transparent_surface.fill((255,255,255, 10))
+    pygame.Surface.set_alpha(transparent_surface, 140)
 
-
+ 
 
 
    
@@ -89,7 +103,7 @@ def start():
 
     # Create custom events for adding a Note
     ADDNote = pygame.USEREVENT + 2
-    pygame.time.set_timer(ADDNote, 2500)
+    pygame.time.set_timer(ADDNote, 1000)
     
 
     # Create groups to hold Note sprites, and all sprites
@@ -112,9 +126,13 @@ def start():
     quit_button = text_button.TextButton(text="Quit", width= 100,height= 50, left_padding= SCREEN_WIDTH/2 - 50, top_padding= SCREEN_HEIGHT/2 + 90)
 
     # This is the transparent background for the pause menu
-    transparent_surface = pygame.Surface((SCREEN_WIDTH - 60, SCREEN_HEIGHT - 60), pygame.SRCALPHA)
-    transparent_surface.fill((109,110,112, 10))
-    pygame.Surface.set_alpha(transparent_surface, 140)
+
+    tabs_image = pygame.image.load("assets/images/backgrounds/tabs_outline.png").convert()
+    tabs_image.set_colorkey((255, 255, 255), RLEACCEL)
+
+    play_line_image = pygame.image.load("assets/images/backgrounds/play_line.png").convert()
+    play_line_image.set_colorkey((255, 255, 255), RLEACCEL)
+
 
     # Our main loop
     while running:
@@ -196,9 +214,27 @@ def start():
                 # Should we add a new Note?
                 elif event.type == ADDNote:
                     # Create the new Note, and add it to our sprite groups
-                    new_Note = note.Note(text="D",Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT)
-                    Notes.add(new_Note)
-                    all_sprites.add(new_Note)
+                    new_Note1 = note.Note(text="O", tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT)
+                    new_Note2 = note.Note(text="O", tab_line=2, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT)
+                    new_Note3 = note.Note(text="O", tab_line=3, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT)
+                    new_Note4 = note.Note(text="O", tab_line=4, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT)
+                    new_Note5 = note.Note(text="O", tab_line=5, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT)
+                    new_Note6 = note.Note(text="O", tab_line=6, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT)
+                   
+                    
+                    Notes.add(new_Note1)
+                    Notes.add(new_Note2)
+                    Notes.add(new_Note3)
+                    Notes.add(new_Note4)
+                    Notes.add(new_Note5)
+                    Notes.add(new_Note6)
+
+                    all_sprites.add(new_Note1)
+                    all_sprites.add(new_Note2)
+                    all_sprites.add(new_Note3)
+                    all_sprites.add(new_Note4)
+                    all_sprites.add(new_Note5)
+                    all_sprites.add(new_Note6)
 
 
 
@@ -217,6 +253,10 @@ def start():
 
             # Fill the screen with the background image
             screen.blit(bg_img,(0,0))
+            screen.blit(play_line_image,(0,0))
+            screen.blit(tabs_image,(0,0))
+            
+             
             # Draw all our sprites
             for entity in all_sprites:
                 screen.blit(entity.surf, entity.rect)

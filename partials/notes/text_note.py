@@ -2,13 +2,13 @@ import pygame
 import random
 
 class Note(pygame.sprite.Sprite):
-    def __init__(self, text="C", font_size=70, font_color=(0, 0, 0), font_name='freesansbold.ttf', Screen_Width=800, Screen_Height=600):
+    def __init__(self, text="O", tab_line=1, font_size=70, font_color=(0, 0, 0), font_name='freesansbold.ttf', Screen_Width=800, Screen_Height=600):
         super(Note, self).__init__()
 
         # Initialize Pygame
         pygame.init()
 
-        # Set up font
+        # Set up font 
         self.font = pygame.font.SysFont(font_name, font_size)
         self.text = text
         self.font_color = font_color
@@ -19,30 +19,27 @@ class Note(pygame.sprite.Sprite):
 
         starting_y = 0
 
-        A_HEIGHT = 10
-        NOTE_OFFSET = 20
+        FIRST_HEIGHT = 30
+        NOTE_OFFSET = 66
 
-        if text == "A":
-            starting_y = A_HEIGHT
-        elif text == "B":
-            starting_y = A_HEIGHT + NOTE_OFFSET * 1
-        elif text == "C":
-            starting_y = A_HEIGHT + NOTE_OFFSET * 2
-        elif text == "D":
-            starting_y = A_HEIGHT + NOTE_OFFSET * 3
-        elif text == "E":
-            starting_y = A_HEIGHT + NOTE_OFFSET * 4
-        elif text == "F":
-            starting_y = A_HEIGHT + NOTE_OFFSET * 5
-        elif text == "G":
-            starting_y = A_HEIGHT + NOTE_OFFSET * 6
-
+        if tab_line== 1:
+            starting_y = FIRST_HEIGHT
+        elif tab_line== 2:
+            starting_y = FIRST_HEIGHT + NOTE_OFFSET * 1
+        elif tab_line== 3:
+            starting_y = FIRST_HEIGHT + NOTE_OFFSET * 2
+        elif tab_line== 4:
+            starting_y = FIRST_HEIGHT + NOTE_OFFSET * 3
+        elif tab_line== 5:
+            starting_y = FIRST_HEIGHT + NOTE_OFFSET * 4
+        elif tab_line== 6:
+            starting_y = FIRST_HEIGHT + NOTE_OFFSET * 5
+            
         # The starting position is randomly generated
         self.rect = self.surf.get_rect(
             center=(
-                Screen_Width + 20,
+                Screen_Width,
                 starting_y
-                # random.randint(0, Screen_Height - 500),
                 
             )
         )
