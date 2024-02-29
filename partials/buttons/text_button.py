@@ -3,7 +3,6 @@ import pygame
 
 
 
-
 class TextButton():
         
         def __init__(self,
@@ -12,8 +11,8 @@ class TextButton():
                       height=50, 
                       left_padding = 100, 
                       top_padding=50, 
-                      color=(38,80,115), 
-                      hover_color=(73, 127, 170), 
+                      color=(239,159,20), 
+                      hover_color=(209,129,0), 
                       text_color=(255, 255, 255)):
             super(TextButton, self).__init__()
             self.button_position = pygame.Rect(left_padding, top_padding, width, height)
@@ -22,9 +21,9 @@ class TextButton():
             self.text_color = text_color
             self.current_color = color
             self.text = text
-
+        
             # create a font to select font and size
-            self.font = pygame.font.Font('freesansbold.ttf', 32)
+            self.font = pygame.font.Font("assets/font/Signatra.ttf",40)
  
             # create a text surface object using the font
             # on which text is drawn on it.

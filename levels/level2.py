@@ -100,7 +100,7 @@ def start():
 
     # This is the transparent background for the pause menu
     transparent_surface = pygame.Surface((SCREEN_WIDTH - 60, SCREEN_HEIGHT - 60), pygame.SRCALPHA)
-    transparent_surface.fill((109,110,112, 10))
+    transparent_surface.fill((255,187,68, 10))
     pygame.Surface.set_alpha(transparent_surface, 140)
 
     # Our main loop
