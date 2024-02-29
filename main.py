@@ -42,6 +42,9 @@ pygame.mixer.init()
 # Initialize pygame
 pygame.init()
 
+# Initialize Pygame fonts
+pygame.font.init()
+
 # Create the screen object
 # The size is determined by the constant SCREEN_WIDTH and SCREEN_HEIGHT
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
@@ -84,29 +87,7 @@ def start_level():
     level_list[current_level][1].start()
 
 
-
-if __name__ == "__main__":
-
-    pygame.init()   
-
-    surface = pygame.display.set_mode((800, 600))
-    mytheme = pygame_menu.themes.Theme( # transparent background
-                title_background_color=(255, 187, 68),
-                title_font_color=(255,255,255),
-                widget_font_color=(0,0,0),
-                background_color=pygame_menu.baseimage.BaseImage("Oreng.jpg"), 
-                widget_selection_effect = pygame_menu.widgets.NoneSelection(),
-                title_bar_style= pygame_menu.widgets.MENUBAR_STYLE_NONE,
-                title_offset= (120,20),
-                title_font_shadow=True,
-                title_font='script',
-                title_font_size=80,
-                title_floating=True,
-                )
-    
-
-    menu = pygame_menu.Menu('Guitar Champions', 800, 600,theme=mytheme)
-    def draw_update_function(widget, menu):
+def draw_update_function(widget, menu):
         color=[0,0,0]
         widget.set_margin(0,50)
         if (widget.is_selected()):
@@ -130,27 +111,49 @@ if __name__ == "__main__":
         widget.get_decorator().remove_all()
         redraw(widget,widget.get_decorator(),color)
         widget.update_font(style)
-        
+if __name__ == "__main__":
+
+    pygame.init()   
+
+    surface = pygame.display.set_mode((800, 600))
+    mytheme = pygame_menu.themes.Theme( # transparent background
+                title_background_color=(255, 187, 68),
+                title_font_color=(255,255,255),
+                widget_font_color=(0,0,0),
+                background_color=pygame_menu.baseimage.BaseImage("assets/images/Oreng.jpg"), 
+                widget_selection_effect = pygame_menu.widgets.NoneSelection(),
+                title_bar_style= pygame_menu.widgets.MENUBAR_STYLE_NONE,
+                title_offset= (120,20),
+                title_font_shadow=True,
+                title_font=pygame.font.Font("assets/font/Cultural.ttf",80),
+                title_floating=True,
+                )
+    
+
+    menu = pygame_menu.Menu('Guitar Champions', 800, 600,theme=mytheme)
+    
+    fonter=pygame.font.Font("assets/font/Signatra.ttf",40)
+    
     #array that stores widgets
     widgets=[]
     
     #all widgets, must have an update function, be moved into position, and added to the array
-    levbutt=menu.add.selector('Level Select:', [(level[0], index) for index, level in enumerate(level_list)],float=True, font_name='script', onchange=select_level)
+    levbutt=menu.add.selector('Level Select:', [(level[0], index) for index, level in enumerate(level_list)],float=True, font_name=fonter, onchange=select_level)
     levbutt.add_draw_callback(draw_update_function)
     levbutt.translate(0,-120)
     widgets.append(levbutt)
     
-    playbutt=menu.add.button('Play', start_level, float=True,font_name='script')
+    playbutt=menu.add.button('Play', start_level, float=True,font_name=fonter)
     playbutt.add_draw_callback(draw_update_function)
     playbutt.translate(0,-20)
     widgets.append(playbutt)
     
-    tutbutt=menu.add.button('Tutorial', tutorials_main.tutorials_menu, float=True,font_name='script')
+    tutbutt=menu.add.button('Tutorial', tutorials_main.tutorials_menu, float=True,font_name=fonter)
     tutbutt.add_draw_callback(draw_update_function)
     tutbutt.translate(0,90)
     widgets.append(tutbutt)
     
-    quitbutt=menu.add.button('Quit', pygame_menu.events.EXIT, float=True,font_name='script')
+    quitbutt=menu.add.button('Quit', pygame_menu.events.EXIT, float=True,font_name=fonter)
     quitbutt.add_draw_callback(draw_update_function)
     quitbutt.translate(0,200)
     widgets.append(quitbutt)
