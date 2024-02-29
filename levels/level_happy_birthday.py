@@ -53,11 +53,11 @@ def start():
     SCREEN_HEIGHT = pygame.display.get_surface().get_size()[1]
 
     PLAY_LINE_LOCATION = 290
-    DIST_TO_PLAY_LINE = SCREEN_WIDTH - 290
 
     # Variable to keep our main loop running
     running = True
     paused = False
+    completed = True
 
 
 
@@ -90,7 +90,7 @@ def start():
     bg_img = pygame.transform.scale(bg_img,(SCREEN_WIDTH,SCREEN_HEIGHT))
 
 
-    transparent_surface_rendered_once = False
+    # This is the transparent background for the pause menu
     transparent_surface = pygame.Surface((SCREEN_WIDTH -60, SCREEN_HEIGHT - 60), pygame.SRCALPHA)
     transparent_surface.fill((255,255,255, 10))
     pygame.Surface.set_alpha(transparent_surface, 255)
@@ -102,11 +102,6 @@ def start():
     # Create our 'player'
     player = playing_player.Player(top_padding=400)
 
-
-
-    # Create custom events for adding a Note
-    ADDNote = pygame.USEREVENT + 2
-    pygame.time.set_timer(ADDNote, 1000)
     
 
     # Create groups to hold Note sprites, and all sprites
@@ -128,7 +123,7 @@ def start():
     main_menu_button = text_button.TextButton(text="Main Menu", width= 100,height= 50, left_padding= SCREEN_WIDTH/2 - 50, top_padding= SCREEN_HEIGHT/2 +20)
     quit_button = text_button.TextButton(text="Quit", width= 100,height= 50, left_padding= SCREEN_WIDTH/2 - 50, top_padding= SCREEN_HEIGHT/2 + 90)
 
-    # This is the transparent background for the pause menu
+    
 
     tabs_image = pygame.image.load("assets/images/backgrounds/tabs_outline.png").convert()
     tabs_image.set_colorkey((255, 255, 255), RLEACCEL)
@@ -187,6 +182,8 @@ def start():
 
     # Our main loop
     while running:
+        
+
         if paused == True:
             # The control loop for when the game is paused
 
@@ -258,8 +255,9 @@ def start():
                     # Was it the Escape key? If so, pause the loop
                     if event.key == K_ESCAPE:
                         paused = True
+
                     elif event.key in [K_0, K_1,K_2,K_3,K_4,K_5,K_6,K_7,K_8,K_9, K_o]:
-                        # This triggers if the note pressed is one of the valid notes
+                        # This triggers if the note pressed is one of the valid notes for playing
 
                         for curr_note in Notes:
                             # This loops through all the notes on screen
@@ -277,18 +275,8 @@ def start():
                     exit()
 
                 
-
-                # # Should we add a new Note?
-                # elif event.type == ADDNote:
-                #     # Create the new Note, and add it to our sprite groups
-                #     if note_index < (len(song_notes) - 1):
-
-                #         new_Note = song_notes[note_index]
-                #         note_index += 1
-                #         Notes.add(new_Note)
-
-                #         all_sprites.add(new_Note)
-            print( clock.get_fps())
+            # This adds notes every second
+            # This uses the current fps so that you are adding notes accurately
             if frames_since_note >= (clock.get_fps() //1) and (clock.get_fps() > 0.1):
                     frames_since_note = 0
                     
@@ -308,12 +296,8 @@ def start():
             player.update(pressed_keys)
 
 
-
-
             # Update the position of our Notes
             Notes.update()
-
-
 
 
             # Fill the screen with the background image
