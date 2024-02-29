@@ -133,6 +133,9 @@ def start():
     play_line_image = pygame.image.load("assets/images/backgrounds/play_line.png").convert()
     play_line_image.set_colorkey((255, 255, 255), RLEACCEL)
 
+    park_foreground_image = pygame.image.load("assets/images/backgrounds/park_foreground.png").convert()
+    park_foreground_image.set_colorkey((255, 255, 255), RLEACCEL)
+
 
     # Our main loop
     while running:
@@ -255,6 +258,7 @@ def start():
             screen.blit(bg_img,(0,0))
             screen.blit(play_line_image,(0,0))
             screen.blit(tabs_image,(0,0))
+            screen.blit(park_foreground_image, (0,0))
             
              
             # Draw all our sprites
