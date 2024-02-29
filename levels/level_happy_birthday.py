@@ -139,6 +139,37 @@ def start():
     park_foreground_image.set_colorkey((255, 255, 255), RLEACCEL)
 
 
+    note_index = 0
+
+    song_notes = [
+        note.Note(text="O", tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
+        note.Note(text="O", tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
+        note.Note(text="2", tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
+
+        note.Note(text="O", tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
+        note.Note(text="5", tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
+        note.Note(text="4", tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
+
+        note.Note(text="O", tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
+        note.Note(text="O", tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
+        note.Note(text="2", tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
+
+        note.Note(text="O", tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
+        note.Note(text="7", tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
+        note.Note(text="5", tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
+
+        note.Note(text="O", tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
+        note.Note(text="O", tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
+        note.Note(text="9", tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
+
+        note.Note(text="5", tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
+        note.Note(text="4", tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
+        note.Note(text="4", tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
+
+        note.Note(text="2", tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
+        ]
+
+
     # Our main loop
     while running:
         if paused == True:
@@ -204,7 +235,10 @@ def start():
 
                             if abs(PLAY_LINE_LOCATION - curr_note.get_x_location()) < 20:
                                 # This triggers if the note is the one on screen
-                                print("Pressed on time")
+                                if curr_note.check_correct_key(event.key):
+                                    print("Correct")
+                                else:
+                                    print("Incorrect")
                             
 
                 # Did the user click the window close button? If so, exit
@@ -215,28 +249,14 @@ def start():
                 # Should we add a new Note?
                 elif event.type == ADDNote:
                     # Create the new Note, and add it to our sprite groups
-                    new_Note1 = note.Note(text="O", tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT)
-                    # new_Note2 = note.Note(text="O", tab_line=2, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT)
-                    # new_Note3 = note.Note(text="O", tab_line=3, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT)
-                    # new_Note4 = note.Note(text="O", tab_line=4, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT)
-                    # new_Note5 = note.Note(text="O", tab_line=5, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT)
-                    # new_Note6 = note.Note(text="O", tab_line=6, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT)
+                    if note_index < (len(song_notes) - 1):
+
+                        new_Note = song_notes[note_index]
+                        note_index += 1
+                        Notes.add(new_Note)
+
+                        all_sprites.add(new_Note)
                    
-                    
-                    Notes.add(new_Note1)
-                    # Notes.add(new_Note2)
-                    # Notes.add(new_Note3)
-                    # Notes.add(new_Note4)
-                    # Notes.add(new_Note5)
-                    # Notes.add(new_Note6)
-
-                    all_sprites.add(new_Note1)
-                    # all_sprites.add(new_Note2)
-                    # all_sprites.add(new_Note3)
-                    # all_sprites.add(new_Note4)
-                    # all_sprites.add(new_Note5)
-                    # all_sprites.add(new_Note6)
-
 
 
             # Get the set of keys pressed and check for user input
