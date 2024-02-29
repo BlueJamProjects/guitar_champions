@@ -57,7 +57,7 @@ def start():
     # Variable to keep our main loop running
     running = True
     paused = False
-    completed = True
+    completed = False
 
 
 
@@ -137,6 +137,7 @@ def start():
 
     # Variables to keep track of the notes of the song
     note_index = 0
+ 
 
     song_notes = [
         note.Note(text="O", tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
@@ -178,144 +179,170 @@ def start():
         note.Note(text="7", tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
         note.Note(text="5", tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
         ]
+    
+    correctly_played_notes = []
+    
 
 
     # Our main loop
     while running:
-        
-
-        if paused == True:
-            # The control loop for when the game is paused
-
-            # pygame.time.wait()
-            pygame.mixer.music.pause()
-            for event in pygame.event.get():
-                # Did the user hit a key?
-                if event.type == KEYDOWN:
-                    # Was it the Escape key? If so, stop the loop
-                    if event.key == K_ESCAPE:
-                        # running = False
-                        pygame.mixer.music.unpause()
-                        paused = False
-
-                # Did the user click the window close button? If so, exit
-                elif event.type == QUIT:
-                    exit()
+        if completed == True:
+        #    What should display if the game is over
             
-                # Here we check for hover events 
-                if event.type==pygame.MOUSEMOTION:
-                    resume_button.on_hover()
-                    main_menu_button.on_hover()
-                    quit_button.on_hover()
-                   
-                # Here we check for clicks events 
-                if event.type==pygame.MOUSEBUTTONDOWN:
-                    if (resume_button.is_pressed() == True):
-                        paused = False
-                        pygame.mixer.music.unpause()
+            total_real_notes = 0
+            for my_note in song_notes:
+                if my_note.text == "":
+                    pass
+                else:
+                    total_real_notes +=1
 
-                    elif(main_menu_button.is_pressed() == True):
-                        running = False
+            total_score = len(correctly_played_notes)
 
-                    elif(quit_button.is_pressed() == True):
+            print("You got :" + str(total_score))
+
+            pygame.mixer.music.stop()
+            print("Level Completed")
+            return 
+        else:
+
+            if note_index >= (len(song_notes) - 1):
+                if len(Notes) == 0:
+                    completed = True
+
+
+            if paused == True:
+                # The control loop for when the game is paused
+
+                # pygame.time.wait()
+                pygame.mixer.music.pause()
+                for event in pygame.event.get():
+                    # Did the user hit a key?
+                    if event.type == KEYDOWN:
+                        # Was it the Escape key? If so, stop the loop
+                        if event.key == K_ESCAPE:
+                            # running = False
+                            pygame.mixer.music.unpause()
+                            paused = False
+
+                    # Did the user click the window close button? If so, exit
+                    elif event.type == QUIT:
+                        exit()
+
+                    # Here we check for hover events 
+                    if event.type==pygame.MOUSEMOTION:
+                        resume_button.on_hover()
+                        main_menu_button.on_hover()
+                        quit_button.on_hover()
+
+                    # Here we check for clicks events 
+                    if event.type==pygame.MOUSEBUTTONDOWN:
+                        if (resume_button.is_pressed() == True):
+                            paused = False
+                            pygame.mixer.music.unpause()
+
+                        elif(main_menu_button.is_pressed() == True):
+                            running = False
+
+                        elif(quit_button.is_pressed() == True):
+                            exit()
+
+
+
+
+
+
+
+
+                # This visually updates the buttons on the pause screen
+                screen.blit(resume_button.render, resume_button.button_position)
+                screen.blit(main_menu_button.render, main_menu_button.button_position)
+                screen.blit(quit_button.render, quit_button.button_position)
+                screen.blit(transparent_surface, (30, 30))
+
+                # This is the transparent background for the pause screen
+                if transparent_surface_rendered_once == False:
+
+                    transparent_surface_rendered_once = True
+
+                pygame.display.update()
+                clock.tick_busy_loop(30)
+
+    
+
+            else:
+                transparent_surface_rendered_once = False
+
+
+
+                # Look at every event in the queue
+                for event in pygame.event.get():
+                    # Did the user hit a key?
+                    if event.type == KEYDOWN:
+                        # Was it the Escape key? If so, pause the loop
+                        if event.key == K_ESCAPE:
+                            paused = True
+
+                        elif event.key in [K_0, K_1,K_2,K_3,K_4,K_5,K_6,K_7,K_8,K_9, K_o]:
+                            # This triggers if the note pressed is one of the valid notes for playing
+
+                            for curr_note in Notes:
+                                # This loops through all the notes on screen
+
+                                if abs(PLAY_LINE_LOCATION - curr_note.get_x_location()) < 20:
+                                    # This triggers if the note is the one on screen
+                                    if curr_note.check_correct_key(event.key):
+                                        print("Correct note played")
+                                        correctly_played_notes.append(curr_note)
+                                    else:
+                                        print("Incorrect note played")
+
+
+                    # Did the user click the window close button? If so, exit
+                    elif event.type == QUIT:
                         exit()
 
 
+                # This adds notes every second
+                # This uses the current fps so that you are adding notes accurately
+                if frames_since_note >= (clock.get_fps() //1) and (clock.get_fps() > 0.1):
+                        frames_since_note = 0
 
-           
-            
-             
-           
+                        # Create the new Note, and add it to our sprite groups
+                        if note_index < (len(song_notes) - 1):
 
-            # This visually updates the buttons on the pause screen
-            screen.blit(resume_button.render, resume_button.button_position)
-            screen.blit(main_menu_button.render, main_menu_button.button_position)
-            screen.blit(quit_button.render, quit_button.button_position)
-            screen.blit(transparent_surface, (30, 30))
+                            new_Note = song_notes[note_index]
+                            note_index += 1
+                            Notes.add(new_Note)
 
-            # This is the transparent background for the pause screen
-            if transparent_surface_rendered_once == False:
-                
-                transparent_surface_rendered_once = True
+                            all_sprites.add(new_Note)
+                       
+                frames_since_note += 1
 
-            pygame.display.update()
-            clock.tick_busy_loop(30)
-            
-		
-    
-        else:
-            transparent_surface_rendered_once = False
+                # Get the set of keys pressed and check for user input
+                pressed_keys = pygame.key.get_pressed()
+                player.update(pressed_keys)
 
 
-
-            # Look at every event in the queue
-            for event in pygame.event.get():
-                # Did the user hit a key?
-                if event.type == KEYDOWN:
-                    # Was it the Escape key? If so, pause the loop
-                    if event.key == K_ESCAPE:
-                        paused = True
-
-                    elif event.key in [K_0, K_1,K_2,K_3,K_4,K_5,K_6,K_7,K_8,K_9, K_o]:
-                        # This triggers if the note pressed is one of the valid notes for playing
-
-                        for curr_note in Notes:
-                            # This loops through all the notes on screen
-
-                            if abs(PLAY_LINE_LOCATION - curr_note.get_x_location()) < 20:
-                                # This triggers if the note is the one on screen
-                                if curr_note.check_correct_key(event.key):
-                                    print("Correct")
-                                else:
-                                    print("Incorrect")
-                            
-
-                # Did the user click the window close button? If so, exit
-                elif event.type == QUIT:
-                    exit()
-
-                
-            # This adds notes every second
-            # This uses the current fps so that you are adding notes accurately
-            if frames_since_note >= (clock.get_fps() //1) and (clock.get_fps() > 0.1):
-                    frames_since_note = 0
-                    
-                    # Create the new Note, and add it to our sprite groups
-                    if note_index < (len(song_notes) - 1):
-
-                        new_Note = song_notes[note_index]
-                        note_index += 1
-                        Notes.add(new_Note)
-
-                        all_sprites.add(new_Note)
-
-            frames_since_note += 1
-
-            # Get the set of keys pressed and check for user input
-            pressed_keys = pygame.key.get_pressed()
-            player.update(pressed_keys)
+                # Update the position of our Notes
+                Notes.update()
 
 
-            # Update the position of our Notes
-            Notes.update()
+                # Fill the screen with the background image
+                screen.blit(bg_img,(0,0))
+                screen.blit(play_line_image,(0,0))
+                screen.blit(tabs_image,(0,0))
+                screen.blit(park_foreground_image, (0,0))
 
 
-            # Fill the screen with the background image
-            screen.blit(bg_img,(0,0))
-            screen.blit(play_line_image,(0,0))
-            screen.blit(tabs_image,(0,0))
-            screen.blit(park_foreground_image, (0,0))
-            
-             
-            # Draw all our sprites
-            for entity in all_sprites:
-                screen.blit(entity.surf, entity.rect)
+                # Draw all our sprites
+                for entity in all_sprites:
+                    screen.blit(entity.surf, entity.rect)
 
 
-            # Flip everything to the display
-            pygame.display.flip()
-            # Ensure we maintain a 30 frames per second rate
-            clock.tick_busy_loop(30)
+                # Flip everything to the display
+                pygame.display.flip()
+                # Ensure we maintain a 30 frames per second rate
+                clock.tick_busy_loop(30)
 
 
 

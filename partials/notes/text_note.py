@@ -22,6 +22,8 @@ class Note(pygame.sprite.Sprite):
         # Initialize Pygame
         pygame.init()
 
+        self.played_correctly = False
+
         # Set up font 
         self.font = pygame.font.SysFont(font_name, font_size)
         self.text = text
