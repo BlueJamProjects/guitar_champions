@@ -62,8 +62,6 @@ def start():
 
 
 
-
-
     # Setup for sounds, defaults are good
     pygame.mixer.init()
 
@@ -139,6 +137,7 @@ def start():
     park_foreground_image.set_colorkey((255, 255, 255), RLEACCEL)
 
 
+    # Variables to keep track of the notes of the song
     note_index = 0
 
     song_notes = [
@@ -174,6 +173,8 @@ def start():
     while running:
         if paused == True:
             # The control loop for when the game is paused
+
+            # pygame.time.wait()
             pygame.mixer.music.pause()
             for event in pygame.event.get():
                 # Did the user hit a key?
