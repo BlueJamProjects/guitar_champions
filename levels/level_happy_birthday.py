@@ -77,6 +77,8 @@ def start():
     # Setup the clock for a decent framerate
     clock = pygame.time.Clock()
 
+    frames_since_note = 0
+
     
 
 
@@ -88,9 +90,10 @@ def start():
     bg_img = pygame.transform.scale(bg_img,(SCREEN_WIDTH,SCREEN_HEIGHT))
 
 
-    transparent_surface = pygame.Surface((SCREEN_WIDTH, SCREEN_HEIGHT - 200), pygame.SRCALPHA)
+    transparent_surface_rendered_once = False
+    transparent_surface = pygame.Surface((SCREEN_WIDTH -60, SCREEN_HEIGHT - 60), pygame.SRCALPHA)
     transparent_surface.fill((255,255,255, 10))
-    pygame.Surface.set_alpha(transparent_surface, 140)
+    pygame.Surface.set_alpha(transparent_surface, 255)
 
  
 
@@ -207,20 +210,34 @@ def start():
                     elif(quit_button.is_pressed() == True):
                         exit()
 
+
+
+           
+            
+             
+           
+
             # This visually updates the buttons on the pause screen
             screen.blit(resume_button.render, resume_button.button_position)
             screen.blit(main_menu_button.render, main_menu_button.button_position)
             screen.blit(quit_button.render, quit_button.button_position)
-
-            # This is the transparent background for the pause screen
             screen.blit(transparent_surface, (30, 30))
 
+            # This is the transparent background for the pause screen
+            if transparent_surface_rendered_once == False:
+                
+                transparent_surface_rendered_once = True
+
             pygame.display.update()
+            clock.tick_busy_loop(30)
             
 		
     
         else:
-            
+            transparent_surface_rendered_once = False
+
+
+
             # Look at every event in the queue
             for event in pygame.event.get():
                 # Did the user hit a key?
@@ -246,9 +263,22 @@ def start():
                 elif event.type == QUIT:
                     exit()
 
+                
 
-                # Should we add a new Note?
-                elif event.type == ADDNote:
+                # # Should we add a new Note?
+                # elif event.type == ADDNote:
+                #     # Create the new Note, and add it to our sprite groups
+                #     if note_index < (len(song_notes) - 1):
+
+                #         new_Note = song_notes[note_index]
+                #         note_index += 1
+                #         Notes.add(new_Note)
+
+                #         all_sprites.add(new_Note)
+            print( clock.get_fps())
+            if frames_since_note >= (clock.get_fps() //1) and (clock.get_fps() > 0.1):
+                    frames_since_note = 0
+                    
                     # Create the new Note, and add it to our sprite groups
                     if note_index < (len(song_notes) - 1):
 
@@ -257,8 +287,8 @@ def start():
                         Notes.add(new_Note)
 
                         all_sprites.add(new_Note)
-                   
 
+            frames_since_note += 1
 
             # Get the set of keys pressed and check for user input
             pressed_keys = pygame.key.get_pressed()
@@ -288,7 +318,7 @@ def start():
             # Flip everything to the display
             pygame.display.flip()
             # Ensure we maintain a 30 frames per second rate
-            clock.tick(30)
+            clock.tick_busy_loop(30)
 
 
 
