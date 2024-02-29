@@ -24,6 +24,7 @@ from pygame.locals import (
     K_e,
     K_f,
     K_g,
+    K_o,
     K_0,
     K_1,
     K_2,
@@ -52,6 +53,7 @@ def start():
     SCREEN_HEIGHT = pygame.display.get_surface().get_size()[1]
 
     PLAY_LINE_LOCATION = 290
+    DIST_TO_PLAY_LINE = SCREEN_WIDTH - 290
 
     # Variable to keep our main loop running
     running = True
@@ -194,20 +196,16 @@ def start():
                     # Was it the Escape key? If so, pause the loop
                     if event.key == K_ESCAPE:
                         paused = True
-                    elif event.key == K_a:
-                        print("Pressed A")
-                    elif event.key == K_b:
-                        print("Pressed B")
-                    elif event.key == K_c:
-                        print("Pressed C")
-                    elif event.key == K_d:
-                        print("Pressed D")
-                    elif event.key == K_e:
-                        print("Pressed E")
-                    elif event.key == K_f:
-                        print("Pressed F")
-                    elif event.key == K_g:
-                        print("Pressed G")
+                    elif event.key in [K_0, K_1,K_2,K_3,K_4,K_5,K_6,K_7,K_8,K_9, K_o]:
+                        # This triggers if the note pressed is one of the valid notes
+
+                        for curr_note in Notes:
+                            # This loops through all the notes on screen
+
+                            if abs(PLAY_LINE_LOCATION - curr_note.get_x_location()) < 20:
+                                # This triggers if the note is the one on screen
+                                print("Pressed on time")
+                            
 
                 # Did the user click the window close button? If so, exit
                 elif event.type == QUIT:
@@ -218,26 +216,26 @@ def start():
                 elif event.type == ADDNote:
                     # Create the new Note, and add it to our sprite groups
                     new_Note1 = note.Note(text="O", tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT)
-                    new_Note2 = note.Note(text="O", tab_line=2, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT)
-                    new_Note3 = note.Note(text="O", tab_line=3, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT)
-                    new_Note4 = note.Note(text="O", tab_line=4, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT)
-                    new_Note5 = note.Note(text="O", tab_line=5, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT)
-                    new_Note6 = note.Note(text="O", tab_line=6, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT)
+                    # new_Note2 = note.Note(text="O", tab_line=2, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT)
+                    # new_Note3 = note.Note(text="O", tab_line=3, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT)
+                    # new_Note4 = note.Note(text="O", tab_line=4, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT)
+                    # new_Note5 = note.Note(text="O", tab_line=5, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT)
+                    # new_Note6 = note.Note(text="O", tab_line=6, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT)
                    
                     
                     Notes.add(new_Note1)
-                    Notes.add(new_Note2)
-                    Notes.add(new_Note3)
-                    Notes.add(new_Note4)
-                    Notes.add(new_Note5)
-                    Notes.add(new_Note6)
+                    # Notes.add(new_Note2)
+                    # Notes.add(new_Note3)
+                    # Notes.add(new_Note4)
+                    # Notes.add(new_Note5)
+                    # Notes.add(new_Note6)
 
                     all_sprites.add(new_Note1)
-                    all_sprites.add(new_Note2)
-                    all_sprites.add(new_Note3)
-                    all_sprites.add(new_Note4)
-                    all_sprites.add(new_Note5)
-                    all_sprites.add(new_Note6)
+                    # all_sprites.add(new_Note2)
+                    # all_sprites.add(new_Note3)
+                    # all_sprites.add(new_Note4)
+                    # all_sprites.add(new_Note5)
+                    # all_sprites.add(new_Note6)
 
 
 
