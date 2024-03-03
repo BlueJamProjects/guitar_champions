@@ -95,6 +95,11 @@ def start():
     transparent_surface.fill((255,255,255, 10))
     pygame.Surface.set_alpha(transparent_surface, 255)
 
+
+    # This is the background for the final screen
+    score_screen_background = pygame.image.load('assets/images/backgrounds/orange_background.jpg').convert()
+    score_screen_background.set_colorkey((255, 255, 255), RLEACCEL)
+
  
 
 
@@ -124,21 +129,24 @@ def start():
     quit_button = text_button.TextButton(text="Quit", width= 100,height= 50, left_padding= SCREEN_WIDTH/2 - 50, top_padding= SCREEN_HEIGHT/2 + 90)
 
     
-
+    # the background image of the tabs
     tabs_image = pygame.image.load("assets/images/backgrounds/tabs_outline.png").convert()
     tabs_image.set_colorkey((255, 255, 255), RLEACCEL)
 
+    # the image of the line where the ntoes should be when played
     play_line_image = pygame.image.load("assets/images/backgrounds/play_line.png").convert()
     play_line_image.set_colorkey((255, 255, 255), RLEACCEL)
 
-    park_foreground_image = pygame.image.load("assets/images/backgrounds/park_foreground.png").convert()
-    park_foreground_image.set_colorkey((255, 255, 255), RLEACCEL)
+    # a foreground image for the notes to go behind
+    foreground_image = pygame.image.load("assets/images/backgrounds/park_foreground.png").convert()
+    foreground_image.set_colorkey((255, 255, 255), RLEACCEL)
 
 
     # Variables to keep track of the notes of the song
     note_index = 0
  
 
+    # This is the array with the song's note information
     song_notes = [
         note.Note(text="O", tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
         note.Note(text="O", tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
@@ -198,13 +206,17 @@ def start():
 
             total_score = len(correctly_played_notes)
 
-            print("You got :" + str(total_score))
+            print("You got :" + str(total_score) +" out of " + str(total_real_notes))
+
+            # screen.blit(score_screen_background,(0,0))
+            # clock.tick_busy_loop(30)
 
             pygame.mixer.music.stop()
             print("Level Completed")
             return 
         else:
 
+            # If we have started going through the notes and deleted the last one then the song is complete
             if note_index >= (len(song_notes) - 1):
                 if len(Notes) == 0:
                     completed = True
@@ -213,14 +225,14 @@ def start():
             if paused == True:
                 # The control loop for when the game is paused
 
-                # pygame.time.wait()
                 pygame.mixer.music.pause()
+
                 for event in pygame.event.get():
+
                     # Did the user hit a key?
                     if event.type == KEYDOWN:
                         # Was it the Escape key? If so, stop the loop
                         if event.key == K_ESCAPE:
-                            # running = False
                             pygame.mixer.music.unpause()
                             paused = False
 
@@ -257,12 +269,17 @@ def start():
                 screen.blit(resume_button.render, resume_button.button_position)
                 screen.blit(main_menu_button.render, main_menu_button.button_position)
                 screen.blit(quit_button.render, quit_button.button_position)
-                screen.blit(transparent_surface, (30, 30))
+
+                #    TODO Make the transparent surface only render once on paused
 
                 # This is the transparent background for the pause screen
-                if transparent_surface_rendered_once == False:
+                # screen.blit(transparent_surface, (30, 30))
 
-                    transparent_surface_rendered_once = True
+               
+            
+                # if transparent_surface_rendered_once == False:
+
+                #     transparent_surface_rendered_once = True
 
                 pygame.display.update()
                 clock.tick_busy_loop(30)
@@ -270,14 +287,17 @@ def start():
     
 
             else:
+                #    TODO Make the transparent surface only render once on paused
                 transparent_surface_rendered_once = False
 
 
 
                 # Look at every event in the queue
                 for event in pygame.event.get():
+
                     # Did the user hit a key?
                     if event.type == KEYDOWN:
+                        
                         # Was it the Escape key? If so, pause the loop
                         if event.key == K_ESCAPE:
                             paused = True
@@ -290,10 +310,14 @@ def start():
 
                                 if abs(PLAY_LINE_LOCATION - curr_note.get_x_location()) < 20:
                                     # This triggers if the note is the one on screen
+
+                                    # This is a function from the note that we check to see if it's key was the one pressed
                                     if curr_note.check_correct_key(event.key):
                                         print("Correct note played")
                                         correctly_played_notes.append(curr_note)
+
                                     else:
+                                        # If a key was pressed on time but was incorrect
                                         print("Incorrect note played")
 
 
@@ -304,11 +328,11 @@ def start():
 
                 # This adds notes every second
                 # This uses the current fps so that you are adding notes accurately
-                if frames_since_note >= (clock.get_fps() //1) and (clock.get_fps() > 0.1):
+                if frames_since_note >= (clock.get_fps() // 1) and (clock.get_fps() > 0.1):
                         frames_since_note = 0
 
                         # Create the new Note, and add it to our sprite groups
-                        if note_index < (len(song_notes) - 1):
+                        if note_index < (len(song_notes)):
 
                             new_Note = song_notes[note_index]
                             note_index += 1
@@ -331,7 +355,7 @@ def start():
                 screen.blit(bg_img,(0,0))
                 screen.blit(play_line_image,(0,0))
                 screen.blit(tabs_image,(0,0))
-                screen.blit(park_foreground_image, (0,0))
+                screen.blit(foreground_image, (0,0))
 
 
                 # Draw all our sprites
@@ -341,6 +365,7 @@ def start():
 
                 # Flip everything to the display
                 pygame.display.flip()
+
                 # Ensure we maintain a 30 frames per second rate
                 clock.tick_busy_loop(30)
 
