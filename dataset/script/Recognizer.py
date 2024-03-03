@@ -5,6 +5,7 @@ import numpy as np
 from scipy.signal import find_peaks, butter, lfilter
 from collections import Counter
 import matplotlib.pyplot as plt
+from music21 import note
 
 class recognizer: 
     
@@ -156,24 +157,27 @@ class recognizer:
                 print("string: ", self.position[i][0], " fret: ", self.position[i][1])
                 # print("avg_centroid: ", avg_centroid)     
         
-        print(f"There are totally {len(self.notes)} notes be detected")
+        print(f"There are totally {len(self.notes)} notes detected")
         print(f"Accuracy Rate: {(score / len(self.notes)) * 100}%")
         
         return score / len(self.notes)
 
     def multiple_notes_tester(self):
         multi_midi = []
+        multi_pitch = []
         r = self.multiple_note_predictor(60/self.bpm)
         print(len(r))
 
         for i in r:
             if i:
                 midi_counts = Counter(i)
-                
                 most_common_midi = midi_counts.most_common(1)[0][0]
-                multi_midi.append(round(most_common_midi))
-
-
+                midi_number = round(most_common_midi)
+                pitch_name = midi_number_to_pitch(midi_number)
+                
+                multi_midi.append(midi_number)
+                multi_pitch.append(pitch_name)
+                
 
         # Illustate the midi numbers
         
@@ -186,16 +190,19 @@ class recognizer:
 
         # Overall Result
         print(f"There are {len(r)} notes")
-        print("Total time: ", self.total_time)   
+        print(f"Total time: {round(self.total_time)}s", )   
         print("Multi MIDI List: ", multi_midi)
+        print("Multi Pitch List: ", multi_pitch)
         
     def single_note_tester(self):
         midi_list = self.single_note_predictor(self.audio, self.sr)
         midi_counts = Counter(midi_list)
-        print(f"The midi number is {round(midi_counts.most_common(1)[0][0])}")          
+        midi_number = round(midi_counts.most_common(1)[0][0])
+        pitch_name = midi_number_to_pitch(midi_number)
+        print(f"The midi number is {midi_number}")          
+        print(f"MIDI number {midi_number} is {pitch_name}")
         
         # Illustate the midi numbers
-        
         plt.figure(figsize=(14, 6))
         plt.plot(midi_list, marker='o', linestyle='-', markersize=4)
         plt.ylabel('MIDI Number')
@@ -203,4 +210,8 @@ class recognizer:
         plt.title('MIDI Numbers Over Time')
         plt.show()
     
+def midi_number_to_pitch(midi_number):
+    n = note.Note()
+    n.pitch.midi = midi_number
+    return n.pitch.nameWithOctave
     
