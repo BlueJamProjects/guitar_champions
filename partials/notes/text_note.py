@@ -22,6 +22,11 @@ class Note(pygame.sprite.Sprite):
         # Initialize Pygame
         pygame.init()
 
+        self.was_pressed = False
+
+         # this is a multiplier that is used to figure out how many beats later the next note should come
+        # after each note is created this is dynamically updated by calling a function on that note
+        # 1.0 means that the next note plays one beat later, 2.0 is 2 beats later while 0.5 would be half a beat later
         self.time_to_next_note = time_to_next_note
 
         # Set up font 
@@ -46,40 +51,41 @@ class Note(pygame.sprite.Sprite):
         "7": K_7,
         "8": K_8,
         "9": K_9,
-
         }
 
-
+        # the y value the note should start from
         starting_y = 0
 
+        # the y value the first tab line starts from
         FIRST_HEIGHT = 30
-        NOTE_OFFSET = 66
+
+        # how far apart each tab line is 
+        TAB_OFFSET = 66
 
         # This will assign the note a y height based off what tab line it should be on
         if tab_line== 1:
             starting_y = FIRST_HEIGHT
         elif tab_line== 2:
-            starting_y = FIRST_HEIGHT + NOTE_OFFSET * 1
+            starting_y = FIRST_HEIGHT + TAB_OFFSET * 1
         elif tab_line== 3:
-            starting_y = FIRST_HEIGHT + NOTE_OFFSET * 2
+            starting_y = FIRST_HEIGHT + TAB_OFFSET * 2
         elif tab_line== 4:
-            starting_y = FIRST_HEIGHT + NOTE_OFFSET * 3
+            starting_y = FIRST_HEIGHT + TAB_OFFSET * 3
         elif tab_line== 5:
-            starting_y = FIRST_HEIGHT + NOTE_OFFSET * 4
+            starting_y = FIRST_HEIGHT + TAB_OFFSET * 4
         elif tab_line== 6:
-            starting_y = FIRST_HEIGHT + NOTE_OFFSET * 5
+            starting_y = FIRST_HEIGHT + TAB_OFFSET * 5
             
         # This will start it centered on the right tab line
         self.rect = self.surf.get_rect(
             center=(
                 Screen_Width-10, # I added this offset of 10 to make it match up with the metronome time
                 starting_y
-                
             )
         )
 
     # Move the Note based on a constant speed
-    # The move number was determined with the following :
+    # The move number (the -5.666666) was determined with the following :
         # Screen distance to the play line / 90 frames
         # the 90 frames are so that it takes 3 seconds
         # the 3 seconds were chosen as the song will start on the 4th metronome beat
@@ -97,12 +103,17 @@ class Note(pygame.sprite.Sprite):
     def get_x_location(self):
         return self.rect.right
     
+    # returns true if the correct key for this button was pressed
     def check_correct_key(self, pressed_key):
-        if pressed_key == self.keys_dict[self.text]:
-            return True
-        else: 
-            return False
-        
+        # checks to see if this note has already been pressed
+        if self.was_pressed == False:
 
+            # checks if the pressed key matches this note
+            if pressed_key == self.keys_dict[self.text]:
+                return True
+            else: 
+                return False
+        
+    # returns the time to the next note
     def get_time_to_next_note(self):
         return self.time_to_next_note

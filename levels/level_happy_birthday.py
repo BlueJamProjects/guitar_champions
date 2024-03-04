@@ -77,33 +77,16 @@ def start():
     # Setup the clock for a decent framerate
     clock = pygame.time.Clock()
 
+    # this keeps track of how many frames have occured since the last note was sent out
+    # it is used later for keeping the notes sending at a regular rate
     frames_since_note = 0
 
     
+    # Load and play our background music
+    pygame.mixer.music.load("assets/sounds/background-music/metro-34-60bpm.mp3")
+    pygame.mixer.music.play(loops=-1)
 
 
-
-    # Create the screen object
-    # The size is determined by the constant SCREEN_WIDTH and SCREEN_HEIGHT
-    screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
-    bg_img = pygame.image.load('assets/images/backgrounds/park.jpeg')
-    bg_img = pygame.transform.scale(bg_img,(SCREEN_WIDTH,SCREEN_HEIGHT))
-
-
-    # This is the transparent background for the pause menu
-    transparent_surface = pygame.Surface((SCREEN_WIDTH -60, SCREEN_HEIGHT - 60), pygame.SRCALPHA)
-    transparent_surface.fill((255,255,255, 10))
-    pygame.Surface.set_alpha(transparent_surface, 255)
-
-
-    # This is the background for the final screen
-    score_screen_background = pygame.image.load('assets/images/backgrounds/orange_background.jpg').convert()
-    score_screen_background.set_colorkey((255, 255, 255), RLEACCEL)
-
- 
-
-
-   
     # Create our 'player'
     player = playing_player.Player(top_padding=400)
 
@@ -118,17 +101,21 @@ def start():
 
 
 
-    # Load and play our background music
-    pygame.mixer.music.load("assets/sounds/background-music/metro-34-60bpm.mp3")
-    pygame.mixer.music.play(loops=-1)
-    
-    
-    # These are the buttons for the pause menu
-    resume_button = text_button.TextButton(text="Resume", width= 100,height= 50, left_padding= SCREEN_WIDTH/2 - 50, top_padding= SCREEN_HEIGHT/2 - 50)
-    main_menu_button = text_button.TextButton(text="Main Menu", width= 100,height= 50, left_padding= SCREEN_WIDTH/2 - 50, top_padding= SCREEN_HEIGHT/2 +20)
-    quit_button = text_button.TextButton(text="Quit", width= 100,height= 50, left_padding= SCREEN_WIDTH/2 - 50, top_padding= SCREEN_HEIGHT/2 + 90)
 
-    
+    # Create the screen object
+    # The size is determined by the constant SCREEN_WIDTH and SCREEN_HEIGHT
+    screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+
+
+    # Create the background image for the level
+    bg_img = pygame.image.load('assets/images/backgrounds/park.jpeg')
+    bg_img = pygame.transform.scale(bg_img,(SCREEN_WIDTH,SCREEN_HEIGHT))
+
+    # a foreground image for the notes to go behind
+    fg_image = pygame.image.load("assets/images/backgrounds/park_foreground.png").convert()
+    fg_image.set_colorkey((255, 255, 255), RLEACCEL)
+
+
     # the background image of the tabs
     tabs_image = pygame.image.load("assets/images/backgrounds/tabs_outline.png").convert()
     tabs_image.set_colorkey((255, 255, 255), RLEACCEL)
@@ -137,14 +124,37 @@ def start():
     play_line_image = pygame.image.load("assets/images/backgrounds/play_line.png").convert()
     play_line_image.set_colorkey((255, 255, 255), RLEACCEL)
 
-    # a foreground image for the notes to go behind
-    foreground_image = pygame.image.load("assets/images/backgrounds/park_foreground.png").convert()
-    foreground_image.set_colorkey((255, 255, 255), RLEACCEL)
+    
+
+
+    # This is the background for the final screen
+    score_screen_background = pygame.image.load('assets/images/backgrounds/orange_background.jpg').convert()
+    score_screen_background.set_colorkey((255, 255, 255), RLEACCEL)
+
+    complete_level_button = text_button.TextButton(text="Complete", width= 100,height= 50, left_padding= SCREEN_WIDTH/2 - 50, top_padding= SCREEN_HEIGHT/2 + 90)
+
+    
+
+    # This is the transparent background for the pause menu
+    transparent_surface = pygame.Surface((SCREEN_WIDTH -60, SCREEN_HEIGHT - 60), pygame.SRCALPHA)
+    transparent_surface.fill((255,255,255, 10))
+    pygame.Surface.set_alpha(transparent_surface, 255)
+    
+    # These are the buttons for the pause menu
+    resume_button = text_button.TextButton(text="Resume", width= 100,height= 50, left_padding= SCREEN_WIDTH/2 - 50, top_padding= SCREEN_HEIGHT/2 - 50)
+    main_menu_button = text_button.TextButton(text="Main Menu", width= 100,height= 50, left_padding= SCREEN_WIDTH/2 - 50, top_padding= SCREEN_HEIGHT/2 +20)
+    quit_button = text_button.TextButton(text="Quit", width= 100,height= 50, left_padding= SCREEN_WIDTH/2 - 50, top_padding= SCREEN_HEIGHT/2 + 90)
+
+    
+    
 
 
     # Variables to keep track of the notes of the song
     note_index = 0
 
+    # this is a multiplier that is used to figure out how many beats later the next note should come
+    # after each note is created this is dynamically updated by calling a function on that note
+    # 1.0 means that the next note plays one beat later, 2.0 is 2 beats later while 0.5 would be half a beat later
     time_to_next_note = 1.0
  
 
@@ -154,63 +164,90 @@ def start():
         note.Note(text="O", time_to_next_note=0.5, tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
         note.Note(text="2", tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
 
-        note.Note(text="O", tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
-        note.Note(text="5", tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
-        note.Note(text="4",  time_to_next_note=2.0, tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
+        # note.Note(text="O", tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
+        # note.Note(text="5", tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
+        # note.Note(text="4",  time_to_next_note=2.0, tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
 
-        note.Note(text="O", time_to_next_note=0.5, tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
-        note.Note(text="O", time_to_next_note=0.5, tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
-        note.Note(text="2", tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
+        # note.Note(text="O", time_to_next_note=0.5, tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
+        # note.Note(text="O", time_to_next_note=0.5, tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
+        # note.Note(text="2", tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
        
-        note.Note(text="O", tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
-        note.Note(text="7", tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
-        note.Note(text="5", time_to_next_note=2.0, tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
+        # note.Note(text="O", tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
+        # note.Note(text="7", tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
+        # note.Note(text="5", time_to_next_note=2.0, tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
 
 
-        note.Note(text="O", time_to_next_note=0.5, tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
-        note.Note(text="O", time_to_next_note=0.5, tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
-        note.Note(text="9", tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
+        # note.Note(text="O", time_to_next_note=0.5, tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
+        # note.Note(text="O", time_to_next_note=0.5, tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
+        # note.Note(text="9", tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
 
-        note.Note(text="5", tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
-        note.Note(text="4", tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
-        note.Note(text="4", tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
-        note.Note(text="2", time_to_next_note=2.0, tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
+        # note.Note(text="5", tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
+        # note.Note(text="4", tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
+        # note.Note(text="4", tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
+        # note.Note(text="2", time_to_next_note=2.0, tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
 
-        note.Note(text="10", time_to_next_note=0.5, tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
-        note.Note(text="10", time_to_next_note=0.5, tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
-        note.Note(text="9", tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
+        # note.Note(text="10", time_to_next_note=0.5, tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
+        # note.Note(text="10", time_to_next_note=0.5, tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
+        # note.Note(text="9", tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
 
-        note.Note(text="5", tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
-        note.Note(text="7", tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
-        note.Note(text="5", tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
+        # note.Note(text="5", tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
+        # note.Note(text="7", tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
+        # note.Note(text="5", tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
         ]
     
+    # This keeps track of all the notes the player correctly hit
+    # It is used for scoring at the end of the game
     correctly_played_notes = []
     
-
 
     # Our main loop
     while running:
         if completed == True:
         #    What should display if the game is over
             
-            total_real_notes = 0
-            for my_note in song_notes:
-                if my_note.text == "":
-                    pass
-                else:
-                    total_real_notes +=1
+            pygame.mixer.music.stop()
 
             total_score = len(correctly_played_notes)
 
-            print("You got :" + str(total_score) +" out of " + str(total_real_notes))
+            print("You got :" + str(total_score) +" out of " + str(len(song_notes)))
 
-            # screen.blit(score_screen_background,(0,0))
-            # clock.tick_busy_loop(30)
 
-            pygame.mixer.music.stop()
+            for event in pygame.event.get():
+
+                    # Did the user hit a key?
+                    if event.type == KEYDOWN:
+
+                        # Was it the Escape key? If so, stop the loop
+                        if event.key == K_ESCAPE:
+                            return
+
+                    # Did the user click the window close button? If so, exit
+                    elif event.type == QUIT:
+                        exit()
+
+                    # Here we check for hover events 
+                    if event.type==pygame.MOUSEMOTION:
+                        complete_level_button.on_hover()
+                        
+
+                    # Here we check for clicks events 
+                    if event.type==pygame.MOUSEBUTTONDOWN:
+
+                        # text_buttons should be pressed like this
+                        if (complete_level_button.is_pressed() == True):
+                            return
+
+            
+            screen.blit(score_screen_background,(0,0))
+            screen.blit(complete_level_button.render, complete_level_button.button_position)
+            pygame.display.update()
+            clock.tick_busy_loop(30)
+
+            
+
+            
             print("Level Completed")
-            return 
+            # return 
         else:
 
             # If we have started going through the notes and deleted the last one then the song is complete
@@ -222,12 +259,15 @@ def start():
             if paused == True:
                 # The control loop for when the game is paused
 
+                # pauses the game music
                 pygame.mixer.music.pause()
 
+                # cycles through every event and deals with them
                 for event in pygame.event.get():
 
                     # Did the user hit a key?
                     if event.type == KEYDOWN:
+
                         # Was it the Escape key? If so, stop the loop
                         if event.key == K_ESCAPE:
                             pygame.mixer.music.unpause()
@@ -245,6 +285,8 @@ def start():
 
                     # Here we check for clicks events 
                     if event.type==pygame.MOUSEBUTTONDOWN:
+
+                        # text_buttons should be pressed like this
                         if (resume_button.is_pressed() == True):
                             paused = False
                             pygame.mixer.music.unpause()
@@ -266,6 +308,7 @@ def start():
                 screen.blit(resume_button.render, resume_button.button_position)
                 screen.blit(main_menu_button.render, main_menu_button.button_position)
                 screen.blit(quit_button.render, quit_button.button_position)
+
 
                 #    TODO Make the transparent surface only render once on paused
 
@@ -355,7 +398,7 @@ def start():
                 screen.blit(bg_img,(0,0))
                 screen.blit(play_line_image,(0,0))
                 screen.blit(tabs_image,(0,0))
-                screen.blit(foreground_image, (0,0))
+                screen.blit(fg_image, (0,0))
 
 
                 # Draw all our sprites
