@@ -209,6 +209,9 @@ def start():
 
             total_score = len(correctly_played_notes)
 
+            
+
+
             print("You got :" + str(total_score) +" out of " + str(len(song_notes)))
 
 
@@ -237,9 +240,21 @@ def start():
                         if (complete_level_button.is_pressed() == True):
                             return
 
+
+            # create a font to select font and size
+            completed_font = pygame.font.Font('freesansbold.ttf', 32)
+ 
+            # create a text surface object using the font
+            # on which text is drawn on it.
+
+            completed_font_text = "You got : " + str(total_score) +" out of " + str(len(song_notes)) + "!"
+            completed_font_render = completed_font.render(completed_font_text, False, (255, 255, 255), (0, 0, 0))
             
             screen.blit(score_screen_background,(0,0))
             screen.blit(complete_level_button.render, complete_level_button.button_position)
+            screen.blit(completed_font_render, (SCREEN_WIDTH/2-100,100))
+            
+            
             pygame.display.update()
             clock.tick_busy_loop(30)
 

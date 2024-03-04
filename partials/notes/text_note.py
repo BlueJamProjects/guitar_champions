@@ -110,6 +110,7 @@ class Note(pygame.sprite.Sprite):
 
             # checks if the pressed key matches this note
             if pressed_key == self.keys_dict[self.text]:
+                self.was_pressed = True
                 return True
             else: 
                 return False
