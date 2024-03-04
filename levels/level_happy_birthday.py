@@ -208,11 +208,8 @@ def start():
             
             pygame.mixer.music.stop()
 
+            # calculates the total of the notes that were correctly played
             total_score = len(correctly_played_notes)
-
-
-            print("You got :" + str(total_score) +" out of " + str(len(song_notes)))
-
 
             for event in pygame.event.get():
 
@@ -249,26 +246,29 @@ def start():
             score_font_render = score_font.render(score_font_text, False, (255, 255, 255), (0, 0, 0))
             
 
+            
+
+            # This is calculates the player's percentage score
+            percent_score = (total_score / len(song_notes)) * 100
+
+            # this is the encouragement that shows up depending on their score
             encouragement_font_text = ""
 
-            # create a text surface object using the font
-            # on which text is drawn on it.
-            percent_score = (total_score / len(song_notes)) * 100
+            # this determines your encouragement method
             if percent_score == 100.0:
                 encouragement_font_text = "Perfect!"
-            elif percent_score >= 75.0:
+            elif percent_score >= 66.666:
                 encouragement_font_text = "Well done!"
-            elif percent_score >= 50.0:
+            elif percent_score >= 33.333:
                 encouragement_font_text = "Good try!"
             else:
                 encouragement_font_text = "You can do it!"
 
 
-
-            
             encouragement_font_render = score_font.render(encouragement_font_text, False, (255, 255, 255), (0, 0, 0))
 
 
+            # displays the visual elements of the completed screen
             screen.blit(score_screen_background,(0,0))
             screen.blit(score_font_render, (SCREEN_WIDTH/2-200,100))
             screen.blit(encouragement_font_render, (SCREEN_WIDTH/2-50,200))
@@ -278,11 +278,6 @@ def start():
             pygame.display.update()
             clock.tick_busy_loop(30)
 
-            
-
-            
-            print("Level Completed")
-            # return 
         else:
 
             # If we have started going through the notes and deleted the last one then the song is complete
