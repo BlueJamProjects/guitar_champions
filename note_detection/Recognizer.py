@@ -54,8 +54,8 @@ class recognizer:
         dataset = []
         """Fetch dataset based on metadata and optional filtering critera"""     
         cwd = os.getcwd()
-        meta_path = os.path.join(cwd, "../metadata.json") 
-        audio_path = os.path.join(cwd, "../audio")
+        meta_path = os.path.join(cwd, "../dataset/metadata.json") 
+        audio_path = os.path.join(cwd, "../dataset/audio")
         
         with open(meta_path, 'r') as file:
             metadata = json.load(file)
@@ -148,13 +148,14 @@ class recognizer:
                 continue
             
             midi = round(midi_counts.most_common(1)[0][0])
-            if midi == self.notes[i][1] or self.position[i][1] > 10:
+            if midi == self.notes[i][1]:
                 score += 1
             else:
-                print("Incorrect")
+                print(f"Signal {i} is Incorrect: ")
                 print("Prediction: ", midi)
-                print("Expectation: ",self.notes[i][1], "signal: ", i)
+                print("Expectation: ",self.notes[i][1])
                 print("string: ", self.position[i][0], " fret: ", self.position[i][1])
+                print("---------------------------")
                 # print("avg_centroid: ", avg_centroid)     
         
         print(f"There are totally {len(self.notes)} notes detected")

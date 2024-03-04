@@ -3,10 +3,14 @@ import os
 import sys
 
 
-def find_path(name):
+def find_path(test, name):
     cwd = os.getcwd()
-    audio_path = os.path.join(cwd, "../audio/", name)
+    if test == 1:
+        audio_path = os.path.join(cwd, "../dataset/test/", name)
+    else:
+        audio_path = os.path.join(cwd, "../dataset/audio/", name)
     normalized_path = os.path.normpath(audio_path)
+    
     return normalized_path
 
 
@@ -21,16 +25,21 @@ def main():
 
     if filename.lower() == "dataset":
         print("Processing dataset...")
+        print("")
         dataset = recognizer.get_dataset()  
         test_dataset = recognizer(None, bpm)
         test_dataset.group_tester(dataset)
     else:
-        path = find_path(filename)
-        test = recognizer(path, bpm)
         
+   
+           
         if bpm > 0:
+            path = find_path(1, filename)
+            test = recognizer(path, bpm) 
             test.multiple_notes_tester()
         else:
+            path = find_path(0, filename)
+            test = recognizer(path, bpm) 
             test.single_note_tester()
 
 if __name__ == "__main__":
