@@ -11,7 +11,7 @@ from pygame.locals import (
 
 
 class Player(pygame.sprite.Sprite):
-        def __init__(self, asset_path="assets/images/characters/protaganist.png", screen_height=800, screen_width=600, top_padding=340):
+        def __init__(self, asset_path="assets/images/characters/player/protaganist.png", screen_height=800, screen_width=600, top_padding=340):
             super(Player, self).__init__()
             self.surf = pygame.image.load(asset_path).convert()
             self.surf.set_colorkey((255, 255, 255), RLEACCEL)
