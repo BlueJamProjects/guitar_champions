@@ -14,7 +14,7 @@ from pygame.locals import (
     K_ESCAPE,
     KEYDOWN,
     QUIT,
-)
+) 
 
 class Note(pygame.sprite.Sprite):
         def __init__(self, asset_path="assets/images/notes/C.png", Screen_Width =800, Screen_Height=600):

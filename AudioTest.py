@@ -1,8 +1,6 @@
 import pyaudio
 import wave
 import librosa
-import time
-import struct
 import math
 import matplotlib.pyplot as plt
 from scipy.datasets import electrocardiogram
@@ -10,21 +8,45 @@ from scipy.signal import find_peaks
 import numpy as np
 from collections import Counter
 from music21 import note
-import switchblade
-import nnAudio
+import scipy.signal
 
 from switchblade.audio_datasets.get_dataset import get_dataset
 
-power = 12
+# Define high-pass filter
+def high_pass_filter(data, cutoff_freq, fs, order=5):
+    nyq = 0.5 * fs
+    normal_cutoff = cutoff_freq / nyq
+    b, a = scipy.signal.butter(order, normal_cutoff, btype='high', analog=False)
+    filtered_data = scipy.signal.lfilter(b, a, data)
+    return filtered_data
+
+# Function to calculate RMS amplitude
+def calculate_rms(data):
+    """Calculate the root mean square amplitude of the given audio block."""
+    count = len(data)/2
+    format = np.int16
+    audio_data = np.frombuffer(data, dtype=format)
+    rms = np.sqrt(np.mean(np.square(audio_data), axis=0))
+    return rms
+
+def amplitude_filter(data, threshold):
+    """Zeroes out data below the specified amplitude threshold."""
+    return np.where(abs(data) > threshold, data, 0.0)
 
 class AudioHandler(object):
     def __init__(self):
         self.FORMAT = pyaudio.paFloat32
         self.CHANNELS = 1
         self.RATE = 44100
-        self.CHUNK = 1024
+        self.CHUNK = 2048
         self.p = None
         self.stream = None
+
+        # High-pass filter parameters
+        self.cutoff_frequency = 70.0
+
+        # Amplitude Threshold
+        self.amplitude_threshold = 0.01
 
     def start(self):
         self.p = pyaudio.PyAudio()
@@ -84,32 +106,37 @@ def main():
     print("start recording... ")
     total = 0
     count = 0
-    seconds = 5
+    seconds = 10
     for i in range(0, int(audio.RATE / audio.CHUNK * seconds)):
         # data = stream.read(CHUNK)
         # frames.append(data)
 
         # Reads the data
-        data = np.frombuffer(audio.stream.read(audio.CHUNK), dtype=np.float32)
-        midi = midi_number_detection(data, audio.RATE)
+        data = audio.stream.read(audio.CHUNK)
+        array_data = np.frombuffer(data, dtype=np.float32)
+        amplitude = calculate_rms(data)
+        midi = 0
+        if(np.abs(amplitude) > audio.amplitude_threshold):
+            #amplitude_data = amplitude_filter(array_data, audio.amplitude_threshold)
+            filtered_data = high_pass_filter(array_data, audio.cutoff_frequency, audio.RATE)
+            midi = midi_number_detection(filtered_data, audio.RATE)
+            print("Amplitude = ", calculate_rms(data))
 
-        if len(midi) == 0:
-            continue
-        m = round(midi.most_common(1)[0][0])
-        midi_num_test = 50
+        if(midi != 0):
+            if len(midi) == 0:
+                continue
+            m = round(midi.most_common(1)[0][0])
+            midi_num_test = 50
 
-        count = 0
+            count = 0
 
-        if(m == midi_num_test):
-            count += 1
-        total += 1
-
-        print('Midi Number Prediction = ', m)
+            if(m == midi_num_test):
+                count += 1
+            total += 1
+            print('Midi Number Prediction = ', m)
     
     print("recording stopped")
     audio.stop()
-
-    print('Accuracy = ', count/total*100)
     
 
 if __name__ == '__main__':
