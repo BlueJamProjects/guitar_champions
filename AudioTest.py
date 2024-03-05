@@ -126,7 +126,7 @@ def main():
         if(np.abs(amplitude) > audio.amplitude_threshold):
             #amplitude_data = amplitude_filter(array_data, audio.amplitude_threshold)
             filtered_data = high_pass_filter(array_data, audio.cutoff_frequency, audio.RATE)
-            filtered_data = butter_lowpass_filter(filtered_data, 120, audio.RATE)
+            # filtered_data = butter_lowpass_filter(filtered_data, 120, audio.RATE)
             midi = midi_number_detection(filtered_data, audio.RATE)
             print("Amplitude = ", calculate_rms(data))
 
