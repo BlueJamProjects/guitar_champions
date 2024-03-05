@@ -11,8 +11,8 @@ def load_audio_from_file(audio_path):
 def get_dataset(filter_by=None):
     """Fetch dataset based on metadata and optional filtering criteria."""
     cwd = os.getcwd()
-    meta_path = os.path.join(cwd, '../metadata.json')
-    audio_path = os.path.join(cwd, '../audio')
+    meta_path = os.path.join(cwd, '../dataset/metadata.json')
+    audio_path = os.path.join(cwd, '../dataset/audio')
     with open(meta_path, 'r') as file:
         metadata = json.load(file)    
         dataset = []
