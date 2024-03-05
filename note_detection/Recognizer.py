@@ -182,12 +182,12 @@ class recognizer:
 
         # Illustate the midi numbers
         
-        plt.figure(figsize=(14, 6))
-        plt.plot(self.overall_list, marker='o', linestyle='-', markersize=4)
-        plt.ylabel('MIDI Number')
-        plt.xlabel('Time')
-        plt.title('MIDI Numbers Over Time')
-        plt.show()
+        # plt.figure(figsize=(14, 6))
+        # plt.plot(self.overall_list, marker='o', linestyle='-', markersize=4)
+        # plt.ylabel('MIDI Number')
+        # plt.xlabel('Time')
+        # plt.title('MIDI Numbers Over Time')
+        # plt.show()
 
         # Overall Result
         print(f"There are {len(r)} notes")
@@ -204,12 +204,12 @@ class recognizer:
         print(f"MIDI number {midi_number} is {pitch_name}")
         
         # Illustate the midi numbers
-        plt.figure(figsize=(14, 6))
-        plt.plot(midi_list, marker='o', linestyle='-', markersize=4)
-        plt.ylabel('MIDI Number')
-        plt.xlabel('Time')
-        plt.title('MIDI Numbers Over Time')
-        plt.show()
+        # plt.figure(figsize=(14, 6))
+        # plt.plot(midi_list, marker='o', linestyle='-', markersize=4)
+        # plt.ylabel('MIDI Number')
+        # plt.xlabel('Time')
+        # plt.title('MIDI Numbers Over Time')
+        # plt.show()
     
 def midi_number_to_pitch(midi_number):
     n = note.Note()
