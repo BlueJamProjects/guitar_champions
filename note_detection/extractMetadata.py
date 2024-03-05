@@ -11,7 +11,7 @@ def pitch_to_midi_music21(pitch):
 
 # Path to the folder containing your audio files
 script_dir = os.path.dirname(os.path.realpath(__file__))
-folder_path = os.path.join(script_dir, '../audio')
+folder_path = os.path.join(script_dir, '../dataset/audio')
 # List all files in the folder
 filenames = [f for f in os.listdir(folder_path) if os.path.isfile(os.path.join(folder_path, f))]
 # Initialize the metadata list
