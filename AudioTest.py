@@ -20,6 +20,13 @@ def high_pass_filter(data, cutoff_freq, fs, order=5):
     filtered_data = scipy.signal.lfilter(b, a, data)
     return filtered_data
 
+# def butter_lowpass_filter(data, cutoff, fs, order=5):
+#     nyq = 0.5 * fs
+#     normal_cutoff = cutoff / nyq
+#     b, a = scipy.signal.butter(order, normal_cutoff, btype='low', analog=False)
+#     y = scipy.signal.lfilter(b, a, data)
+#     return y
+
 # Function to calculate RMS amplitude
 def calculate_rms(data):
     """Calculate the root mean square amplitude of the given audio block."""
@@ -46,7 +53,7 @@ class AudioHandler(object):
         self.cutoff_frequency = 70.0
 
         # Amplitude Threshold
-        self.amplitude_threshold = 0.01
+        self.amplitude_threshold = 20.0
 
     def start(self):
         self.p = pyaudio.PyAudio()
@@ -119,6 +126,7 @@ def main():
         if(np.abs(amplitude) > audio.amplitude_threshold):
             #amplitude_data = amplitude_filter(array_data, audio.amplitude_threshold)
             filtered_data = high_pass_filter(array_data, audio.cutoff_frequency, audio.RATE)
+            filtered_data = butter_lowpass_filter(filtered_data, 120, audio.RATE)
             midi = midi_number_detection(filtered_data, audio.RATE)
             print("Amplitude = ", calculate_rms(data))
 
