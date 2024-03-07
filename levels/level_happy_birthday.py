@@ -108,7 +108,7 @@ def start():
 
 
     # Create the background image for the level
-    bg_img = pygame.image.load('assets/images/backgrounds/happy_birthday_background.png')
+    bg_img = pygame.image.load('assets/images/backgrounds/happy_birthday_background_blue.png')
     bg_img = pygame.transform.scale(bg_img,(SCREEN_WIDTH,SCREEN_HEIGHT))
 
     # a foreground image for the notes to go behind
@@ -427,8 +427,8 @@ def start():
                 # Fill the screen with the background image
                 screen.blit(bg_img,(0,0))
                 screen.blit(play_line_image,(0,0))
-                screen.blit(tabs_image,(0,0))
                 screen.blit(fg_image, (0,0))
+                screen.blit(tabs_image,(0,0))
 
 
                 # Draw all our sprites

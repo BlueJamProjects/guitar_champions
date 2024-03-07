@@ -21,6 +21,7 @@ class Player(pygame.sprite.Sprite):
 
             #sets the top at an offset of 340 to get him to look like he's standing on the ground
             self.rect.top = top_padding
+            self.rect.left = 30
 
         # Move the sprite based on keypresses
         def update(self, pressed_keys):
