@@ -58,6 +58,7 @@ def start():
     running = True
     paused = False
     completed = False
+    restart_level = False
 
 
 
@@ -131,7 +132,10 @@ def start():
     score_screen_background = pygame.image.load('assets/images/backgrounds/orange_background.jpg').convert()
     score_screen_background.set_colorkey((255, 255, 255), RLEACCEL)
 
-    complete_level_button = text_button.TextButton(text="Complete", width= 100,height= 50, left_padding= SCREEN_WIDTH/2 - 50, top_padding= SCREEN_HEIGHT/2 + 90)
+
+    completed_restart_level_button = text_button.TextButton(text="Restart", width= 100,height= 50, left_padding= SCREEN_WIDTH/2 - 50, top_padding= SCREEN_HEIGHT/2 + 60)
+
+    complete_level_button = text_button.TextButton(text="Complete", width= 100,height= 50, left_padding= SCREEN_WIDTH/2 - 50, top_padding= SCREEN_HEIGHT/2 + 110)
 
     
 
@@ -141,7 +145,8 @@ def start():
     pygame.Surface.set_alpha(transparent_surface, 255)
     
     # These are the buttons for the pause menu
-    resume_button = text_button.TextButton(text="Resume", width= 100,height= 50, left_padding= SCREEN_WIDTH/2 - 50, top_padding= SCREEN_HEIGHT/2 - 50)
+    resume_button = text_button.TextButton(text="Resume", width= 100,height= 50, left_padding= SCREEN_WIDTH/2 - 50, top_padding= SCREEN_HEIGHT/2 - 100)
+    restart_button = text_button.TextButton(text="Restart", width= 100,height= 50, left_padding= SCREEN_WIDTH/2 - 50, top_padding= SCREEN_HEIGHT/2 - 50)
     main_menu_button = text_button.TextButton(text="Main Menu", width= 100,height= 50, left_padding= SCREEN_WIDTH/2 - 50, top_padding= SCREEN_HEIGHT/2 +20)
     quit_button = text_button.TextButton(text="Quit", width= 100,height= 50, left_padding= SCREEN_WIDTH/2 - 50, top_padding= SCREEN_HEIGHT/2 + 90)
 
@@ -164,35 +169,35 @@ def start():
         note.Note(text="O", time_to_next_note=0.5, tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
         note.Note(text="2", tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
 
-        note.Note(text="O", tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
-        note.Note(text="5", tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
-        note.Note(text="4",  time_to_next_note=2.0, tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
+        # note.Note(text="O", tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
+        # note.Note(text="5", tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
+        # note.Note(text="4",  time_to_next_note=2.0, tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
 
-        note.Note(text="O", time_to_next_note=0.5, tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
-        note.Note(text="O", time_to_next_note=0.5, tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
-        note.Note(text="2", tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
+        # note.Note(text="O", time_to_next_note=0.5, tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
+        # note.Note(text="O", time_to_next_note=0.5, tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
+        # note.Note(text="2", tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
        
-        note.Note(text="O", tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
-        note.Note(text="7", tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
-        note.Note(text="5", time_to_next_note=2.0, tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
+        # note.Note(text="O", tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
+        # note.Note(text="7", tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
+        # note.Note(text="5", time_to_next_note=2.0, tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
 
 
-        note.Note(text="O", time_to_next_note=0.5, tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
-        note.Note(text="O", time_to_next_note=0.5, tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
-        note.Note(text="9", tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
+        # note.Note(text="O", time_to_next_note=0.5, tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
+        # note.Note(text="O", time_to_next_note=0.5, tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
+        # note.Note(text="9", tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
 
-        note.Note(text="5", tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
-        note.Note(text="4", tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
-        note.Note(text="4", tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
-        note.Note(text="2", time_to_next_note=2.0, tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
+        # note.Note(text="5", tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
+        # note.Note(text="4", tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
+        # note.Note(text="4", tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
+        # note.Note(text="2", time_to_next_note=2.0, tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
 
-        note.Note(text="10", time_to_next_note=0.5, tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
-        note.Note(text="10", time_to_next_note=0.5, tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
-        note.Note(text="9", tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
+        # note.Note(text="10", time_to_next_note=0.5, tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
+        # note.Note(text="10", time_to_next_note=0.5, tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
+        # note.Note(text="9", tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
 
-        note.Note(text="5", tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
-        note.Note(text="7", tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
-        note.Note(text="5", tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
+        # note.Note(text="5", tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
+        # note.Note(text="7", tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
+        # note.Note(text="5", tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
         ]
     
     # This keeps track of all the notes the player correctly hit
@@ -227,6 +232,7 @@ def start():
                     # Here we check for hover events 
                     if event.type==pygame.MOUSEMOTION:
                         complete_level_button.on_hover()
+                        completed_restart_level_button.on_hover()
                         
 
                     # Here we check for clicks events 
@@ -235,6 +241,11 @@ def start():
                         # text_buttons should be pressed like this
                         if (complete_level_button.is_pressed() == True):
                             return
+                        
+                        if (completed_restart_level_button.is_pressed() == True):
+                            # this will exit the main loop, setting the condition to restart the level as true
+                            restart_level = True
+                            running = False
 
 
             # create a font to select font and size
@@ -272,6 +283,7 @@ def start():
             screen.blit(score_screen_background,(0,0))
             screen.blit(score_font_render, (SCREEN_WIDTH/2-200,100))
             screen.blit(encouragement_font_render, (SCREEN_WIDTH/2-50,200))
+            screen.blit(completed_restart_level_button.render, completed_restart_level_button.button_position)
             screen.blit(complete_level_button.render, complete_level_button.button_position)
             
             
@@ -310,6 +322,7 @@ def start():
                     # Here we check for hover events 
                     if event.type==pygame.MOUSEMOTION:
                         resume_button.on_hover()
+                        restart_button.on_hover()
                         main_menu_button.on_hover()
                         quit_button.on_hover()
 
@@ -321,6 +334,10 @@ def start():
                             paused = False
                             pygame.mixer.music.unpause()
 
+                        elif(restart_button.is_pressed() == True):
+                            restart_level = True
+                            running = False
+
                         elif(main_menu_button.is_pressed() == True):
                             running = False
 
@@ -329,13 +346,9 @@ def start():
 
 
 
-
-
-
-
-
                 # This visually updates the buttons on the pause screen
                 screen.blit(resume_button.render, resume_button.button_position)
+                screen.blit(restart_button.render, restart_button.button_position)
                 screen.blit(main_menu_button.render, main_menu_button.button_position)
                 screen.blit(quit_button.render, quit_button.button_position)
 
@@ -473,3 +486,8 @@ def start():
     # At this point, we're done, so we can stop and quit the mixer
     pygame.mixer.music.stop()
     pygame.mixer.quit()
+
+
+    # If the level should be restarted the restart it
+    if restart_level == True:
+        start()
