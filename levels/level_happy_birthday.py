@@ -391,7 +391,7 @@ def start():
                             for curr_note in Notes:
                                 # This loops through all the notes on screen
 
-                                if abs(PLAY_LINE_LOCATION - curr_note.get_x_location()) < 20:
+                                if abs(PLAY_LINE_LOCATION - curr_note.get_x_location()) < 25:
                                     # This triggers if the note is the one on screen
 
                                     # This is a function from the note that we check to see if it's key was the one pressed
