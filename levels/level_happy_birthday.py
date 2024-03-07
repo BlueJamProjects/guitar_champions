@@ -396,6 +396,31 @@ def start():
                         exit()
 
 
+                for curr_note in Notes:
+                                # This loops through all the notes on screen
+                                
+
+                                if abs(PLAY_LINE_LOCATION - curr_note.get_x_location()) < 25:
+                                    # it checks to see if the note is close enough to the play line to update
+
+                                    if curr_note.get_is_active() == False:
+                                        # if the note is currently note active
+                                        curr_note.set_active_color()
+
+
+                                else:
+                                     if curr_note.get_is_active() == True:
+                                        # if it is leaving the play line region
+
+                                        if curr_note.get_was_played() == True:
+                                            # if note was played successfully
+                                            curr_note.set_played_color()
+                                        else:
+                                            # if the note was not played successfully
+                                            curr_note.set_missed_color()
+                                    
+
+
                 # This adds notes every second
                 # This uses the current fps so that you are adding notes accurately
                 if frames_since_note >= ((clock.get_fps() * time_to_next_note )// 1) and (clock.get_fps() > 0.1):
