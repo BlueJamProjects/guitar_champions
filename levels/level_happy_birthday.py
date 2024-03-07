@@ -109,7 +109,7 @@ def start():
 
 
     # Create the background image for the level
-    bg_img = pygame.image.load('assets/images/backgrounds/happy_birthday_background_blue.png')
+    bg_img = pygame.image.load('assets/images/backgrounds/happy_birthday_background.png')
     bg_img = pygame.transform.scale(bg_img,(SCREEN_WIDTH,SCREEN_HEIGHT))
 
     # a foreground image for the notes to go behind
