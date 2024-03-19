@@ -9,6 +9,8 @@ import random
 # Import math for oscillation
 import math
 
+import json
+
 # Import the menu library to more easily make menu selction
 import pygame_menu
 
@@ -35,6 +37,7 @@ import tutorials.tutorials_main as tutorials_main
 SCREEN_WIDTH = 800
 SCREEN_HEIGHT = 600
 
+ 
 
 # Setup for sounds, defaults are good
 pygame.mixer.init()
@@ -56,6 +59,18 @@ screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 current_level = 0
 
 level_list = [("Happy Birthday", level_happy_birthday), ("Mario", level1), ("Mountains", level2)]
+
+
+def update_settings(enable_metronome):
+    print("Updating settings")
+
+    with open("settings/gamesettings.json", "r") as file:
+        settings_data = json.load(file)
+
+    settings_data["enable_metronome"] = str(enable_metronome)
+    
+    with open("settings/gamesettings.json", "w") as file:
+        json.dump(settings_data, file, indent=4)
 
 
 def select_level(name, index):
@@ -135,9 +150,15 @@ if __name__ == "__main__":
     fonter=pygame.font.Font("assets/font/Signatra.ttf",40)
     
     #array that stores widgets
+    
     widgets=[]
     
     #all widgets, must have an update function, be moved into position, and added to the array
+    settbutt=menu.add.button('Settings', update_settings(False), float=True,font_name=fonter)
+    settbutt.add_draw_callback(draw_update_function)
+    settbutt.translate(0,-150)
+    widgets.append(settbutt)
+    
     levbutt=menu.add.selector('Level Select:', [(level[0], index) for index, level in enumerate(level_list)],float=True, font_name=fonter, onchange=select_level)
     levbutt.add_draw_callback(draw_update_function)
     levbutt.translate(0,-120)
