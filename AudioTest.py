@@ -21,7 +21,35 @@ def butter_bandpass_filter(data, lowcut, highcut, sr, order=5):
 
 def test():
     print("Hello")
-
+def harmonic_energy(signal, sr, fundamental_freq, harmonics=5):
+    """
+    Analyze the energy of the fundamental frequency and its harmonics.
+    
+    Parameters:
+    - signal: Audio signal array.
+    - sr: Sampling rate.
+    - fundamental_freq: Detected fundamental frequency (in Hz).
+    - harmonics: Number of harmonics to analyze.
+    
+    Returns:
+    - Dictionary with 'fundamental' energy and harmonic energies.
+    """
+    fft_result = np.fft.fft(signal)
+    freqs = np.fft.fftfreq(len(signal), 1/sr)
+    energy = {'fundamental': 0, 'harmonics': []}
+    
+    # Energy of the fundamental frequency
+    fundamental_indices = np.where((freqs >= fundamental_freq - 5) & (freqs <= fundamental_freq + 5))
+    energy['fundamental'] = np.sum(np.abs(fft_result[fundamental_indices])**2)
+    
+    # Energy of harmonics
+    for i in range(1, harmonics + 1):
+        harmonic_freq = fundamental_freq * i
+        harmonic_indices = np.where((freqs >= harmonic_freq - 5) & (freqs <= harmonic_freq + 5))
+        harmonic_energy = np.sum(np.abs(fft_result[harmonic_indices])**2)
+        energy['harmonics'].append(harmonic_energy)
+    
+    return energy
 def get_energy_around_freq(signal, sr, freq, bandwidth=5):
     """
     Calculate the energy of the signal around a specific frequency using FFT.
@@ -58,7 +86,8 @@ def correct_octave_error(midi_number, audio_signal, sr):
     lower_octave_freq = initial_freq / 2
     energy_initial = get_energy_around_freq(audio_signal, sr, initial_freq)
     energy_lower_octave = get_energy_around_freq(audio_signal, sr, lower_octave_freq)
-    
+    # print("Energy: ", energy_initial)
+    print("Energy Lower Octave: ", energy_lower_octave)
     # Correct the MIDI number if the lower octave has more energy
     if energy_lower_octave > energy_initial:
         corrected_midi_number = librosa.hz_to_midi(lower_octave_freq)
@@ -71,8 +100,7 @@ def audio_callback(in_data, frame_count, time_info, status):
     audio_data = np.frombuffer(in_data, dtype=np.float32)
     
     # Apply bandpass filter
-    filtered_audio = butter_bandpass_filter(audio_data, lowcut=80, highcut=10000, sr=44100)
-    
+    filtered_audio = butter_bandpass_filter(audio_data, lowcut=80, highcut=7000, sr=44100)
     # Convert to MIDI (note: this is simplified for demonstration and may need refinement for accurate pitch detection)
     try:
         cqt = librosa.cqt(filtered_audio, sr=44100, fmin=librosa.note_to_hz('C1'), n_bins=72, bins_per_octave=12)
@@ -82,11 +110,21 @@ def audio_callback(in_data, frame_count, time_info, status):
         midi_number = librosa.hz_to_midi(librosa.core.cqt_frequencies(n_bins=72, fmin=librosa.note_to_hz('C1'), bins_per_octave=12)[predominant_bin])
 
         #midi_number = correct_octave_error(midi_number, filtered_audio, 44100)
-        
         # Calculate amplitude
         amplitude = np.sqrt(np.mean(filtered_audio**2))
+        detected_freq = librosa.midi_to_hz(midi_number)
         
-        print(f"MIDI Number: {midi_number:.2f}, Amplitude: {amplitude:.5f}")
+        # Harmonic analysis to verify and possibly correct the detected pitch
+        harmonic_analysis = harmonic_energy(filtered_audio, 44100, detected_freq)
+
+        # print(f"MIDI Number: {midi_number:.2f}, Amplitude: {amplitude:.5f}")
+        if midi_number == 40 or midi_number == 52: 
+            # print(f"MIDI Number: {midi_number:.2f}, Amplitude: {amplitude:.5f}")
+            print(f"Fundamental Energy: {harmonic_analysis['fundamental']}, Harmonic Energies: {harmonic_analysis['harmonics']}")
+            if harmonic_analysis['harmonics'][1] - harmonic_analysis['harmonics'][0] > 3:
+                midi_number = 40
+                
+            print(f"MIDI Number: {midi_number:.2f}, Amplitude: {amplitude:.5f}")
     except Exception as e:
         print(f"Error processing audio: {e}")
     
