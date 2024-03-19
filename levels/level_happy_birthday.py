@@ -8,6 +8,14 @@ import random
 
 import sys
 
+import pyaudio
+import wave
+import librosa
+import math
+from scipy.signal import find_peaks
+import numpy as np
+from collections import Counter
+import scipy.signal
 
 # Import the menu library to more easily make menu selction
 import pygame_menu
@@ -44,7 +52,7 @@ import partials.player.playing_player as playing_player
 import partials.notes.text_note as note
 import partials.buttons.text_button as text_button
 
-
+main_midi_number = 40
 
 def start():
 
@@ -59,8 +67,6 @@ def start():
     paused = False
     completed = False
     restart_level = False
-
-
 
 
     # Setup for sounds, defaults are good
@@ -101,7 +107,18 @@ def start():
     all_sprites.add(player)
 
 
+    # Start Audio
+    p = pyaudio.PyAudio()
 
+    stream = p.open(format=pyaudio.paFloat32,
+                    channels=1,
+                    rate=44100,
+                    input=True,
+                    frames_per_buffer=4096,
+                    stream_callback=audio_callback)
+
+    print("Streaming and processing audio. Press Ctrl+C to stop.")
+    stream.start_stream()
 
     # Create the screen object
     # The size is determined by the constant SCREEN_WIDTH and SCREEN_HEIGHT
@@ -150,8 +167,6 @@ def start():
     main_menu_button = text_button.TextButton(text="Main Menu", width= 100,height= 50, left_padding= SCREEN_WIDTH/2 - 50, top_padding= SCREEN_HEIGHT/2 +20)
     quit_button = text_button.TextButton(text="Quit", width= 100,height= 50, left_padding= SCREEN_WIDTH/2 - 50, top_padding= SCREEN_HEIGHT/2 + 90)
 
-    
-    
 
 
     # Variables to keep track of the notes of the song
@@ -165,39 +180,35 @@ def start():
 
     # This is the array with the song's note information
     song_notes = [
-        note.Note(text="O", time_to_next_note=0.5, tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
-        note.Note(text="O", time_to_next_note=0.5, tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
-        note.Note(text="2", tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
+        note.Note(text="0", midi=55, time_to_next_note=1, tab_line=3, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
+        note.Note(text="0", midi=55, time_to_next_note=1, tab_line=3, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
+        note.Note(text="2", midi=57, time_to_next_note=1, tab_line=3, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
+        note.Note(text="0", midi=55, time_to_next_note=1, tab_line=3, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
+        note.Note(text="1", midi=60, time_to_next_note=1, tab_line=2, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
+        note.Note(text="0", midi=59, time_to_next_note=2.0, tab_line=2, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
 
-        note.Note(text="O", tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
-        note.Note(text="5", tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
-        note.Note(text="4",  time_to_next_note=2.0, tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
-
-        note.Note(text="O", time_to_next_note=0.5, tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
-        note.Note(text="O", time_to_next_note=0.5, tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
-        note.Note(text="2", tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
-       
-        note.Note(text="O", tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
-        note.Note(text="7", tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
-        note.Note(text="5", time_to_next_note=2.0, tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
+        note.Note(text="0", midi=55, time_to_next_note=0.5, tab_line=3, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
+        note.Note(text="0", midi=55, time_to_next_note=0.5, tab_line=3, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
+        note.Note(text="2", midi=57, tab_line=3, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
+        note.Note(text="0", midi=55, tab_line=3, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
+        note.Note(text="3", midi=62, tab_line=2, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
+        note.Note(text="1", midi=60, time_to_next_note=2.0, tab_line=2, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
 
 
-        note.Note(text="O", time_to_next_note=0.5, tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
-        note.Note(text="O", time_to_next_note=0.5, tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
-        note.Note(text="9", tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
+        note.Note(text="0", midi=55, time_to_next_note=0.5, tab_line=3, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
+        note.Note(text="0", midi=55, time_to_next_note=0.5, tab_line=3, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
+        note.Note(text="3", midi=67, tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
+        note.Note(text="0", midi=64, tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
+        note.Note(text="1", midi=60, tab_line=2, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
+        note.Note(text="0", midi=59, tab_line=2, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
+        note.Note(text="2", midi=57, time_to_next_note=2.0, tab_line=3, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
 
-        note.Note(text="5", tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
-        note.Note(text="4", tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
-        note.Note(text="4", tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
-        note.Note(text="2", time_to_next_note=2.0, tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
-
-        note.Note(text="10", time_to_next_note=0.5, tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
-        note.Note(text="10", time_to_next_note=0.5, tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
-        note.Note(text="9", tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
-
-        note.Note(text="5", tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
-        note.Note(text="7", tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
-        note.Note(text="5", tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
+        note.Note(text="1", midi=65, time_to_next_note=0.5, tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
+        note.Note(text="1", midi=65, time_to_next_note=0.5, tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
+        note.Note(text="0", midi=64, tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
+        note.Note(text="1", midi=60, tab_line=2, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
+        note.Note(text="3", midi=62, tab_line=2, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
+        note.Note(text="1", midi=60, tab_line=2, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
         ]
     
     # This keeps track of all the notes the player correctly hit
@@ -374,12 +385,31 @@ def start():
                 # transparent_surface_rendered_once = False
 
 
+                for curr_note in Notes:
+                    # This loops through all the notes on screen
+                    if abs(PLAY_LINE_LOCATION - curr_note.get_x_location()) < 20:
+
+                        # This triggers if the note is the one on screen
+                        # This is a function from the note that we check to see if it's key was the one pressed
+                        # print("MIDI Number: ",main_midi_number)
+                        if curr_note.check_correct_note(main_midi_number):
+
+                            print("Correct note played")
+                            correctly_played_notes.append(curr_note)
+                            
+                        #else:
+
+                            # If a key was pressed on time but was incorrect
+                            #print("Incorrect note played")
+
 
                 # Look at every event in the queue
                 for event in pygame.event.get():
 
                     # Did the user hit a key?
                     if event.type == KEYDOWN:
+
+                        
                         
                         # Was it the Escape key? If so, pause the loop
                         if event.key == K_ESCAPE:
@@ -481,13 +511,134 @@ def start():
                 clock.tick_busy_loop(30)
 
 
-
+    # Stop Audio
+    stream.stop_stream()
+    stream.close()
+    p.terminate()
 
     # At this point, we're done, so we can stop and quit the mixer
     pygame.mixer.music.stop()
     pygame.mixer.quit()
 
 
+
+# Define bandpass filter
+def butter_bandpass_filter(data, lowcut, highcut, sr, order=5):
+    """
+    Apply a bandpass filter to the audio data.
+    """
+    nyquist = 0.5 * sr
+    low = lowcut / nyquist
+    high = highcut / nyquist
+    b, a = scipy.signal.butter(order, [low, high], btype='band')
+    y = scipy.signal.lfilter(b, a, data)
+    return y
+
+def get_energy_around_freq(signal, sr, freq, bandwidth=5):
+    """
+    Calculate the energy of the signal around a specific frequency using FFT.
+
+    Parameters:
+    - signal: The audio signal (numpy array).
+    - sr: The sampling rate of the audio signal.
+    - freq: The target frequency around which to calculate energy.
+    - bandwidth: The bandwidth around the target frequency (in Hz).
+
+    Returns:
+    - The energy of the signal within the specified bandwidth around the target frequency.
+    """
+    # Perform FFT
+    fft_result = np.fft.fft(signal)
+    # Get frequencies for FFT results
+    freqs = np.fft.fftfreq(len(signal), 1/sr)
+    
+    # Find index range for target frequency +/- bandwidth
+    lower_bound = freq - bandwidth / 2
+    upper_bound = freq + bandwidth / 2
+    target_indices = np.where((freqs >= lower_bound) & (freqs <= upper_bound))
+    
+    # Calculate energy in the target frequency band
+    energy = np.sum(np.abs(fft_result[target_indices])**2)
+    
+    return energy
+
+def correct_octave_error(midi_number, audio_signal, sr):
+    # Convert MIDI to frequency
+    initial_freq = librosa.midi_to_hz(midi_number)
+    
+    # Check the energy around the initial frequency and its lower octave
+    lower_octave_freq = initial_freq / 2
+    energy_initial = get_energy_around_freq(audio_signal, sr, initial_freq)
+    energy_lower_octave = get_energy_around_freq(audio_signal, sr, lower_octave_freq)
+    
+    # Correct the MIDI number if the lower octave has more energy
+    if energy_lower_octave > energy_initial:
+        corrected_midi_number = librosa.hz_to_midi(lower_octave_freq)
+        return corrected_midi_number
+    else:
+        return midi_number
+
+# Audio processing and MIDI/amplitude calculation
+def audio_callback(in_data, frame_count, time_info, status):
+    audio_data = np.frombuffer(in_data, dtype=np.float32)
+    
+    # Apply bandpass filter
+    filtered_audio = butter_bandpass_filter(audio_data, lowcut=80, highcut=10000, sr=44100)
+    
+    # Convert to MIDI (note: this is simplified for demonstration and may need refinement for accurate pitch detection)
+    try:
+        cqt = librosa.cqt(filtered_audio, sr=44100, fmin=librosa.note_to_hz('C1'), n_bins=72, bins_per_octave=12)
+        mag_cqt = np.abs(cqt)
+        summed_mag = np.sum(mag_cqt, axis=1)
+        predominant_bin = np.argmax(summed_mag)
+        midi_number = librosa.hz_to_midi(librosa.core.cqt_frequencies(n_bins=72, fmin=librosa.note_to_hz('C1'), bins_per_octave=12)[predominant_bin])
+
+        global main_midi_number
+        main_midi_number = round(midi_number)
+        #print(main_midi_number)
+
+        #midi_number = correct_octave_error(midi_number, filtered_audio, 44100)
+        
+        # Calculate amplitude
+        amplitude = np.sqrt(np.mean(filtered_audio**2))
+        
+        print(f"MIDI Number: {main_midi_number:.2f}, Amplitude: {amplitude:.5f}")
+    except Exception as e:
+        print(f"Error processing audio: {e}")
+    
+    return (in_data, pyaudio.paContinue)
+
+class AudioHandler(object):
+    def __init__(self):
+        self.FORMAT = pyaudio.paFloat32
+        self.CHANNELS = 1
+        self.RATE = 44100
+        self.CHUNK = 4096
+        self.p = None
+        self.stream = None
+
+        # High-pass filter parameters
+        self.low_cutoff = 80.0
+        self.high_cutoff = 300.0
+
+        # Amplitude Threshold
+        self.amplitude_threshold = 3.0
+
+    def start(self):
+        self.p = pyaudio.PyAudio()
+        self.stream = self.p.open(format=self.FORMAT,
+                                  channels=self.CHANNELS,
+                                  rate=self.RATE,
+                                  input=True,
+                                  output=False,
+                                  frames_per_buffer=self.CHUNK,
+                                  stream_callback=audio_callback)
+
+    def stop(self):
+        self.stream.close()
+        self.p.terminate()
+
     # If the level should be restarted the restart it
     if restart_level == True:
         start()
+
