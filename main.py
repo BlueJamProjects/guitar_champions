@@ -146,7 +146,7 @@ if __name__ == "__main__":
     widgets=[]
     
     #all widgets, must have an update function, be moved into position, and added to the array
-    settbutt=menu.add.button('Settings', settings_helper.update_settings(False), float=True,font_name=fonter)
+    settbutt=menu.add.button('Settings', print(settings_helper.get_settings().enable_metronome), float=True,font_name=fonter)
     settbutt.add_draw_callback(draw_update_function)
     settbutt.translate(0,-150)
     widgets.append(settbutt)

@@ -1,4 +1,4 @@
 {
-    "enable_metronome": "False",
-    "volume": "100"
+    "enable_metronome": "1",
+    "volume": "50"
 }
