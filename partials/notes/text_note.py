@@ -16,13 +16,14 @@ from pygame.locals import (
 )
 
 class Note(pygame.sprite.Sprite):
-    def __init__(self, text="O", tab_line=1, time_to_next_note=1.0, font_size=70, font_color=(0, 0, 0), font_name='freesansbold.ttf', Screen_Width=800, Screen_Height=600):
+    def __init__(self, midi=40, text="O", tab_line=1, time_to_next_note=1.0, font_size=70, font_color=(0, 0, 0), font_name='freesansbold.ttf', Screen_Width=800, Screen_Height=600):
         super(Note, self).__init__()
 
         # Initialize Pygame
         pygame.init()
 
         self.was_pressed = False
+        self.midi = midi
 
          # this is a multiplier that is used to figure out how many beats later the next note should come
         # after each note is created this is dynamically updated by calling a function on that note
@@ -114,7 +115,17 @@ class Note(pygame.sprite.Sprite):
                 return True
             else: 
                 return False
+    
+    def check_correct_note(self, predicted_midi):
         
+        if self.was_pressed == False:
+
+            if self.midi == predicted_midi:
+                self.was_pressed = True
+                return True
+            else:
+                return False
+
     # returns the time to the next note
     def get_time_to_next_note(self):
         return self.time_to_next_note
