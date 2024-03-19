@@ -22,8 +22,12 @@ class Note(pygame.sprite.Sprite):
         # Initialize Pygame
         pygame.init()
 
+
         self.was_pressed = False
         self.midi = midi
+
+        self.was_played = False
+
 
          # this is a multiplier that is used to figure out how many beats later the next note should come
         # after each note is created this is dynamically updated by calling a function on that note
@@ -37,6 +41,8 @@ class Note(pygame.sprite.Sprite):
 
         # Render text onto the surface
         self.surf = self.font.render(self.text, True, self.font_color)
+
+        self.is_active = False
 
 
         # This dictionary matches notes to keys pressed
@@ -107,11 +113,11 @@ class Note(pygame.sprite.Sprite):
     # returns true if the correct key for this button was pressed
     def check_correct_key(self, pressed_key):
         # checks to see if this note has already been pressed
-        if self.was_pressed == False:
+        if self.was_played == False:
 
             # checks if the pressed key matches this note
             if pressed_key == self.keys_dict[self.text]:
-                self.was_pressed = True
+                self.was_played = True
                 return True
             else: 
                 return False
@@ -129,3 +135,29 @@ class Note(pygame.sprite.Sprite):
     # returns the time to the next note
     def get_time_to_next_note(self):
         return self.time_to_next_note
+    
+
+    # sets the note to be active 
+    def set_active_color(self):
+        self.is_active = True
+        self.font_color = (0,0,255)
+        self.surf = self.font.render(self.text, True, self.font_color)
+
+
+    # returns true if the if the note is active and false otherwise  
+    def get_is_active(self):
+        return  self.is_active
+    
+
+    # sets the color to show that the user didn't hit the right note
+    def set_missed_color(self):
+        self.font_color = (255,0,0)
+        self.surf = self.font.render(self.text, True, self.font_color)
+
+    # sets the color to show that the user did hit the right note
+    def set_played_color(self):
+        self.font_color = (0,255,0)
+        self.surf = self.font.render(self.text, True, self.font_color)
+
+    def get_was_played(self):
+        return self.was_played
