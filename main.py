@@ -32,6 +32,7 @@ import levels.level1 as level1
 import levels.level2 as level2
 import levels.level_happy_birthday as level_happy_birthday
 import tutorials.tutorials_main as tutorials_main
+import helpers.settings_helper as settings_helper
 
 # Define constants for the screen width and height
 SCREEN_WIDTH = 800
@@ -61,16 +62,7 @@ current_level = 0
 level_list = [("Happy Birthday", level_happy_birthday), ("Mario", level1), ("Mountains", level2)]
 
 
-def update_settings(enable_metronome):
-    print("Updating settings")
 
-    with open("settings/gamesettings.json", "r") as file:
-        settings_data = json.load(file)
-
-    settings_data["enable_metronome"] = str(enable_metronome)
-    
-    with open("settings/gamesettings.json", "w") as file:
-        json.dump(settings_data, file, indent=4)
 
 
 def select_level(name, index):
@@ -154,7 +146,7 @@ if __name__ == "__main__":
     widgets=[]
     
     #all widgets, must have an update function, be moved into position, and added to the array
-    settbutt=menu.add.button('Settings', update_settings(False), float=True,font_name=fonter)
+    settbutt=menu.add.button('Settings', settings_helper.update_settings(False), float=True,font_name=fonter)
     settbutt.add_draw_callback(draw_update_function)
     settbutt.translate(0,-150)
     widgets.append(settbutt)
