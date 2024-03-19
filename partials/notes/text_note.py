@@ -22,8 +22,6 @@ class Note(pygame.sprite.Sprite):
         # Initialize Pygame
         pygame.init()
 
-
-        self.was_pressed = False
         self.midi = midi
 
         self.was_played = False
@@ -44,21 +42,6 @@ class Note(pygame.sprite.Sprite):
 
         self.is_active = False
 
-
-        # This dictionary matches notes to keys pressed
-        self.keys_dict = {
-        "O": K_o,
-        "10": K_0,
-        "1": K_1,
-        "2": K_2,
-        "3": K_3,
-        "4": K_4,
-        "5": K_5,
-        "6": K_6,
-        "7": K_7,
-        "8": K_8,
-        "9": K_9,
-        }
 
         # the y value the note should start from
         starting_y = 0
@@ -110,24 +93,14 @@ class Note(pygame.sprite.Sprite):
     def get_x_location(self):
         return self.rect.right
     
-    # returns true if the correct key for this button was pressed
-    def check_correct_key(self, pressed_key):
-        # checks to see if this note has already been pressed
-        if self.was_played == False:
 
-            # checks if the pressed key matches this note
-            if pressed_key == self.keys_dict[self.text]:
-                self.was_played = True
-                return True
-            else: 
-                return False
     
     def check_correct_note(self, predicted_midi):
         
-        if self.was_pressed == False:
+        if self.was_played == False:
 
             if self.midi == predicted_midi:
-                self.was_pressed = True
+                self.was_played = True
                 return True
             else:
                 return False
