@@ -71,13 +71,62 @@ def get_settings():
 
 
 
-def update_settings(enable_metronome):
-    print("Updating settings")
+def update_enable_metronome(enable_metronome):
+    """
+    Updates the stored enable_metronome settings value
+    Takes one (bool) arg
+    """
 
+    # reads the current values of the settings
     with open("settings/gamesettings.json", "r") as file:
         settings_data = json.load(file)
 
-    settings_data["enable_metronome"] = str(enable_metronome)
     
+    # bounds checking and correcting if necessary
+    if enable_metronome == True:
+        final_enable_metronome = True
+    elif enable_metronome == False:
+        final_enable_metronome = False
+    else:
+        print("WARNING - invalid enable_metronome value, corrected to True")
+        final_enable_metronome = True
+
+    
+
+
+    # updates the enable_metronome value to the passed in value
+    settings_data["enable_metronome"] = str(int(final_enable_metronome))
+    
+    # writes the updated settings to the settings file
+    with open("settings/gamesettings.json", "w") as file:
+        json.dump(settings_data, file, indent=4)
+
+
+
+def update_volume(new_volume):
+    """
+    Updates the stored volume settings value
+    Takes one (int) arg <= 100 and > 0
+    """
+
+    # reads the current values of the settings
+    with open("settings/gamesettings.json", "r") as file:
+        settings_data = json.load(file)
+
+
+    # bounds checking and correcting if necessary
+    if new_volume > 100:
+        print("WARNING - Volume too high, it was corrected to 100")
+        final_volume = 100
+    elif new_volume < 0:
+        print("WARNING - Volume too low, it was correct to 0")
+        final_volume = 0
+    else:
+        final_volume = new_volume
+
+    # updates the volume to the passed in value
+    settings_data["volume"] = str(final_volume)
+    
+    # writes the updated settings to the settings file
     with open("settings/gamesettings.json", "w") as file:
         json.dump(settings_data, file, indent=4)
