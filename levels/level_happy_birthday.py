@@ -520,6 +520,10 @@ def start():
     pygame.mixer.music.stop()
     pygame.mixer.quit()
 
+    # If the level should be restarted the restart it
+    if restart_level == True:
+        start()
+
 
 
 # Define bandpass filter
@@ -638,7 +642,5 @@ class AudioHandler(object):
         self.stream.close()
         self.p.terminate()
 
-    # If the level should be restarted the restart it
-    if restart_level == True:
-        start()
+    
 
