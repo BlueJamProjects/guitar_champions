@@ -71,13 +71,18 @@ def get_settings():
 
 
 
-def update_settings(enable_metronome):
-    print("Updating settings")
+def update_enable_metronome(enable_metronome):
+    """
+    Updates the stored enable_metronome settings value
+    """
 
+    # reads the current values of the settings
     with open("settings/gamesettings.json", "r") as file:
         settings_data = json.load(file)
 
+    # updates the enable_metronome value to the passed in value
     settings_data["enable_metronome"] = str(enable_metronome)
     
+    # writes the updated settings to the settings file
     with open("settings/gamesettings.json", "w") as file:
         json.dump(settings_data, file, indent=4)
