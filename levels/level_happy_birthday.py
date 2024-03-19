@@ -122,7 +122,7 @@ def start():
 
     # Create the screen object
     # The size is determined by the constant SCREEN_WIDTH and SCREEN_HEIGHT
-    screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+    # screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 
 
     # Create the background image for the level
@@ -538,49 +538,6 @@ def butter_bandpass_filter(data, lowcut, highcut, sr, order=5):
     y = scipy.signal.lfilter(b, a, data)
     return y
 
-def get_energy_around_freq(signal, sr, freq, bandwidth=5):
-    """
-    Calculate the energy of the signal around a specific frequency using FFT.
-
-    Parameters:
-    - signal: The audio signal (numpy array).
-    - sr: The sampling rate of the audio signal.
-    - freq: The target frequency around which to calculate energy.
-    - bandwidth: The bandwidth around the target frequency (in Hz).
-
-    Returns:
-    - The energy of the signal within the specified bandwidth around the target frequency.
-    """
-    # Perform FFT
-    fft_result = np.fft.fft(signal)
-    # Get frequencies for FFT results
-    freqs = np.fft.fftfreq(len(signal), 1/sr)
-    
-    # Find index range for target frequency +/- bandwidth
-    lower_bound = freq - bandwidth / 2
-    upper_bound = freq + bandwidth / 2
-    target_indices = np.where((freqs >= lower_bound) & (freqs <= upper_bound))
-    
-    # Calculate energy in the target frequency band
-    energy = np.sum(np.abs(fft_result[target_indices])**2)
-    
-    return energy
-
-def correct_octave_error(midi_number, audio_signal, sr):
-    # Convert MIDI to frequency
-    initial_freq = librosa.midi_to_hz(midi_number)
-    
-    # Check the energy around the initial frequency and its lower octave
-    lower_octave_freq = initial_freq / 2
-    energy_initial = get_energy_around_freq(audio_signal, sr, initial_freq)
-    energy_lower_octave = get_energy_around_freq(audio_signal, sr, lower_octave_freq)
-    
-    # Correct the MIDI number if the lower octave has more energy
-    if energy_lower_octave > energy_initial:
-        corrected_midi_number = librosa.hz_to_midi(lower_octave_freq)
-        return corrected_midi_number
-    else:
-        return midi_number
 
 # Audio processing and MIDI/amplitude calculation
 def audio_callback(in_data, frame_count, time_info, status):
@@ -599,9 +556,6 @@ def audio_callback(in_data, frame_count, time_info, status):
 
         global main_midi_number
         main_midi_number = round(midi_number)
-        #print(main_midi_number)
-
-        #midi_number = correct_octave_error(midi_number, filtered_audio, 44100)
         
         # Calculate amplitude
         amplitude = np.sqrt(np.mean(filtered_audio**2))
