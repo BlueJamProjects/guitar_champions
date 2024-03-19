@@ -75,11 +75,11 @@ def audio_callback(in_data, frame_count, time_info, status):
     
     # Convert to MIDI (note: this is simplified for demonstration and may need refinement for accurate pitch detection)
     try:
-        cqt = librosa.cqt(filtered_audio, sr=44100, fmin=librosa.note_to_hz('C1'), n_bins=72, bins_per_octave=12)
+        cqt = librosa.cqt(filtered_audio, sr=44100, fmin=librosa.note_to_hz('A0'), n_bins=72, bins_per_octave=12)
         mag_cqt = np.abs(cqt)
         summed_mag = np.sum(mag_cqt, axis=1)
         predominant_bin = np.argmax(summed_mag)
-        midi_number = librosa.hz_to_midi(librosa.core.cqt_frequencies(n_bins=72, fmin=librosa.note_to_hz('C1'), bins_per_octave=12)[predominant_bin])
+        midi_number = librosa.hz_to_midi(librosa.core.cqt_frequencies(n_bins=72, fmin=librosa.note_to_hz('A0'), bins_per_octave=12)[predominant_bin])
 
         #midi_number = correct_octave_error(midi_number, filtered_audio, 44100)
         
