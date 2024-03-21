@@ -83,54 +83,6 @@ def get_energy_around_freq(signal, sr, freq, bandwidth=5):
    
     return energy
 
-
-
-
-# Audio processing and MIDI/amplitude calculation
-# def audio_callback(in_data, frame_count, time_info, status):
-#     audio_data = np.frombuffer(in_data, dtype=np.float32)
-   
-#     # Apply bandpass filter
-#     filtered_audio = butter_bandpass_filter(audio_data, lowcut=80, highcut=7000, sr=44100)
-#     # Convert to MIDI (note: this is simplified for demonstration and may need refinement for accurate pitch detection)
-#     try:
-#         cqt = librosa.cqt(filtered_audio, sr=44100, fmin=librosa.note_to_hz('C1'), n_bins=72, bins_per_octave=12)
-#         mag_cqt = np.abs(cqt)
-#         summed_mag = np.sum(mag_cqt, axis=1)
-#         predominant_bin = np.argmax(summed_mag)
-#         midi_number = librosa.hz_to_midi(librosa.core.cqt_frequencies(n_bins=72, fmin=librosa.note_to_hz('C1'), bins_per_octave=12)[predominant_bin])
-
-
-#         #midi_number = correct_octave_error(midi_number, filtered_audio, 44100)
-#         # Calculate amplitude
-#         amplitude = np.sqrt(np.mean(filtered_audio**2))
-#         detected_freq = librosa.midi_to_hz(midi_number)
-       
-#         # Harmonic analysis to verify and possibly correct the detected pitch
-#         harmonic_analysis = harmonic_energy(filtered_audio, 44100, detected_freq)
-       
-#         midi_number = librosa.hz_to_midi(detected_freq)
-#         # corrected_midi_number = correct_octave_error(midi_number, filtered_audio, 44100)
-
-
-#         if amplitude > 0.001:
-#             # print(f"MIDI Number: {corrected_midi_number:.2f}, Amplitude: {amplitude:.5f}")
-
-
-#             # if midi_number == 40 or midi_number == 52 or midi_number == 68:
-#             #     # print(f"MIDI Number: {midi_number:.2f}, Amplitude: {amplitude:.5f}")
-#             #     if abs(harmonic_analysis['harmonics'][1] - harmonic_analysis['harmonics'][0]) > 20:
-#             #         midi_number = 40
-#             #     else:
-#             #         print(harmonic_analysis['harmonics'][1] - harmonic_analysis['harmonics'][0])
-#             print(f"Fundamental Energy: {harmonic_analysis['fundamental']}, Harmonic Energies: {harmonic_analysis['harmonics']}")        
-#             print(f"MIDI Number: {midi_number:.2f}, Amplitude: {amplitude:.5f}")
-#     except Exception as e:
-#         print(f"Error processing audio: {e}")
-   
-#     return (in_data, pyaudio.paContinue)
-
-
 def midi_number_to_pitch(midi_number):
     n = note.Note()
     n.pitch.midi = midi_number
