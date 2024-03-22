@@ -69,10 +69,15 @@ metronome_butt = settings_menu.add.selector(
 metronome_butt.add_draw_callback(draw_update_function_helper.draw_update_function)
 metronome_butt.translate(0,-90)
 
-# backbutt=settings_menu.add.button('Enable Metronome', pygame_menu.events.BACK, float=True,font_name=fonter)
-# backbutt.add_draw_callback(draw_update_function_helper.draw_update_function)
-# backbutt.translate(0, 0)
+volume_slider = settings_menu.add.range_slider('Voume', 100, (0, 100), 1,
+                                             rangeslider_id='range_slider',
+                                             value_format=lambda x: str(int(x)))
 
+
+
+volume_slider.add_draw_callback(draw_update_function_helper.draw_update_function)
+
+volume_slider.translate(0,-120)
 
 backbutt=settings_menu.add.button('Back', pygame_menu.events.BACK, float=True,font_name=fonter)
 backbutt.add_draw_callback(draw_update_function_helper.draw_update_function)
