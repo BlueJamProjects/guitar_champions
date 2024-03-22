@@ -67,7 +67,7 @@ metronome_butt = settings_menu.add.selector(
     )
 
 metronome_butt.add_draw_callback(draw_update_function_helper.draw_update_function)
-metronome_butt.translate(0,-40)
+metronome_butt.translate(0,-90)
 
 # backbutt=settings_menu.add.button('Enable Metronome', pygame_menu.events.BACK, float=True,font_name=fonter)
 # backbutt.add_draw_callback(draw_update_function_helper.draw_update_function)
