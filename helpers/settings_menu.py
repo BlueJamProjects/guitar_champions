@@ -52,6 +52,26 @@ fonter=pygame.font.Font("assets/font/Signatra.ttf",40)
 widgets=[]
 
 settings_menu = pygame_menu.Menu('Settings', 800, 600,theme=mytheme)
+
+enable_metronome_options = [("True", True),
+             ('False', False)]
+
+    # Create selector with 3 difficulty options
+metronome_butt = settings_menu.add.selector(
+        'Enable Metronome:\t',
+        enable_metronome_options,
+        selector_id='difficulty',
+        default=1
+    )
+
+metronome_butt.add_draw_callback(draw_update_function_helper.draw_update_function)
+metronome_butt.translate(0,-40)
+
+# backbutt=settings_menu.add.button('Enable Metronome', pygame_menu.events.BACK, float=True,font_name=fonter)
+# backbutt.add_draw_callback(draw_update_function_helper.draw_update_function)
+# backbutt.translate(0, 0)
+
+
 backbutt=settings_menu.add.button('Back', pygame_menu.events.BACK, float=True,font_name=fonter)
 backbutt.add_draw_callback(draw_update_function_helper.draw_update_function)
 backbutt.translate(0,-20)
