@@ -53,12 +53,12 @@ fonter=pygame.font.Font("assets/font/Signatra.ttf",40)
 
 widgets=[]
 
-tutorials_menu = pygame_menu.Menu('Tutorials', 800, 600,theme=mytheme)
-backbutt=tutorials_menu.add.button('Back', pygame_menu.events.BACK, float=True,font_name=fonter)
+settings_menu = pygame_menu.Menu('settings', 800, 600,theme=mytheme)
+backbutt=settings_menu.add.button('Back', pygame_menu.events.BACK, float=True,font_name=fonter)
 backbutt.add_draw_callback(draw_update_function_helper.draw_update_function)
 backbutt.translate(0,-20)
 widgets.append(backbutt)
-exbutt=tutorials_menu.add.button('Quit', pygame_menu.events.EXIT, float=True,font_name=fonter)
+exbutt=settings_menu.add.button('Quit', pygame_menu.events.EXIT, float=True,font_name=fonter)
 exbutt.add_draw_callback(draw_update_function_helper.draw_update_function)
 exbutt.translate(0,90)
 widgets.append(exbutt)
