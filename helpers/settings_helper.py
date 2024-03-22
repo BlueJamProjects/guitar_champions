@@ -68,7 +68,38 @@ def get_settings():
 
 
 
+def update_enable_metronome(new_enable_metronome):
+    """
+    Updates the stored enable_metronome value in the gamesettings.json file
+    Takes in a bool to be stored as the enable_metronome value
+    """
 
+    with open("settings/gamesettings.json", "r") as file:
+        settings_data = json.load(file)
+
+    try:
+        if new_enable_metronome == True:
+            final_enable_metronome = 1
+        elif new_enable_metronome == False:
+            final_enable_metronome = 0
+        else:
+            print("WARNING - invalid value passed for enable_metronome, corrected to True")
+            final_enable_metronome = 1
+
+
+        # Updates the value if no errors were thrown
+        settings_data["enable_metronome"] = str(final_enable_metronome)
+
+        with open("settings/gamesettings.json", "w") as file:
+            json.dump(settings_data, file, indent=4)
+
+
+
+    except Exception as e:
+        print(f"ERROR updating value for enable_metronome: {e}")
+        print("enable_metronome was not updated")
+    
+   
 
 
 def update_settings(enable_metronome):

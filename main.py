@@ -147,14 +147,12 @@ if __name__ == "__main__":
 
 
     def test_update():
-        settings_helper.update_enable_metronome(True)
-        settings_helper.update_volume(33)
+        print("Updating settings")
+        settings_helper.update_enable_metronome("Bill")
+        # settings_helper.update_volume(33)
     
     #all widgets, must have an update function, be moved into position, and added to the array
-    settbutt=menu.add.button('Settings', test_update(), float=True,font_name=fonter)
-    settbutt.add_draw_callback(draw_update_function)
-    settbutt.translate(0,-150)
-    widgets.append(settbutt)
+    
     
     levbutt=menu.add.selector('Level Select:', [(level[0], index) for index, level in enumerate(level_list)],float=True, font_name=fonter, onchange=select_level)
     levbutt.add_draw_callback(draw_update_function)
@@ -170,10 +168,16 @@ if __name__ == "__main__":
     tutbutt.add_draw_callback(draw_update_function)
     tutbutt.translate(0,90)
     widgets.append(tutbutt)
+
+
+    settbutt=menu.add.button('Settings', test_update, float=True,font_name=fonter)
+    settbutt.add_draw_callback(draw_update_function)
+    settbutt.translate(0,170)
+    widgets.append(settbutt)
     
     quitbutt=menu.add.button('Quit', pygame_menu.events.EXIT, float=True,font_name=fonter)
     quitbutt.add_draw_callback(draw_update_function)
-    quitbutt.translate(0,200)
+    quitbutt.translate(0,260)
     widgets.append(quitbutt)
     
     for widget in widgets:
