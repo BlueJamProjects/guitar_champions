@@ -11,6 +11,7 @@ import pygame_menu
 
 import helpers.redraw_helper as redraw_helper
 import helpers.draw_update_function_helper as draw_update_function_helper
+import helpers.settings_helper as settings_helper
 
 # Import pygame.locals for easier access to key coordinates
 # Updated to conform to flake8 and black standards
@@ -61,7 +62,8 @@ metronome_butt = settings_menu.add.selector(
         'Enable Metronome:\t',
         enable_metronome_options,
         selector_id='difficulty',
-        default=1
+        default=1,
+        onchange=settings_helper.update_enable_metronome
     )
 
 metronome_butt.add_draw_callback(draw_update_function_helper.draw_update_function)

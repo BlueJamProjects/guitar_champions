@@ -68,10 +68,10 @@ def get_settings():
 
 
 
-def update_enable_metronome(new_enable_metronome):
+def update_enable_metronome(name, new_enable_metronome):
     """
     Updates the stored enable_metronome value in the gamesettings.json file
-    Takes in a bool to be stored as the enable_metronome value
+    Takes in a (name, bool) to store the bool as the enable_metronome value
     """
 
     with open("settings/gamesettings.json", "r") as file:
@@ -102,10 +102,10 @@ def update_enable_metronome(new_enable_metronome):
    
 
 
-def update_volume(new_volume):
+def update_volume(name, new_volume):
     """
     Updates the stored volume value in the gamesettings.json file
-    Takes in an int <= 100 and >= 0 to be stored as the enable_metronome value
+    Takes in an (name, int) with the int int <= 100 and >= 0 to be stored as the enable_metronome value
     """
 
     print("Updating volume")
