@@ -148,8 +148,8 @@ if __name__ == "__main__":
 
     def test_update():
         print("Updating settings")
-        settings_helper.update_enable_metronome("Bill")
-        # settings_helper.update_volume(33)
+        # settings_helper.update_enable_metronome("Bill")
+        settings_helper.update_volume("Testing")
     
     #all widgets, must have an update function, be moved into position, and added to the array
     

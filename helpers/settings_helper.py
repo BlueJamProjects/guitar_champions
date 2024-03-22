@@ -108,21 +108,23 @@ def update_volume(new_volume):
     Takes in an int <= 100 and >= 0 to be stored as the enable_metronome value
     """
 
+    print("Updating volume")
+
     with open("settings/gamesettings.json", "r") as file:
         settings_data = json.load(file)
 
     try:
-        if (new_volume // 1) > 101 and (new_volume // 1 ) > -1:
-            final_volume = (new_volume // 1 )
-        elif (new_volume // 1) < 101:
+        if (new_volume // 1) <= 100 and (new_volume // 1 ) >= 0:
+            final_volume = (new_volume // 1)
+        elif (new_volume // 1) > 100:
             final_volume = 100
         elif (new_volume // 1) < 0:
             final_volume = 0
         else:
-            print("WARNING - invalid value passed for enable_metronome, corrected to True")
+            print("WARNING - invalid value passed for volume, corrected to 100")
             final_volume = 100
 
-
+        print(final_volume)
         # Updates the value if no errors were thrown
         settings_data["volume"] = str(final_volume)
 
@@ -132,5 +134,5 @@ def update_volume(new_volume):
 
 
     except Exception as e:
-        print(f"ERROR updating value for enable_metronome: {e}")
-        print("enable_metronome was not updated")
+        print(f"ERROR updating value for volume: {e}")
+        print("volume was not updated")
