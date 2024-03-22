@@ -29,8 +29,6 @@ pygame.init()
 # Initialize Pygame fonts
 pygame.font.init()
 
-new_font = pygame.font.Font("assets/font/Signatra.ttf",40)
-
 mytheme = pygame_menu.themes.Theme( # transparent background
                 title_background_color=(255, 187, 68),
                 title_font_color=(255,255,255),
@@ -40,7 +38,7 @@ mytheme = pygame_menu.themes.Theme( # transparent background
                 title_bar_style= pygame_menu.widgets.MENUBAR_STYLE_NONE,
                 title_offset= (120,20),
                 title_font_shadow=True,
-                title_font=new_font,
+                title_font=pygame.font.Font("assets/font/Signatra.ttf",40),
                 title_font_size=80,
                 title_floating=True,
                 )
