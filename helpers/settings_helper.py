@@ -114,7 +114,7 @@ def update_volume(new_volume):
 
     try:
         if (new_volume // 1) <= 100 and (new_volume // 1 ) >= 0:
-            final_volume = (new_volume // 1)
+            final_volume = int(new_volume)
         elif (new_volume // 1) > 100:
             final_volume = 100
         elif (new_volume // 1) < 0:

@@ -82,7 +82,7 @@ metronome_butt = settings_menu.add.selector(
 metronome_butt.add_draw_callback(draw_update_function_helper.draw_update_function)
 metronome_butt.translate(0,-90)
 
-volume_slider = settings_menu.add.range_slider('Volume', 100, (0, 100), 1,
+volume_slider = settings_menu.add.range_slider('Volume', user_settings.volume, (0, 100), 1,
                                              rangeslider_id='range_slider',
                                              value_format=lambda x: str(int(x)),
                                              onchange=settings_helper.update_volume
