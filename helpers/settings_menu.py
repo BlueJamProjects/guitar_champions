@@ -25,6 +25,9 @@ from pygame.locals import (
     QUIT,
 )
 
+
+user_settings = settings_helper.get_settings()
+
 pygame.init()
 
 # Initialize Pygame fonts
@@ -44,7 +47,7 @@ mytheme = pygame_menu.themes.Theme( # transparent background
                 title_floating=True,
                 )
 
-pygame.init()
+# pygame.init()
 
 surface = pygame.display.set_mode((800, 600))
 
@@ -54,22 +57,32 @@ widgets=[]
 
 settings_menu = pygame_menu.Menu('Settings', 800, 600,theme=mytheme)
 
-enable_metronome_options = [("True", True),
-             ('False', False)]
+
+if user_settings.enable_metronome == False:
+    default_metronome_value = 0
+elif user_settings.enable_metronome == True:
+    default_metronome_value = 1
+else:
+    default_metronome_value = 1
+
+enable_metronome_options = [
+             ('False', False),
+             ("True", True)
+             ]
 
     # Create selector with 3 difficulty options
 metronome_butt = settings_menu.add.selector(
         'Enable Metronome:\t',
         enable_metronome_options,
         selector_id='difficulty',
-        default=1,
+        default= default_metronome_value,
         onchange=settings_helper.update_enable_metronome
     )
 
 metronome_butt.add_draw_callback(draw_update_function_helper.draw_update_function)
 metronome_butt.translate(0,-90)
 
-volume_slider = settings_menu.add.range_slider('Voume', 100, (0, 100), 1,
+volume_slider = settings_menu.add.range_slider('Volume', 100, (0, 100), 1,
                                              rangeslider_id='range_slider',
                                              value_format=lambda x: str(int(x)))
 
