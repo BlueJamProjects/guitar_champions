@@ -35,7 +35,7 @@ def get_settings():
             try:
                 # If the volume was in the valid range
                 if (int(settings_data[key]) < 101) and (int(settings_data[key]) > -1):
-                    current_settings.volume = settings_data[key]
+                    current_settings.volume = int(settings_data[key])
                 else:
                     print("ERROR - stored volume setting was not in valid range")
 

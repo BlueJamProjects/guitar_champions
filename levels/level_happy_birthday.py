@@ -78,6 +78,7 @@ def start():
         # Load and play our background music
         pygame.mixer.music.load("assets/sounds/background-music/metro-34-60bpm.mp3")
         pygame.mixer.music.play(loops=-1)
+        pygame.mixer.music.set_volume(user_settings.volume / 100)
 
 
     # Create our 'player'
