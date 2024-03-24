@@ -108,7 +108,6 @@ def update_volume(new_volume):
     Takes in an (name, int) with the int int <= 100 and >= 0 to be stored as the enable_metronome value
     """
 
-    print("Updating volume")
 
     with open("settings/gamesettings.json", "r") as file:
         settings_data = json.load(file)
@@ -124,7 +123,6 @@ def update_volume(new_volume):
             print("WARNING - invalid value passed for volume, corrected to 100")
             final_volume = 100
 
-        print(final_volume)
         # Updates the value if no errors were thrown
         settings_data["volume"] = str(final_volume)
 
