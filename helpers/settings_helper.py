@@ -50,9 +50,9 @@ def get_settings():
 
             try:
                 # If the enable metronome value was one of the valid values
-                if (settings_data[key] == "0"):
+                if (settings_data[key] == False):
                     current_settings.enable_metronome = False
-                elif (settings_data[key] == "1"):
+                elif (settings_data[key] == True):
                     current_settings.enable_metronome = True
                 else:
                     print("ERROR - stored enable_metronome setting was not valid")
@@ -79,16 +79,16 @@ def update_enable_metronome(name, new_enable_metronome):
 
     try:
         if new_enable_metronome == True:
-            final_enable_metronome = 1
+            final_enable_metronome = True
         elif new_enable_metronome == False:
-            final_enable_metronome = 0
+            final_enable_metronome = False
         else:
             print("WARNING - invalid value passed for enable_metronome, corrected to True")
-            final_enable_metronome = 1
+            final_enable_metronome = True
 
 
         # Updates the value if no errors were thrown
-        settings_data["enable_metronome"] = str(final_enable_metronome)
+        settings_data["enable_metronome"] = final_enable_metronome
 
         with open("settings/gamesettings.json", "w") as file:
             json.dump(settings_data, file, indent=4)
@@ -124,7 +124,7 @@ def update_volume(new_volume):
             final_volume = 100
 
         # Updates the value if no errors were thrown
-        settings_data["volume"] = str(final_volume)
+        settings_data["volume"] = final_volume
 
         with open("settings/gamesettings.json", "w") as file:
             json.dump(settings_data, file, indent=4)
