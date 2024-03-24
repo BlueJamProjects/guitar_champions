@@ -20,15 +20,11 @@ def get_settings():
     with open("settings/gamesettings.json", "r") as file:
         settings_data = json.load(file)
 
-
     current_settings = Settings()
-
 
     # Loops through all the keys from the data and assigns their settings value
     # checks each for validity
     for key in settings_data:
-
-
 
         if key == "volume":
 
@@ -42,8 +38,6 @@ def get_settings():
             # If the stored value was not a string of an int
             except Exception as e:
                 print(f"ERROR - could not process volume setting: {e}")
-
-
 
 
         elif key == "enable_metronome":
@@ -93,8 +87,6 @@ def update_enable_metronome(name, new_enable_metronome):
         with open("settings/gamesettings.json", "w") as file:
             json.dump(settings_data, file, indent=4)
 
-
-
     except Exception as e:
         print(f"ERROR updating value for enable_metronome: {e}")
         print("enable_metronome was not updated")
@@ -128,8 +120,6 @@ def update_volume(new_volume):
 
         with open("settings/gamesettings.json", "w") as file:
             json.dump(settings_data, file, indent=4)
-
-
 
     except Exception as e:
         print(f"ERROR updating value for volume: {e}")
