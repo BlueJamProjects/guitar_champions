@@ -102,7 +102,7 @@ def update_enable_metronome(name, new_enable_metronome):
    
 
 
-def update_volume(name, new_volume):
+def update_volume(new_volume):
     """
     Updates the stored volume value in the gamesettings.json file
     Takes in an (name, int) with the int int <= 100 and >= 0 to be stored as the enable_metronome value
