@@ -35,7 +35,7 @@ import partials.notes.text_note as note
 import partials.buttons.text_button as text_button
 
 import helpers.settings_helper as settings_helper
-=======
+
 import partials.titlecard.title_card as title_card
 
 
