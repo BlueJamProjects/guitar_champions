@@ -157,6 +157,9 @@ def start():
                                 exit()
 
             # screen.blit(bg_img,(0,0))
+                                
+            surface = pygame.display.set_mode((100, 100))
+            # surface.blit()
 
             for sprite in current_sprites:
                 screen.blit(sprite, (0,0))
