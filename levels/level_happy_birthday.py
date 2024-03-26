@@ -7,7 +7,7 @@ import os, pygame
 import random
 
 import sys
-
+import matplotlib.pyplot as plt
 import pyaudio
 import wave
 import librosa
@@ -171,35 +171,35 @@ def start():
 
     # This is the array with the song's note information
     song_notes = [
-        note.Note(text="O", midi=55, time_to_next_note=1, tab_line=3, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
-        note.Note(text="O", midi=55, time_to_next_note=1, tab_line=3, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
-        note.Note(text="2", midi=57, time_to_next_note=1, tab_line=3, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
-        note.Note(text="O", midi=55, time_to_next_note=1, tab_line=3, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
-        note.Note(text="1", midi=60, time_to_next_note=1, tab_line=2, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
-        note.Note(text="O", midi=59, time_to_next_note=2.0, tab_line=2, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
+        note.Note(text="O", midi=55, time_to_next_note=1, tab_line=3, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=0),
+        note.Note(text="O", midi=55, time_to_next_note=1, tab_line=3, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=1),
+        note.Note(text="2", midi=57, time_to_next_note=1, tab_line=3, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=2),
+        note.Note(text="O", midi=55, time_to_next_note=1, tab_line=3, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=3),
+        note.Note(text="1", midi=60, time_to_next_note=1, tab_line=2, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=4),
+        note.Note(text="O", midi=59, time_to_next_note=2.0, tab_line=2, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=5),
 
-        note.Note(text="O", midi=55, time_to_next_note=0.5, tab_line=3, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
-        note.Note(text="O", midi=55, time_to_next_note=0.5, tab_line=3, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
-        note.Note(text="2", midi=57, tab_line=3, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
-        note.Note(text="O", midi=55, tab_line=3, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
-        note.Note(text="3", midi=62, tab_line=2, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
-        note.Note(text="1", midi=60, time_to_next_note=2.0, tab_line=2, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
+        note.Note(text="O", midi=55, time_to_next_note=0.5, tab_line=3, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=6),
+        note.Note(text="O", midi=55, time_to_next_note=0.5, tab_line=3, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=7),
+        note.Note(text="2", midi=57, tab_line=3, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=8),
+        note.Note(text="O", midi=55, tab_line=3, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=9),
+        note.Note(text="3", midi=62, tab_line=2, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=10),
+        note.Note(text="1", midi=60, time_to_next_note=2.0, tab_line=2, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=11),
 
 
-        note.Note(text="O", midi=55, time_to_next_note=0.5, tab_line=3, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
-        note.Note(text="O", midi=55, time_to_next_note=0.5, tab_line=3, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
-        note.Note(text="3", midi=67, tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
-        note.Note(text="O", midi=64, tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
-        note.Note(text="1", midi=60, tab_line=2, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
-        note.Note(text="O", midi=59, tab_line=2, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
-        note.Note(text="2", midi=57, time_to_next_note=2.0, tab_line=3, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
+        note.Note(text="O", midi=55, time_to_next_note=0.5, tab_line=3, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=13),
+        note.Note(text="o", midi=55, time_to_next_note=0.5, tab_line=3, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=14),
+        note.Note(text="3", midi=67, tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=15),
+        note.Note(text="o", midi=64, tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=16),
+        note.Note(text="1", midi=60, tab_line=2, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=17),
+        note.Note(text="o", midi=59, tab_line=2, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=18),
+        note.Note(text="2", midi=57, time_to_next_note=2.0, tab_line=3, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=19),
 
-        note.Note(text="1", midi=65, time_to_next_note=0.5, tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
-        note.Note(text="1", midi=65, time_to_next_note=0.5, tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
-        note.Note(text="O", midi=64, tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
-        note.Note(text="1", midi=60, tab_line=2, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
-        note.Note(text="3", midi=62, tab_line=2, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
-        note.Note(text="1", midi=60, tab_line=2, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
+        note.Note(text="1", midi=65, time_to_next_note=0.5, tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=20),
+        note.Note(text="1", midi=65, time_to_next_note=0.5, tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=21),
+        note.Note(text="O", midi=64, tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=22),
+        note.Note(text="1", midi=60, tab_line=2, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=23),
+        note.Note(text="3", midi=62, tab_line=2, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=24),
+        note.Note(text="1", midi=60, tab_line=2, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=25),
         ]
     
     # This keeps track of all the notes the player correctly hit
@@ -215,8 +215,7 @@ def start():
             
             pygame.mixer.music.stop()
 
-            # calculates the total of the notes that were correctly played
-            total_score = len(correctly_played_notes)
+
 
             for event in pygame.event.get():
 
@@ -249,7 +248,31 @@ def start():
                             restart_level = True
                             running = False
 
-
+            # calculates the total of the notes that were correctly played
+            total_score = len(correctly_played_notes)
+            # create an array that stores accuracy percentage at each note
+            accuracy_array=[]
+            index_array=[]
+            correcters=0
+            totnote=0
+            for noe in song_notes:
+                if noe.was_played:
+                    correcters+=1
+                totnote+=1
+                index_array.append(totnote)
+                accuracy_array.append(correcters/totnote*100)
+            plt.plot(index_array,accuracy_array, color='orange', linewidth=5)
+            plt.ylim(0,100)
+            plt.xlim(1,totnote)
+            plt.title('Your overall Accuracy!')
+            font = {'family' : 'normal',
+                'weight' : 'bold',
+                'size'   : 22}
+            plt.yticks(fontsize=20)
+            plt.xticks(fontsize=20)
+            plt.rc('font', **font)
+            plt.savefig('assets/images/tempgraphs/graphy.png')
+            endplot = pygame.image.load('assets/images/tempgraphs/graphy.png')
             # create a font to select font and size
             score_font = pygame.font.Font('assets/font/BITSUMIS.ttf', 32)
             end_font=  pygame.font.Font('assets/font/Signatra.ttf', 80)
@@ -291,7 +314,9 @@ def start():
             s.fill((30,30,30))           
             screen.blit(s, (20,20))
             end_screen_cheems=pygame.transform.scale(end_screen_cheems,(270,270))
+            endplot=pygame.transform.scale(endplot,(440,247))
             screen.blit(end_screen_cheems,(SCREEN_WIDTH-290,40))
+            screen.blit(endplot,(SCREEN_WIDTH/2-360,300))
             screen.blit(score_font_render, (SCREEN_WIDTH/4-162,150))
             screen.blit(score_font_render2, (SCREEN_WIDTH/4-60,200))
             screen.blit(end_render, (SCREEN_WIDTH/4-130,50))
@@ -302,6 +327,9 @@ def start():
             screen.blit(complete_level_button.render, complete_level_button.button_position)
             pygame.draw.rect(screen,(255,255,255),complete_level_button.button_position,2)
             
+            
+
+            os.remove('assets/images/tempgraphs/graphy.png')
             pygame.display.update()
             clock.tick_busy_loop(30)
 
@@ -392,8 +420,6 @@ def start():
     
 
             else:
-                #    TODO Make the transparent surface only render once on paused
-                # transparent_surface_rendered_once = False
 
 
                 for curr_note in Notes:
@@ -404,7 +430,7 @@ def start():
                         # This is a function from the note that we check to see if it's key was the one pressed
                         # print("MIDI Number: ",main_midi_number)
                         if curr_note.check_correct_note(main_midi_number):
-
+                            curr_note.was_played=True
                             print("Correct note played")
                             correctly_played_notes.append(curr_note)
                             
