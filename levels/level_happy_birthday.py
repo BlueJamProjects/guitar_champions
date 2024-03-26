@@ -129,10 +129,11 @@ def start():
     score_screen_background = pygame.image.load('assets/images/backgrounds/orange_background.jpg').convert()
     score_screen_background.set_colorkey((255, 255, 255), RLEACCEL)
 
+    end_screen_cheems = pygame.image.load('assets/images/characters/npcs/birthday_dog.png')
 
-    completed_restart_level_button = text_button.TextButton(text="Restart", width= 100,height= 50, left_padding= SCREEN_WIDTH/2 - 50, top_padding= SCREEN_HEIGHT/2 + 60)
+    completed_restart_level_button = text_button.TextButton(text=" Restart Level ", width= 151,height= 44, left_padding= SCREEN_WIDTH/2 + 175, top_padding= SCREEN_HEIGHT/2 + 50)
 
-    complete_level_button = text_button.TextButton(text="Complete", width= 100,height= 50, left_padding= SCREEN_WIDTH/2 - 50, top_padding= SCREEN_HEIGHT/2 + 110)
+    complete_level_button = text_button.TextButton(text=" Return to Menu ", width= 177,height= 44, left_padding= SCREEN_WIDTH/2 + 163, top_padding= SCREEN_HEIGHT/2 + 140)
 
     
 
@@ -242,13 +243,16 @@ def start():
 
 
             # create a font to select font and size
-            score_font = pygame.font.Font('freesansbold.ttf', 32)
- 
+            score_font = pygame.font.Font('assets/font/BITSUMIS.ttf', 32)
+            end_font=  pygame.font.Font('assets/font/Signatra.ttf', 80)
             # create a text surface object using the font
             # on which text is drawn on it.
-            score_font_text = "You correctly played : " + str(total_score) +" out of " + str(len(song_notes))
-            score_font_render = score_font.render(score_font_text, False, (255, 255, 255), (0, 0, 0))
-            
+            end_text= " Level  Complete! "
+            end_render = end_font.render(end_text, False, (255, 255, 255), (239,159,20))
+            score_font_text = " You correctly played: " 
+            score_font_text2=" "+str(total_score) +" out of " + str(len(song_notes))+"! "
+            score_font_render = score_font.render(score_font_text, False, (255, 255, 255), (239,159,20))
+            score_font_render2 = score_font.render(score_font_text2, False, (255, 255, 255), (239,159,20))
 
             
 
@@ -260,31 +264,40 @@ def start():
 
             # this determines your encouragement method
             if percent_score == 100.0:
-                encouragement_font_text = "Perfect!"
+                encouragement_font_text = " Perfect! "
             elif percent_score >= 66.666:
-                encouragement_font_text = "Well done!"
+                encouragement_font_text = " Well done! "
             elif percent_score >= 33.333:
-                encouragement_font_text = "Good try!"
+                encouragement_font_text = " Good try! "
             else:
-                encouragement_font_text = "You can do it!"
+                encouragement_font_text = " You can do it! "
 
 
-            encouragement_font_render = score_font.render(encouragement_font_text, False, (255, 255, 255), (0, 0, 0))
+            encouragement_font_render = score_font.render(encouragement_font_text, False, (255, 255, 255), (239,159,20))
 
 
             # displays the visual elements of the completed screen
             screen.blit(score_screen_background,(0,0))
-            screen.blit(score_font_render, (SCREEN_WIDTH/2-200,100))
-            screen.blit(encouragement_font_render, (SCREEN_WIDTH/2-50,200))
+            s = pygame.Surface((SCREEN_WIDTH*.6,.9*SCREEN_HEIGHT)) 
+            s.set_alpha(160)                
+            s.fill((30,30,30))           
+            screen.blit(s, (20,20))
+            end_screen_cheems=pygame.transform.scale(end_screen_cheems,(270,270))
+            screen.blit(end_screen_cheems,(SCREEN_WIDTH-290,40))
+            screen.blit(score_font_render, (SCREEN_WIDTH/4-162,150))
+            screen.blit(score_font_render2, (SCREEN_WIDTH/4-60,200))
+            screen.blit(end_render, (SCREEN_WIDTH/4-130,50))
+            pygame.draw.rect(screen,(255,255,255),pygame.Rect(SCREEN_WIDTH/4-130,50,373,85),2)
+            screen.blit(encouragement_font_render, (SCREEN_WIDTH/4-75,250))
             screen.blit(completed_restart_level_button.render, completed_restart_level_button.button_position)
+            pygame.draw.rect(screen,(255,255,255),completed_restart_level_button.button_position,2)
             screen.blit(complete_level_button.render, complete_level_button.button_position)
-            
+            pygame.draw.rect(screen,(255,255,255),complete_level_button.button_position,2)
             
             pygame.display.update()
             clock.tick_busy_loop(30)
 
         else:
-
             # If we have started going through the notes and deleted the last one then the song is complete
             if note_index >= (len(song_notes) - 1):
                 if len(Notes) == 0:
@@ -491,6 +504,7 @@ def start():
     # At this point, we're done, so we can stop and quit the mixer
     pygame.mixer.music.stop()
     pygame.mixer.quit()
+    
 
     # If the level should be restarted the restart it
     if restart_level == True:
