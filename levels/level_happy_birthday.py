@@ -96,7 +96,7 @@ def start():
                     channels=1,
                     rate=44100,
                     input=True,
-                    frames_per_buffer=4096,
+                    frames_per_buffer=1024,
                     stream_callback=audio_callback)
 
     print("Streaming and processing audio. Press Ctrl+C to stop.")
@@ -530,7 +530,7 @@ class AudioHandler(object):
         self.FORMAT = pyaudio.paFloat32
         self.CHANNELS = 1
         self.RATE = 44100
-        self.CHUNK = 4096
+        self.CHUNK = 1024
         self.p = None
         self.stream = None
 

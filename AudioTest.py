@@ -7,7 +7,14 @@ import numpy as np
 from collections import Counter
 import scipy.signal
 import crepe
+import keras
+import keras.backend as K
 from music21 import note
+import os
+
+os.environ['CUDA_VISIBLE_DEVICS'] = '-1'
+
+import tensorflow as tf
 
 # Define bandpass filter
 def butter_bandpass_filter(data, lowcut, highcut, sr, order=5):
@@ -93,11 +100,12 @@ def audio_callback(in_data, frame_count, time_info, status):
 
 
     # Apply bandpass filter
-    filtered_audio = butter_bandpass_filter(audio_data, lowcut=80, highcut=7000, sr=44100)
+    filtered_audio = butter_bandpass_filter(audio_data, lowcut=80, highcut=7000, sr=16000)
 
 
     try:
-        time, frequency, confidence, activation = crepe.predict(audio_data, 44100, viterbi=True)
+        time, frequency, confidence, activation = crepe.predict(filtered_audio, 16000, step_size=50, viterbi=True)
+        # K.clear_session()
        
         if len(confidence) > 0:
             best_idx = np.argmax(confidence)
@@ -114,43 +122,6 @@ def audio_callback(in_data, frame_count, time_info, status):
     return (in_data, pyaudio.paContinue)
 
 
-class AudioHandler(object):
-    def __init__(self):
-        self.FORMAT = pyaudio.paFloat32
-        self.CHANNELS = 1
-        self.RATE = 44100
-        self.CHUNK = 4096
-        self.p = None
-        self.stream = None
-
-
-        # High-pass filter parameters
-        self.low_cutoff = 80.0
-        self.high_cutoff = 300.0
-
-
-        # Amplitude Threshold
-        self.amplitude_threshold = 3.0
-
-
-    def start(self):
-        self.p = pyaudio.PyAudio()
-        self.stream = self.p.open(format=self.FORMAT,
-                                  channels=self.CHANNELS,
-                                  rate=self.RATE,
-                                  input=True,
-                                  output=False,
-                                  frames_per_buffer=self.CHUNK,
-                                  stream_callback=audio_callback)
-
-
-    def stop(self):
-        self.stream.close()
-        self.p.terminate()
-
-
-
-
 # Main function to start audio streaming
 def stream_audio():
     p = pyaudio.PyAudio()
@@ -158,9 +129,9 @@ def stream_audio():
 
     stream = p.open(format=pyaudio.paFloat32,
                     channels=1,
-                    rate=44100,
+                    rate=16000,
                     input=True,
-                    frames_per_buffer=4096,
+                    frames_per_buffer=2048,
                     stream_callback=audio_callback)
 
 
@@ -181,12 +152,3 @@ def stream_audio():
 
 if __name__ == "__main__":
     stream_audio()
-
-
-
-
-
-
-
-
-
