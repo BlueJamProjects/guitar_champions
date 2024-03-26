@@ -34,9 +34,17 @@ import partials.player.playing_player as playing_player
 import partials.notes.text_note as note
 import partials.buttons.text_button as text_button
 
+import helpers.settings_helper as settings_helper
+
+import partials.titlecard.title_card as title_card
+
+
 main_midi_number = 40
 
 def start():
+
+
+    user_settings = settings_helper.get_settings()
 
     # Define constants for the screen width and height
     SCREEN_WIDTH = pygame.display.get_surface().get_size()[0]
@@ -49,6 +57,7 @@ def start():
     paused = False
     completed = False
     restart_level = False
+    pauserendered=False
 
 
     # Setup for sounds, defaults are good
@@ -70,10 +79,11 @@ def start():
     # it is used later for keeping the notes sending at a regular rate
     frames_since_note = 0
 
-    
-    # Load and play our background music
-    pygame.mixer.music.load("assets/sounds/background-music/metro-34-60bpm.mp3")
-    pygame.mixer.music.play(loops=-1)
+    if user_settings.enable_metronome == True:
+        # Load and play our background music
+        pygame.mixer.music.load("assets/sounds/background-music/metro-34-60bpm.mp3")
+        pygame.mixer.music.play(loops=-1)
+        pygame.mixer.music.set_volume(user_settings.volume / 100)
 
 
     # Create our 'player'
@@ -127,10 +137,11 @@ def start():
     score_screen_background = pygame.image.load('assets/images/backgrounds/orange_background.jpg').convert()
     score_screen_background.set_colorkey((255, 255, 255), RLEACCEL)
 
+    end_screen_cheems = pygame.image.load('assets/images/characters/npcs/birthday_dog.png')
 
-    completed_restart_level_button = text_button.TextButton(text="Restart", width= 100,height= 50, left_padding= SCREEN_WIDTH/2 - 50, top_padding= SCREEN_HEIGHT/2 + 60)
+    completed_restart_level_button = text_button.TextButton(text=" Restart Level ", width= 151,height= 44, left_padding= SCREEN_WIDTH/2 + 175, top_padding= SCREEN_HEIGHT/2 + 50)
 
-    complete_level_button = text_button.TextButton(text="Complete", width= 100,height= 50, left_padding= SCREEN_WIDTH/2 - 50, top_padding= SCREEN_HEIGHT/2 + 110)
+    complete_level_button = text_button.TextButton(text=" Return to Menu ", width= 177,height= 44, left_padding= SCREEN_WIDTH/2 + 163, top_padding= SCREEN_HEIGHT/2 + 140)
 
     
 
@@ -139,11 +150,13 @@ def start():
     transparent_surface.fill((255,255,255, 10))
     pygame.Surface.set_alpha(transparent_surface, 255)
     
+    pause_title = title_card.Titlecard(text="   Paused   ", width= 350,height= 59, left_padding= SCREEN_WIDTH/2 - 175, top_padding= SCREEN_HEIGHT/2 - 180)
+    
     # These are the buttons for the pause menu
-    resume_button = text_button.TextButton(text="Resume", width= 100,height= 50, left_padding= SCREEN_WIDTH/2 - 50, top_padding= SCREEN_HEIGHT/2 - 100)
-    restart_button = text_button.TextButton(text="Restart", width= 100,height= 50, left_padding= SCREEN_WIDTH/2 - 50, top_padding= SCREEN_HEIGHT/2 - 50)
-    main_menu_button = text_button.TextButton(text="Main Menu", width= 100,height= 50, left_padding= SCREEN_WIDTH/2 - 50, top_padding= SCREEN_HEIGHT/2 +20)
-    quit_button = text_button.TextButton(text="Quit", width= 100,height= 50, left_padding= SCREEN_WIDTH/2 - 50, top_padding= SCREEN_HEIGHT/2 + 90)
+    resume_button = text_button.TextButton(text=" Resume ", width= 96,height= 44, left_padding= SCREEN_WIDTH/2 - 50, top_padding= SCREEN_HEIGHT/2 - 80)
+    restart_button = text_button.TextButton(text=" Restart ", width= 94,height= 44, left_padding= SCREEN_WIDTH/2 - 48, top_padding= SCREEN_HEIGHT/2 - 10)
+    main_menu_button = text_button.TextButton(text=" Main Menu ", width= 128,height= 44, left_padding= SCREEN_WIDTH/2 - 62, top_padding= SCREEN_HEIGHT/2 +60)
+    quit_button = text_button.TextButton(text=" Quit ", width= 60,height= 44, left_padding= SCREEN_WIDTH/2 -30, top_padding= SCREEN_HEIGHT/2 + 120)
 
 
 
@@ -174,11 +187,11 @@ def start():
 
 
         note.Note(text="O", midi=55, time_to_next_note=0.5, tab_line=3, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
-        note.Note(text="o", midi=55, time_to_next_note=0.5, tab_line=3, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
+        note.Note(text="O", midi=55, time_to_next_note=0.5, tab_line=3, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
         note.Note(text="3", midi=67, tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
-        note.Note(text="o", midi=64, tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
+        note.Note(text="O", midi=64, tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
         note.Note(text="1", midi=60, tab_line=2, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
-        note.Note(text="o", midi=59, tab_line=2, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
+        note.Note(text="O", midi=59, tab_line=2, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
         note.Note(text="2", midi=57, time_to_next_note=2.0, tab_line=3, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
 
         note.Note(text="1", midi=65, time_to_next_note=0.5, tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT),
@@ -212,7 +225,7 @@ def start():
 
                         # Was it the Escape key? If so, stop the loop
                         if event.key == K_ESCAPE:
-                            return
+                            running = False
 
                     # Did the user click the window close button? If so, exit
                     elif event.type == QUIT:
@@ -229,7 +242,7 @@ def start():
 
                         # text_buttons should be pressed like this
                         if (complete_level_button.is_pressed() == True):
-                            return
+                            running = False
                         
                         if (completed_restart_level_button.is_pressed() == True):
                             # this will exit the main loop, setting the condition to restart the level as true
@@ -238,13 +251,16 @@ def start():
 
 
             # create a font to select font and size
-            score_font = pygame.font.Font('freesansbold.ttf', 32)
- 
+            score_font = pygame.font.Font('assets/font/BITSUMIS.ttf', 32)
+            end_font=  pygame.font.Font('assets/font/Signatra.ttf', 80)
             # create a text surface object using the font
             # on which text is drawn on it.
-            score_font_text = "You correctly played : " + str(total_score) +" out of " + str(len(song_notes))
-            score_font_render = score_font.render(score_font_text, False, (255, 255, 255), (0, 0, 0))
-            
+            end_text= " Level  Complete! "
+            end_render = end_font.render(end_text, False, (255, 255, 255), (239,159,20))
+            score_font_text = " You correctly played: " 
+            score_font_text2=" "+str(total_score) +" out of " + str(len(song_notes))+"! "
+            score_font_render = score_font.render(score_font_text, False, (255, 255, 255), (239,159,20))
+            score_font_render2 = score_font.render(score_font_text2, False, (255, 255, 255), (239,159,20))
 
             
 
@@ -256,31 +272,40 @@ def start():
 
             # this determines your encouragement method
             if percent_score == 100.0:
-                encouragement_font_text = "Perfect!"
+                encouragement_font_text = " Perfect! "
             elif percent_score >= 66.666:
-                encouragement_font_text = "Well done!"
+                encouragement_font_text = " Well done! "
             elif percent_score >= 33.333:
-                encouragement_font_text = "Good try!"
+                encouragement_font_text = " Good try! "
             else:
-                encouragement_font_text = "You can do it!"
+                encouragement_font_text = " You can do it! "
 
 
-            encouragement_font_render = score_font.render(encouragement_font_text, False, (255, 255, 255), (0, 0, 0))
+            encouragement_font_render = score_font.render(encouragement_font_text, False, (255, 255, 255), (239,159,20))
 
 
             # displays the visual elements of the completed screen
             screen.blit(score_screen_background,(0,0))
-            screen.blit(score_font_render, (SCREEN_WIDTH/2-200,100))
-            screen.blit(encouragement_font_render, (SCREEN_WIDTH/2-50,200))
+            s = pygame.Surface((SCREEN_WIDTH*.6,.9*SCREEN_HEIGHT)) 
+            s.set_alpha(160)                
+            s.fill((30,30,30))           
+            screen.blit(s, (20,20))
+            end_screen_cheems=pygame.transform.scale(end_screen_cheems,(270,270))
+            screen.blit(end_screen_cheems,(SCREEN_WIDTH-290,40))
+            screen.blit(score_font_render, (SCREEN_WIDTH/4-162,150))
+            screen.blit(score_font_render2, (SCREEN_WIDTH/4-60,200))
+            screen.blit(end_render, (SCREEN_WIDTH/4-130,50))
+            pygame.draw.rect(screen,(255,255,255),pygame.Rect(SCREEN_WIDTH/4-130,50,373,85),2)
+            screen.blit(encouragement_font_render, (SCREEN_WIDTH/4-75,250))
             screen.blit(completed_restart_level_button.render, completed_restart_level_button.button_position)
+            pygame.draw.rect(screen,(255,255,255),completed_restart_level_button.button_position,2)
             screen.blit(complete_level_button.render, complete_level_button.button_position)
-            
+            pygame.draw.rect(screen,(255,255,255),complete_level_button.button_position,2)
             
             pygame.display.update()
             clock.tick_busy_loop(30)
 
         else:
-
             # If we have started going through the notes and deleted the last one then the song is complete
             if note_index >= (len(song_notes) - 1):
                 if len(Notes) == 0:
@@ -303,6 +328,7 @@ def start():
                         if event.key == K_ESCAPE:
                             pygame.mixer.music.unpause()
                             paused = False
+                            pauserendered=False
 
                     # Did the user click the window close button? If so, exit
                     elif event.type == QUIT:
@@ -333,25 +359,32 @@ def start():
                         elif(quit_button.is_pressed() == True):
                             exit()
 
+                #checks if pausemenu has been rendered once before and if not, draws the transparent background
+                if(not pauserendered):
+                    s = pygame.Surface((SCREEN_WIDTH/2,3*SCREEN_HEIGHT/4)) 
+                    s.set_alpha(140)                
+                    s.fill((239,159,20))           
+                    screen.blit(s, (SCREEN_WIDTH/4,SCREEN_HEIGHT/8))
+                    pauserendered=True
 
+                #border around entire pause menu
+                pygame.draw.rect(screen,(255,255,255),pygame.Rect(SCREEN_WIDTH/4,SCREEN_HEIGHT/8,SCREEN_WIDTH/2,3*SCREEN_HEIGHT/4),5)  
 
-                # This visually updates the buttons on the pause screen
+                # This visually updates the buttons on the pause screen and draws borders around them on render
+                screen.blit(pause_title.render, pause_title.button_position)  
+                pygame.draw.rect(screen,(0,0,0),pause_title.button_position,3)  
+
                 screen.blit(resume_button.render, resume_button.button_position)
+                pygame.draw.rect(screen,(255,255,255),resume_button.button_position,2)
+
                 screen.blit(restart_button.render, restart_button.button_position)
+                pygame.draw.rect(screen,(255,255,255),restart_button.button_position,2)
+
                 screen.blit(main_menu_button.render, main_menu_button.button_position)
+                pygame.draw.rect(screen,(255,255,255),main_menu_button.button_position,2)
+                
                 screen.blit(quit_button.render, quit_button.button_position)
-
-
-                #    TODO Make the transparent surface only render once on paused
-
-                # This is the transparent background for the pause screen
-                # screen.blit(transparent_surface, (30, 30))
-
-               
-            
-                # if transparent_surface_rendered_once == False:
-
-                #     transparent_surface_rendered_once = True
+                pygame.draw.rect(screen,(255,255,255),quit_button.button_position,2)
 
                 pygame.display.update()
                 clock.tick_busy_loop(30)
@@ -390,6 +423,7 @@ def start():
                         # Was it the Escape key? If so, pause the loop
                         if event.key == K_ESCAPE:
                             paused = True
+                            pauserendered=False
 
                     
 
@@ -478,6 +512,7 @@ def start():
     # At this point, we're done, so we can stop and quit the mixer
     pygame.mixer.music.stop()
     pygame.mixer.quit()
+    
 
     # If the level should be restarted the restart it
     if restart_level == True:
