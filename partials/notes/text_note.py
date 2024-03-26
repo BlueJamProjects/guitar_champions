@@ -16,11 +16,13 @@ from pygame.locals import (
 )
 
 class Note(pygame.sprite.Sprite):
-    def __init__(self, midi=40, text="O", tab_line=1, time_to_next_note=1.0, font_size=70, font_color=(0, 0, 0), font_name='freesansbold.ttf', Screen_Width=800, Screen_Height=600):
+    def __init__(self, midi=40, text="O", tab_line=1, time_to_next_note=1.0, font_size=70, font_color=(0, 0, 0), font_name='freesansbold.ttf', Screen_Width=800, Screen_Height=600, id=0):
         super(Note, self).__init__()
 
         # Initialize Pygame
         pygame.init()
+
+        self.id=id
 
         self.midi = midi
 
