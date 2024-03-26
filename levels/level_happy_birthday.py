@@ -33,11 +33,18 @@ from pygame.locals import (
 import partials.player.playing_player as playing_player
 import partials.notes.text_note as note
 import partials.buttons.text_button as text_button
+
+import helpers.settings_helper as settings_helper
+=======
 import partials.titlecard.title_card as title_card
+
 
 main_midi_number = 40
 
 def start():
+
+
+    user_settings = settings_helper.get_settings()
 
     # Define constants for the screen width and height
     SCREEN_WIDTH = pygame.display.get_surface().get_size()[0]
@@ -72,10 +79,11 @@ def start():
     # it is used later for keeping the notes sending at a regular rate
     frames_since_note = 0
 
-    
-    # Load and play our background music
-    pygame.mixer.music.load("assets/sounds/background-music/metro-34-60bpm.mp3")
-    pygame.mixer.music.play(loops=-1)
+    if user_settings.enable_metronome == True:
+        # Load and play our background music
+        pygame.mixer.music.load("assets/sounds/background-music/metro-34-60bpm.mp3")
+        pygame.mixer.music.play(loops=-1)
+        pygame.mixer.music.set_volume(user_settings.volume / 100)
 
 
     # Create our 'player'
@@ -217,7 +225,7 @@ def start():
 
                         # Was it the Escape key? If so, stop the loop
                         if event.key == K_ESCAPE:
-                            return
+                            running = False
 
                     # Did the user click the window close button? If so, exit
                     elif event.type == QUIT:
@@ -234,7 +242,7 @@ def start():
 
                         # text_buttons should be pressed like this
                         if (complete_level_button.is_pressed() == True):
-                            return
+                            running = False
                         
                         if (completed_restart_level_button.is_pressed() == True):
                             # this will exit the main loop, setting the condition to restart the level as true
