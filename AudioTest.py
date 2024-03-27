@@ -1,7 +1,5 @@
 import pyaudio
-import wave
 import librosa
-import math
 from scipy.signal import find_peaks
 import numpy as np
 from collections import Counter
@@ -92,6 +90,7 @@ def get_energy_around_freq(signal, sr, freq, bandwidth=5):
 
 def midi_number_to_pitch(midi_number):
     n = note.Note()
+    print(type(n))
     n.pitch.midi = midi_number
     return n.pitch.nameWithOctave
 

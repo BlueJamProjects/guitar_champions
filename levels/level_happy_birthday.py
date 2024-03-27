@@ -17,6 +17,16 @@ import numpy as np
 from collections import Counter
 import scipy.signal
 
+
+import crepe
+import keras
+import keras.backend as K
+from music21 import note as music21Note
+
+os.environ['CUDA_VISIBLE_DEVICS'] = '-1'
+
+import tensorflow as tf
+
 # Import the menu library to more easily make menu selction
 import pygame_menu
  
@@ -104,9 +114,9 @@ def start():
 
     stream = p.open(format=pyaudio.paFloat32,
                     channels=1,
-                    rate=44100,
+                    rate=16000,
                     input=True,
-                    frames_per_buffer=1024,
+                    frames_per_buffer=2048,
                     stream_callback=audio_callback)
 
     print("Streaming and processing audio. Press Ctrl+C to stop.")
@@ -532,63 +542,39 @@ def butter_bandpass_filter(data, lowcut, highcut, sr, order=5):
     y = scipy.signal.lfilter(b, a, data)
     return y
 
+def midi_number_to_pitch(midi_number):
+    n = music21Note.Note()
+    n.pitch.midi = midi_number
+    return n.pitch.nameWithOctave
 
-# Audio processing and MIDI/amplitude calculation
 def audio_callback(in_data, frame_count, time_info, status):
     audio_data = np.frombuffer(in_data, dtype=np.float32)
-    
-    # Apply bandpass filter
-    filtered_audio = butter_bandpass_filter(audio_data, lowcut=80, highcut=10000, sr=44100)
-    
-    # Convert to MIDI (note: this is simplified for demonstration and may need refinement for accurate pitch detection)
-    try:
-        cqt = librosa.cqt(filtered_audio, sr=44100, fmin=librosa.note_to_hz('C1'), n_bins=72, bins_per_octave=12)
-        mag_cqt = np.abs(cqt)
-        summed_mag = np.sum(mag_cqt, axis=1)
-        predominant_bin = np.argmax(summed_mag)
-        midi_number = librosa.hz_to_midi(librosa.core.cqt_frequencies(n_bins=72, fmin=librosa.note_to_hz('C1'), bins_per_octave=12)[predominant_bin])
 
-        global main_midi_number
-        main_midi_number = round(midi_number)
-        
-        # Calculate amplitude
-        amplitude = np.sqrt(np.mean(filtered_audio**2))
-        
-        print(f"MIDI Number: {main_midi_number:.2f}, Amplitude: {amplitude:.5f}")
+
+    # Apply bandpass filter
+    filtered_audio = butter_bandpass_filter(audio_data, lowcut=80, highcut=7000, sr=16000)
+
+
+    try:
+        time, frequency, confidence, activation = crepe.predict(filtered_audio, 16000, step_size=50, viterbi=True)
+        # K.clear_session()
+       
+        if len(confidence) > 0:
+            best_idx = np.argmax(confidence)
+            freq = frequency[best_idx]
+            midi_number = librosa.hz_to_midi(freq)
+
+            global main_midi_number
+            main_midi_number = round(midi_number)
+
+
+            amplitude = np.sqrt(np.mean(filtered_audio**2))
+            print(f"Pitch: {midi_number_to_pitch(midi_number)}, Frequency: {freq:.2f} Hz, Confidence: {confidence[best_idx]:.2f}, Amplitude: {amplitude:.5f}")
     except Exception as e:
         print(f"Error processing audio: {e}")
-    
+
+
     return (in_data, pyaudio.paContinue)
-
-class AudioHandler(object):
-    def __init__(self):
-        self.FORMAT = pyaudio.paFloat32
-        self.CHANNELS = 1
-        self.RATE = 44100
-        self.CHUNK = 1024
-        self.p = None
-        self.stream = None
-
-        # High-pass filter parameters
-        self.low_cutoff = 80.0
-        self.high_cutoff = 300.0
-
-        # Amplitude Threshold
-        self.amplitude_threshold = 3.0
-
-    def start(self):
-        self.p = pyaudio.PyAudio()
-        self.stream = self.p.open(format=self.FORMAT,
-                                  channels=self.CHANNELS,
-                                  rate=self.RATE,
-                                  input=True,
-                                  output=False,
-                                  frames_per_buffer=self.CHUNK,
-                                  stream_callback=audio_callback)
-
-    def stop(self):
-        self.stream.close()
-        self.p.terminate()
 
     
 
