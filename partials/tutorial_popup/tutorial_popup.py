@@ -15,22 +15,27 @@ class TutorialPopup():
                       hover_color=(209,129,0), 
                       text_color=(255, 255, 255)):
             super(TutorialPopup, self).__init__()
-            self.button_position = pygame.Rect(left_padding, top_padding, width, height)
+            
             self.color = color
             self.hover_color = hover_color
             self.text_color = text_color
             self.current_color = color
-            self.text = text
+            self.button_text = "Next"
         
             # create a font to select font and size
             self.font = pygame.font.Font("assets/font/Signatra.ttf",40)
  
             # create a text surface object using the font
             # on which text is drawn on it.
-            self.render = self.font.render(self.text, True, self.text_color, self.color)
+            self.outline_color = (0,0,0)
+
+            self.outline_position = pygame.Rect(left_padding - 10, top_padding - 10, width, height + 20)
+
+            self.button_position = pygame.Rect(left_padding, top_padding, width, height)
+            self.render = self.font.render(self.button_text, True, self.text_color, self.color)
 
 
-        def on_hover(self):
+        def button_on_hover(self):
             # This funciton checks whether the button is being hovered over and changes style accordingly
             # This should be placed in the control loop after if event.type==pygame.MOUSEMOTION:
 
@@ -43,11 +48,11 @@ class TutorialPopup():
                 # print("Not hovering")
                 self.current_color = self.color
 
-            self.render = self.font.render(self.text, True, self.text_color, self.current_color)
+            self.render = self.font.render(self.button_text, True, self.text_color, self.current_color)
 
 
-        def is_pressed(self):
-            # This funciton checks whether the button is being pressed and returns True if so
+        def button_is_pressed(self):
+            # This function checks whether the button is being pressed and returns True if so
             # This should be placed in the control loop after if event.type==pygame.MOUSEBUTTONDOWN:
 
             mouse_position=pygame.mouse.get_pos()

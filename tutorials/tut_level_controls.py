@@ -6,6 +6,8 @@ import partials.buttons.text_button as text_button
 
 import partials.titlecard.title_card as title_card
 
+import partials.tutorial_popup.tutorial_popup as tutorial_popup
+
 from pygame.locals import (
     RLEACCEL,
     K_ESCAPE,
@@ -59,9 +61,13 @@ def start():
     quit_button = text_button.TextButton(text=" Quit ", width= 60,height= 44, left_padding= SCREEN_WIDTH/2 -30, top_padding= SCREEN_HEIGHT/2 + 120)
 
 
+    current_popup = tutorial_popup.TutorialPopup("Hello", width= 300, height= 200)
+
     current_sprites = []
 
     current_sprites.append(bg_img)
+
+    
 
 
     # The main loop
@@ -156,13 +162,26 @@ def start():
                             elif event.type == QUIT:
                                 exit()
 
-            # screen.blit(bg_img,(0,0))
+            screen.blit(bg_img,(0,0))
+
+
+            pygame.draw.rect(screen,current_popup.outline_color,current_popup.outline_position)
+
+            screen.blit(current_popup.render, current_popup.button_position)
+
+            
+
+
                                 
-            surface = pygame.display.set_mode((100, 100))
+            # surface = pygame.display.set_mode((100, 100))
+
+            # pygame.draw.rect(surface,(255,255,255),pygame.Rect(100/4,100/8,100/2,3*100/4),5)
             # surface.blit()
 
-            for sprite in current_sprites:
-                screen.blit(sprite, (0,0))
+            # for sprite in current_sprites:
+            #     screen.blit(sprite, (0,0))
+
+            # screen.blit(surface, (0,0))
 
 
             pygame.display.update()
