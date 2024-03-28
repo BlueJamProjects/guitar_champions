@@ -61,7 +61,7 @@ def start():
     quit_button = text_button.TextButton(text=" Quit ", width= 60,height= 44, left_padding= SCREEN_WIDTH/2 -30, top_padding= SCREEN_HEIGHT/2 + 120)
 
 
-    current_popup = tutorial_popup.TutorialPopup("Hello", width= 300, height= 200)
+    current_popup = tutorial_popup.TutorialPopup("Hello there, general kenobi, it is a pleasure to see you now", width= 300, height= 200)
 
     current_sprites = []
 
@@ -167,7 +167,12 @@ def start():
 
             pygame.draw.rect(screen,current_popup.outline_color,current_popup.outline_position)
 
-            screen.blit(current_popup.render, current_popup.button_position)
+            screen.blit(current_popup.line1_render, current_popup.line1_position)
+            screen.blit(current_popup.line2_render, current_popup.line2_position)
+            screen.blit(current_popup.line3_render, current_popup.line3_position)
+            screen.blit(current_popup.line4_render, current_popup.line4_position)
+
+            screen.blit(current_popup.button_render, current_popup.button_position)
 
             
 
