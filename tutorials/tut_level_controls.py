@@ -61,7 +61,7 @@ def start():
     quit_button = text_button.TextButton(text=" Quit ", width= 60,height= 44, left_padding= SCREEN_WIDTH/2 -30, top_padding= SCREEN_HEIGHT/2 + 120)
 
 
-    current_popup = tutorial_popup.TutorialPopup("Hello there dear general it is good to see you in such good fighting form", width= 300, height= 200)
+    current_popup = tutorial_popup.TutorialPopup("Hello there dear general it is good to see you in such good fighting form it will ensure that our battle will be truly legendary. A contest of champions between the 2 greatest warriors in the galaxy. Kenobi and grievious! The Greatest of all", width= 300, height= 200)
 
     current_sprites = []
 
@@ -171,6 +171,7 @@ def start():
             screen.blit(current_popup.line2_render, current_popup.line2_position)
             screen.blit(current_popup.line3_render, current_popup.line3_position)
             screen.blit(current_popup.line4_render, current_popup.line4_position)
+            screen.blit(current_popup.line5_render, current_popup.line5_position)
 
             screen.blit(current_popup.button_render, current_popup.button_position)
 

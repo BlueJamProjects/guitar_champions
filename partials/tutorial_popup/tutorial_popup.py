@@ -35,36 +35,89 @@ class TutorialPopup():
             self.background_color = background_color
             self.text_color = text_color
 
-            gap_1 = text.find(" ", 40, 50)
+            line1_text = ""
+            line2_text = ""
+            line3_text = ""
+            line4_text = ""
+            line5_text = ""
+            
 
-            line1_text = text[0: gap_1 + 1 :1]
 
-            self.line1_font = pygame.font.Font("assets/font/Signatra.ttf",22)
+            # The below code splits the text into a list of words
+            # Then it iterates through the words to build up each line
+            # Finally any excess words will go to the 5th line
+            text_words_list = text.split(" ")
+
+            current_string_length = 0
+
+            current_line = 1
+
+            for word in text_words_list:
+                if current_line == 1:
+                    if current_string_length == 0:
+                        line1_text = word
+                        current_string_length = len(word)
+                    elif current_string_length + len(word) <= 44:
+                        line1_text = line1_text + " " + word
+                        current_string_length = current_string_length + len(word) + 1
+                    else:
+                        line2_text = word
+                        current_string_length = len(word)
+                        current_line = 2
+
+                elif current_line == 2:
+                   if current_string_length + len(word) <= 44:
+                       line2_text = line2_text + " " + word
+                       current_string_length = current_string_length + len(word) + 1
+                   else:
+                       line3_text = word
+                       current_string_length = len(word)
+                       current_line = 3
+                
+                elif current_line == 3:
+                   if current_string_length+ len(word) <= 44:
+                       line3_text = line3_text + " " + word
+                       current_string_length = current_string_length + len(word) + 1
+                   else:
+                       line4_text = word
+                       current_string_length = len(word)
+                       current_line = 4
+
+                elif current_line == 4:
+                   if current_string_length+ len(word) <= 44:
+                       line4_text = line4_text + " " + word
+                       current_string_length = current_string_length + len(word) + 1
+                   else:
+                       line5_text = word
+                       current_string_length = len(word)
+                       current_line = 5
+                
+                else:
+                    line5_text = line5_text + " " + word
+
+
+
+
+            self.line1_font = pygame.font.Font("assets/font/arial.ttf",14)
             self.line1_position = pygame.Rect(left_padding, top_padding, width, height)
             self.line1_render = self.line1_font.render(line1_text, True, self.text_color, self.background_color)
 
-            gap_2 = text.find(" ", gap_1+40, gap_1+50)
 
-            line2_text = text[gap_1: gap_2 + 1  :1]
-
-
-            self.line2_font = pygame.font.Font("assets/font/Signatra.ttf",22)
-            self.line2_position = pygame.Rect(left_padding, top_padding+ 40, width, height)
+            self.line2_font = pygame.font.Font("assets/font/arial.ttf",14)
+            self.line2_position = pygame.Rect(left_padding, top_padding+ 30, width, height)
             self.line2_render = self.line2_font.render(line2_text, True, self.text_color, self.background_color)
 
-            gap_3 = text.find(" ", gap_2+40, gap_2+50)
-            line3_text = text[gap_2: gap_3 + 1  :1]
-
-            self.line3_font = pygame.font.Font("assets/font/Signatra.ttf",22)
-            self.line3_position = pygame.Rect(left_padding, top_padding+ 80, width, height)
+            self.line3_font = pygame.font.Font("assets/font/arial.ttf",14)
+            self.line3_position = pygame.Rect(left_padding, top_padding+ 60, width, height)
             self.line3_render = self.line3_font.render(line3_text, True, self.text_color, self.background_color)
 
-            gap_4 = text.find(" ", gap_3+40, gap_3+50)
-            line4_text = text[gap_3: gap_4 + 1  :1]
-
-            self.line4_font = pygame.font.Font("assets/font/Signatra.ttf",22)
-            self.line4_position = pygame.Rect(left_padding, top_padding+ 120, width, height)
+            self.line4_font = pygame.font.Font("assets/font/arial.ttf",14)
+            self.line4_position = pygame.Rect(left_padding, top_padding+ 90, width, height)
             self.line4_render = self.line4_font.render(line4_text, True, self.text_color, self.background_color)
+
+            self.line5_font = pygame.font.Font("assets/font/arial.ttf",14)
+            self.line5_position = pygame.Rect(left_padding, top_padding+ 120, width, height)
+            self.line5_render = self.line4_font.render(line5_text, True, self.text_color, self.background_color)
 
             
 
