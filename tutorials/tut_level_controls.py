@@ -61,7 +61,7 @@ def start():
     quit_button = text_button.TextButton(text=" Quit ", width= 60,height= 44, left_padding= SCREEN_WIDTH/2 -30, top_padding= SCREEN_HEIGHT/2 + 120)
 
 
-    current_popup = tutorial_popup.TutorialPopup("Hello there, general kenobi, it is a pleasure to see you now", width= 300, height= 200)
+    current_popup = tutorial_popup.TutorialPopup("Hello there dear general it is good to see you in such good fighting form", width= 300, height= 200)
 
     current_sprites = []
 
