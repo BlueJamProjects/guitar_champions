@@ -2,6 +2,8 @@ import pygame
 
 import helpers.settings_helper as settings_helper
 
+import helpers.tutorial_info as tutorial_info
+
 import partials.buttons.text_button as text_button
 
 import partials.titlecard.title_card as title_card
@@ -12,6 +14,7 @@ from pygame.locals import (
     RLEACCEL,
     K_ESCAPE,
     K_RIGHT,
+    K_LEFT,
     KEYDOWN,
     QUIT,
 )
@@ -60,13 +63,34 @@ def start():
     main_menu_button = text_button.TextButton(text=" Main Menu ", width= 128,height= 44, left_padding= SCREEN_WIDTH/2 - 62, top_padding= SCREEN_HEIGHT/2 +60)
     quit_button = text_button.TextButton(text=" Quit ", width= 60,height= 44, left_padding= SCREEN_WIDTH/2 -30, top_padding= SCREEN_HEIGHT/2 + 120)
 
+    next_bg_img = pygame.image.load('assets/images/backgrounds/forest.jpeg')
+    next_bg_img = pygame.transform.scale(next_bg_img,(SCREEN_WIDTH,SCREEN_HEIGHT))
 
-    current_popup = tutorial_popup.TutorialPopup("Hello there dear general it is good to see you in such good fighting form it will ensure that our battle will be truly legendary. A contest of champions between the 2 greatest warriors in the galaxy. Kenobi and grievious! The Greatest of all", width= 300, height= 200)
+    curr_tutorial_info = tutorial_info.TutorialInfo(
+         popup_list = [
+              tutorial_popup.TutorialPopup("Welcome to the controls tutorial. Press the next button on screen or the right arrowkey on your keyboard to go to the next screen", left_padding=10, top_padding=20),
+              tutorial_popup.TutorialPopup("If you want to go back then press the left arrow key on your keyboard"),
+              ],
+         sprites_list = [
+              [
+                   (bg_img, (0,0)),
+                   
+                   ],
 
-    current_sprites = []
+              [
+                   (next_bg_img, (0,0)),
 
-    current_sprites.append(bg_img)
+                   ],
+         ],
+    )
 
+    current_popup = curr_tutorial_info.current_popup
+
+   
+    current_sprites = curr_tutorial_info.current_sprites
+
+    
+    
     
 
 
@@ -156,14 +180,35 @@ def start():
                                     print("paused the game")
 
                                 elif event.key == K_RIGHT:
-                                    print("Right pressed")
+                                    curr_tutorial_info.next()
+
+                                elif event.key == K_LEFT:
+                                    curr_tutorial_info.previous()
 
                             # Did the user click the window close button? If so, exit
                             elif event.type == QUIT:
                                 exit()
 
-            screen.blit(bg_img,(0,0))
+                            # Here we check for hover events 
+                            if event.type==pygame.MOUSEMOTION:
+                                current_popup.button_on_hover()
+                                
+                        
 
+                            # Here we check for clicks events 
+                            if event.type==pygame.MOUSEBUTTONDOWN:
+
+                                # text_buttons should be pressed like this
+                                if (current_popup.button_is_pressed() == True):
+                                    curr_tutorial_info.next()
+
+
+            current_popup = curr_tutorial_info.current_popup
+            current_sprites = curr_tutorial_info.current_sprites
+
+            
+            for sprite_tuple in current_sprites:
+                screen.blit(sprite_tuple[0], sprite_tuple[1])
 
             pygame.draw.rect(screen,current_popup.outline_color,current_popup.outline_position)
 
@@ -175,19 +220,6 @@ def start():
 
             screen.blit(current_popup.button_render, current_popup.button_position)
 
-            
-
-
-                                
-            # surface = pygame.display.set_mode((100, 100))
-
-            # pygame.draw.rect(surface,(255,255,255),pygame.Rect(100/4,100/8,100/2,3*100/4),5)
-            # surface.blit()
-
-            # for sprite in current_sprites:
-            #     screen.blit(sprite, (0,0))
-
-            # screen.blit(surface, (0,0))
 
 
             pygame.display.update()
