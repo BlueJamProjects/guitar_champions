@@ -42,6 +42,8 @@ class TutorialPopup():
             line5_text = ""
             
 
+            self.highlight_region_color = (255, 255, 255)
+            self.highlight_region_position = pygame.Rect(20, 20, 100, 100)
 
             # The below code splits the text into a list of words
             # Then it iterates through the words to build up each line

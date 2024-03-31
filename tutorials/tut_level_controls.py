@@ -10,6 +10,8 @@ import partials.titlecard.title_card as title_card
 
 import partials.tutorial_popup.tutorial_popup as tutorial_popup
 
+import helpers.sprite_item as sprite_item
+
 from pygame.locals import (
     RLEACCEL,
     K_ESCAPE,
@@ -73,12 +75,12 @@ def start():
               ],
          sprites_list = [
               [
-                   (bg_img, (0,0)),
+                   sprite_item.SpriteItem(sprite = bg_img, location = (0,0)),
                    
                    ],
 
               [
-                   (next_bg_img, (0,0)),
+                   sprite_item.SpriteItem(sprite = next_bg_img, location = (0,0)),
 
                    ],
          ],
@@ -99,7 +101,6 @@ def start():
 
         # PAUSED LOOP
         if paused == True:
-            print("Paused was true")
               
             for event in pygame.event.get():
 
@@ -207,8 +208,8 @@ def start():
             current_sprites = curr_tutorial_info.current_sprites
 
             
-            for sprite_tuple in current_sprites:
-                screen.blit(sprite_tuple[0], sprite_tuple[1])
+            for curr_sprite_item in current_sprites:
+                screen.blit(curr_sprite_item.sprite, curr_sprite_item.location)
 
             pygame.draw.rect(screen,current_popup.outline_color,current_popup.outline_position)
 
@@ -221,6 +222,8 @@ def start():
             screen.blit(current_popup.number_render, current_popup.number_position)
 
             screen.blit(current_popup.button_render, current_popup.button_position)
+
+            pygame.draw.rect(screen,current_popup.highlight_region_color,current_popup.highlight_region_position, 5)
 
 
 
