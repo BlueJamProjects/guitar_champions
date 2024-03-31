@@ -120,6 +120,9 @@ class TutorialPopup():
             self.line5_render = self.line4_font.render(line5_text, True, self.text_color, self.background_color)
 
             
+            self.number_font = pygame.font.Font("assets/font/arial.ttf", 14)
+            self.number_position = pygame.Rect(left_padding + width - 50, top_padding + height - 10, width, height)
+            self.number_render = self.number_font.render("1/2", True, self.text_color, self.background_color)
 
 
 
@@ -139,6 +142,8 @@ class TutorialPopup():
 
 
 
+        def set_number(self, current_number, total):
+            self.number_render = self.number_font.render(str(current_number) + "/" + str(total), True, self.text_color, self.background_color)
 
 
 

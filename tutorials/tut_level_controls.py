@@ -218,6 +218,8 @@ def start():
             screen.blit(current_popup.line4_render, current_popup.line4_position)
             screen.blit(current_popup.line5_render, current_popup.line5_position)
 
+            screen.blit(current_popup.number_render, current_popup.number_position)
+
             screen.blit(current_popup.button_render, current_popup.button_position)
 
 

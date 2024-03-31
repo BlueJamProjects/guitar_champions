@@ -9,6 +9,9 @@ class TutorialInfo(object):
         self.current_popup = popup_list[0]
         self.current_sprites = sprites_list[0]
 
+
+        self.current_popup.set_number(1, len(popup_list))
+
         self.popup_index = 0
         self.sprites_index = 0
 
@@ -27,6 +30,7 @@ class TutorialInfo(object):
         if self.popup_index < (len(self.popup_list) - 1):
             self.popup_index = self.popup_index + 1
             self.current_popup = self.popup_list[self.popup_index]
+            self.current_popup.set_number(self.popup_index + 1, len(self.popup_list))
         else:
             print("Reached the end of the popups")
 
@@ -45,6 +49,7 @@ class TutorialInfo(object):
         if self.popup_index > 0: 
             self.popup_index = self.popup_index - 1
             self.current_popup = self.popup_list[self.popup_index]
+            self.current_popup.set_number(self.popup_index + 1, len(self.popup_list))
         else:
             print("Reached the beginning of the popups")
 
