@@ -72,9 +72,14 @@ def start():
     
     example_button2 = text_button.TextButton(text=" example ", width= 96,height= 44, left_padding= SCREEN_WIDTH/2 - 50, top_padding= SCREEN_HEIGHT/2 - 80)
     
+
+
     example_pause_background = pygame.Surface((SCREEN_WIDTH/2,3*SCREEN_HEIGHT/4)) 
     example_pause_background.set_alpha(140)                
     example_pause_background.fill((239,159,20))  
+
+    complete_tutorial_button = text_button.TextButton(text=" Complete ", width= 96,height= 44, left_padding= SCREEN_WIDTH/2 - 50, top_padding= SCREEN_HEIGHT/2 - 80)
+    
 
     curr_tutorial_info = tutorial_info.TutorialInfo(
          popup_list = [
@@ -85,7 +90,7 @@ def start():
             #   3
               tutorial_popup.TutorialPopup("This is what a button looks like", top_padding= 300, left_padding= 200, show_hightlight_region=True, highlight_region_position= pygame.Rect(SCREEN_WIDTH/2 - 50 - 3,SCREEN_HEIGHT/2 - 80 - 3, 106,50,) ),
             #   4
-              tutorial_popup.TutorialPopup("Try pressing it", top_padding= 300, left_padding= 200,),
+              tutorial_popup.TutorialPopup("Try pressing it", top_padding= 300, left_padding= 200,trigger_effect_number=1,),
             #   5
               tutorial_popup.TutorialPopup("Now, let's take a look at a common menu you'll see throughout the game", top_padding= 300, left_padding= 200,),
             #   6
@@ -99,7 +104,7 @@ def start():
             # 10
             tutorial_popup.TutorialPopup("This is quit button which will close the game", top_padding= 300, left_padding= 20,  show_hightlight_region=True, highlight_region_position= quit_button.button_position),
             # 11
-            tutorial_popup.TutorialPopup("Final page", top_padding= 220, left_padding= 20, trigger_effect_number=1),
+            tutorial_popup.TutorialPopup("Press complete to finish the tutorial", top_padding= 220, left_padding= 20, trigger_effect_number=2,),
 
 
               ],
@@ -131,7 +136,6 @@ def start():
                 #    5
                 [
                     sprite_item.SpriteItem(sprite = bg_img_2, location = (0,0)),
-                    
                     
                 ],
 
@@ -262,6 +266,7 @@ def start():
                 # 11
                 [
                     sprite_item.SpriteItem(sprite = bg_img_2, location = (0,0)),
+                    sprite_item.SpriteItem(sprite = complete_tutorial_button.render, location=complete_tutorial_button.button_position),
                    
                 ],
 
@@ -395,6 +400,7 @@ def start():
                                 # TODO Add the hover effects for this tutorials example buttons
                                 # START/////////
                                 example_button2.on_hover()
+                                complete_tutorial_button.on_hover()
                                 # END/////////
                                 
                         
@@ -404,6 +410,7 @@ def start():
 
                                 # text_buttons should be pressed like this
                                 if (current_popup.button_is_pressed() == True):
+                                    print("Current popup pressed")
                                     curr_tutorial_info.next()
 
                                     # TODO Add custom next code here
@@ -417,8 +424,15 @@ def start():
 
                                  # TODO Add the click effects for this tutorials example buttons
                                     # START/////////
-                                if (example_button2.is_pressed() == True):
-                                    curr_tutorial_info.next()
+                                        # you should make certain you're on the correct screen before allowing the button to be pressed
+
+                                if (current_popup.trigger_effect_number == 1):
+                                    if (example_button2.is_pressed() == True):
+                                        curr_tutorial_info.next()
+
+                                if (current_popup.trigger_effect_number == 2):
+                                    if (complete_tutorial_button.is_pressed() == True):
+                                        running = False
                                 # END/////////
 
 

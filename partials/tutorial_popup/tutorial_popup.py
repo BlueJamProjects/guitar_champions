@@ -153,7 +153,7 @@ class TutorialPopup():
 
             # Creates the button render elements
             self.button_font = pygame.font.Font("assets/font/Signatra.ttf",40)
-            self.button_position = pygame.Rect(left_padding+ width/2 - 30, top_padding+height-40, width, height)
+            self.button_position = pygame.Rect(left_padding+ width/2 - 30, top_padding+height-40, 50, 42)
             self.button_render = self.button_font.render(self.button_text, True, self.button_text_color, self.button_color)
 
 
