@@ -93,13 +93,13 @@ def start():
             #   7
               tutorial_popup.TutorialPopup("This is the resume button. It is used to unpause the current level", top_padding= 150, left_padding= 20, show_hightlight_region=True, highlight_region_position= resume_button.button_position),
             # 8
-            tutorial_popup.TutorialPopup("This is the restart button, it will restart the level from the beginning", top_padding= 180, left_padding= 20,  show_hightlight_region=True, highlight_region_position= restart_button.button_position),
+            tutorial_popup.TutorialPopup("This is the restart button, it will restart the level from the beginning", top_padding= 200, left_padding= 20,  show_hightlight_region=True, highlight_region_position= restart_button.button_position),
             # 9
-            tutorial_popup.TutorialPopup("This is the main menu button which, as the name suggests, will take you back to the main menu", top_padding= 200, left_padding= 20, show_hightlight_region=True, highlight_region_position= main_menu_button.button_position),
+            tutorial_popup.TutorialPopup("This is the main menu button which, as the name suggests, will take you back to the main menu", top_padding= 250, left_padding= 20, show_hightlight_region=True, highlight_region_position= main_menu_button.button_position),
             # 10
-            tutorial_popup.TutorialPopup("This is quit button which will close the game", top_padding= 220, left_padding= 20,  show_hightlight_region=True, highlight_region_position= quit_button.button_position, trigger_effect_number=1),
+            tutorial_popup.TutorialPopup("This is quit button which will close the game", top_padding= 300, left_padding= 20,  show_hightlight_region=True, highlight_region_position= quit_button.button_position),
             # 11
-            tutorial_popup.TutorialPopup("Final page", top_padding= 220, left_padding= 20,),
+            tutorial_popup.TutorialPopup("Final page", top_padding= 220, left_padding= 20, trigger_effect_number=1),
 
 
               ],
@@ -370,6 +370,8 @@ def start():
                                      
                                      # TODO Add custom next code here
                                     # START/////////
+                                    if current_popup.trigger_effect_number == 1:
+                                        print("Trigger effect 1")
 
                                     # END/////////
                                     curr_tutorial_info.next()
@@ -406,6 +408,9 @@ def start():
 
                                     # TODO Add custom next code here
                                     # START/////////
+
+                                    if current_popup.trigger_effect_number == 1:
+                                        print("Trigger effect 1")
 
                                     # END/////////
 
