@@ -79,7 +79,7 @@ def audio_callback(in_data, frame_count, time_info, status):
 
 # Main function to start audio streaming
 def stream_audio():
-   p = pyaudio.PyAudio()
+    p = pyaudio.PyAudio()
 
 
 
@@ -94,21 +94,21 @@ def stream_audio():
 
 
 
-   print("Streaming and processing audio. Press Ctrl+C to stop.")
-   stream.start_stream()
+    print("Streaming and processing audio. Press Ctrl+C to stop.")
+    stream.start_stream()
 
 
 
 
-   try:
-       while stream.is_active():
-           pass
-   except KeyboardInterrupt:
-       pass
-   finally:
-       stream.stop_stream()
-       stream.close()
-       p.terminate()
+    try:
+        while stream.is_active():
+            pass
+    except KeyboardInterrupt:
+        pass
+    finally:
+        stream.stop_stream()
+        stream.close()
+        p.terminate()
 
 
 
