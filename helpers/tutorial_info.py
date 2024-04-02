@@ -6,16 +6,25 @@ class TutorialInfo(object):
     A class to store the prites for the screens for each tutorial
     """
     def __init__(self, popup_list = [], sprites_list = []):
+
+        # These stores the current popup
         self.current_popup = popup_list[0]
+
+        # This stores the list of current sprites that should be displayed on the screen
         self.current_sprites = sprites_list[0]
 
-
+        # sets the number of the first popup
         self.current_popup.set_number(1, len(popup_list))
 
+        # used to navigate the lists of popups and sprites 
         self.popup_index = 0
         self.sprites_index = 0
 
+        # a list of  TutorialPopup objects
         self.popup_list = popup_list
+
+        # A list of lists of SpriteItem objects
+        # Each inner list will be a screen of Sprites that displays
         self.sprites_list = sprites_list
 
 
