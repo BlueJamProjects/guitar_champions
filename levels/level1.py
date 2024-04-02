@@ -54,15 +54,15 @@ def start():
 
     # Create the screen object
     # The size is determined by the constant SCREEN_WIDTH and SCREEN_HEIGHT
-    screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+    #screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 
     # set aseprite file directory
-    dirname = os.path.dirname(__file__)
-    aseprite_file_directory = str(dirname) + '/TheHarvester.aseprite'
+    #dirname = os.path.dirname(__file__)
+    #aseprite_file_directory = str(dirname) + 'assets/animations/rjgwgIDLEANIMATION1.aseprite'
 
     # initialize animations - To add new animations, create a new animationmanager the same way its created here and put the Animation in its list
-    test_animation = Animation(aseprite_file_directory)
-    animationmanager = AnimationManager([test_animation], screen)
+    #test_animation = Animation(aseprite_file_directory)
+    #animationmanager = AnimationManager([test_animation], screen)
 
     # Setup the clock for a decent framerate
     clock = pygame.time.Clock()
@@ -119,6 +119,7 @@ def start():
 
     # Our main loop
     while running:
+        #animationmanager.update_self(50, 50)
         if paused == True:
             # The control loop for when the game is paused
             pygame.mixer.music.pause()
@@ -157,6 +158,7 @@ def start():
             screen.blit(resume_button.render, resume_button.button_position)
             screen.blit(main_menu_button.render, main_menu_button.button_position)
             screen.blit(quit_button.render, quit_button.button_position)
+
 
             # This is the transparent background for the pause screen
             screen.blit(transparent_surface, (30, 30))
@@ -201,16 +203,11 @@ def start():
 
 
 
-
             # Fill the screen with the background image
             screen.blit(bg_img,(0,0))
             # Draw all our sprites
             for entity in all_sprites:
                 screen.blit(entity.surf, entity.rect)
-
-
-
-            animationmanager.update_self(0, 0)
 
             # Flip everything to the display
             pygame.display.flip()
