@@ -80,6 +80,25 @@ def start():
     # The size is determined by the constant SCREEN_WIDTH and SCREEN_HEIGHT
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 
+    # set aseprite file directory
+    dirname = os.path.dirname(__file__)
+    aseprite_file_directory = 'assets/animations/rjgwgMOVINGHANDTOPLAY1.aseprite'
+
+    # initialize animations - To add new animations, create a new animationmanager the same way its created here and put the Animation in its list
+    #guitar guy animations
+    test_animation = Animation(aseprite_file_directory)
+    animationmanager = AnimationManager([test_animation], screen)
+    strumAnimation = Animation('assets/animations/rjgwgSTRUMMINGGUITAR1.aseprite')
+    animationmanager2 = AnimationManager([strumAnimation], screen)
+    # dog animations
+    tailWag = Animation('assets/animations/birthdaydogTAILWAG1.aseprite')
+    animationmanager3 = AnimationManager([tailWag], screen)
+    # girl animations
+    girlIdle = Animation('assets/animations/melissaIDLE1.aseprite')
+    animationmanager4 = AnimationManager([girlIdle], screen)
+    # tree animation
+    treeBounce = Animation('assets/animations/treeBOUNCE.aseprite')
+    animationmanager5 =  AnimationManager([treeBounce], screen)
 
 
     # Setup the clock for a decent framerate
@@ -538,7 +557,11 @@ def start():
                 # Draw all our sprites
                 for entity in all_sprites:
                     screen.blit(entity.surf, entity.rect)
-
+                
+                animationmanager5.update_self(13, 210)
+                animationmanager2.update_self(30, 390)
+                animationmanager3.update_self(206, 420)
+                animationmanager4.update_self(275, 400)
 
                 # Flip everything to the display
                 pygame.display.flip()

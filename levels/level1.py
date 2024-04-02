@@ -78,9 +78,15 @@ def start():
 
     # Create the screen object
     # The size is determined by the constant SCREEN_WIDTH and SCREEN_HEIGHT
-    screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+    #screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 
+    # set aseprite file directory
+    dirname = os.path.dirname(__file__)
+    aseprite_file_directory = str(dirname) + '/TheHarvester.aseprite'
 
+    # initialize animations - To add new animations, create a new animationmanager the same way its created here and put the Animation in its list
+    test_animation = Animation(aseprite_file_directory)
+    animationmanager = AnimationManager([test_animation], screen)
 
     # Setup the clock for a decent framerate
     clock = pygame.time.Clock()
@@ -543,6 +549,8 @@ def start():
 
                 # Update the position of our Notes
                 Notes.update()
+
+
 
 
                 # Fill the screen with the background image
