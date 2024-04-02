@@ -137,10 +137,22 @@ def start():
 
                 #    6
                 [
+            #          pygame.draw.rect(screen,(0,0,0),pause_title.button_position,3)  
+            # screen.blit(resume_button.render, resume_button.button_position)
+            # pygame.draw.rect(screen,(255,255,255),resume_button.button_position,2)
+            # screen.blit(restart_button.render, restart_button.button_position)
+            # pygame.draw.rect(screen,(255,255,255),restart_button.button_position,2)
+            # screen.blit(main_menu_button.render, main_menu_button.button_position)
+            # pygame.draw.rect(screen,(255,255,255),main_menu_button.button_position,2)
+            
+            # screen.blit(quit_button.render, quit_button.button_position)
+            # pygame.draw.rect(screen,(255,255,255),quit_button.button_position,2)
                     
-                    sprite_item.SpriteItem(sprite =example_pause_background, location =  (SCREEN_WIDTH/4,SCREEN_HEIGHT/8)),
+                    
                     sprite_item.SpriteItem(sprite = bg_img_2, location = (0,0)),
                     sprite_item.SpriteItem(sprite =example_pause_background, location =  (SCREEN_WIDTH/4,SCREEN_HEIGHT/8)),
+                    sprite_item.SpriteItem(sprite=pause_title.render, location=pause_title.button_position),
+                    sprite_item.SpriteItem(is_box=True, box_has_border=True, box_color=(0,0,0), box_rect=pause_title.button_position, box_border=3),
                     sprite_item.SpriteItem(sprite = resume_button.render, location = resume_button.button_position),
                     sprite_item.SpriteItem(sprite = restart_button.render, location = restart_button.button_position),
                     sprite_item.SpriteItem(sprite = main_menu_button.render, location = main_menu_button.button_position),
@@ -350,7 +362,18 @@ def start():
 
             
             for curr_sprite_item in current_sprites:
-                screen.blit(curr_sprite_item.sprite, curr_sprite_item.location)
+                if curr_sprite_item.is_box == True:
+                    # If the current sprite is a box
+
+                    if curr_sprite_item.box_has_border == True:
+                        #  If the box does have a border
+                        pygame.draw.rect(screen,curr_sprite_item.box_color,curr_sprite_item.box_rect, curr_sprite_item.box_border)
+                    else:
+                        # If the box has no border
+                        pygame.draw.rect(screen,curr_sprite_item.box_color,curr_sprite_item.box_rect)
+                else:
+                    # If the current sprite is not a box
+                    screen.blit(curr_sprite_item.sprite, curr_sprite_item.location)
 
             pygame.draw.rect(screen,current_popup.outline_color,current_popup.outline_position)
 
