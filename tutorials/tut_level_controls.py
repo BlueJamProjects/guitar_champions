@@ -62,8 +62,6 @@ def start():
     
     # TODO make the custom sprites for the tutorial
     # START/////////
-    bg_img = pygame.image.load('assets/images/backgrounds/glacier_night.jpeg')
-    bg_img = pygame.transform.scale(bg_img,(SCREEN_WIDTH,SCREEN_HEIGHT))
 
     bg_img_2 = pygame.image.load('assets/images/backgrounds/forest.jpeg')
     bg_img_2 = pygame.transform.scale(bg_img_2,(SCREEN_WIDTH,SCREEN_HEIGHT))
@@ -84,7 +82,7 @@ def start():
     curr_tutorial_info = tutorial_info.TutorialInfo(
          popup_list = [
             #   1
-              tutorial_popup.TutorialPopup("Welcome to the controls tutorial. Press the next button on screen or the right arrowkey on your keyboard to go to the next screen", left_padding=10, top_padding=20),
+              tutorial_popup.TutorialPopup("Welcome to the Playing Notes tutorial! Press the next button on screen or use the arrow keys to navigate", left_padding=10, top_padding=20),
             #  2
               tutorial_popup.TutorialPopup("If you want to go back then press the left arrow key on your keyboard"),
             #   3
@@ -111,7 +109,7 @@ def start():
          sprites_list = [
             # 1
               [
-                   sprite_item.SpriteItem(sprite = bg_img, location = (0,0)),
+                   sprite_item.SpriteItem(sprite = bg_img_2, location = (0,0)),
                    
                    ],
 

@@ -14,6 +14,8 @@ import helpers.draw_update_function_helper as draw_update_function_helper
 
 import tutorials.tut_level_controls as tut_level_controls
 
+import tutorials.tut_level_playing_notes as tut_level_playing_notes
+
 # Import pygame.locals for easier access to key coordinates
 # Updated to conform to flake8 and black standards
 # from pygame.locals import *
@@ -57,8 +59,13 @@ tutorials_menu = pygame_menu.Menu('Tutorials', 800, 600,theme=mytheme)
 
 controlsbutt=tutorials_menu.add.button('Controls', tut_level_controls.start, float=True,font_name=fonter)
 controlsbutt.add_draw_callback(draw_update_function_helper.draw_update_function)
-controlsbutt.translate(0,-100)
+controlsbutt.translate(0,-200)
 widgets.append(controlsbutt)
+
+playingnotesbutt=tutorials_menu.add.button('Playing Notes', tut_level_playing_notes.start, float=True,font_name=fonter)
+playingnotesbutt.add_draw_callback(draw_update_function_helper.draw_update_function)
+playingnotesbutt.translate(0,-100)
+widgets.append(playingnotesbutt)
 
 backbutt=tutorials_menu.add.button('Back', pygame_menu.events.BACK, float=True,font_name=fonter)
 backbutt.add_draw_callback(draw_update_function_helper.draw_update_function)
