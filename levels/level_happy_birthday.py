@@ -265,13 +265,14 @@ def start():
             plt.ylim(0,100)
             plt.xlim(1,totnote)
             plt.title('Your overall Accuracy!')
-            font = {'family' : 'normal',
+            font = {
                 'weight' : 'bold',
                 'size'   : 22}
             plt.yticks(fontsize=20)
             plt.xticks(fontsize=20)
             plt.rc('font', **font)
             plt.savefig('assets/images/tempgraphs/graphy.png')
+            plt.clf()
             endplot = pygame.image.load('assets/images/tempgraphs/graphy.png')
             # create a font to select font and size
             score_font = pygame.font.Font('assets/font/BITSUMIS.ttf', 32)
