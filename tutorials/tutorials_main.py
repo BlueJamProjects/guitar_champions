@@ -12,6 +12,8 @@ import pygame_menu
 import helpers.redraw_helper as redraw_helper
 import helpers.draw_update_function_helper as draw_update_function_helper
 
+import tutorials.tut_level_controls as tut_level_controls
+
 # Import pygame.locals for easier access to key coordinates
 # Updated to conform to flake8 and black standards
 # from pygame.locals import *
@@ -52,6 +54,12 @@ fonter=pygame.font.Font("assets/font/Signatra.ttf",40)
 widgets=[]
 
 tutorials_menu = pygame_menu.Menu('Tutorials', 800, 600,theme=mytheme)
+
+controlsbutt=tutorials_menu.add.button('Controls', tut_level_controls.start, float=True,font_name=fonter)
+controlsbutt.add_draw_callback(draw_update_function_helper.draw_update_function)
+controlsbutt.translate(0,-100)
+widgets.append(controlsbutt)
+
 backbutt=tutorials_menu.add.button('Back', pygame_menu.events.BACK, float=True,font_name=fonter)
 backbutt.add_draw_callback(draw_update_function_helper.draw_update_function)
 backbutt.translate(0,-20)
