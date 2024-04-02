@@ -63,7 +63,7 @@ class TutorialPopup():
                     if current_string_length == 0:
                         line1_text = word
                         current_string_length = len(word)
-                    elif current_string_length + len(word) <= 44:
+                    elif current_string_length + len(word) <= 42:
                         line1_text = line1_text + " " + word
                         current_string_length = current_string_length + len(word) + 1
                     else:
@@ -72,7 +72,7 @@ class TutorialPopup():
                         current_line = 2
 
                 elif current_line == 2:
-                   if current_string_length + len(word) <= 44:
+                   if current_string_length + len(word) <= 42:
                        line2_text = line2_text + " " + word
                        current_string_length = current_string_length + len(word) + 1
                    else:
@@ -81,7 +81,7 @@ class TutorialPopup():
                        current_line = 3
                 
                 elif current_line == 3:
-                   if current_string_length+ len(word) <= 44:
+                   if current_string_length+ len(word) <= 42:
                        line3_text = line3_text + " " + word
                        current_string_length = current_string_length + len(word) + 1
                    else:
@@ -90,7 +90,7 @@ class TutorialPopup():
                        current_line = 4
 
                 elif current_line == 4:
-                   if current_string_length+ len(word) <= 44:
+                   if current_string_length+ len(word) <= 42:
                        line4_text = line4_text + " " + word
                        current_string_length = current_string_length + len(word) + 1
                    else:

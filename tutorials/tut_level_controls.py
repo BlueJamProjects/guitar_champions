@@ -137,66 +137,126 @@ def start():
 
                 #    6
                 [
-            #          pygame.draw.rect(screen,(0,0,0),pause_title.button_position,3)  
-            # screen.blit(resume_button.render, resume_button.button_position)
-            # pygame.draw.rect(screen,(255,255,255),resume_button.button_position,2)
-            # screen.blit(restart_button.render, restart_button.button_position)
-            # pygame.draw.rect(screen,(255,255,255),restart_button.button_position,2)
-            # screen.blit(main_menu_button.render, main_menu_button.button_position)
-            # pygame.draw.rect(screen,(255,255,255),main_menu_button.button_position,2)
-            
-            # screen.blit(quit_button.render, quit_button.button_position)
-            # pygame.draw.rect(screen,(255,255,255),quit_button.button_position,2)
-                    
-                    
                     sprite_item.SpriteItem(sprite = bg_img_2, location = (0,0)),
                     sprite_item.SpriteItem(sprite =example_pause_background, location =  (SCREEN_WIDTH/4,SCREEN_HEIGHT/8)),
                     sprite_item.SpriteItem(sprite=pause_title.render, location=pause_title.button_position),
                     sprite_item.SpriteItem(is_box=True, box_has_border=True, box_color=(0,0,0), box_rect=pause_title.button_position, box_border=3),
+                    
                     sprite_item.SpriteItem(sprite = resume_button.render, location = resume_button.button_position),
+                    
+                    sprite_item.SpriteItem(is_box=True, box_has_border=True, box_color=(0,0,0), box_rect=resume_button.button_position, box_border=2),
+                    
                     sprite_item.SpriteItem(sprite = restart_button.render, location = restart_button.button_position),
+                    
+                    sprite_item.SpriteItem(is_box=True, box_has_border=True, box_color=(0,0,0), box_rect=restart_button.button_position, box_border=2),
+                    
                     sprite_item.SpriteItem(sprite = main_menu_button.render, location = main_menu_button.button_position),
+                    
+                    sprite_item.SpriteItem(is_box=True, box_has_border=True, box_color=(0,0,0), box_rect=main_menu_button.button_position, box_border=2),
+                    
                     sprite_item.SpriteItem(sprite = quit_button.render, location = quit_button.button_position),
+                    
+                    sprite_item.SpriteItem(is_box=True, box_has_border=True, box_color=(0,0,0), box_rect=quit_button.button_position, box_border=2),
                     
                 ],
 
                  #    7
                 [
                     sprite_item.SpriteItem(sprite = bg_img_2, location = (0,0)),
+                    sprite_item.SpriteItem(sprite =example_pause_background, location =  (SCREEN_WIDTH/4,SCREEN_HEIGHT/8)),
+                    sprite_item.SpriteItem(sprite=pause_title.render, location=pause_title.button_position),
+                    sprite_item.SpriteItem(is_box=True, box_has_border=True, box_color=(0,0,0), box_rect=pause_title.button_position, box_border=3),
+                    
                     sprite_item.SpriteItem(sprite = resume_button.render, location = resume_button.button_position),
+                    
+                    sprite_item.SpriteItem(is_box=True, box_has_border=True, box_color=(0,0,0), box_rect=resume_button.button_position, box_border=2),
+                    
                     sprite_item.SpriteItem(sprite = restart_button.render, location = restart_button.button_position),
+                    
+                    sprite_item.SpriteItem(is_box=True, box_has_border=True, box_color=(0,0,0), box_rect=restart_button.button_position, box_border=2),
+                    
                     sprite_item.SpriteItem(sprite = main_menu_button.render, location = main_menu_button.button_position),
+                    
+                    sprite_item.SpriteItem(is_box=True, box_has_border=True, box_color=(0,0,0), box_rect=main_menu_button.button_position, box_border=2),
+                    
                     sprite_item.SpriteItem(sprite = quit_button.render, location = quit_button.button_position),
+                    
+                    sprite_item.SpriteItem(is_box=True, box_has_border=True, box_color=(0,0,0), box_rect=quit_button.button_position, box_border=2),
                     
                 ],
 
                  #    8
                 [
-                    sprite_item.SpriteItem(sprite = bg_img_2, location = (0,0)),
+                   sprite_item.SpriteItem(sprite = bg_img_2, location = (0,0)),
+                    sprite_item.SpriteItem(sprite =example_pause_background, location =  (SCREEN_WIDTH/4,SCREEN_HEIGHT/8)),
+                    sprite_item.SpriteItem(sprite=pause_title.render, location=pause_title.button_position),
+                    sprite_item.SpriteItem(is_box=True, box_has_border=True, box_color=(0,0,0), box_rect=pause_title.button_position, box_border=3),
+                    
                     sprite_item.SpriteItem(sprite = resume_button.render, location = resume_button.button_position),
+                    
+                    sprite_item.SpriteItem(is_box=True, box_has_border=True, box_color=(0,0,0), box_rect=resume_button.button_position, box_border=2),
+                    
                     sprite_item.SpriteItem(sprite = restart_button.render, location = restart_button.button_position),
+                    
+                    sprite_item.SpriteItem(is_box=True, box_has_border=True, box_color=(0,0,0), box_rect=restart_button.button_position, box_border=2),
+                    
                     sprite_item.SpriteItem(sprite = main_menu_button.render, location = main_menu_button.button_position),
+                    
+                    sprite_item.SpriteItem(is_box=True, box_has_border=True, box_color=(0,0,0), box_rect=main_menu_button.button_position, box_border=2),
+                    
                     sprite_item.SpriteItem(sprite = quit_button.render, location = quit_button.button_position),
+                    
+                    sprite_item.SpriteItem(is_box=True, box_has_border=True, box_color=(0,0,0), box_rect=quit_button.button_position, box_border=2),
                     
                 ],
 
                  #    9
                 [
-                    sprite_item.SpriteItem(sprite = bg_img_2, location = (0,0)),
+                   sprite_item.SpriteItem(sprite = bg_img_2, location = (0,0)),
+                    sprite_item.SpriteItem(sprite =example_pause_background, location =  (SCREEN_WIDTH/4,SCREEN_HEIGHT/8)),
+                    sprite_item.SpriteItem(sprite=pause_title.render, location=pause_title.button_position),
+                    sprite_item.SpriteItem(is_box=True, box_has_border=True, box_color=(0,0,0), box_rect=pause_title.button_position, box_border=3),
+                    
                     sprite_item.SpriteItem(sprite = resume_button.render, location = resume_button.button_position),
+                    
+                    sprite_item.SpriteItem(is_box=True, box_has_border=True, box_color=(0,0,0), box_rect=resume_button.button_position, box_border=2),
+                    
                     sprite_item.SpriteItem(sprite = restart_button.render, location = restart_button.button_position),
+                    
+                    sprite_item.SpriteItem(is_box=True, box_has_border=True, box_color=(0,0,0), box_rect=restart_button.button_position, box_border=2),
+                    
                     sprite_item.SpriteItem(sprite = main_menu_button.render, location = main_menu_button.button_position),
+                    
+                    sprite_item.SpriteItem(is_box=True, box_has_border=True, box_color=(0,0,0), box_rect=main_menu_button.button_position, box_border=2),
+                    
                     sprite_item.SpriteItem(sprite = quit_button.render, location = quit_button.button_position),
+                    
+                    sprite_item.SpriteItem(is_box=True, box_has_border=True, box_color=(0,0,0), box_rect=quit_button.button_position, box_border=2),
                     
                 ],
 
                 #    10
                 [
-                    sprite_item.SpriteItem(sprite = bg_img_2, location = (0,0)),
+                   sprite_item.SpriteItem(sprite = bg_img_2, location = (0,0)),
+                    sprite_item.SpriteItem(sprite =example_pause_background, location =  (SCREEN_WIDTH/4,SCREEN_HEIGHT/8)),
+                    sprite_item.SpriteItem(sprite=pause_title.render, location=pause_title.button_position),
+                    sprite_item.SpriteItem(is_box=True, box_has_border=True, box_color=(0,0,0), box_rect=pause_title.button_position, box_border=3),
+                    
                     sprite_item.SpriteItem(sprite = resume_button.render, location = resume_button.button_position),
+                    
+                    sprite_item.SpriteItem(is_box=True, box_has_border=True, box_color=(0,0,0), box_rect=resume_button.button_position, box_border=2),
+                    
                     sprite_item.SpriteItem(sprite = restart_button.render, location = restart_button.button_position),
+                    
+                    sprite_item.SpriteItem(is_box=True, box_has_border=True, box_color=(0,0,0), box_rect=restart_button.button_position, box_border=2),
+                    
                     sprite_item.SpriteItem(sprite = main_menu_button.render, location = main_menu_button.button_position),
+                    
+                    sprite_item.SpriteItem(is_box=True, box_has_border=True, box_color=(0,0,0), box_rect=main_menu_button.button_position, box_border=2),
+                    
                     sprite_item.SpriteItem(sprite = quit_button.render, location = quit_button.button_position),
+                    
+                    sprite_item.SpriteItem(is_box=True, box_has_border=True, box_color=(0,0,0), box_rect=quit_button.button_position, box_border=2),
                     
                 ],
                 # 11
