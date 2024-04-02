@@ -14,7 +14,11 @@ class TutorialPopup():
                       button_color=(239,159,20), 
                       button_hover_color=(209,129,0), 
                       text_color=(255, 255, 255),
-                      background_color=(0,0,0)
+                      background_color=(0,0,0),
+                      show_hightlight_region=False,
+                      highlight_region_color=(255, 255, 255),
+                      highlight_region_position = pygame.Rect(20, 20, 100, 100)
+
                       ):
             super(TutorialPopup, self).__init__()
 
@@ -42,8 +46,7 @@ class TutorialPopup():
             line5_text = ""
             
 
-            self.highlight_region_color = (255, 255, 255)
-            self.highlight_region_position = pygame.Rect(20, 20, 100, 100)
+            
 
             # The below code splits the text into a list of words
             # Then it iterates through the words to build up each line
@@ -126,6 +129,9 @@ class TutorialPopup():
             self.number_position = pygame.Rect(left_padding + width - 50, top_padding + height - 10, width, height)
             self.number_render = self.number_font.render("1/2", True, self.text_color, self.background_color)
 
+            self.show_hightlight_region = show_hightlight_region
+            self.highlight_region_color = highlight_region_color
+            self.highlight_region_position = highlight_region_position
 
 
             # Creates the button render elements
