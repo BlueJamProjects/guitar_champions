@@ -7,6 +7,9 @@ class TutorialInfo(object):
     """
     def __init__(self, popup_list = [], sprites_list = []):
 
+        # IMPORTANT
+        # popup_list and sprites_list should have the same amount of elements or there will be issues
+
         # These stores the current popup
         self.current_popup = popup_list[0]
 
@@ -35,18 +38,22 @@ class TutorialInfo(object):
         Sets the current_popup and current_sprites to the next one in the list
         """
 
-        
+        # If there are more popups to go you update the popup index and current popup then set the current popup's number
         if self.popup_index < (len(self.popup_list) - 1):
             self.popup_index = self.popup_index + 1
             self.current_popup = self.popup_list[self.popup_index]
             self.current_popup.set_number(self.popup_index + 1, len(self.popup_list))
         else:
+            # If there are no more popups to go then do nothing
             print("Reached the end of the popups")
 
+
+        # If there are more sprites screens to go you update the sprits_index and current spriteslist 
         if self.sprites_index < (len(self.sprites_list) - 1):
             self.sprites_index = self.sprites_index + 1
             self.current_sprites = self.sprites_list[self.sprites_index]
         else:
+            # If there are no more sprites list to go then do nothing
             print("Reached the end of the sprites list")
 
 
@@ -54,16 +61,19 @@ class TutorialInfo(object):
         """
         Sets the current_popup and current_sprites to the previous one in the list
         """
-
+        # If there are more popups before to go back to you update the popup index and current popup then set the current popup's number    
         if self.popup_index > 0: 
             self.popup_index = self.popup_index - 1
             self.current_popup = self.popup_list[self.popup_index]
             self.current_popup.set_number(self.popup_index + 1, len(self.popup_list))
         else:
+            # If you are at the beginning, do nothing
             print("Reached the beginning of the popups")
 
+        # If there are more sprites screens to go you update the sprits_index and current spriteslist 
         if self.sprites_index > 0:
             self.sprites_index = self.sprites_index - 1
             self.current_sprites = self.sprites_list[self.sprites_index]
         else:
+            # If you are at the beginning do nothing
             print("Reached the beginning of the sprites list")
