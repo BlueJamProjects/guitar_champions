@@ -131,6 +131,8 @@ def start():
               tutorial_popup.TutorialPopup("We are using tab notation to represent notes. So a note on the top line here would be played on the bottom string.", left_padding=10, top_padding=20, show_hightlight_region=True, highlight_region_position=example_note5.rect),
             #   7
               tutorial_popup.TutorialPopup("While a note on the bottom line here would be played on the top string.", left_padding=10, top_padding=250, show_hightlight_region=True, highlight_region_position=example_note6.rect),
+            #   8
+              tutorial_popup.TutorialPopup("The fret of the note is represented by its number", left_padding=10, top_padding=250, show_hightlight_region=True, highlight_region_position=example_note6.rect),
             
             
             # END
@@ -187,6 +189,14 @@ def start():
                    
                    ],
                 #    7
+                [
+                   sprite_item.SpriteItem(sprite = bg_img, location = (0,0)),
+                   sprite_item.SpriteItem(sprite = tabs_image, location = (0,0)),
+                   sprite_item.SpriteItem(sprite = play_line_image, location = (0,0)),
+                   sprite_item.SpriteItem(sprite= example_note6.surf, location=example_note6.rect),
+                   
+                   ],
+                    #    8
                 [
                    sprite_item.SpriteItem(sprite = bg_img, location = (0,0)),
                    sprite_item.SpriteItem(sprite = tabs_image, location = (0,0)),
