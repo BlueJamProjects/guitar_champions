@@ -63,7 +63,7 @@ screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 
 current_level = 0
 
-level_list = [("Happy Birthday", level_happy_birthday), ("Mario", level1), ("Mountains", level2)]
+level_list = [("Happy Birthday", level_happy_birthday), ("Twinkle Little Star", level1), ("Mountains", level2)]
 
 
 

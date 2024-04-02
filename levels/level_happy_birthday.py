@@ -49,7 +49,7 @@ import helpers.settings_helper as settings_helper
 import partials.titlecard.title_card as title_card
 
 
-main_midi_number = 40
+main_midi_number_arr = [40, 40, 40]
 
 def start():
 
@@ -181,32 +181,32 @@ def start():
 
     # This is the array with the song's note information
     song_notes = [
-        note.Note(text="O", midi=55, time_to_next_note=1, tab_line=3, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=0),
-        note.Note(text="O", midi=55, time_to_next_note=1, tab_line=3, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=1),
+        note.Note(text="0", midi=55, time_to_next_note=1, tab_line=3, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=0),
+        note.Note(text="0", midi=55, time_to_next_note=1, tab_line=3, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=1),
         note.Note(text="2", midi=57, time_to_next_note=1, tab_line=3, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=2),
-        note.Note(text="O", midi=55, time_to_next_note=1, tab_line=3, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=3),
+        note.Note(text="0", midi=55, time_to_next_note=1, tab_line=3, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=3),
         note.Note(text="1", midi=60, time_to_next_note=1, tab_line=2, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=4),
-        note.Note(text="O", midi=59, time_to_next_note=2.0, tab_line=2, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=5),
+        note.Note(text="0", midi=59, time_to_next_note=2.0, tab_line=2, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=5),
 
-        note.Note(text="O", midi=55, time_to_next_note=0.5, tab_line=3, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=6),
-        note.Note(text="O", midi=55, time_to_next_note=0.5, tab_line=3, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=7),
+        note.Note(text="0", midi=55, time_to_next_note=0.5, tab_line=3, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=6),
+        note.Note(text="0", midi=55, time_to_next_note=0.5, tab_line=3, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=7),
         note.Note(text="2", midi=57, tab_line=3, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=8),
-        note.Note(text="O", midi=55, tab_line=3, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=9),
+        note.Note(text="0", midi=55, tab_line=3, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=9),
         note.Note(text="3", midi=62, tab_line=2, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=10),
         note.Note(text="1", midi=60, time_to_next_note=2.0, tab_line=2, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=11),
 
 
-        note.Note(text="O", midi=55, time_to_next_note=0.5, tab_line=3, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=13),
-        note.Note(text="o", midi=55, time_to_next_note=0.5, tab_line=3, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=14),
+        note.Note(text="0", midi=55, time_to_next_note=0.5, tab_line=3, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=13),
+        note.Note(text="0", midi=55, time_to_next_note=0.5, tab_line=3, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=14),
         note.Note(text="3", midi=67, tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=15),
-        note.Note(text="o", midi=64, tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=16),
+        note.Note(text="0", midi=64, tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=16),
         note.Note(text="1", midi=60, tab_line=2, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=17),
-        note.Note(text="o", midi=59, tab_line=2, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=18),
+        note.Note(text="0", midi=59, tab_line=2, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=18),
         note.Note(text="2", midi=57, time_to_next_note=2.0, tab_line=3, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=19),
 
         note.Note(text="1", midi=65, time_to_next_note=0.5, tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=20),
         note.Note(text="1", midi=65, time_to_next_note=0.5, tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=21),
-        note.Note(text="O", midi=64, tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=22),
+        note.Note(text="0", midi=64, tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=22),
         note.Note(text="1", midi=60, tab_line=2, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=23),
         note.Note(text="3", midi=62, tab_line=2, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=24),
         note.Note(text="1", midi=60, tab_line=2, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=25),
@@ -434,12 +434,12 @@ def start():
 
                 for curr_note in Notes:
                     # This loops through all the notes on screen
-                    if abs(PLAY_LINE_LOCATION - curr_note.get_x_location()) < 20:
+                    if abs((PLAY_LINE_LOCATION-200) - curr_note.get_x_location()) < 20:
 
                         # This triggers if the note is the one on screen
                         # This is a function from the note that we check to see if it's key was the one pressed
                         # print("MIDI Number: ",main_midi_number)
-                        if curr_note.check_correct_note(main_midi_number):
+                        if curr_note.check_correct_note(main_midi_number_arr):
                             curr_note.was_played=True
                             print("Correct note played")
                             correctly_played_notes.append(curr_note)
@@ -470,10 +470,14 @@ def start():
 
                 for curr_note in Notes:
                                 # This loops through all the notes on screen
+
+                                
                                 
 
-                                if abs(PLAY_LINE_LOCATION - curr_note.get_x_location()) < 25:
+                                if (abs(PLAY_LINE_LOCATION - curr_note.get_x_location()) < 25) :
                                     # it checks to see if the note is close enough to the play line to update
+                                    
+                                    
 
                                     if curr_note.get_is_active() == False:
                                         # if the note is currently note active
@@ -484,12 +488,14 @@ def start():
                                      if curr_note.get_is_active() == True:
                                         # if it is leaving the play line region
 
-                                        if curr_note.get_was_played() == True:
-                                            # if note was played successfully
-                                            curr_note.set_played_color()
-                                        else:
-                                            # if the note was not played successfully
-                                            curr_note.set_missed_color()
+                                        if((curr_note.get_x_location() < (PLAY_LINE_LOCATION - 200))):
+
+                                            if curr_note.get_was_played() == True:
+                                                # if note was played successfully
+                                                curr_note.set_played_color()
+                                            else:
+                                                # if the note was not played successfully
+                                                curr_note.set_missed_color()
                                     
 
 
@@ -590,8 +596,9 @@ def audio_callback(in_data, frame_count, time_info, status):
             freq = frequency[best_idx]
             midi_number = librosa.hz_to_midi(freq)
 
-            global main_midi_number
-            main_midi_number = round(midi_number)
+            global main_midi_number_arr
+            main_midi_number_arr.append(round(midi_number))
+            main_midi_number_arr.pop(0)
 
 
             amplitude = np.sqrt(np.mean(filtered_audio**2))
