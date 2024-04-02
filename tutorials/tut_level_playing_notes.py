@@ -89,8 +89,28 @@ def start():
     strumAnimation = Animation('assets/animations/rjgwgSTRUMMINGGUITAR1.aseprite')
     animationmanager2 = AnimationManager([strumAnimation], screen)
 
-    example_note1 = note.Note(text="0", midi=55, time_to_next_note=1, tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=0)
+    example_note1 = note.Note(text="0", midi=55, time_to_next_note=1, tab_line=3, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=0)
     example_note1.set_x_location(500)
+
+    example_note2 = note.Note(text="0", midi=55, time_to_next_note=1, tab_line=3, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=0)
+    example_note2.set_x_location(290)
+    example_note2.set_active_color()
+
+    example_note3 = note.Note(text="0", midi=55, time_to_next_note=1, tab_line=3, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=0)
+    example_note3.set_x_location(210)
+    example_note3.set_played_color()
+
+    example_note4 = note.Note(text="0", midi=55, time_to_next_note=1, tab_line=3, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=0)
+    example_note4.set_x_location(210)
+    example_note4.set_missed_color()
+
+    example_note5 = note.Note(text="0", midi=55, time_to_next_note=1, tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=0)
+    example_note5.set_x_location(500)
+    example_note5.set_active_color()
+
+    example_note6 = note.Note(text="0", midi=55, time_to_next_note=1, tab_line=6, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=0)
+    example_note6.set_x_location(500)
+    example_note6.set_active_color()
 
     complete_tutorial_button = text_button.TextButton(text=" Complete ", width= 96,height= 44, left_padding= SCREEN_WIDTH/2 - 50, top_padding= SCREEN_HEIGHT/2 - 80)
     
@@ -102,11 +122,15 @@ def start():
              #   2
               tutorial_popup.TutorialPopup("In this game, notes, like this will glide across the screen and you'll need to play them once they change to blue", left_padding=100, top_padding=20, show_hightlight_region=True, highlight_region_position=example_note1.rect),
             #   3
-              tutorial_popup.TutorialPopup("When they change to Blue they'll look like this", left_padding=10, top_padding=20),
+              tutorial_popup.TutorialPopup("When they change to Blue they'll look like this", left_padding=10, top_padding=250, show_hightlight_region=True, highlight_region_position=example_note2.rect),
              #   4
-              tutorial_popup.TutorialPopup("If you play them correctly they'll change to Green", left_padding=10, top_padding=20),
+              tutorial_popup.TutorialPopup("If you play them correctly they'll change to Green", left_padding=10, top_padding=250, show_hightlight_region=True, highlight_region_position=example_note3.rect),
              #   5
-              tutorial_popup.TutorialPopup("But if you play them incorrectly they'll change to Red", left_padding=10, top_padding=20),
+              tutorial_popup.TutorialPopup("But if you play them incorrectly they'll change to Red", left_padding=10, top_padding=250, show_hightlight_region=True, highlight_region_position=example_note4.rect),
+            #   6
+              tutorial_popup.TutorialPopup("We are using tab notation to represent notes. So a note on the top line here would be played on the bottom string.", left_padding=10, top_padding=20, show_hightlight_region=True, highlight_region_position=example_note5.rect),
+            #   7
+              tutorial_popup.TutorialPopup("While a note on the bottom line here would be played on the top string.", left_padding=10, top_padding=250, show_hightlight_region=True, highlight_region_position=example_note6.rect),
             
             
             # END
@@ -127,7 +151,7 @@ def start():
                    sprite_item.SpriteItem(sprite = bg_img, location = (0,0)),
                    sprite_item.SpriteItem(sprite = tabs_image, location = (0,0)),
                    sprite_item.SpriteItem(sprite = play_line_image, location = (0,0)),
-                   sprite_item.SpriteItem(sprite= example_note1.surf, location=example_note1.rect)
+                   sprite_item.SpriteItem(sprite= example_note1.surf, location=example_note1.rect),
                    
                    ],
                    # 3
@@ -135,6 +159,7 @@ def start():
                    sprite_item.SpriteItem(sprite = bg_img, location = (0,0)),
                    sprite_item.SpriteItem(sprite = tabs_image, location = (0,0)),
                    sprite_item.SpriteItem(sprite = play_line_image, location = (0,0)),
+                   sprite_item.SpriteItem(sprite= example_note2.surf, location=example_note2.rect),
                    
                    ],
                    # 4
@@ -142,13 +167,31 @@ def start():
                    sprite_item.SpriteItem(sprite = bg_img, location = (0,0)),
                    sprite_item.SpriteItem(sprite = tabs_image, location = (0,0)),
                    sprite_item.SpriteItem(sprite = play_line_image, location = (0,0)),
+                   sprite_item.SpriteItem(sprite= example_note3.surf, location=example_note3.rect),
                    
                    ],
-                   # 4
+                   # 5
               [
                    sprite_item.SpriteItem(sprite = bg_img, location = (0,0)),
                    sprite_item.SpriteItem(sprite = tabs_image, location = (0,0)),
                    sprite_item.SpriteItem(sprite = play_line_image, location = (0,0)),
+                   sprite_item.SpriteItem(sprite= example_note4.surf, location=example_note4.rect),
+                   
+                   ],
+                #    6
+                [
+                   sprite_item.SpriteItem(sprite = bg_img, location = (0,0)),
+                   sprite_item.SpriteItem(sprite = tabs_image, location = (0,0)),
+                   sprite_item.SpriteItem(sprite = play_line_image, location = (0,0)),
+                   sprite_item.SpriteItem(sprite= example_note5.surf, location=example_note5.rect),
+                   
+                   ],
+                #    7
+                [
+                   sprite_item.SpriteItem(sprite = bg_img, location = (0,0)),
+                   sprite_item.SpriteItem(sprite = tabs_image, location = (0,0)),
+                   sprite_item.SpriteItem(sprite = play_line_image, location = (0,0)),
+                   sprite_item.SpriteItem(sprite= example_note6.surf, location=example_note6.rect),
                    
                    ],
 
