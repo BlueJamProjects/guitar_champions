@@ -17,14 +17,15 @@ class TutorialPopup():
                       background_color=(0,0,0),
                       show_hightlight_region=False,
                       highlight_region_color=(255, 255, 255),
-                      highlight_region_position = pygame.Rect(20, 20, 100, 100)
+                      highlight_region_position = pygame.Rect(20, 20, 100, 100),
+                      trigger_effect_number=0,
 
                       ):
             super(TutorialPopup, self).__init__()
 
             
-            
-           
+            # This is a number can be checked in the tutorial to see if an effect should be triggered when this button is moved away from
+            self.trigger_effect_number = trigger_effect_number
         
             
  

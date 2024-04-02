@@ -49,12 +49,6 @@ def start():
     # The size is determined by the constant SCREEN_WIDTH and SCREEN_HEIGHT
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 
-    
-
-    # Create the background image for the level
-    bg_img = pygame.image.load('assets/images/backgrounds/glacier_night.jpeg')
-    bg_img = pygame.transform.scale(bg_img,(SCREEN_WIDTH,SCREEN_HEIGHT))
-
 
     pause_title = title_card.Titlecard(text="   Paused   ", width= 350,height= 59, left_padding= SCREEN_WIDTH/2 - 175, top_padding= SCREEN_HEIGHT/2 - 180)
     
@@ -65,26 +59,146 @@ def start():
     main_menu_button = text_button.TextButton(text=" Main Menu ", width= 128,height= 44, left_padding= SCREEN_WIDTH/2 - 62, top_padding= SCREEN_HEIGHT/2 +60)
     quit_button = text_button.TextButton(text=" Quit ", width= 60,height= 44, left_padding= SCREEN_WIDTH/2 -30, top_padding= SCREEN_HEIGHT/2 + 120)
 
-    next_bg_img = pygame.image.load('assets/images/backgrounds/forest.jpeg')
-    next_bg_img = pygame.transform.scale(next_bg_img,(SCREEN_WIDTH,SCREEN_HEIGHT))
+    
+    # TODO make the custom sprites for the tutorial
+    # START/////////
+    bg_img = pygame.image.load('assets/images/backgrounds/glacier_night.jpeg')
+    bg_img = pygame.transform.scale(bg_img,(SCREEN_WIDTH,SCREEN_HEIGHT))
+
+    bg_img_2 = pygame.image.load('assets/images/backgrounds/forest.jpeg')
+    bg_img_2 = pygame.transform.scale(bg_img_2,(SCREEN_WIDTH,SCREEN_HEIGHT))
+
+    example_button = text_button.TextButton(text=" example ", width= 96,height= 44, left_padding= SCREEN_WIDTH/2 - 50, top_padding= SCREEN_HEIGHT/2 - 80)
+    
+    example_button2 = text_button.TextButton(text=" example ", width= 96,height= 44, left_padding= SCREEN_WIDTH/2 - 50, top_padding= SCREEN_HEIGHT/2 - 80)
+    
+    example_pause_background = pygame.Surface((SCREEN_WIDTH/2,3*SCREEN_HEIGHT/4)) 
+    example_pause_background.set_alpha(140)                
+    example_pause_background.fill((239,159,20))  
 
     curr_tutorial_info = tutorial_info.TutorialInfo(
          popup_list = [
+            #   1
               tutorial_popup.TutorialPopup("Welcome to the controls tutorial. Press the next button on screen or the right arrowkey on your keyboard to go to the next screen", left_padding=10, top_padding=20),
+            #  2
               tutorial_popup.TutorialPopup("If you want to go back then press the left arrow key on your keyboard"),
+            #   3
+              tutorial_popup.TutorialPopup("This is what a button looks like", top_padding= 300, left_padding= 200, show_hightlight_region=True, highlight_region_position= pygame.Rect(SCREEN_WIDTH/2 - 50 - 3,SCREEN_HEIGHT/2 - 80 - 3, 106,50,) ),
+            #   4
+              tutorial_popup.TutorialPopup("Try pressing it", top_padding= 300, left_padding= 200,),
+            #   5
+              tutorial_popup.TutorialPopup("Now, let's take a look at a common menu you'll see throughout the game", top_padding= 300, left_padding= 200,),
+            #   6
+              tutorial_popup.TutorialPopup("This is the pause menu", top_padding= 150, left_padding= 20,),
+            #   7
+              tutorial_popup.TutorialPopup("This is the resume button. It is used to unpause the current level", top_padding= 150, left_padding= 20, show_hightlight_region=True, highlight_region_position= resume_button.button_position),
+            # 8
+            tutorial_popup.TutorialPopup("This is the restart button, it will restart the level from the beginning", top_padding= 180, left_padding= 20,  show_hightlight_region=True, highlight_region_position= restart_button.button_position),
+            # 9
+            tutorial_popup.TutorialPopup("This is the main menu button which, as the name suggests, will take you back to the main menu", top_padding= 200, left_padding= 20, show_hightlight_region=True, highlight_region_position= main_menu_button.button_position),
+            # 10
+            tutorial_popup.TutorialPopup("This is quit button which will close the game", top_padding= 220, left_padding= 20,  show_hightlight_region=True, highlight_region_position= quit_button.button_position, trigger_effect_number=1),
+            # 11
+            tutorial_popup.TutorialPopup("Final page", top_padding= 220, left_padding= 20,),
+
+
               ],
          sprites_list = [
+            # 1
               [
                    sprite_item.SpriteItem(sprite = bg_img, location = (0,0)),
                    
                    ],
 
-              [
-                   sprite_item.SpriteItem(sprite = next_bg_img, location = (0,0)),
+                # 2
+              [ 
+                   sprite_item.SpriteItem(sprite = bg_img_2, location = (0,0)),
 
                    ],
+                    # 3
+                   [
+            
+                    sprite_item.SpriteItem(sprite = bg_img_2, location = (0,0)),
+                    sprite_item.SpriteItem(sprite = example_button.render, location = example_button.button_position),
+                   ],
+                #    4
+                [
+                    sprite_item.SpriteItem(sprite = bg_img_2, location = (0,0)),
+                    sprite_item.SpriteItem(sprite = example_button2.render, location = example_button2.button_position),
+                   
+                ],
+
+                #    5
+                [
+                    sprite_item.SpriteItem(sprite = bg_img_2, location = (0,0)),
+                    
+                    
+                ],
+
+                #    6
+                [
+                    
+                    sprite_item.SpriteItem(sprite =example_pause_background, location =  (SCREEN_WIDTH/4,SCREEN_HEIGHT/8)),
+                    sprite_item.SpriteItem(sprite = bg_img_2, location = (0,0)),
+                    sprite_item.SpriteItem(sprite =example_pause_background, location =  (SCREEN_WIDTH/4,SCREEN_HEIGHT/8)),
+                    sprite_item.SpriteItem(sprite = resume_button.render, location = resume_button.button_position),
+                    sprite_item.SpriteItem(sprite = restart_button.render, location = restart_button.button_position),
+                    sprite_item.SpriteItem(sprite = main_menu_button.render, location = main_menu_button.button_position),
+                    sprite_item.SpriteItem(sprite = quit_button.render, location = quit_button.button_position),
+                    
+                ],
+
+                 #    7
+                [
+                    sprite_item.SpriteItem(sprite = bg_img_2, location = (0,0)),
+                    sprite_item.SpriteItem(sprite = resume_button.render, location = resume_button.button_position),
+                    sprite_item.SpriteItem(sprite = restart_button.render, location = restart_button.button_position),
+                    sprite_item.SpriteItem(sprite = main_menu_button.render, location = main_menu_button.button_position),
+                    sprite_item.SpriteItem(sprite = quit_button.render, location = quit_button.button_position),
+                    
+                ],
+
+                 #    8
+                [
+                    sprite_item.SpriteItem(sprite = bg_img_2, location = (0,0)),
+                    sprite_item.SpriteItem(sprite = resume_button.render, location = resume_button.button_position),
+                    sprite_item.SpriteItem(sprite = restart_button.render, location = restart_button.button_position),
+                    sprite_item.SpriteItem(sprite = main_menu_button.render, location = main_menu_button.button_position),
+                    sprite_item.SpriteItem(sprite = quit_button.render, location = quit_button.button_position),
+                    
+                ],
+
+                 #    9
+                [
+                    sprite_item.SpriteItem(sprite = bg_img_2, location = (0,0)),
+                    sprite_item.SpriteItem(sprite = resume_button.render, location = resume_button.button_position),
+                    sprite_item.SpriteItem(sprite = restart_button.render, location = restart_button.button_position),
+                    sprite_item.SpriteItem(sprite = main_menu_button.render, location = main_menu_button.button_position),
+                    sprite_item.SpriteItem(sprite = quit_button.render, location = quit_button.button_position),
+                    
+                ],
+
+                #    10
+                [
+                    sprite_item.SpriteItem(sprite = bg_img_2, location = (0,0)),
+                    sprite_item.SpriteItem(sprite = resume_button.render, location = resume_button.button_position),
+                    sprite_item.SpriteItem(sprite = restart_button.render, location = restart_button.button_position),
+                    sprite_item.SpriteItem(sprite = main_menu_button.render, location = main_menu_button.button_position),
+                    sprite_item.SpriteItem(sprite = quit_button.render, location = quit_button.button_position),
+                    
+                ],
+                # 11
+                [
+                    sprite_item.SpriteItem(sprite = bg_img_2, location = (0,0)),
+                   
+                ],
+
+            
          ],
     )
+
+
+    # END/////////
 
     current_popup = curr_tutorial_info.current_popup
 
@@ -181,9 +295,19 @@ def start():
                                     print("paused the game")
 
                                 elif event.key == K_RIGHT:
+                                     
+                                     # TODO Add custom next code here
+                                    # START/////////
+
+                                    # END/////////
                                     curr_tutorial_info.next()
+                                    
 
                                 elif event.key == K_LEFT:
+                                    # TODO Add custom previous code here
+                                    # START/////////
+
+                                    # END/////////
                                     curr_tutorial_info.previous()
 
                             # Did the user click the window close button? If so, exit
@@ -193,6 +317,11 @@ def start():
                             # Here we check for hover events 
                             if event.type==pygame.MOUSEMOTION:
                                 current_popup.button_on_hover()
+
+                                # TODO Add the hover effects for this tutorials example buttons
+                                # START/////////
+                                example_button2.on_hover()
+                                # END/////////
                                 
                         
 
@@ -202,6 +331,18 @@ def start():
                                 # text_buttons should be pressed like this
                                 if (current_popup.button_is_pressed() == True):
                                     curr_tutorial_info.next()
+
+                                    # TODO Add custom next code here
+                                    # START/////////
+
+                                    # END/////////
+
+
+                                 # TODO Add the click effects for this tutorials example buttons
+                                    # START/////////
+                                if (example_button2.is_pressed() == True):
+                                    curr_tutorial_info.next()
+                                # END/////////
 
 
             current_popup = curr_tutorial_info.current_popup
@@ -223,7 +364,8 @@ def start():
 
             screen.blit(current_popup.button_render, current_popup.button_position)
 
-            pygame.draw.rect(screen,current_popup.highlight_region_color,current_popup.highlight_region_position, 5)
+            if (current_popup.show_hightlight_region == True):
+                pygame.draw.rect(screen,current_popup.highlight_region_color,current_popup.highlight_region_position, 5)
 
 
 
