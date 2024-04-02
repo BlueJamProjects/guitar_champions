@@ -16,11 +16,13 @@ from pygame.locals import (
 )
 
 class Note(pygame.sprite.Sprite):
-    def __init__(self, midi=40, text="O", tab_line=1, time_to_next_note=1.0, font_size=70, font_color=(0, 0, 0), font_name='freesansbold.ttf', Screen_Width=800, Screen_Height=600):
+    def __init__(self, midi=40, text="O", tab_line=1, time_to_next_note=1.0, font_size=70, font_color=(0, 0, 0), font_name='freesansbold.ttf', Screen_Width=800, Screen_Height=600, id=0):
         super(Note, self).__init__()
 
         # Initialize Pygame
         pygame.init()
+
+        self.id=id
 
         self.midi = midi
 
@@ -95,15 +97,16 @@ class Note(pygame.sprite.Sprite):
     
 
     
-    def check_correct_note(self, predicted_midi):
+    def check_correct_note(self, predicted_midi_arr):
         
         if self.was_played == False:
 
-            if self.midi == predicted_midi:
-                self.was_played = True
-                return True
-            else:
-                return False
+            for note in predicted_midi_arr:
+                if self.midi == note:
+                    self.was_played = True
+                    return True
+            
+            return False
 
     # returns the time to the next note
     def get_time_to_next_note(self):
