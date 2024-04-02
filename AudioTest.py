@@ -1,12 +1,12 @@
 import pyaudio
-import wave
 import librosa
-import math
 from scipy.signal import find_peaks
 import numpy as np
 from collections import Counter
 import scipy.signal
 import crepe
+import keras
+import keras.backend as K
 from music21 import note
 import os
 import noisereduce as nr
@@ -36,9 +36,10 @@ def test():
 
 
 def midi_number_to_pitch(midi_number):
-   n = note.Note()
-   n.pitch.midi = midi_number
-   return n.pitch.nameWithOctave
+    n = note.Note()
+    print(type(n))
+    n.pitch.midi = midi_number
+    return n.pitch.nameWithOctave
 
 
 def audio_callback(in_data, frame_count, time_info, status):
@@ -54,8 +55,9 @@ def audio_callback(in_data, frame_count, time_info, status):
 
 
     try:
-        time, frequency, confidence, activation = crepe.predict(audio_data, 44100, viterbi=True)
-        
+        time, frequency, confidence, activation = crepe.predict(filtered_audio, 16000, step_size=50, viterbi=True)
+        # K.clear_session()
+       
         if len(confidence) > 0:
             best_idx = np.argmax(confidence)
             freq = frequency[best_idx]
@@ -75,57 +77,6 @@ def audio_callback(in_data, frame_count, time_info, status):
     return (in_data, pyaudio.paContinue)
 
 
-
-
-class AudioHandler(object):
-   def __init__(self):
-       self.FORMAT = pyaudio.paFloat32
-       self.CHANNELS = 1
-       self.RATE = 44100
-       self.CHUNK = 4096
-       self.p = None
-       self.stream = None
-
-
-
-
-       # High-pass filter parameters
-       self.low_cutoff = 80.0
-       self.high_cutoff = 300.0
-
-
-
-
-       # Amplitude Threshold
-       self.amplitude_threshold = 3.0
-
-
-
-
-   def start(self):
-       self.p = pyaudio.PyAudio()
-       self.stream = self.p.open(format=self.FORMAT,
-                                 channels=self.CHANNELS,
-                                 rate=self.RATE,
-                                 input=True,
-                                 output=False,
-                                 frames_per_buffer=self.CHUNK,
-                                 stream_callback=audio_callback)
-
-
-
-
-   def stop(self):
-       self.stream.close()
-       self.p.terminate()
-
-
-
-
-
-
-
-
 # Main function to start audio streaming
 def stream_audio():
    p = pyaudio.PyAudio()
@@ -133,12 +84,12 @@ def stream_audio():
 
 
 
-   stream = p.open(format=pyaudio.paFloat32,
-                   channels=1,
-                   rate=44100,
-                   input=True,
-                   frames_per_buffer=4096,
-                   stream_callback=audio_callback)
+    stream = p.open(format=pyaudio.paFloat32,
+                    channels=1,
+                    rate=16000,
+                    input=True,
+                    frames_per_buffer=2048,
+                    stream_callback=audio_callback)
 
 
 
@@ -163,4 +114,4 @@ def stream_audio():
 
 
 if __name__ == "__main__":
-   stream_audio()
+    stream_audio()
