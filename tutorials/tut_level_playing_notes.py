@@ -1,5 +1,9 @@
 import pygame
 
+import os
+
+from pygame_aseprite_animation import *
+
 import helpers.settings_helper as settings_helper
 
 import helpers.tutorial_info as tutorial_info
@@ -11,6 +15,8 @@ import partials.titlecard.title_card as title_card
 import partials.tutorial_popup.tutorial_popup as tutorial_popup
 
 import helpers.sprite_item as sprite_item
+
+import partials.notes.text_note as note
 
 from pygame.locals import (
     RLEACCEL,
@@ -65,9 +71,26 @@ def start():
     bg_img = pygame.image.load('assets/images/backgrounds/glacier_night.jpeg')
     bg_img = pygame.transform.scale(bg_img,(SCREEN_WIDTH,SCREEN_HEIGHT))
 
+    #  the background image of the tabs
+    tabs_image = pygame.image.load("assets/images/backgrounds/tabs_outline.png").convert()
+    tabs_image.set_colorkey((255, 255, 255), RLEACCEL)
 
-    
+    # the image of the line where the ntoes should be when played
+    play_line_image = pygame.image.load("assets/images/backgrounds/play_line.png").convert()
+    play_line_image.set_colorkey((255, 255, 255), RLEACCEL)
 
+    # set aseprite file directory
+    dirname = os.path.dirname(__file__)
+    aseprite_file_directory = 'assets/animations/rjgwgMOVINGHANDTOPLAY1.aseprite'
+
+    #guitar guy animations
+    test_animation = Animation(aseprite_file_directory)
+    animationmanager = AnimationManager([test_animation], screen)
+    strumAnimation = Animation('assets/animations/rjgwgSTRUMMINGGUITAR1.aseprite')
+    animationmanager2 = AnimationManager([strumAnimation], screen)
+
+    example_note1 = note.Note(text="0", midi=55, time_to_next_note=1, tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=0)
+    example_note1.set_x_location(500)
 
     complete_tutorial_button = text_button.TextButton(text=" Complete ", width= 96,height= 44, left_padding= SCREEN_WIDTH/2 - 50, top_padding= SCREEN_HEIGHT/2 - 80)
     
@@ -76,6 +99,16 @@ def start():
          popup_list = [
             #   1
               tutorial_popup.TutorialPopup("Welcome to the Playing Notes tutorial! Press the next button on screen or use the arrow keys to navigate", left_padding=10, top_padding=20),
+             #   2
+              tutorial_popup.TutorialPopup("In this game, notes, like this will glide across the screen and you'll need to play them once they change to blue", left_padding=100, top_padding=20, show_hightlight_region=True, highlight_region_position=example_note1.rect),
+            #   3
+              tutorial_popup.TutorialPopup("When they change to Blue they'll look like this", left_padding=10, top_padding=20),
+             #   4
+              tutorial_popup.TutorialPopup("If you play them correctly they'll change to Green", left_padding=10, top_padding=20),
+             #   5
+              tutorial_popup.TutorialPopup("But if you play them incorrectly they'll change to Red", left_padding=10, top_padding=20),
+            
+            
             # END
             tutorial_popup.TutorialPopup("Press complete to finish the tutorial", top_padding= 220, left_padding= 20, trigger_effect_number=1,),
 
@@ -85,6 +118,37 @@ def start():
             # 1
               [
                    sprite_item.SpriteItem(sprite = bg_img, location = (0,0)),
+                   sprite_item.SpriteItem(sprite = tabs_image, location = (0,0)),
+                   sprite_item.SpriteItem(sprite = play_line_image, location = (0,0)),
+                   
+                   ],
+                   # 2
+              [
+                   sprite_item.SpriteItem(sprite = bg_img, location = (0,0)),
+                   sprite_item.SpriteItem(sprite = tabs_image, location = (0,0)),
+                   sprite_item.SpriteItem(sprite = play_line_image, location = (0,0)),
+                   sprite_item.SpriteItem(sprite= example_note1.surf, location=example_note1.rect)
+                   
+                   ],
+                   # 3
+              [
+                   sprite_item.SpriteItem(sprite = bg_img, location = (0,0)),
+                   sprite_item.SpriteItem(sprite = tabs_image, location = (0,0)),
+                   sprite_item.SpriteItem(sprite = play_line_image, location = (0,0)),
+                   
+                   ],
+                   # 4
+              [
+                   sprite_item.SpriteItem(sprite = bg_img, location = (0,0)),
+                   sprite_item.SpriteItem(sprite = tabs_image, location = (0,0)),
+                   sprite_item.SpriteItem(sprite = play_line_image, location = (0,0)),
+                   
+                   ],
+                   # 4
+              [
+                   sprite_item.SpriteItem(sprite = bg_img, location = (0,0)),
+                   sprite_item.SpriteItem(sprite = tabs_image, location = (0,0)),
+                   sprite_item.SpriteItem(sprite = play_line_image, location = (0,0)),
                    
                    ],
 
@@ -279,6 +343,10 @@ def start():
                     # If the current sprite is not a box
                     screen.blit(curr_sprite_item.sprite, curr_sprite_item.location)
 
+
+            # TODO This is the animation of the player
+            animationmanager2.update_self(30, 390)
+
             pygame.draw.rect(screen,current_popup.outline_color,current_popup.outline_position)
 
             screen.blit(current_popup.line1_render, current_popup.line1_position)
@@ -292,8 +360,9 @@ def start():
             screen.blit(current_popup.button_render, current_popup.button_position)
 
             if (current_popup.show_hightlight_region == True):
-                pygame.draw.rect(screen,current_popup.highlight_region_color,current_popup.highlight_region_position, 5)
+                pygame.draw.rect(screen,current_popup.highlight_region_color,current_popup.highlight_region_position.scale_by(1.4), 5)
 
+            
 
 
             pygame.display.update()

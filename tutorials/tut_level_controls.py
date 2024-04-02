@@ -102,7 +102,7 @@ def start():
             # 10
             tutorial_popup.TutorialPopup("This is quit button which will close the game", top_padding= 300, left_padding= 20,  show_hightlight_region=True, highlight_region_position= quit_button.button_position),
             # 11
-            tutorial_popup.TutorialPopup("Press complete to finish the tutorial", top_padding= 220, left_padding= 20, trigger_effect_number=2,),
+            tutorial_popup.TutorialPopup("Press complete to finish the tutorial", top_padding= 220, left_padding= 20, trigger_effect_number=2, show_hightlight_region=True, highlight_region_position= complete_tutorial_button.button_position),
 
 
               ],
@@ -465,7 +465,7 @@ def start():
             screen.blit(current_popup.button_render, current_popup.button_position)
 
             if (current_popup.show_hightlight_region == True):
-                pygame.draw.rect(screen,current_popup.highlight_region_color,current_popup.highlight_region_position, 5)
+                pygame.draw.rect(screen,current_popup.highlight_region_color,current_popup.highlight_region_position.scale_by(1.4), 5)
 
 
 

@@ -95,6 +95,10 @@ class Note(pygame.sprite.Sprite):
     def get_x_location(self):
         return self.rect.right
     
+    # This sets the current x location of the note
+    def set_x_location(self, x_value=100):
+        self.rect.right = x_value
+    
 
     
     def check_correct_note(self, predicted_midi_arr):
