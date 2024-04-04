@@ -123,28 +123,28 @@ if __name__ == "__main__":
     
     levbutt=menu.add.selector('Level Select:', [(level[0], index) for index, level in enumerate(level_list)],float=True, font_name=fonter, onchange=select_level)
     levbutt.add_draw_callback(draw_update_function_helper.draw_update_function)
-    levbutt.translate(0,-120)
+    levbutt.translate(0,-130)
     widgets.append(levbutt)
     
     playbutt=menu.add.button('Play', start_level, float=True,font_name=fonter)
     playbutt.add_draw_callback(draw_update_function_helper.draw_update_function)
-    playbutt.translate(0,-20)
+    playbutt.translate(0,-40)
     widgets.append(playbutt)
     
     tutbutt=menu.add.button('Tutorial', tutorials_main.tutorials_menu, float=True,font_name=fonter)
     tutbutt.add_draw_callback(draw_update_function_helper.draw_update_function)
-    tutbutt.translate(0,90)
+    tutbutt.translate(0,50)
     widgets.append(tutbutt)
 
 
     settbutt=menu.add.button('Settings', settings_menu.settings_menu, float=True,font_name=fonter)
     settbutt.add_draw_callback(draw_update_function_helper.draw_update_function)
-    settbutt.translate(0,170)
+    settbutt.translate(0,140)
     widgets.append(settbutt)
     
     quitbutt=menu.add.button('Quit', pygame_menu.events.EXIT, float=True,font_name=fonter)
     quitbutt.add_draw_callback(draw_update_function_helper.draw_update_function)
-    quitbutt.translate(0,260)
+    quitbutt.translate(0,230)
     widgets.append(quitbutt)
     
     for widget in widgets:
