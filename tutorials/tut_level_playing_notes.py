@@ -222,13 +222,13 @@ def start():
              #   5
               tutorial_popup.TutorialPopup("But if you play them incorrectly they'll change to Red", left_padding=10, top_padding=250, show_hightlight_region=True, highlight_region_position=example_note4.rect),
             #   6
-              tutorial_popup.TutorialPopup("We are using tab notation to represent notes. So a note on the top line here would be played on the bottom string.", left_padding=10, top_padding=20, show_hightlight_region=True, highlight_region_position=example_note5.rect),
+              tutorial_popup.TutorialPopup("We are using tab notation to represent notes. So a note on the top line here would be played on the bottom string (This is called the first string).", left_padding=10, top_padding=20, show_hightlight_region=True, highlight_region_position=example_note5.rect),
             #   7
-              tutorial_popup.TutorialPopup("While a note on the bottom line here would be played on the top string.", left_padding=10, top_padding=250, show_hightlight_region=True, highlight_region_position=example_note6.rect),
+              tutorial_popup.TutorialPopup("While a note on the bottom line here would be played on the top string (This is called the 6th string).", left_padding=10, top_padding=250, show_hightlight_region=True, highlight_region_position=example_note6.rect),
             #   8
               tutorial_popup.TutorialPopup("The fret of the note is represented by its number. In this case the number is 0 which means you just pluck the string without pressing down a fret.", left_padding=10, top_padding=250, show_hightlight_region=True, highlight_region_position=example_note6.rect),
             #   9
-              tutorial_popup.TutorialPopup("While for this one, the number is 1 which means you hold down the 1st string and then pluck the string", left_padding=10, top_padding=250, show_hightlight_region=True, highlight_region_position=example_note7.rect),
+              tutorial_popup.TutorialPopup("While for this one, the number is 1 which means you hold down the string at the first fret and then pluck the string", left_padding=10, top_padding=250, show_hightlight_region=True, highlight_region_position=example_note7.rect),
             
             #   10
               tutorial_popup.TutorialPopup("Now, let's practice playing this note. You'll press down your finger on the top string at the first fret and pluck the string. When it changes to green you've played it correctly.", left_padding=10, top_padding=20, show_hightlight_region=True, highlight_region_position=example_note8.rect, highlight_region_color=(0,0,0), trigger_effect_number=2,),
@@ -242,7 +242,6 @@ def start():
               tutorial_popup.TutorialPopup("Practice as long as you need", left_padding=300, top_padding=400, trigger_effect_number=4,),
             #   15
               tutorial_popup.TutorialPopup("Now you're ready to try out a song!", left_padding=10, top_padding=20,),
-            
             
             # END
             tutorial_popup.TutorialPopup("Press complete to finish the tutorial", top_padding= 220, left_padding= 20, trigger_effect_number=1,),
@@ -580,6 +579,13 @@ def start():
                                     print("paused the game")
 
                                 elif event.key == K_RIGHT:
+                                    if (current_popup.trigger_effect_number == 3 or current_popup.trigger_effect_number == 4):
+                                        Notes = pygame.sprite.Group()
+                                        curr_tutorial_info.sprites_list[curr_tutorial_info.sprites_index] = [
+                                        sprite_item.SpriteItem(sprite = bg_img, location = (0,0)),
+                                        sprite_item.SpriteItem(sprite = tabs_image, location = (0,0)),
+                                        sprite_item.SpriteItem(sprite = play_line_image, location = (0,0)), 
+                                        ]
                                      
                                      # TODO Add custom next code here
                                     # START/////////
@@ -593,6 +599,13 @@ def start():
                                 elif event.key == K_LEFT:
                                     # TODO Add custom previous code here
                                     # START/////////
+                                    if (current_popup.trigger_effect_number == 3 or current_popup.trigger_effect_number == 4):
+                                        Notes = pygame.sprite.Group()
+                                        curr_tutorial_info.sprites_list[curr_tutorial_info.sprites_index] = [
+                                        sprite_item.SpriteItem(sprite = bg_img, location = (0,0)),
+                                        sprite_item.SpriteItem(sprite = tabs_image, location = (0,0)),
+                                        sprite_item.SpriteItem(sprite = play_line_image, location = (0,0)), 
+                                        ]
 
                                     # END/////////
                                     curr_tutorial_info.previous()
@@ -619,6 +632,13 @@ def start():
                                 # text_buttons should be pressed like this
                                 if (current_popup.button_is_pressed() == True):
                                     print("Current popup pressed")
+                                    if (current_popup.trigger_effect_number == 3 or current_popup.trigger_effect_number == 4):
+                                        Notes = pygame.sprite.Group()
+                                        curr_tutorial_info.sprites_list[curr_tutorial_info.sprites_index] = [
+                                        sprite_item.SpriteItem(sprite = bg_img, location = (0,0)),
+                                        sprite_item.SpriteItem(sprite = tabs_image, location = (0,0)),
+                                        sprite_item.SpriteItem(sprite = play_line_image, location = (0,0)), 
+                                        ]
                                     curr_tutorial_info.next()
 
                                     # TODO Add custom next code here
