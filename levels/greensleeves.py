@@ -82,11 +82,24 @@ def start():
 
     # set aseprite file directory
     dirname = os.path.dirname(__file__)
-    aseprite_file_directory = str(dirname) + '/TheHarvester.aseprite'
+    aseprite_file_directory = 'assets/animations/rjgwgMOVINGHANDTOPLAY1.aseprite'
 
     # initialize animations - To add new animations, create a new animationmanager the same way its created here and put the Animation in its list
+    #guitar guy animations
     test_animation = Animation(aseprite_file_directory)
     animationmanager = AnimationManager([test_animation], screen)
+    strumAnimation = Animation('assets/animations/rjgwgSTRUMMINGGUITAR1.aseprite')
+    animationmanager2 = AnimationManager([strumAnimation], screen)
+    # dog animations
+    tailWag = Animation('assets/animations/birthdaydogTAILWAG1.aseprite')
+    animationmanager3 = AnimationManager([tailWag], screen)
+    # girl animations
+    girlIdle = Animation('assets/animations/melissaIDLE1.aseprite')
+    animationmanager4 = AnimationManager([girlIdle], screen)
+    # tree animation
+    treeBounce = Animation('assets/animations/treeBOUNCE.aseprite')
+    animationmanager5 =  AnimationManager([treeBounce], screen)
+
 
     # Setup the clock for a decent framerate
     clock = pygame.time.Clock()
@@ -130,12 +143,17 @@ def start():
 
 
     # Create the background image for the level
-    bg_img = pygame.image.load('assets/images/backgrounds/Little_Star_Background.jpg')
+    bg_img = pygame.image.load('assets/images/backgrounds/happy_birthday_background.png')
     bg_img = pygame.transform.scale(bg_img,(SCREEN_WIDTH,SCREEN_HEIGHT))
-
+    
+    king = pygame.image.load('assets/images/characters/npcs/Henry_VIII.png')
+    king = pygame.transform.scale(king, (150, 210))
+    
+    queen = pygame.image.load('assets/images/characters/npcs/Anne_Boleyn.png')
+    queen = pygame.transform.scale(queen, (90, 90))
     # a foreground image for the notes to go behind
-    # fg_image = pygame.image.load("assets/images/backgrounds/happy_birthday_foreground.png").convert()
-    # fg_image.set_colorkey((255, 255, 255), RLEACCEL)
+    fg_image = pygame.image.load("assets/images/backgrounds/greensleeves-bg.png").convert()
+    fg_image.set_colorkey((255, 255, 255), RLEACCEL)
 
 
     # the background image of the tabs
@@ -187,53 +205,38 @@ def start():
 
     # This is the array with the song's note information
     song_notes = [
-        note.Note(text="1", midi=60, time_to_next_note=1, tab_line=2, font_color=(255,255,255), Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=0),
-        note.Note(text="1", midi=60, time_to_next_note=1, tab_line=2, font_color=(255,255,255), Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=1),
-        note.Note(text="3", midi=67, time_to_next_note=1, tab_line=1, font_color=(255,255,255), Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=2),
-        note.Note(text="3", midi=67, time_to_next_note=1, tab_line=1, font_color=(255,255,255), Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=3),
-        note.Note(text="5", midi=69, time_to_next_note=1, tab_line=1, font_color=(255,255,255), Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=4),
-        note.Note(text="5", midi=69, time_to_next_note=1, tab_line=1, font_color=(255,255,255), Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=5),
-        note.Note(text="3", midi=67, time_to_next_note=2.0, tab_line=1, font_color=(255,255,255), Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=6),
-
-        note.Note(text="1", midi=65, time_to_next_note=1, tab_line=1, font_color=(255,255,255), Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=7),
-        note.Note(text="1", midi=65, time_to_next_note=1, tab_line=1, font_color=(255,255,255), Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=8),
-        note.Note(text="0", midi=64, time_to_next_note=1, tab_line=1, font_color=(255,255,255), Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=9),
-        note.Note(text="0", midi=64, time_to_next_note=1, tab_line=1, font_color=(255,255,255), Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=10),
-        note.Note(text="3", midi=62, time_to_next_note=1, tab_line=2, font_color=(255,255,255), Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=11),
-        note.Note(text="3", midi=62, time_to_next_note=1, tab_line=2, font_color=(255,255,255), Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=12),
-        note.Note(text="1", midi=62, time_to_next_note=2.0, tab_line=2, font_color=(255,255,255), Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=13),
-
-        note.Note(text="3", midi=67, time_to_next_note=1, tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=14),
+        note.Note(text="0", midi=55, time_to_next_note=0.5, tab_line=3, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=0),
+        note.Note(text="0", midi=55, time_to_next_note=0.5, tab_line=3, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=1),
+        
+        note.Note(text="2", midi=57, time_to_next_note=1, tab_line=3, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=2),
+        note.Note(text="0", midi=55, time_to_next_note=1, tab_line=3, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=3),
+        note.Note(text="1", midi=60, time_to_next_note=1, tab_line=2, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=4),
+        
+        note.Note(text="0", midi=59, time_to_next_note=2, tab_line=2, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=5),
+        note.Note(text="0", midi=55, time_to_next_note=0.5, tab_line=3, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=6),
+        note.Note(text="0", midi=55, time_to_next_note=0.5, tab_line=3, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=7),
+        
+        note.Note(text="2", midi=57, time_to_next_note=1, tab_line=3, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=8),
+        note.Note(text="0", midi=55, time_to_next_note=1, tab_line=3, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=9),
+        note.Note(text="3", midi=62, time_to_next_note=1, tab_line=2, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=10),
+        
+        note.Note(text="1", midi=60, time_to_next_note=2.0, tab_line=2, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=11),
+        note.Note(text="0", midi=55, time_to_next_note=0.5, tab_line=3, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=13),
+        note.Note(text="0", midi=55, time_to_next_note=0.5, tab_line=3, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=14),
+        
         note.Note(text="3", midi=67, time_to_next_note=1, tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=15),
-        note.Note(text="1", midi=65, time_to_next_note=1, tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=16),
-        note.Note(text="1", midi=65, time_to_next_note=1, tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=17),
-        note.Note(text="0", midi=64, time_to_next_note=1, tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=18),
-        note.Note(text="0", midi=64, time_to_next_note=1, tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=19),
-        note.Note(text="3", midi=62, time_to_next_note=2.0, tab_line=2, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=20),
-
-        note.Note(text="3", midi=67, time_to_next_note=1, tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=21),
-        note.Note(text="3", midi=67, time_to_next_note=1, tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=22),
-        note.Note(text="1", midi=65, time_to_next_note=1, tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=23),
-        note.Note(text="1", midi=65, time_to_next_note=1, tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=24),
-        note.Note(text="0", midi=64, time_to_next_note=1, tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=25),
-        note.Note(text="0", midi=64, time_to_next_note=1, tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=26),
-        note.Note(text="3", midi=62, time_to_next_note=2.0, tab_line=2, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=27),
-
-        note.Note(text="1", midi=60, time_to_next_note=1, tab_line=2, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=28),
-        note.Note(text="1", midi=60, time_to_next_note=1, tab_line=2, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=29),
-        note.Note(text="3", midi=67, time_to_next_note=1, tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=30),
-        note.Note(text="3", midi=67, time_to_next_note=1, tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=31),
-        note.Note(text="5", midi=69, time_to_next_note=1, tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=32),
-        note.Note(text="5", midi=69, time_to_next_note=1, tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=33),
-        note.Note(text="3", midi=67, time_to_next_note=2.0, tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=34),
-
-        note.Note(text="1", midi=65, time_to_next_note=1, tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=28),
-        note.Note(text="1", midi=65, time_to_next_note=1, tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=29),
-        note.Note(text="0", midi=64, time_to_next_note=1, tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=30),
-        note.Note(text="0", midi=64, time_to_next_note=1, tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=31),
-        note.Note(text="3", midi=62, time_to_next_note=1, tab_line=2, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=32),
-        note.Note(text="3", midi=62, time_to_next_note=1, tab_line=2, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=33),
-        note.Note(text="1", midi=60, time_to_next_note=2.0, tab_line=2, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=34),
+        note.Note(text="0", midi=64, time_to_next_note=1, tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=16),
+        note.Note(text="1", midi=60, time_to_next_note=1, tab_line=2, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=17),
+       
+        note.Note(text="0", midi=59, time_to_next_note=1, tab_line=2, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=18),
+        note.Note(text="2", midi=57, time_to_next_note=1, tab_line=3, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=19),
+        note.Note(text="1", midi=65, time_to_next_note=0.5, tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=20),
+        note.Note(text="1", midi=65, time_to_next_note=0.5, tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=21),
+        
+        note.Note(text="0", time_to_next_note=1, midi=64, tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=22),
+        note.Note(text="1", midi=60, tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=23),
+        note.Note(text="3", midi=62, tab_line=2, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=24),
+        note.Note(text="1", midi=60, tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=25),
         ]
     
     # This keeps track of all the notes the player correctly hit
@@ -299,13 +302,14 @@ def start():
             plt.ylim(0,100)
             plt.xlim(1,totnote)
             plt.title('Your overall Accuracy!')
-            font = {'family' : 'normal',
+            font = {
                 'weight' : 'bold',
                 'size'   : 22}
             plt.yticks(fontsize=20)
             plt.xticks(fontsize=20)
             plt.rc('font', **font)
             plt.savefig('assets/images/tempgraphs/graphy.png')
+            plt.clf()
             endplot = pygame.image.load('assets/images/tempgraphs/graphy.png')
             # create a font to select font and size
             score_font = pygame.font.Font('assets/font/BITSUMIS.ttf', 32)
@@ -551,19 +555,23 @@ def start():
                 Notes.update()
 
 
-
-
                 # Fill the screen with the background image
                 screen.blit(bg_img,(0,0))
                 screen.blit(play_line_image,(0,0))
-                #screen.blit(fg_image, (0,0))
+                screen.blit(fg_image, (0,0))
                 screen.blit(tabs_image,(0,0))
+                screen.blit(king, (420,360))
+                screen.blit(queen, (670,305))
 
 
                 # Draw all our sprites
                 for entity in all_sprites:
                     screen.blit(entity.surf, entity.rect)
-
+                
+                animationmanager5.update_self(13, 210)
+                animationmanager2.update_self(30, 390)
+                animationmanager3.update_self(206, 420)
+                animationmanager4.update_self(275, 400)
 
                 # Flip everything to the display
                 pygame.display.flip()
