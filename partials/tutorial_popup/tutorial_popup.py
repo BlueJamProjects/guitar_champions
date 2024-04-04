@@ -113,29 +113,29 @@ class TutorialPopup():
 
             self.line1_font = pygame.font.Font("assets/font/arial-unicode-bold.ttf",13)
             self.line1_position = pygame.Rect(left_padding, top_padding, width, height)
-            self.line1_render = self.line1_font.render(line1_text, True, self.text_color, self.background_color)
+            self.line1_render = self.line1_font.render(line1_text, True, self.text_color)
 
 
             self.line2_font = pygame.font.Font("assets/font/arial-unicode-bold.ttf",13)
             self.line2_position = pygame.Rect(left_padding, top_padding+ 30, width, height)
-            self.line2_render = self.line2_font.render(line2_text, True, self.text_color, self.background_color)
+            self.line2_render = self.line2_font.render(line2_text, True, self.text_color)
 
             self.line3_font = pygame.font.Font("assets/font/arial-unicode-bold.ttf",13)
             self.line3_position = pygame.Rect(left_padding, top_padding+ 60, width, height)
-            self.line3_render = self.line3_font.render(line3_text, True, self.text_color, self.background_color)
+            self.line3_render = self.line3_font.render(line3_text, True, self.text_color)
 
             self.line4_font = pygame.font.Font("assets/font/arial-unicode-bold.ttf",13)
             self.line4_position = pygame.Rect(left_padding, top_padding+ 90, width, height)
-            self.line4_render = self.line4_font.render(line4_text, True, self.text_color, self.background_color)
+            self.line4_render = self.line4_font.render(line4_text, True, self.text_color)
 
             self.line5_font = pygame.font.Font("assets/font/arial-unicode-bold.ttf",13)
             self.line5_position = pygame.Rect(left_padding, top_padding+ 120, width, height)
-            self.line5_render = self.line4_font.render(line5_text, True, self.text_color, self.background_color)
+            self.line5_render = self.line4_font.render(line5_text, True, self.text_color)
 
             
             self.number_font = pygame.font.Font("assets/font/arial.ttf", 14)
             self.number_position = pygame.Rect(left_padding + width - 50, top_padding + height - 10, width, height)
-            self.number_render = self.number_font.render("1/2", True, self.text_color, self.background_color)
+            self.number_render = self.number_font.render("1/2", True, self.text_color)
 
             self.show_hightlight_region = show_hightlight_region
             self.highlight_region_color = highlight_region_color

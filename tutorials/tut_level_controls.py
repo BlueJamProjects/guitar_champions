@@ -111,36 +111,36 @@ def start():
          sprites_list = [
             # 1
               [
-                   sprite_item.SpriteItem(sprite = bg_img, location = (0,0)),
+                   sprite_item.SpriteItem(sprite = bg_img,is_background=True, location = (0,0)),
                    ],
 
                 # 2
               [ 
-                   sprite_item.SpriteItem(sprite = bg_img_2, location = (0,0)),
+                   sprite_item.SpriteItem(sprite = bg_img_2,is_background=True, location = (0,0)),
 
                    ],
                     # 3
                    [
             
-                    sprite_item.SpriteItem(sprite = bg_img_2, location = (0,0)),
+                    sprite_item.SpriteItem(sprite = bg_img_2,is_background=True, location = (0,0)),
                     sprite_item.SpriteItem(sprite = example_button.render, location = example_button.button_position),
                    ],
                 #    4
                 [
-                    sprite_item.SpriteItem(sprite = bg_img_2, location = (0,0)),
+                    sprite_item.SpriteItem(sprite = bg_img_2,is_background=True, location = (0,0)),
                     sprite_item.SpriteItem(sprite = example_button2.render, location = example_button2.button_position),
                    
                 ],
 
                 #    5
                 [
-                    sprite_item.SpriteItem(sprite = bg_img_2, location = (0,0)),
+                    sprite_item.SpriteItem(sprite = bg_img_2,is_background=True, location = (0,0)),
                     
                 ],
 
                 #    6
                 [
-                    sprite_item.SpriteItem(sprite = bg_img_2, location = (0,0)),
+                    sprite_item.SpriteItem(sprite = bg_img_2,is_background=True, location = (0,0)),
                     sprite_item.SpriteItem(sprite =example_pause_background, location =  (SCREEN_WIDTH/4,SCREEN_HEIGHT/8)),
                     sprite_item.SpriteItem(sprite=pause_title.render, location=pause_title.button_position),
                     sprite_item.SpriteItem(is_box=True, box_has_border=True, box_color=(0,0,0), box_rect=pause_title.button_position, box_border=3),
@@ -165,7 +165,7 @@ def start():
 
                  #    7
                 [
-                    sprite_item.SpriteItem(sprite = bg_img_2, location = (0,0)),
+                    sprite_item.SpriteItem(sprite = bg_img_2,is_background=True, location = (0,0)),
                     sprite_item.SpriteItem(sprite =example_pause_background, location =  (SCREEN_WIDTH/4,SCREEN_HEIGHT/8)),
                     sprite_item.SpriteItem(sprite=pause_title.render, location=pause_title.button_position),
                     sprite_item.SpriteItem(is_box=True, box_has_border=True, box_color=(0,0,0), box_rect=pause_title.button_position, box_border=3),
@@ -190,7 +190,7 @@ def start():
 
                  #    8
                 [
-                   sprite_item.SpriteItem(sprite = bg_img_2, location = (0,0)),
+                   sprite_item.SpriteItem(sprite = bg_img_2,is_background=True, location = (0,0)),
                     sprite_item.SpriteItem(sprite =example_pause_background, location =  (SCREEN_WIDTH/4,SCREEN_HEIGHT/8)),
                     sprite_item.SpriteItem(sprite=pause_title.render, location=pause_title.button_position),
                     sprite_item.SpriteItem(is_box=True, box_has_border=True, box_color=(0,0,0), box_rect=pause_title.button_position, box_border=3),
@@ -215,7 +215,7 @@ def start():
 
                  #    9
                 [
-                   sprite_item.SpriteItem(sprite = bg_img_2, location = (0,0)),
+                   sprite_item.SpriteItem(sprite = bg_img_2, is_background=True, location = (0,0)),
                     sprite_item.SpriteItem(sprite =example_pause_background, location =  (SCREEN_WIDTH/4,SCREEN_HEIGHT/8)),
                     sprite_item.SpriteItem(sprite=pause_title.render, location=pause_title.button_position),
                     sprite_item.SpriteItem(is_box=True, box_has_border=True, box_color=(0,0,0), box_rect=pause_title.button_position, box_border=3),
@@ -240,7 +240,7 @@ def start():
 
                 #    10
                 [
-                   sprite_item.SpriteItem(sprite = bg_img_2, location = (0,0)),
+                   sprite_item.SpriteItem(sprite = bg_img_2,is_background=True,  location = (0,0)),
                     sprite_item.SpriteItem(sprite =example_pause_background, location =  (SCREEN_WIDTH/4,SCREEN_HEIGHT/8)),
                     sprite_item.SpriteItem(sprite=pause_title.render, location=pause_title.button_position),
                     sprite_item.SpriteItem(is_box=True, box_has_border=True, box_color=(0,0,0), box_rect=pause_title.button_position, box_border=3),
@@ -264,7 +264,7 @@ def start():
                 ],
                 # 11
                 [
-                    sprite_item.SpriteItem(sprite = bg_img_2, location = (0,0)),
+                    sprite_item.SpriteItem(sprite = bg_img_2,is_background=True,  location = (0,0)),
                     sprite_item.SpriteItem(sprite = complete_tutorial_button.render, location=complete_tutorial_button.button_position),
                    
                 ],
@@ -438,7 +438,6 @@ def start():
             current_popup = curr_tutorial_info.current_popup
             current_sprites = curr_tutorial_info.current_sprites
 
-            
             for curr_sprite_item in current_sprites:
                 if curr_sprite_item.is_box == True:
                     # If the current sprite is a box
@@ -452,20 +451,25 @@ def start():
                 else:
                     # If the current sprite is not a box
                     screen.blit(curr_sprite_item.sprite, curr_sprite_item.location)
+                    if curr_sprite_item.is_background == True:
+                        # load tutorial box frame
+                        tutframe = pygame.image.load('assets/images/backgrounds/frame.png')
+                        tutframe=pygame.transform.scale(tutframe,(381,360))
+                        screen.blit(tutframe,(current_popup.outline_position.x-46,current_popup.outline_position.y-70))
 
             pygame.draw.rect(screen,current_popup.outline_color,current_popup.outline_position)
-
+            
             screen.blit(current_popup.line1_render, current_popup.line1_position)
             screen.blit(current_popup.line2_render, current_popup.line2_position)
             screen.blit(current_popup.line3_render, current_popup.line3_position)
             screen.blit(current_popup.line4_render, current_popup.line4_position)
             screen.blit(current_popup.line5_render, current_popup.line5_position)
-
+            
             screen.blit(current_popup.number_render, current_popup.number_position)
             pygame.draw.rect(screen,(209,129,0),current_popup.button_position)
             screen.blit(current_popup.button_render, current_popup.button_position)
             pygame.draw.rect(screen,(255,255,255),current_popup.button_position, 2)
-            pygame.draw.rect(screen,(255,255,255),current_popup.outline_position, 3)
+
             if (current_popup.show_hightlight_region == True):
                 pygame.draw.rect(screen,current_popup.highlight_region_color,current_popup.highlight_region_position, 5)
 

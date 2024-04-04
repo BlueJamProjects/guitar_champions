@@ -10,6 +10,7 @@ class SpriteItem(object):
                  sprite=pygame.Surface([100,100]), 
                  location=(0,0), 
                  is_box=False, 
+                 is_background=False,
                  box_has_border= False, 
                  box_color=(0,0,0),
                  box_border=10,
@@ -22,8 +23,10 @@ class SpriteItem(object):
         # the location on screen where it should be rendered
         self.location = location
 
+        # Set true if this is a background sprite
+        self.is_background = is_background
         # These 4 are used if this is a box
-
+        
         # Set to true if, this is a box
         self.is_box = is_box
         # controls whether the box has a border
