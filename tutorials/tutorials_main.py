@@ -38,9 +38,9 @@ mytheme = pygame_menu.themes.Theme( # transparent background
                 background_color=pygame_menu.baseimage.BaseImage("assets/images/Oreng.jpg"), 
                 widget_selection_effect = pygame_menu.widgets.NoneSelection(),
                 title_bar_style= pygame_menu.widgets.MENUBAR_STYLE_NONE,
-                title_offset= (120,20),
+                title_offset= (300,40),
                 title_font_shadow=True,
-                title_font=pygame.font.Font("assets/font/Signatra.ttf",40),
+                title_font=pygame.font.Font("assets/font/Signatra.ttf",80),
                 title_font_size=80,
                 title_floating=True,
                 )
@@ -57,16 +57,12 @@ tutorials_menu = pygame_menu.Menu('Tutorials', 800, 600,theme=mytheme)
 
 controlsbutt=tutorials_menu.add.button('Controls', tut_level_controls.start, float=True,font_name=fonter)
 controlsbutt.add_draw_callback(draw_update_function_helper.draw_update_function)
-controlsbutt.translate(0,-100)
+controlsbutt.translate(0,-80)
 widgets.append(controlsbutt)
 
 backbutt=tutorials_menu.add.button('Back', pygame_menu.events.BACK, float=True,font_name=fonter)
 backbutt.add_draw_callback(draw_update_function_helper.draw_update_function)
-backbutt.translate(0,-20)
+backbutt.translate(0,20)
 widgets.append(backbutt)
-exbutt=tutorials_menu.add.button('Quit', pygame_menu.events.EXIT, float=True,font_name=fonter)
-exbutt.add_draw_callback(draw_update_function_helper.draw_update_function)
-exbutt.translate(0,90)
-widgets.append(exbutt)
 for widget in widgets:
     redraw_helper.redraw(widget,widget.get_decorator(),[255,187,68])

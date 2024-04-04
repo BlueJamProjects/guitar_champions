@@ -7,14 +7,14 @@ class TutorialPopup():
         
         def __init__(self,
                       text, 
-                      width=300, 
+                      width=290, 
                       height=200, 
                       left_padding = 100, 
                       top_padding=50, 
                       button_color=(239,159,20), 
                       button_hover_color=(209,129,0), 
                       text_color=(255, 255, 255),
-                      background_color=(0,0,0),
+                      background_color=(239,159,20),
                       show_hightlight_region=False,
                       highlight_region_color=(255, 255, 255),
                       highlight_region_position = pygame.Rect(20, 20, 100, 100),
@@ -31,8 +31,7 @@ class TutorialPopup():
             # This is a number can be checked in the tutorial to see if an effect should be triggered when this button is moved away from
             self.trigger_effect_number = trigger_effect_number
         
-            
- 
+
             # creates the outline box (The box that surrounds the text) render elements
             self.outline_color = background_color
             self.outline_position = pygame.Rect(left_padding - 10, top_padding - 10, width, height + 20)
@@ -112,24 +111,24 @@ class TutorialPopup():
 
 
 
-            self.line1_font = pygame.font.Font("assets/font/arial.ttf",14)
+            self.line1_font = pygame.font.Font("assets/font/arial-unicode-bold.ttf",13)
             self.line1_position = pygame.Rect(left_padding, top_padding, width, height)
             self.line1_render = self.line1_font.render(line1_text, True, self.text_color, self.background_color)
 
 
-            self.line2_font = pygame.font.Font("assets/font/arial.ttf",14)
+            self.line2_font = pygame.font.Font("assets/font/arial-unicode-bold.ttf",13)
             self.line2_position = pygame.Rect(left_padding, top_padding+ 30, width, height)
             self.line2_render = self.line2_font.render(line2_text, True, self.text_color, self.background_color)
 
-            self.line3_font = pygame.font.Font("assets/font/arial.ttf",14)
+            self.line3_font = pygame.font.Font("assets/font/arial-unicode-bold.ttf",13)
             self.line3_position = pygame.Rect(left_padding, top_padding+ 60, width, height)
             self.line3_render = self.line3_font.render(line3_text, True, self.text_color, self.background_color)
 
-            self.line4_font = pygame.font.Font("assets/font/arial.ttf",14)
+            self.line4_font = pygame.font.Font("assets/font/arial-unicode-bold.ttf",13)
             self.line4_position = pygame.Rect(left_padding, top_padding+ 90, width, height)
             self.line4_render = self.line4_font.render(line4_text, True, self.text_color, self.background_color)
 
-            self.line5_font = pygame.font.Font("assets/font/arial.ttf",14)
+            self.line5_font = pygame.font.Font("assets/font/arial-unicode-bold.ttf",13)
             self.line5_position = pygame.Rect(left_padding, top_padding+ 120, width, height)
             self.line5_render = self.line4_font.render(line5_text, True, self.text_color, self.background_color)
 
@@ -149,11 +148,11 @@ class TutorialPopup():
             self.button_current_color = button_color
             self.button_color = button_color
             self.button_hover_color = button_hover_color
-            self.button_text = "Next"
+            self.button_text = " Next"
 
             # Creates the button render elements
             self.button_font = pygame.font.Font("assets/font/Signatra.ttf",40)
-            self.button_position = pygame.Rect(left_padding+ width/2 - 30, top_padding+height-40, 50, 42)
+            self.button_position = pygame.Rect(left_padding+ width/2 - 30, top_padding+height-40, 62, 44)
             self.button_render = self.button_font.render(self.button_text, True, self.button_text_color, self.button_color)
 
 
