@@ -78,7 +78,7 @@ def start():
 
     # Create the screen object
     # The size is determined by the constant SCREEN_WIDTH and SCREEN_HEIGHT
-    #screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+    screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 
     # set aseprite file directory
     dirname = os.path.dirname(__file__)
@@ -86,7 +86,7 @@ def start():
 
     # initialize animations - To add new animations, create a new animationmanager the same way its created here and put the Animation in its list
     test_animation = Animation(aseprite_file_directory)
-    animationmanager = AnimationManager([test_animation], screen)
+    #animationmanager = AnimationManager([test_animation], screen)
 
     # Setup the clock for a decent framerate
     clock = pygame.time.Clock()
@@ -203,37 +203,37 @@ def start():
         note.Note(text="3", midi=62, time_to_next_note=1, tab_line=2, font_color=(255,255,255), Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=12),
         note.Note(text="1", midi=62, time_to_next_note=2.0, tab_line=2, font_color=(255,255,255), Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=13),
 
-        note.Note(text="3", midi=67, time_to_next_note=1, tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=14),
-        note.Note(text="3", midi=67, time_to_next_note=1, tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=15),
-        note.Note(text="1", midi=65, time_to_next_note=1, tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=16),
-        note.Note(text="1", midi=65, time_to_next_note=1, tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=17),
-        note.Note(text="0", midi=64, time_to_next_note=1, tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=18),
-        note.Note(text="0", midi=64, time_to_next_note=1, tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=19),
-        note.Note(text="3", midi=62, time_to_next_note=2.0, tab_line=2, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=20),
+        note.Note(text="3", midi=67, time_to_next_note=1, tab_line=1, font_color=(255,255,255), Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=14),
+        note.Note(text="3", midi=67, time_to_next_note=1, tab_line=1, font_color=(255,255,255), Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=15),
+        note.Note(text="1", midi=65, time_to_next_note=1, tab_line=1, font_color=(255,255,255), Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=16),
+        note.Note(text="1", midi=65, time_to_next_note=1, tab_line=1, font_color=(255,255,255), Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=17),
+        note.Note(text="0", midi=64, time_to_next_note=1, tab_line=1, font_color=(255,255,255), Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=18),
+        note.Note(text="0", midi=64, time_to_next_note=1, tab_line=1, font_color=(255,255,255), Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=19),
+        note.Note(text="3", midi=62, time_to_next_note=2.0, tab_line=2, font_color=(255,255,255), Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=20),
 
-        note.Note(text="3", midi=67, time_to_next_note=1, tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=21),
-        note.Note(text="3", midi=67, time_to_next_note=1, tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=22),
-        note.Note(text="1", midi=65, time_to_next_note=1, tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=23),
-        note.Note(text="1", midi=65, time_to_next_note=1, tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=24),
-        note.Note(text="0", midi=64, time_to_next_note=1, tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=25),
-        note.Note(text="0", midi=64, time_to_next_note=1, tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=26),
-        note.Note(text="3", midi=62, time_to_next_note=2.0, tab_line=2, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=27),
+        note.Note(text="3", midi=67, time_to_next_note=1, tab_line=1, font_color=(255,255,255), Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=21),
+        note.Note(text="3", midi=67, time_to_next_note=1, tab_line=1, font_color=(255,255,255), Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=22),
+        note.Note(text="1", midi=65, time_to_next_note=1, tab_line=1, font_color=(255,255,255), Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=23),
+        note.Note(text="1", midi=65, time_to_next_note=1, tab_line=1, font_color=(255,255,255), Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=24),
+        note.Note(text="0", midi=64, time_to_next_note=1, tab_line=1, font_color=(255,255,255), Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=25),
+        note.Note(text="0", midi=64, time_to_next_note=1, tab_line=1, font_color=(255,255,255), Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=26),
+        note.Note(text="3", midi=62, time_to_next_note=2.0, tab_line=2, font_color=(255,255,255), Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=27),
 
-        note.Note(text="1", midi=60, time_to_next_note=1, tab_line=2, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=28),
-        note.Note(text="1", midi=60, time_to_next_note=1, tab_line=2, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=29),
-        note.Note(text="3", midi=67, time_to_next_note=1, tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=30),
-        note.Note(text="3", midi=67, time_to_next_note=1, tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=31),
-        note.Note(text="5", midi=69, time_to_next_note=1, tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=32),
-        note.Note(text="5", midi=69, time_to_next_note=1, tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=33),
-        note.Note(text="3", midi=67, time_to_next_note=2.0, tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=34),
+        note.Note(text="1", midi=60, time_to_next_note=1, tab_line=2, font_color=(255,255,255), Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=28),
+        note.Note(text="1", midi=60, time_to_next_note=1, tab_line=2, font_color=(255,255,255), Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=29),
+        note.Note(text="3", midi=67, time_to_next_note=1, tab_line=1, font_color=(255,255,255), Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=30),
+        note.Note(text="3", midi=67, time_to_next_note=1, tab_line=1, font_color=(255,255,255), Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=31),
+        note.Note(text="5", midi=69, time_to_next_note=1, tab_line=1, font_color=(255,255,255), Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=32),
+        note.Note(text="5", midi=69, time_to_next_note=1, tab_line=1, font_color=(255,255,255), Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=33),
+        note.Note(text="3", midi=67, time_to_next_note=2.0, tab_line=1, font_color=(255,255,255), Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=34),
 
-        note.Note(text="1", midi=65, time_to_next_note=1, tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=28),
-        note.Note(text="1", midi=65, time_to_next_note=1, tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=29),
-        note.Note(text="0", midi=64, time_to_next_note=1, tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=30),
-        note.Note(text="0", midi=64, time_to_next_note=1, tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=31),
-        note.Note(text="3", midi=62, time_to_next_note=1, tab_line=2, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=32),
-        note.Note(text="3", midi=62, time_to_next_note=1, tab_line=2, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=33),
-        note.Note(text="1", midi=60, time_to_next_note=2.0, tab_line=2, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=34),
+        note.Note(text="1", midi=65, time_to_next_note=1, tab_line=1, font_color=(255,255,255), Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=28),
+        note.Note(text="1", midi=65, time_to_next_note=1, tab_line=1, font_color=(255,255,255), Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=29),
+        note.Note(text="0", midi=64, time_to_next_note=1, tab_line=1, font_color=(255,255,255), Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=30),
+        note.Note(text="0", midi=64, time_to_next_note=1, tab_line=1, font_color=(255,255,255), Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=31),
+        note.Note(text="3", midi=62, time_to_next_note=1, tab_line=2, font_color=(255,255,255), Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=32),
+        note.Note(text="3", midi=62, time_to_next_note=1, tab_line=2, font_color=(255,255,255), Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=33),
+        note.Note(text="1", midi=60, time_to_next_note=2.0, tab_line=2, font_color=(255,255,255), Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=34),
         ]
     
     # This keeps track of all the notes the player correctly hit

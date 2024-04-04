@@ -1,4 +1,4 @@
-# import pygame asprite package, download by typing "pip3 install pygame_aseprite_animation" into your terminal
+# import pygame asprite package, download by typing "pip3 install pygame-aseprite-animation" into your terminal
 from pygame_aseprite_animation import *
 # Import the pygame module
 import os, pygame
@@ -613,9 +613,10 @@ def audio_callback(in_data, frame_count, time_info, status):
 
     try:
         time, frequency, confidence, activation = crepe.predict(filtered_audio, 16000, step_size=50, viterbi=True)
+        amplitude = np.sqrt(np.mean(filtered_audio**2))
         # K.clear_session()
        
-        if len(confidence) > 0:
+        if len(confidence) > 0 :
             best_idx = np.argmax(confidence)
             freq = frequency[best_idx]
             midi_number = librosa.hz_to_midi(freq)
@@ -625,7 +626,6 @@ def audio_callback(in_data, frame_count, time_info, status):
             main_midi_number_arr.pop(0)
 
 
-            amplitude = np.sqrt(np.mean(filtered_audio**2))
             print(f"Pitch: {midi_number_to_pitch(midi_number)}, Frequency: {freq:.2f} Hz, Confidence: {confidence[best_idx]:.2f}, Amplitude: {amplitude:.5f}")
     except Exception as e:
         print(f"Error processing audio: {e}")
