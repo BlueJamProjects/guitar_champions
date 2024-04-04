@@ -2,6 +2,27 @@ import pygame
 
 import os
 
+import copy
+
+# note recognition imports
+
+import pyaudio
+import wave
+import librosa
+import math
+from scipy.signal import find_peaks
+import numpy as np
+from collections import Counter
+import scipy.signal
+import crepe
+import keras
+import keras.backend as K
+from music21 import note as music21Note
+
+os.environ['CUDA_VISIBLE_DEVICS'] = '-1'
+
+import tensorflow as tf
+
 from pygame_aseprite_animation import *
 
 import helpers.settings_helper as settings_helper
@@ -27,6 +48,10 @@ from pygame.locals import (
     QUIT,
 )
 
+# For keeping track of the last 3 played midi numbers
+
+main_midi_number_arr = [40, 40, 40]
+
 def start():
 
     running = True
@@ -35,11 +60,15 @@ def start():
 
     pauserendered = False
 
+    played_example_note8 = False
+
     user_settings = settings_helper.get_settings()
 
     # Define constants for the screen width and height
     SCREEN_WIDTH = pygame.display.get_surface().get_size()[0]
     SCREEN_HEIGHT = pygame.display.get_surface().get_size()[1]
+
+    PLAY_LINE_LOCATION = 290
 
 
     # Setup for sounds, defaults are good
@@ -65,6 +94,20 @@ def start():
     main_menu_button = text_button.TextButton(text=" Main Menu ", width= 128,height= 44, left_padding= SCREEN_WIDTH/2 - 62, top_padding= SCREEN_HEIGHT/2 +60)
     quit_button = text_button.TextButton(text=" Quit ", width= 60,height= 44, left_padding= SCREEN_WIDTH/2 -30, top_padding= SCREEN_HEIGHT/2 + 120)
 
+
+
+    # Start Audio
+    p = pyaudio.PyAudio()
+
+    stream = p.open(format=pyaudio.paFloat32,
+                    channels=1,
+                    rate=16000,
+                    input=True,
+                    frames_per_buffer=2048,
+                    stream_callback=audio_callback)
+
+    print("Streaming and processing audio. Press Ctrl+C to stop.")
+    stream.start_stream()
     
     # TODO make the custom sprites for the tutorial
     # START/////////
@@ -112,6 +155,57 @@ def start():
     example_note6.set_x_location(500)
     example_note6.set_active_color()
 
+    example_note7 = note.Note(text="1", midi=55, time_to_next_note=1, tab_line=6, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=0)
+    example_note7.set_x_location(500)
+    example_note7.set_active_color()
+
+    example_note8 = note.Note(text="1", midi=41, time_to_next_note=1, tab_line=6, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=0)
+    example_note8.set_x_location(290)
+    example_note8.set_active_color()
+
+    frames_since_note = 0
+
+    # this is a multiplier that is used to figure out how many beats later the next note should come
+    # after each note is created this is dynamically updated by calling a function on that note
+    # 1.0 means that the next note plays one beat later, 2.0 is 2 beats later while 0.5 would be half a beat later
+    time_to_next_note = 1.0
+
+    Notes = pygame.sprite.Group()
+
+    note_index = 0
+
+    # This is the array with the song's note information
+    song_notes = [
+        note.Note(text="0", midi=55, time_to_next_note=1, tab_line=3, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=0),
+        note.Note(text="0", midi=55, time_to_next_note=1, tab_line=3, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=1),
+        note.Note(text="2", midi=57, time_to_next_note=1, tab_line=3, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=2),
+        note.Note(text="0", midi=55, time_to_next_note=1, tab_line=3, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=3),
+        note.Note(text="1", midi=60, time_to_next_note=1, tab_line=2, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=4),
+        note.Note(text="0", midi=59, time_to_next_note=1, tab_line=2, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=5),
+        
+        note.Note(text="0", midi=55, time_to_next_note=1, tab_line=3, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=0),
+        note.Note(text="0", midi=55, time_to_next_note=1, tab_line=3, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=1),
+        note.Note(text="2", midi=57, time_to_next_note=1, tab_line=3, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=2),
+        note.Note(text="0", midi=55, time_to_next_note=1, tab_line=3, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=3),
+        note.Note(text="1", midi=60, time_to_next_note=1, tab_line=2, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=4),
+        note.Note(text="0", midi=59, time_to_next_note=1, tab_line=2, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=5),
+        
+        note.Note(text="0", midi=55, time_to_next_note=1, tab_line=3, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=0),
+        note.Note(text="0", midi=55, time_to_next_note=1, tab_line=3, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=1),
+        note.Note(text="2", midi=57, time_to_next_note=1, tab_line=3, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=2),
+        note.Note(text="0", midi=55, time_to_next_note=1, tab_line=3, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=3),
+        note.Note(text="1", midi=60, time_to_next_note=1, tab_line=2, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=4),
+        note.Note(text="0", midi=59, time_to_next_note=1, tab_line=2, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=5),
+        
+        note.Note(text="0", midi=55, time_to_next_note=1, tab_line=3, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=0),
+        note.Note(text="0", midi=55, time_to_next_note=1, tab_line=3, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=1),
+        note.Note(text="2", midi=57, time_to_next_note=1, tab_line=3, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=2),
+        note.Note(text="0", midi=55, time_to_next_note=1, tab_line=3, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=3),
+        note.Note(text="1", midi=60, time_to_next_note=1, tab_line=2, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=4),
+        note.Note(text="0", midi=59, time_to_next_note=1, tab_line=2, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=5),
+        
+        ]
+
     complete_tutorial_button = text_button.TextButton(text=" Complete ", width= 96,height= 44, left_padding= SCREEN_WIDTH/2 - 50, top_padding= SCREEN_HEIGHT/2 - 80)
     
 
@@ -132,7 +226,22 @@ def start():
             #   7
               tutorial_popup.TutorialPopup("While a note on the bottom line here would be played on the top string.", left_padding=10, top_padding=250, show_hightlight_region=True, highlight_region_position=example_note6.rect),
             #   8
-              tutorial_popup.TutorialPopup("The fret of the note is represented by its number", left_padding=10, top_padding=250, show_hightlight_region=True, highlight_region_position=example_note6.rect),
+              tutorial_popup.TutorialPopup("The fret of the note is represented by its number. In this case the number is 0 which means you just pluck the string without pressing down a fret.", left_padding=10, top_padding=250, show_hightlight_region=True, highlight_region_position=example_note6.rect),
+            #   9
+              tutorial_popup.TutorialPopup("While for this one, the number is 1 which means you hold down the 1st string and then pluck the string", left_padding=10, top_padding=250, show_hightlight_region=True, highlight_region_position=example_note7.rect),
+            
+            #   10
+              tutorial_popup.TutorialPopup("Now, let's practice playing this note. You'll press down your finger on the top string at the first fret and pluck the string. When it changes to green you've played it correctly.", left_padding=10, top_padding=20, show_hightlight_region=True, highlight_region_position=example_note8.rect, highlight_region_color=(0,0,0), trigger_effect_number=2,),
+             #   11
+              tutorial_popup.TutorialPopup("On the next screen you can practice playing notes as they come across the screen. Don't worry you can practice as long as you need. :)", left_padding=10, top_padding=20,),
+            #   12
+              tutorial_popup.TutorialPopup("Practice as long as you need", left_padding=10, top_padding=20, trigger_effect_number=3,),
+            #   13
+              tutorial_popup.TutorialPopup("Now, on the next screen you can practice playing different notes as they come across the screen. Don't worry you can practice as long as you need. :)", left_padding=10, top_padding=20, trigger_effect_number=5),
+            #   14
+              tutorial_popup.TutorialPopup("Practice as long as you need", left_padding=300, top_padding=400, trigger_effect_number=4,),
+            #   15
+              tutorial_popup.TutorialPopup("Now you're ready to try out a song!", left_padding=10, top_padding=20,),
             
             
             # END
@@ -205,16 +314,77 @@ def start():
                    
                    ],
 
+                     #    9
+                [
+                   sprite_item.SpriteItem(sprite = bg_img, location = (0,0)),
+                   sprite_item.SpriteItem(sprite = tabs_image, location = (0,0)),
+                   sprite_item.SpriteItem(sprite = play_line_image, location = (0,0)),
+                   sprite_item.SpriteItem(sprite= example_note7.surf, location=example_note7.rect),
+                   
+                   ],
+
+
+                    #    10
+                [
+                   sprite_item.SpriteItem(sprite = bg_img, location = (0,0)),
+                   sprite_item.SpriteItem(sprite = tabs_image, location = (0,0)),
+                   sprite_item.SpriteItem(sprite = play_line_image, location = (0,0)),
+                   sprite_item.SpriteItem(sprite= example_note8.surf, location=example_note8.rect),
+                   
+                   ],
+
+                   #    11
+                [
+                   sprite_item.SpriteItem(sprite = bg_img, location = (0,0)),
+                   sprite_item.SpriteItem(sprite = tabs_image, location = (0,0)),
+                   sprite_item.SpriteItem(sprite = play_line_image, location = (0,0)),
+                  
+                   
+                   ],
+
+                   #    12
+                [
+                   sprite_item.SpriteItem(sprite = bg_img, location = (0,0)),
+                   sprite_item.SpriteItem(sprite = tabs_image, location = (0,0)),
+                   sprite_item.SpriteItem(sprite = play_line_image, location = (0,0)),
+                  
+                   
+                   ],
+
+                   #    13
+                [
+                   sprite_item.SpriteItem(sprite = bg_img, location = (0,0)),
+                   sprite_item.SpriteItem(sprite = tabs_image, location = (0,0)),
+                   sprite_item.SpriteItem(sprite = play_line_image, location = (0,0)),
+                  
+                   
+                   ],
+
+                    #     14
+                [
+                   sprite_item.SpriteItem(sprite = bg_img, location = (0,0)),
+                   sprite_item.SpriteItem(sprite = tabs_image, location = (0,0)),
+                   sprite_item.SpriteItem(sprite = play_line_image, location = (0,0)),
+                  
+                   
+                   ],
+
+                   #     15
+                [
+                   sprite_item.SpriteItem(sprite = bg_img, location = (0,0)),
+                   sprite_item.SpriteItem(sprite = tabs_image, location = (0,0)),
+                   sprite_item.SpriteItem(sprite = play_line_image, location = (0,0)),
+                  
+                   
+                   ],
+
+
                    # END
               [
                    sprite_item.SpriteItem(sprite = bg_img, location = (0,0)),
                    sprite_item.SpriteItem(sprite= complete_tutorial_button.render, location=complete_tutorial_button.button_position)
                    ],
 
-
-              
-
-            
          ],
     )
 
@@ -304,6 +474,100 @@ def start():
 
         else:
 
+            
+            current_popup = curr_tutorial_info.current_popup
+            current_sprites = curr_tutorial_info.current_sprites
+
+
+
+            if (current_popup.trigger_effect_number == 2):
+                                    
+
+                                    if (example_note8.check_correct_note(main_midi_number_arr)):
+                                        print("Correct note was played")
+                                        played_example_note8 = True
+
+
+                                    if(played_example_note8 == True):
+                                        example_note8.set_played_color()
+                                        current_sprites = [
+                                            sprite_item.SpriteItem(sprite = bg_img, location = (0,0)),
+                                            sprite_item.SpriteItem(sprite = tabs_image, location = (0,0)),
+                                            sprite_item.SpriteItem(sprite = play_line_image, location = (0,0)),
+                                            sprite_item.SpriteItem(sprite= example_note8.surf, location=example_note8.rect),
+                                            ]
+                                        
+            if (current_popup.trigger_effect_number == 5):
+                Notes = pygame.sprite.Group()
+                                        
+            if (current_popup.trigger_effect_number == 3 or current_popup.trigger_effect_number == 4):
+                # This adds notes every second
+                # This uses the current fps so that you are adding notes accurately
+                if frames_since_note >= ((clock.get_fps() * time_to_next_note )// 1) and (clock.get_fps() > 0.1):
+                        frames_since_note = 0
+
+                        if (current_popup.trigger_effect_number == 3):
+                            new_Note = note.Note(text="1", midi=41, time_to_next_note=2, tab_line=6, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=0)
+
+                        if (current_popup.trigger_effect_number == 4):
+                            new_Note = song_notes[note_index]
+
+                            print("Current note index")
+                            print(note_index)
+                            if (note_index < len(song_notes)-1):
+                                note_index = note_index + 1
+                            else:
+                                note_index = 0
+
+
+                            
+
+                        Notes.add(new_Note)
+                        print("Added a new note")
+                            # global time_to_next_note
+                        time_to_next_note = new_Note.get_time_to_next_note()
+                       
+                frames_since_note += 1
+
+                Notes.update()
+                # print("Notes were updated")
+                for curr_note in Notes:
+                    # print("For each note")
+                    # This loops through all the notes on screen
+                    if abs((PLAY_LINE_LOCATION-200) - curr_note.get_x_location()) < 20:
+
+                        # This triggers if the note is the one on screen
+                        # This is a function from the note that we check to see if it's key was the one pressed
+                        # print("MIDI Number: ",main_midi_number)
+                        if curr_note.check_correct_note(main_midi_number_arr):
+                            curr_note.was_played=True
+                            print("Correct note played")
+                            
+                        
+                    if (abs(PLAY_LINE_LOCATION - curr_note.get_x_location()) < 25) :
+                                    # it checks to see if the note is close enough to the play line to update
+                                    
+                                    
+
+                        if curr_note.get_is_active() == False:
+                            # if the note is currently note active
+                            curr_note.set_active_color()
+
+
+                    else:
+                         if curr_note.get_is_active() == True:
+                            # if it is leaving the play line regio
+                            if((curr_note.get_x_location() < (PLAY_LINE_LOCATION - 200))):
+                                if curr_note.get_was_played() == True:
+                                    # if note was played successfully
+                                    curr_note.set_played_color()
+                                else:
+                                    # if the note was not played successfully
+                                    curr_note.set_missed_color()
+                                
+
+                
+
             for event in pygame.event.get():
 
                             # Did the user hit a key?
@@ -375,11 +639,16 @@ def start():
                                 if (current_popup.trigger_effect_number == 1):
                                     if (complete_tutorial_button.is_pressed() == True):
                                         running = False
+
+                                
+
+                                        
                                 # END/////////
+            
 
-
-            current_popup = curr_tutorial_info.current_popup
-            current_sprites = curr_tutorial_info.current_sprites
+            if (current_popup.trigger_effect_number == 3 or current_popup.trigger_effect_number == 4):
+                for entity in Notes:
+                    current_sprites.append(sprite_item.SpriteItem(sprite=entity.surf, location=entity.rect))
 
             
             for curr_sprite_item in current_sprites:
@@ -397,8 +666,12 @@ def start():
                     screen.blit(curr_sprite_item.sprite, curr_sprite_item.location)
 
 
+
+
             # TODO This is the animation of the player
             animationmanager2.update_self(30, 390)
+
+            
 
             pygame.draw.rect(screen,current_popup.outline_color,current_popup.outline_position)
 
@@ -423,14 +696,68 @@ def start():
 
 
 
-
+     # Stop Audio
+    stream.stop_stream()
+    stream.close()
+    p.terminate()
 
     # At this point, we're done, so we can stop and quit the mixer
     pygame.mixer.music.stop()
     pygame.mixer.quit()
+
+   
     
 
     # If the level should be restarted the restart it
     if restart_level == True:
         start()
 
+
+
+
+# Define bandpass filter
+def butter_bandpass_filter(data, lowcut, highcut, sr, order=5):
+    """
+    Apply a bandpass filter to the audio data.
+    """
+    nyquist = 0.5 * sr
+    low = lowcut / nyquist
+    high = highcut / nyquist
+    b, a = scipy.signal.butter(order, [low, high], btype='band')
+    y = scipy.signal.lfilter(b, a, data)
+    return y
+
+def midi_number_to_pitch(midi_number):
+    n = music21Note.Note()
+    n.pitch.midi = midi_number
+    return n.pitch.nameWithOctave
+
+def audio_callback(in_data, frame_count, time_info, status):
+    audio_data = np.frombuffer(in_data, dtype=np.float32)
+
+
+    # Apply bandpass filter
+    filtered_audio = butter_bandpass_filter(audio_data, lowcut=80, highcut=7000, sr=16000)
+
+
+    try:
+        time, frequency, confidence, activation = crepe.predict(filtered_audio, 16000, step_size=50, viterbi=True)
+        # K.clear_session()
+       
+        if len(confidence) > 0:
+            best_idx = np.argmax(confidence)
+            freq = frequency[best_idx]
+            midi_number = librosa.hz_to_midi(freq)
+
+            global main_midi_number_arr
+            main_midi_number_arr.append(round(midi_number))
+            main_midi_number_arr.pop(0)
+
+
+            amplitude = np.sqrt(np.mean(filtered_audio**2))
+            print(f"Pitch: {midi_number_to_pitch(midi_number)}, Frequency: {freq:.2f} Hz, Confidence: {confidence[best_idx]:.2f}, Amplitude: {amplitude:.5f}")
+    except Exception as e:
+        print(f"Error processing audio: {e}")
+
+
+    return (in_data, pyaudio.paContinue)

@@ -8,6 +8,8 @@ import random
 
 import sys
 import matplotlib.pyplot as plt
+
+
 import pyaudio
 import wave
 import librosa
@@ -16,8 +18,6 @@ from scipy.signal import find_peaks
 import numpy as np
 from collections import Counter
 import scipy.signal
-
-
 import crepe
 import keras
 import keras.backend as K
@@ -632,6 +632,3 @@ def audio_callback(in_data, frame_count, time_info, status):
 
 
     return (in_data, pyaudio.paContinue)
-
-    
-
