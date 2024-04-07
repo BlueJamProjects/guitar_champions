@@ -58,17 +58,17 @@ tutorials_menu = pygame_menu.Menu('Tutorials', 800, 600,theme=mytheme)
 
 controlsbutt=tutorials_menu.add.button('Controls', tut_level_controls.start, float=True,font_name=fonter)
 controlsbutt.add_draw_callback(draw_update_function_helper.draw_update_function)
-controlsbutt.translate(0,-80)
+controlsbutt.translate(0,-120)
 widgets.append(controlsbutt)
 
 holdGuitarbutt=tutorials_menu.add.button('How to hold a Guitar', tut_guitar_holding.start, float=True,font_name=fonter)
 holdGuitarbutt.add_draw_callback(draw_update_function_helper.draw_update_function)
-holdGuitarbutt.translate(0,-100)
+holdGuitarbutt.translate(0,-20)
 widgets.append(holdGuitarbutt)
 
 backbutt=tutorials_menu.add.button('Back', pygame_menu.events.BACK, float=True,font_name=fonter)
 backbutt.add_draw_callback(draw_update_function_helper.draw_update_function)
-backbutt.translate(0,20)
+backbutt.translate(0,120)
 widgets.append(backbutt)
 for widget in widgets:
     redraw_helper.redraw(widget,widget.get_decorator(),[255,187,68])
