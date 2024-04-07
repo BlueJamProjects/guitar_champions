@@ -616,7 +616,7 @@ def audio_callback(in_data, frame_count, time_info, status):
         amplitude = np.sqrt(np.mean(filtered_audio**2))
         # K.clear_session()
        
-        if len(confidence) > 0 :
+        if len(confidence) > 0 and amplitude >= 0.002:
             best_idx = np.argmax(confidence)
             freq = frequency[best_idx]
             midi_number = librosa.hz_to_midi(freq)
