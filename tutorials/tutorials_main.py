@@ -14,6 +14,7 @@ import helpers.draw_update_function_helper as draw_update_function_helper
 
 import tutorials.tut_level_controls as tut_level_controls
 import tutorials.tut_guitar_holding as tut_guitar_holding
+import tutorials.tut_level_playing_notes as tut_level_playing_notes
 
 # Import pygame.locals for easier access to key coordinates
 # Updated to conform to flake8 and black standards
@@ -66,9 +67,14 @@ holdGuitarbutt.add_draw_callback(draw_update_function_helper.draw_update_functio
 holdGuitarbutt.translate(0,-20)
 widgets.append(holdGuitarbutt)
 
+playingnotesbutt=tutorials_menu.add.button('Playing Notes', tut_level_playing_notes.start, float=True,font_name=fonter)
+playingnotesbutt.add_draw_callback(draw_update_function_helper.draw_update_function)
+playingnotesbutt.translate(0,80)
+widgets.append(playingnotesbutt)
+
 backbutt=tutorials_menu.add.button('Back', pygame_menu.events.BACK, float=True,font_name=fonter)
 backbutt.add_draw_callback(draw_update_function_helper.draw_update_function)
-backbutt.translate(0,120)
+backbutt.translate(0,180)
 widgets.append(backbutt)
 for widget in widgets:
     redraw_helper.redraw(widget,widget.get_decorator(),[255,187,68])
