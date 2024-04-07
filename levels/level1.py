@@ -79,14 +79,31 @@ def start():
     # Create the screen object
     # The size is determined by the constant SCREEN_WIDTH and SCREEN_HEIGHT
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+    screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 
     # set aseprite file directory
-    dirname = os.path.dirname(__file__)
-    aseprite_file_directory = str(dirname) + '/TheHarvester.aseprite'
+    aseprite_file_directory = 'assets/animations/starTWINKLE.aseprite'
+    aseprite_file_directory2 = 'assets/animations/starTWINKLE2.aseprite'
 
     # initialize animations - To add new animations, create a new animationmanager the same way its created here and put the Animation in its list
-    test_animation = Animation(aseprite_file_directory)
-    #animationmanager = AnimationManager([test_animation], screen)
+    # star animations
+    star1 = Animation(aseprite_file_directory)
+    animationmanager = AnimationManager([star1], screen)
+    star2 = Animation(aseprite_file_directory)
+    animationmanager2 = AnimationManager([star2], screen)
+    star3 = Animation(aseprite_file_directory)
+    animationmanager3 = AnimationManager([star3], screen)
+    starL1 = Animation(aseprite_file_directory2)
+    animationmanager5 = AnimationManager([starL1], screen)
+    starL2 = Animation(aseprite_file_directory2)
+    animationmanager6 = AnimationManager([starL2], screen)
+    starL3 = Animation(aseprite_file_directory2)
+    animationmanager7 = AnimationManager([starL3], screen)
+
+    # flying saucer animations
+    flyingSaucer = Animation('assets/animations/flyingsaucerSPIN.aseprite')
+    animationmanager4 = AnimationManager([flyingSaucer], screen)
+    
 
     # Setup the clock for a decent framerate
     clock = pygame.time.Clock()
@@ -103,7 +120,7 @@ def start():
 
 
     # Create our 'player'
-    player = playing_player.Player(top_padding=390)
+    #player = playing_player.Player(top_padding=390)
 
     
 
@@ -112,7 +129,7 @@ def start():
     # - all_sprites isused for rendering
     Notes = pygame.sprite.Group()
     all_sprites = pygame.sprite.Group()
-    all_sprites.add(player)
+    #all_sprites.add(player)
 
 
     # Start Audio
@@ -544,7 +561,7 @@ def start():
 
                 # Get the set of keys pressed and check for user input
                 pressed_keys = pygame.key.get_pressed()
-                player.update(pressed_keys)
+                #player.update(pressed_keys)
 
 
                 # Update the position of our Notes
@@ -563,7 +580,17 @@ def start():
                 # Draw all our sprites
                 for entity in all_sprites:
                     screen.blit(entity.surf, entity.rect)
+                
+                # star animations
+                animationmanager.update_self(620, 210) 
+                animationmanager2.update_self(324, 456)
+                animationmanager3.update_self(465, 430)
+                animationmanager5.update_self(200, 222)
+                animationmanager6.update_self(73, 152)
+                animationmanager7.update_self(532, 138)
 
+                # flying saucer animations
+                animationmanager4.update_self(-50, 400)
 
                 # Flip everything to the display
                 pygame.display.flip()
