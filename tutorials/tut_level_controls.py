@@ -112,7 +112,6 @@ def start():
             # 1
               [
                    sprite_item.SpriteItem(sprite = bg_img, location = (0,0)),
-                   
                    ],
 
                 # 2
@@ -463,9 +462,10 @@ def start():
             screen.blit(current_popup.line5_render, current_popup.line5_position)
 
             screen.blit(current_popup.number_render, current_popup.number_position)
-
+            pygame.draw.rect(screen,(209,129,0),current_popup.button_position)
             screen.blit(current_popup.button_render, current_popup.button_position)
-
+            pygame.draw.rect(screen,(255,255,255),current_popup.button_position, 2)
+            pygame.draw.rect(screen,(255,255,255),current_popup.outline_position, 3)
             if (current_popup.show_hightlight_region == True):
                 pygame.draw.rect(screen,current_popup.highlight_region_color,current_popup.highlight_region_position, 5)
 
