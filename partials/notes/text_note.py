@@ -22,6 +22,11 @@ class Note(pygame.sprite.Sprite):
         # Initialize Pygame
         pygame.init()
 
+        self.tab_line = tab_line
+
+        self.Screen_Width = Screen_Width
+        self.Screen_Height = Screen_Height
+
         self.id=id
 
         self.midi = midi
