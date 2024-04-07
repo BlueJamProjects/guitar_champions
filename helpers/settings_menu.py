@@ -40,9 +40,9 @@ mytheme = pygame_menu.themes.Theme( # transparent background
                 background_color=pygame_menu.baseimage.BaseImage("assets/images/Oreng.jpg"), 
                 widget_selection_effect = pygame_menu.widgets.NoneSelection(),
                 title_bar_style= pygame_menu.widgets.MENUBAR_STYLE_NONE,
-                title_offset= (120,20),
+                title_offset= (300,20),
                 title_font_shadow=True,
-                title_font=pygame.font.Font("assets/font/Signatra.ttf",40),
+                title_font=pygame.font.Font("assets/font/Signatra.ttf",80),
                 title_font_size=80,
                 title_floating=True,
                 )
@@ -100,7 +100,7 @@ backbutt.translate(0,-20)
 widgets.append(backbutt)
 exbutt=settings_menu.add.button('Quit', pygame_menu.events.EXIT, float=True,font_name=fonter)
 exbutt.add_draw_callback(draw_update_function_helper.draw_update_function)
-exbutt.translate(0,90)
+exbutt.translate(0,70)
 widgets.append(exbutt)
 for widget in widgets:
     redraw_helper.redraw(widget,widget.get_decorator(),[255,187,68])
