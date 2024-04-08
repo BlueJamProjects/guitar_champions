@@ -7,6 +7,7 @@ class Settings(object):
     def __init__(self):
         self.volume = 100
         self.enable_metronome = True
+        self.microphone_amplitude = 1
 
 
 
