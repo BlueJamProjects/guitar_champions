@@ -56,6 +56,19 @@ def get_settings():
             except Exception as e:
                 print(f"ERROR - could not process enable_metronome setting: {e}")
 
+        elif key == "microphone_amplitude":
+
+            try:
+                # If the volume was in the valid range
+                if (int(settings_data[key]) < 101) and (int(settings_data[key]) > -1):
+                    current_settings.microphone_amplitude = int(settings_data[key])
+                else:
+                    print("ERROR - stored microphone_amplitude setting was not in valid range")
+
+            # If the stored value was not a string of an int
+            except Exception as e:
+                print(f"ERROR - could not process microphone_amplitude setting: {e}")
+
 
 
     return current_settings
@@ -98,7 +111,7 @@ def update_enable_metronome(name, new_enable_metronome):
 def update_volume(new_volume):
     """
     Updates the stored volume value in the gamesettings.json file
-    Takes in an (name, int) with the int int <= 100 and >= 0 to be stored as the enable_metronome value
+    Takes in an int with the int int <= 100 and >= 0 to be stored as the enable_metronome value
     """
 
 
@@ -125,3 +138,31 @@ def update_volume(new_volume):
     except Exception as e:
         print(f"ERROR updating value for volume: {e}")
         print("volume was not updated")
+
+
+
+
+def update_microphone_amplitude(new_amplitude):
+    """
+    Updates the stored microphone_amplitude value in the gamesettings.json file
+    Takes in an int with the int int <= 100 and >= 0 to be stored as the microphone_amplitude value
+    """
+    with open("settings/gamesettings.json", "r") as file:
+        settings_data = json.load(file)
+    try:
+        if (new_amplitude // 1) <= 100 and (new_amplitude // 1 ) >= 0:
+            final_amplitude = int(new_amplitude)
+        elif (new_amplitude // 1) > 100:
+            final_amplitude = 100
+        elif (new_amplitude // 1) < 0:
+            final_amplitude = 0
+        else:
+            print("WARNING - invalid value passed for microphone_amplitude, corrected to 100")
+            final_amplitude = 100
+        # Updates the value if no errors were thrown
+        settings_data["microphone_amplitude"] = final_amplitude
+        with open("settings/gamesettings.json", "w") as file:
+            json.dump(settings_data, file, indent=4)
+    except Exception as e:
+        print(f"ERROR updating value for microphone_amplitude: {e}")
+        print("microphone_amplitude was not updated")
