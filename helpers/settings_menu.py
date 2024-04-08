@@ -96,7 +96,7 @@ volume_slider.translate(0,0)
 
 
 
-microphone_amplitude_slider = settings_menu.add.range_slider('Microphone Amplitude', user_settings.microphone_amplitude, (0, 100), 1,
+microphone_amplitude_slider = settings_menu.add.range_slider('Microphone Amplitude', user_settings.microphone_amplitude, (1, 100), 1,
                                              rangeslider_id='amplitude_range_slider',
                                              value_format=lambda x: str(int(x)),
                                              onchange=settings_helper.update_microphone_amplitude
