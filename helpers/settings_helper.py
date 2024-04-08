@@ -60,7 +60,7 @@ def get_settings():
 
             try:
                 # If the volume was in the valid range
-                if (int(settings_data[key]) < 101) and (int(settings_data[key]) > -1):
+                if (int(settings_data[key]) < 101) and (int(settings_data[key]) > 0):
                     current_settings.microphone_amplitude = int(settings_data[key])
                 else:
                     print("ERROR - stored microphone_amplitude setting was not in valid range")
@@ -154,7 +154,7 @@ def update_microphone_amplitude(new_amplitude):
             final_amplitude = int(new_amplitude)
         elif (new_amplitude // 1) > 100:
             final_amplitude = 100
-        elif (new_amplitude // 1) < 0:
+        elif (new_amplitude // 1) < 1:
             final_amplitude = 0
         else:
             print("WARNING - invalid value passed for microphone_amplitude, corrected to 100")
