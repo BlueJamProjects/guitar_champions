@@ -16,13 +16,23 @@ from pygame.locals import (
 )
 
 class Note(pygame.sprite.Sprite):
-    def __init__(self, text="O", tab_line=1, time_to_next_note=1.0, font_size=70, font_color=(0, 0, 0), font_name='freesansbold.ttf', Screen_Width=800, Screen_Height=600):
+    def __init__(self, midi=40, text="O", tab_line=1, time_to_next_note=1.0, font_size=70, font_color=(0, 0, 0), font_name='freesansbold.ttf', Screen_Width=800, Screen_Height=600, id=0):
         super(Note, self).__init__()
 
         # Initialize Pygame
         pygame.init()
 
-        self.was_pressed = False
+        self.tab_line = tab_line
+
+        self.Screen_Width = Screen_Width
+        self.Screen_Height = Screen_Height
+
+        self.id=id
+
+        self.midi = midi
+
+        self.was_played = False
+
 
          # this is a multiplier that is used to figure out how many beats later the next note should come
         # after each note is created this is dynamically updated by calling a function on that note
@@ -37,21 +47,8 @@ class Note(pygame.sprite.Sprite):
         # Render text onto the surface
         self.surf = self.font.render(self.text, True, self.font_color)
 
+        self.is_active = False
 
-        # This dictionary matches notes to keys pressed
-        self.keys_dict = {
-        "O": K_o,
-        "10": K_0,
-        "1": K_1,
-        "2": K_2,
-        "3": K_3,
-        "4": K_4,
-        "5": K_5,
-        "6": K_6,
-        "7": K_7,
-        "8": K_8,
-        "9": K_9,
-        }
 
         # the y value the note should start from
         starting_y = 0
@@ -103,18 +100,49 @@ class Note(pygame.sprite.Sprite):
     def get_x_location(self):
         return self.rect.right
     
-    # returns true if the correct key for this button was pressed
-    def check_correct_key(self, pressed_key):
-        # checks to see if this note has already been pressed
-        if self.was_pressed == False:
+    # This sets the current x location of the note
+    def set_x_location(self, x_value=100):
+        self.rect.right = x_value
+    
 
-            # checks if the pressed key matches this note
-            if pressed_key == self.keys_dict[self.text]:
-                self.was_pressed = True
-                return True
-            else: 
-                return False
+    
+    def check_correct_note(self, predicted_midi_arr):
         
+        if self.was_played == False:
+
+            for note in predicted_midi_arr:
+                if self.midi == note:
+                    self.was_played = True
+                    return True
+            
+            return False
+
     # returns the time to the next note
     def get_time_to_next_note(self):
         return self.time_to_next_note
+    
+
+    # sets the note to be active 
+    def set_active_color(self):
+        self.is_active = True
+        self.font_color = (0,0,255)
+        self.surf = self.font.render(self.text, True, self.font_color)
+
+
+    # returns true if the if the note is active and false otherwise  
+    def get_is_active(self):
+        return  self.is_active
+    
+
+    # sets the color to show that the user didn't hit the right note
+    def set_missed_color(self):
+        self.font_color = (255,0,0)
+        self.surf = self.font.render(self.text, True, self.font_color)
+
+    # sets the color to show that the user did hit the right note
+    def set_played_color(self):
+        self.font_color = (0,255,0)
+        self.surf = self.font.render(self.text, True, self.font_color)
+
+    def get_was_played(self):
+        return self.was_played
