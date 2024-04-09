@@ -33,7 +33,7 @@ def start():
 
     # Define constants for the screen width and height
     SCREEN_WIDTH = pygame.display.get_surface().get_size()[0]
-    SCREEN_HEIGHT = pygame.display.get_surface().get_size()[1]
+    SCREEN_HEIGHT = pygame.display.get_surface().get_size()[1] 
 
 
     # Setup for sounds, defaults are good
