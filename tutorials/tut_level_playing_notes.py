@@ -436,10 +436,10 @@ def start():
                         paused = False
                         pygame.mixer.music.unpause()
                     elif(restart_button.is_pressed() == True):
+                        
                         restart_level = True
                         running = False
                     elif(main_menu_button.is_pressed() == True):
-                        restart_level = False
                         running = False
                     elif(quit_button.is_pressed() == True):
                         exit()
@@ -486,7 +486,7 @@ def start():
                                     
 
                                     if (example_note8.check_correct_note(main_midi_number_arr)):
-                                        print("Correct note was played")
+                                        # print("Correct note was played")
                                         played_example_note8 = True
 
 
@@ -517,8 +517,8 @@ def start():
                             new_Note = note.Note(text=song_notes[note_index].text, midi=song_notes[note_index].midi, time_to_next_note=song_notes[note_index].time_to_next_note, tab_line=song_notes[note_index].tab_line, Screen_Width=song_notes[note_index].Screen_Width, Screen_Height=song_notes[note_index].Screen_Height, id=song_notes[note_index].id),
         
                             time_to_next_note = song_notes[note_index].get_time_to_next_note()
-                            print("Current note index")
-                            print(note_index)
+                            # print("Current note index")
+                            # print(note_index)
                             if (note_index < len(song_notes)-1):
                                 note_index = note_index + 1
                             else:
@@ -526,7 +526,7 @@ def start():
 
 
                         Notes.add(new_Note)
-                        print("Added a new note")
+                        # print("Added a new note")
                         
                        
                 frames_since_note += 1
@@ -543,7 +543,7 @@ def start():
                         # print("MIDI Number: ",main_midi_number)
                         if curr_note.check_correct_note(main_midi_number_arr):
                             curr_note.was_played=True
-                            print("Correct note played")
+                            # print("Correct note played")
                             
                         
                     if (abs(PLAY_LINE_LOCATION - curr_note.get_x_location()) < 25) :
@@ -579,7 +579,7 @@ def start():
                                 if event.key == K_ESCAPE:
                                     paused = True
                                     pauserendered = False
-                                    print("paused the game")
+                                    # print("paused the game")
 
                                 elif event.key == K_RIGHT:
                                     if (current_popup.trigger_effect_number == 3 or current_popup.trigger_effect_number == 4):
@@ -592,8 +592,8 @@ def start():
                                      
                                      # TODO Add custom next code here
                                     # START/////////
-                                    if current_popup.trigger_effect_number == 1:
-                                        print("Trigger effect 1")
+                                    # if current_popup.trigger_effect_number == 1:
+                                        # print("Trigger effect 1")
 
                                     # END/////////
                                     curr_tutorial_info.next()
@@ -634,7 +634,7 @@ def start():
 
                                 # text_buttons should be pressed like this
                                 if (current_popup.button_is_pressed() == True):
-                                    print("Current popup pressed")
+                                    # print("Current popup pressed")
                                     if (current_popup.trigger_effect_number == 3 or current_popup.trigger_effect_number == 4):
                                         Notes = pygame.sprite.Group()
                                         curr_tutorial_info.sprites_list[curr_tutorial_info.sprites_index] = [
@@ -647,8 +647,8 @@ def start():
                                     # TODO Add custom next code here
                                     # START/////////
 
-                                    if current_popup.trigger_effect_number == 1:
-                                        print("Trigger effect 1")
+                                    # if current_popup.trigger_effect_number == 1:
+                                    #     print("Trigger effect 1")
 
                                     # END/////////
 
@@ -725,7 +725,8 @@ def start():
             clock.tick_busy_loop(30)
 
 
-
+    # print("Exiting")
+    # print(restart_level)
      # Stop Audio
     stream.stop_stream()
     stream.close()
@@ -740,7 +741,11 @@ def start():
 
     # If the level should be restarted the restart it
     if restart_level == True:
+        # print("Restart level was true")
         start()
+
+    # print("This happened")
+    # return
 
 
 

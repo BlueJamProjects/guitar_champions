@@ -28,6 +28,21 @@ from pygame.locals import (
     QUIT,
 )
 
+pressed_playing_notes = False
+
+
+def playing_notes_function():
+    global pressed_playing_notes
+    if pressed_playing_notes == False:
+        pressed_playing_notes = True
+        tut_level_playing_notes.start()
+
+    else:
+        pressed_playing_notes = False
+
+
+
+
 pygame.init()
 
 # Initialize Pygame fonts
@@ -67,7 +82,7 @@ holdGuitarbutt.add_draw_callback(draw_update_function_helper.draw_update_functio
 holdGuitarbutt.translate(0,-20)
 widgets.append(holdGuitarbutt)
 
-playingnotesbutt=tutorials_menu.add.button('Playing Notes', tut_level_playing_notes.start, float=True,font_name=fonter)
+playingnotesbutt=tutorials_menu.add.button('Playing Notes', playing_notes_function, float=True,font_name=fonter)
 playingnotesbutt.add_draw_callback(draw_update_function_helper.draw_update_function)
 playingnotesbutt.translate(0,80)
 widgets.append(playingnotesbutt)
