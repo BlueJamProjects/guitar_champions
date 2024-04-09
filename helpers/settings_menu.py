@@ -40,9 +40,9 @@ mytheme = pygame_menu.themes.Theme( # transparent background
                 background_color=pygame_menu.baseimage.BaseImage("assets/images/Oreng.jpg"), 
                 widget_selection_effect = pygame_menu.widgets.NoneSelection(),
                 title_bar_style= pygame_menu.widgets.MENUBAR_STYLE_NONE,
-                title_offset= (120,20),
+                title_offset= (300,20),
                 title_font_shadow=True,
-                title_font=pygame.font.Font("assets/font/Signatra.ttf",40),
+                title_font=pygame.font.Font("assets/font/Signatra.ttf",80),
                 title_font_size=80,
                 title_floating=True,
                 )
@@ -80,7 +80,7 @@ metronome_butt = settings_menu.add.selector(
     )
 
 metronome_butt.add_draw_callback(draw_update_function_helper.draw_update_function)
-metronome_butt.translate(0,-90)
+metronome_butt.translate(0,-20)
 
 volume_slider = settings_menu.add.range_slider('Volume', user_settings.volume, (0, 100), 1,
                                              rangeslider_id='range_slider',
@@ -92,15 +92,29 @@ volume_slider = settings_menu.add.range_slider('Volume', user_settings.volume, (
 
 volume_slider.add_draw_callback(draw_update_function_helper.draw_update_function)
 
-volume_slider.translate(0,-120)
+volume_slider.translate(0,-20)
+
+
+
+microphone_amplitude_slider = settings_menu.add.range_slider('Microphone Amplitude', user_settings.microphone_amplitude, (1, 100), 1,
+                                             rangeslider_id='amplitude_range_slider',
+                                             value_format=lambda x: str(int(x)),
+                                             onchange=settings_helper.update_microphone_amplitude
+                                             )
+
+
+
+microphone_amplitude_slider.add_draw_callback(draw_update_function_helper.draw_update_function)
+
+microphone_amplitude_slider.translate(0, -20)
 
 backbutt=settings_menu.add.button('Back', pygame_menu.events.BACK, float=True,font_name=fonter)
 backbutt.add_draw_callback(draw_update_function_helper.draw_update_function)
-backbutt.translate(0,-20)
+backbutt.translate(0,65)
 widgets.append(backbutt)
 exbutt=settings_menu.add.button('Quit', pygame_menu.events.EXIT, float=True,font_name=fonter)
 exbutt.add_draw_callback(draw_update_function_helper.draw_update_function)
-exbutt.translate(0,90)
+exbutt.translate(0,155)
 widgets.append(exbutt)
 for widget in widgets:
     redraw_helper.redraw(widget,widget.get_decorator(),[255,187,68])
