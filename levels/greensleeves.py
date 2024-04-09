@@ -465,6 +465,7 @@ def start():
                             running = False
 
                         elif(main_menu_button.is_pressed() == True):
+                            restart_level = False
                             running = False
 
                         elif(quit_button.is_pressed() == True):
