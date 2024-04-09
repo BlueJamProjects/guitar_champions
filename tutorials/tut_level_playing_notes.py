@@ -236,14 +236,14 @@ def start():
          sprites_list = [
             # 1
               [
-                   sprite_item.SpriteItem(sprite = bg_img, location = (0,0)),
+                   sprite_item.SpriteItem(sprite = bg_img, location = (0,0), is_background=True),
                    sprite_item.SpriteItem(sprite = tabs_image, location = (0,0)),
                    sprite_item.SpriteItem(sprite = play_line_image, location = (0,0)),
                    
                    ],
                    # 2
               [
-                   sprite_item.SpriteItem(sprite = bg_img, location = (0,0)),
+                   sprite_item.SpriteItem(sprite = bg_img, location = (0,0), is_background=True),
                    sprite_item.SpriteItem(sprite = tabs_image, location = (0,0)),
                    sprite_item.SpriteItem(sprite = play_line_image, location = (0,0)),
                    sprite_item.SpriteItem(sprite= example_note1.surf, location=example_note1.rect),
@@ -251,7 +251,7 @@ def start():
                    ],
                    # 3
               [
-                   sprite_item.SpriteItem(sprite = bg_img, location = (0,0)),
+                   sprite_item.SpriteItem(sprite = bg_img, location = (0,0), is_background=True),
                    sprite_item.SpriteItem(sprite = tabs_image, location = (0,0)),
                    sprite_item.SpriteItem(sprite = play_line_image, location = (0,0)),
                    sprite_item.SpriteItem(sprite= example_note2.surf, location=example_note2.rect),
@@ -259,7 +259,7 @@ def start():
                    ],
                    # 4
               [
-                   sprite_item.SpriteItem(sprite = bg_img, location = (0,0)),
+                   sprite_item.SpriteItem(sprite = bg_img, location = (0,0), is_background=True),
                    sprite_item.SpriteItem(sprite = tabs_image, location = (0,0)),
                    sprite_item.SpriteItem(sprite = play_line_image, location = (0,0)),
                    sprite_item.SpriteItem(sprite= example_note3.surf, location=example_note3.rect),
@@ -267,7 +267,7 @@ def start():
                    ],
                    # 5
               [
-                   sprite_item.SpriteItem(sprite = bg_img, location = (0,0)),
+                   sprite_item.SpriteItem(sprite = bg_img, location = (0,0), is_background=True),
                    sprite_item.SpriteItem(sprite = tabs_image, location = (0,0)),
                    sprite_item.SpriteItem(sprite = play_line_image, location = (0,0)),
                    sprite_item.SpriteItem(sprite= example_note4.surf, location=example_note4.rect),
@@ -275,7 +275,7 @@ def start():
                    ],
                 #    6
                 [
-                   sprite_item.SpriteItem(sprite = bg_img, location = (0,0)),
+                   sprite_item.SpriteItem(sprite = bg_img, location = (0,0), is_background=True),
                    sprite_item.SpriteItem(sprite = tabs_image, location = (0,0)),
                    sprite_item.SpriteItem(sprite = play_line_image, location = (0,0)),
                    sprite_item.SpriteItem(sprite= example_note5.surf, location=example_note5.rect),
@@ -283,7 +283,7 @@ def start():
                    ],
                 #    7
                 [
-                   sprite_item.SpriteItem(sprite = bg_img, location = (0,0)),
+                   sprite_item.SpriteItem(sprite = bg_img, location = (0,0), is_background=True),
                    sprite_item.SpriteItem(sprite = tabs_image, location = (0,0)),
                    sprite_item.SpriteItem(sprite = play_line_image, location = (0,0)),
                    sprite_item.SpriteItem(sprite= example_note6.surf, location=example_note6.rect),
@@ -291,7 +291,7 @@ def start():
                    ],
                     #    8
                 [
-                   sprite_item.SpriteItem(sprite = bg_img, location = (0,0)),
+                   sprite_item.SpriteItem(sprite = bg_img, location = (0,0), is_background=True),
                    sprite_item.SpriteItem(sprite = tabs_image, location = (0,0)),
                    sprite_item.SpriteItem(sprite = play_line_image, location = (0,0)),
                    sprite_item.SpriteItem(sprite= example_note6.surf, location=example_note6.rect),
@@ -300,7 +300,7 @@ def start():
 
                      #    9
                 [
-                   sprite_item.SpriteItem(sprite = bg_img, location = (0,0)),
+                   sprite_item.SpriteItem(sprite = bg_img, location = (0,0), is_background=True),
                    sprite_item.SpriteItem(sprite = tabs_image, location = (0,0)),
                    sprite_item.SpriteItem(sprite = play_line_image, location = (0,0)),
                    sprite_item.SpriteItem(sprite= example_note7.surf, location=example_note7.rect),
@@ -310,7 +310,7 @@ def start():
 
                     #    10
                 [
-                   sprite_item.SpriteItem(sprite = bg_img, location = (0,0)),
+                   sprite_item.SpriteItem(sprite = bg_img, location = (0,0), is_background=True),
                    sprite_item.SpriteItem(sprite = tabs_image, location = (0,0)),
                    sprite_item.SpriteItem(sprite = play_line_image, location = (0,0)),
                    sprite_item.SpriteItem(sprite= example_note8.surf, location=example_note8.rect),
@@ -319,7 +319,7 @@ def start():
 
                    #    11
                 [
-                   sprite_item.SpriteItem(sprite = bg_img, location = (0,0)),
+                   sprite_item.SpriteItem(sprite = bg_img, location = (0,0), is_background=True),
                    sprite_item.SpriteItem(sprite = tabs_image, location = (0,0)),
                    sprite_item.SpriteItem(sprite = play_line_image, location = (0,0)),
                   
@@ -328,7 +328,7 @@ def start():
 
                    #    12
                 [
-                   sprite_item.SpriteItem(sprite = bg_img, location = (0,0)),
+                   sprite_item.SpriteItem(sprite = bg_img, location = (0,0), is_background=True),
                    sprite_item.SpriteItem(sprite = tabs_image, location = (0,0)),
                    sprite_item.SpriteItem(sprite = play_line_image, location = (0,0)),
                   
@@ -337,7 +337,7 @@ def start():
 
                    #    13
                 [
-                   sprite_item.SpriteItem(sprite = bg_img, location = (0,0)),
+                   sprite_item.SpriteItem(sprite = bg_img, location = (0,0), is_background=True),
                    sprite_item.SpriteItem(sprite = tabs_image, location = (0,0)),
                    sprite_item.SpriteItem(sprite = play_line_image, location = (0,0)),
                   
@@ -346,7 +346,7 @@ def start():
 
                     #     14
                 [
-                   sprite_item.SpriteItem(sprite = bg_img, location = (0,0)),
+                   sprite_item.SpriteItem(sprite = bg_img, location = (0,0), is_background=True),
                    sprite_item.SpriteItem(sprite = tabs_image, location = (0,0)),
                    sprite_item.SpriteItem(sprite = play_line_image, location = (0,0)),
                   
@@ -355,7 +355,7 @@ def start():
 
                    #     15
                 [
-                   sprite_item.SpriteItem(sprite = bg_img, location = (0,0)),
+                   sprite_item.SpriteItem(sprite = bg_img, location = (0,0), is_background=True),
                    sprite_item.SpriteItem(sprite = tabs_image, location = (0,0)),
                    sprite_item.SpriteItem(sprite = play_line_image, location = (0,0)),
                   
@@ -365,7 +365,7 @@ def start():
 
                    # END
               [
-                   sprite_item.SpriteItem(sprite = bg_img, location = (0,0)),
+                   sprite_item.SpriteItem(sprite = bg_img, location = (0,0), is_background=True),
                    sprite_item.SpriteItem(sprite= complete_tutorial_button.render, location=complete_tutorial_button.button_position)
                    ],
 
@@ -668,6 +668,12 @@ def start():
                 else:
                     # If the current sprite is not a box
                     screen.blit(curr_sprite_item.sprite, curr_sprite_item.location)
+                    if curr_sprite_item.is_background == True:
+                        # load tutorial box frame
+                        tutframe = pygame.image.load('assets/images/backgrounds/frame.png')
+                        tutframe.set_alpha(140)
+                        tutframe=pygame.transform.scale(tutframe,(381,360))
+                        screen.blit(tutframe,(current_popup.outline_position.x-46,current_popup.outline_position.y-70))
 
 
 
@@ -686,8 +692,9 @@ def start():
             screen.blit(current_popup.line5_render, current_popup.line5_position)
 
             screen.blit(current_popup.number_render, current_popup.number_position)
-
+            pygame.draw.rect(screen,(209,129,0),current_popup.button_position)
             screen.blit(current_popup.button_render, current_popup.button_position)
+            pygame.draw.rect(screen,(255,255,255),current_popup.button_position, 2)
 
             if (current_popup.show_hightlight_region == True):
                 pygame.draw.rect(screen,current_popup.highlight_region_color,current_popup.highlight_region_position.scale_by(1.4), 5)
