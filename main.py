@@ -28,8 +28,8 @@ from pygame.locals import (
 
 
 # Import levels
-import levels.level_happy_birthday as level1
-import levels.twinkle_little_star as level2
+import levels.twinkle_little_star as level1
+import levels.level_happy_birthday as level2
 import levels.greensleeves as level3
 
 
@@ -64,7 +64,7 @@ screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 
 current_level = 0
 
-level_list = [("Happy Birthday", level1), ("Twinkle Little Star", level2), ("Greensleeves", level3)]
+level_list = [("Twinkle Little Star", level1),("Happy Birthday", level2),  ("Greensleeves", level3)]
 
 
 
