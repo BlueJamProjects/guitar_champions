@@ -22,6 +22,11 @@ class Note(pygame.sprite.Sprite):
         # Initialize Pygame
         pygame.init()
 
+        self.tab_line = tab_line
+
+        self.Screen_Width = Screen_Width
+        self.Screen_Height = Screen_Height
+
         self.id=id
 
         self.midi = midi
@@ -95,17 +100,22 @@ class Note(pygame.sprite.Sprite):
     def get_x_location(self):
         return self.rect.right
     
+    # This sets the current x location of the note
+    def set_x_location(self, x_value=100):
+        self.rect.right = x_value
+    
 
     
-    def check_correct_note(self, predicted_midi):
+    def check_correct_note(self, predicted_midi_arr):
         
         if self.was_played == False:
 
-            if self.midi == predicted_midi:
-                self.was_played = True
-                return True
-            else:
-                return False
+            for note in predicted_midi_arr:
+                if self.midi == note:
+                    self.was_played = True
+                    return True
+            
+            return False
 
     # returns the time to the next note
     def get_time_to_next_note(self):

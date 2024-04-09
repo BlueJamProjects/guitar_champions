@@ -1,4 +1,5 @@
 {
     "enable_metronome": true,
-    "volume": 100
+    "volume": 47,
+    "microphone_amplitude": 1
 }
