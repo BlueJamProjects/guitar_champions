@@ -1,4 +1,4 @@
-# import pygame asprite package, download by typing "pip3 install pygame_aseprite_animation" into your terminal
+# import pygame asprite package, download by typing "pip3 install pygame-aseprite-animation" into your terminal
 from pygame_aseprite_animation import *
 # Import the pygame module
 import os, pygame
@@ -8,6 +8,8 @@ import random
 
 import sys
 import matplotlib.pyplot as plt
+
+
 import pyaudio
 import wave
 import librosa
@@ -16,8 +18,6 @@ from scipy.signal import find_peaks
 import numpy as np
 from collections import Counter
 import scipy.signal
-
-
 import crepe
 import keras
 import keras.backend as K
@@ -81,13 +81,10 @@ def start():
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 
     # set aseprite file directory
-    dirname = os.path.dirname(__file__)
     aseprite_file_directory = 'assets/animations/rjgwgMOVINGHANDTOPLAY1.aseprite'
 
     # initialize animations - To add new animations, create a new animationmanager the same way its created here and put the Animation in its list
     #guitar guy animations
-    test_animation = Animation(aseprite_file_directory)
-    animationmanager = AnimationManager([test_animation], screen)
     strumAnimation = Animation('assets/animations/rjgwgSTRUMMINGGUITAR1.aseprite')
     animationmanager2 = AnimationManager([strumAnimation], screen)
     # dog animations
@@ -557,7 +554,8 @@ def start():
                 # Draw all our sprites
                 for entity in all_sprites:
                     screen.blit(entity.surf, entity.rect)
-                
+
+                # playing animations
                 animationmanager5.update_self(13, 210)
                 animationmanager2.update_self(30, 390)
                 animationmanager3.update_self(206, 420)
@@ -613,6 +611,7 @@ def audio_callback(in_data, frame_count, time_info, status):
 
     try:
         time, frequency, confidence, activation = crepe.predict(filtered_audio, 16000, step_size=50, viterbi=True)
+        amplitude = np.sqrt(np.mean(filtered_audio**2))
         # K.clear_session()
        
         if len(confidence) > 0:
@@ -625,13 +624,9 @@ def audio_callback(in_data, frame_count, time_info, status):
             main_midi_number_arr.pop(0)
 
 
-            amplitude = np.sqrt(np.mean(filtered_audio**2))
             print(f"Pitch: {midi_number_to_pitch(midi_number)}, Frequency: {freq:.2f} Hz, Confidence: {confidence[best_idx]:.2f}, Amplitude: {amplitude:.5f}")
     except Exception as e:
         print(f"Error processing audio: {e}")
 
 
     return (in_data, pyaudio.paContinue)
-
-    
-

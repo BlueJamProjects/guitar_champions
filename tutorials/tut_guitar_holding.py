@@ -62,9 +62,16 @@ def start():
     
     # TODO make the custom sprites for the tutorial
     # START/////////
+    bg_img = pygame.image.load('assets/images/backgrounds/glacier_night.jpeg')
+    bg_img = pygame.transform.scale(bg_img,(SCREEN_WIDTH,SCREEN_HEIGHT))
 
-    bg_img_2 = pygame.image.load('assets/images/backgrounds/forest.jpeg')
-    bg_img_2 = pygame.transform.scale(bg_img_2,(SCREEN_WIDTH,SCREEN_HEIGHT))
+    guitar_img = pygame.image.load('assets/images/items/Pixel-Guitar.png')
+
+    arrow_img = pygame.image.load('assets/images/items/Arrow.png')
+    arrow_left_img = pygame.transform.rotate(arrow_img, 90)
+    arrow_down_img = pygame.transform.rotate(arrow_img, 180)
+
+    player_img = pygame.image.load('assets/images/characters/npcs/pixel-art-happy-guitar-player.png')
 
     example_button = text_button.TextButton(text=" example ", width= 96,height= 44, left_padding= SCREEN_WIDTH/2 - 50, top_padding= SCREEN_HEIGHT/2 - 80)
     
@@ -82,190 +89,97 @@ def start():
     curr_tutorial_info = tutorial_info.TutorialInfo(
          popup_list = [
             #   1
-              tutorial_popup.TutorialPopup("Welcome to the Playing Notes tutorial! Press the next button on screen or use the arrow keys to navigate", left_padding=10, top_padding=20),
+              tutorial_popup.TutorialPopup("Welcome to the How to hold a Guitar tutorial. Press the next button on screen or the right arrowkey on your keyboard to go to the next screen", top_padding= 150, left_padding= 100),
             #  2
-              tutorial_popup.TutorialPopup("If you want to go back then press the left arrow key on your keyboard"),
+              tutorial_popup.TutorialPopup("If you want to go back then press the left arrow key on your keyboard", top_padding= 150, left_padding= 100),
             #   3
-              tutorial_popup.TutorialPopup("This is what a button looks like", top_padding= 300, left_padding= 200, show_hightlight_region=True, highlight_region_position= pygame.Rect(SCREEN_WIDTH/2 - 50 - 3,SCREEN_HEIGHT/2 - 80 - 3, 106,50,) ),
+              tutorial_popup.TutorialPopup("This is an acoustic guitar with a number of frets and strings on it", top_padding= 150, left_padding= 100,),
             #   4
-              tutorial_popup.TutorialPopup("Try pressing it", top_padding= 300, left_padding= 200,trigger_effect_number=1,),
+              tutorial_popup.TutorialPopup("The tabs on the neck of the guitar are called Frets.", top_padding= 150, left_padding= 100, ),
             #   5
-              tutorial_popup.TutorialPopup("Now, let's take a look at a common menu you'll see throughout the game", top_padding= 300, left_padding= 200,),
+              tutorial_popup.TutorialPopup("You should see 6 strings on the guitar ordered from thick to thin strings. Thick strings play the lower notes while thin string play higher notes.", top_padding= 150, left_padding= 100,),
             #   6
-              tutorial_popup.TutorialPopup("This is the pause menu", top_padding= 150, left_padding= 20,),
+              tutorial_popup.TutorialPopup("Tune your guitar using the pegs at the top of the neck. You can use a guitar tuner or there are multiple tuning apps online to help tune acoustic guitars.", top_padding= 150, left_padding= 100,),
             #   7
-              tutorial_popup.TutorialPopup("This is the resume button. It is used to unpause the current level", top_padding= 150, left_padding= 20, show_hightlight_region=True, highlight_region_position= resume_button.button_position),
+              tutorial_popup.TutorialPopup("Now, lean your guitar over in a comfortable position. ", top_padding= 150, left_padding= 100,),
             # 8
-            tutorial_popup.TutorialPopup("This is the restart button, it will restart the level from the beginning", top_padding= 200, left_padding= 20,  show_hightlight_region=True, highlight_region_position= restart_button.button_position),
+            tutorial_popup.TutorialPopup("For right handed users, put your left arm under the neck with your hand on the frets. Your right arm should be slung over the guitar ready to strike the strings.", top_padding= 150, left_padding= 100,),
             # 9
-            tutorial_popup.TutorialPopup("This is the main menu button which, as the name suggests, will take you back to the main menu", top_padding= 250, left_padding= 20, show_hightlight_region=True, highlight_region_position= main_menu_button.button_position),
+            tutorial_popup.TutorialPopup("To play a note, press a finger on your left hand on a string just before a certain fret making sure the string touches the fret. Then, strike that string with your other hand. ", top_padding= 150, left_padding= 100,),
             # 10
-            tutorial_popup.TutorialPopup("This is quit button which will close the game", top_padding= 300, left_padding= 20,  show_hightlight_region=True, highlight_region_position= quit_button.button_position),
-            # 11
-            tutorial_popup.TutorialPopup("Press complete to finish the tutorial", top_padding= 220, left_padding= 20, trigger_effect_number=2, show_hightlight_region=True, highlight_region_position= complete_tutorial_button.button_position),
+            tutorial_popup.TutorialPopup("Congrats! You are now ready to move on to the playing Notes tutorial.", top_padding= 300, left_padding= 20,  trigger_effect_number=2),
 
 
               ],
          sprites_list = [
             # 1
               [
-                   sprite_item.SpriteItem(sprite = bg_img_2, location = (0,0)),
+                   sprite_item.SpriteItem(sprite = bg_img, location = (0,0)),
                    
                    ],
 
                 # 2
               [ 
-                   sprite_item.SpriteItem(sprite = bg_img_2,is_background=True, location = (0,0)),
+                   sprite_item.SpriteItem(sprite = bg_img, location = (0,0)),
 
                    ],
                     # 3
                    [
             
-                    sprite_item.SpriteItem(sprite = bg_img_2,is_background=True, location = (0,0)),
-                    sprite_item.SpriteItem(sprite = example_button.render, location = example_button.button_position),
+                    sprite_item.SpriteItem(sprite = bg_img, location = (0,0)),
+                    sprite_item.SpriteItem(sprite = guitar_img, location = (SCREEN_WIDTH*2/3, SCREEN_HEIGHT/4)),
                    ],
                 #    4
                 [
-                    sprite_item.SpriteItem(sprite = bg_img_2,is_background=True, location = (0,0)),
-                    sprite_item.SpriteItem(sprite = example_button2.render, location = example_button2.button_position),
+                    sprite_item.SpriteItem(sprite = bg_img, location = (0,0)),
+                    sprite_item.SpriteItem(sprite = guitar_img, location = (SCREEN_WIDTH*2/3, SCREEN_HEIGHT/4)),
+                    sprite_item.SpriteItem(sprite = arrow_left_img, location = (SCREEN_WIDTH*2/3+83, SCREEN_HEIGHT/4+45)),
                    
                 ],
 
                 #    5
                 [
-                    sprite_item.SpriteItem(sprite = bg_img_2,is_background=True, location = (0,0)),
+                    sprite_item.SpriteItem(sprite = bg_img, location = (0,0)),
+                    sprite_item.SpriteItem(sprite = guitar_img, location = (SCREEN_WIDTH*2/3, SCREEN_HEIGHT/4)),
+                    sprite_item.SpriteItem(sprite = arrow_img, location = (SCREEN_WIDTH*2/3+54, SCREEN_HEIGHT/4+230)),
                     
                 ],
 
                 #    6
                 [
-                    sprite_item.SpriteItem(sprite = bg_img_2,is_background=True, location = (0,0)),
-                    sprite_item.SpriteItem(sprite =example_pause_background, location =  (SCREEN_WIDTH/4,SCREEN_HEIGHT/8)),
-                    sprite_item.SpriteItem(sprite=pause_title.render, location=pause_title.button_position),
-                    sprite_item.SpriteItem(is_box=True, box_has_border=True, box_color=(0,0,0), box_rect=pause_title.button_position, box_border=3),
-                    
-                    sprite_item.SpriteItem(sprite = resume_button.render, location = resume_button.button_position),
-                    
-                    sprite_item.SpriteItem(is_box=True, box_has_border=True, box_color=(0,0,0), box_rect=resume_button.button_position, box_border=2),
-                    
-                    sprite_item.SpriteItem(sprite = restart_button.render, location = restart_button.button_position),
-                    
-                    sprite_item.SpriteItem(is_box=True, box_has_border=True, box_color=(0,0,0), box_rect=restart_button.button_position, box_border=2),
-                    
-                    sprite_item.SpriteItem(sprite = main_menu_button.render, location = main_menu_button.button_position),
-                    
-                    sprite_item.SpriteItem(is_box=True, box_has_border=True, box_color=(0,0,0), box_rect=main_menu_button.button_position, box_border=2),
-                    
-                    sprite_item.SpriteItem(sprite = quit_button.render, location = quit_button.button_position),
-                    
-                    sprite_item.SpriteItem(is_box=True, box_has_border=True, box_color=(0,0,0), box_rect=quit_button.button_position, box_border=2),
+                    sprite_item.SpriteItem(sprite = bg_img, location = (0,0)),
+                    sprite_item.SpriteItem(sprite = guitar_img, location = (SCREEN_WIDTH*2/3, SCREEN_HEIGHT/4)),
+                    sprite_item.SpriteItem(sprite = arrow_down_img, location = (SCREEN_WIDTH*2/3+54, SCREEN_HEIGHT/4-35)),
                     
                 ],
 
                  #    7
                 [
-                    sprite_item.SpriteItem(sprite = bg_img_2,is_background=True, location = (0,0)),
-                    sprite_item.SpriteItem(sprite =example_pause_background, location =  (SCREEN_WIDTH/4,SCREEN_HEIGHT/8)),
-                    sprite_item.SpriteItem(sprite=pause_title.render, location=pause_title.button_position),
-                    sprite_item.SpriteItem(is_box=True, box_has_border=True, box_color=(0,0,0), box_rect=pause_title.button_position, box_border=3),
-                    
-                    sprite_item.SpriteItem(sprite = resume_button.render, location = resume_button.button_position),
-                    
-                    sprite_item.SpriteItem(is_box=True, box_has_border=True, box_color=(0,0,0), box_rect=resume_button.button_position, box_border=2),
-                    
-                    sprite_item.SpriteItem(sprite = restart_button.render, location = restart_button.button_position),
-                    
-                    sprite_item.SpriteItem(is_box=True, box_has_border=True, box_color=(0,0,0), box_rect=restart_button.button_position, box_border=2),
-                    
-                    sprite_item.SpriteItem(sprite = main_menu_button.render, location = main_menu_button.button_position),
-                    
-                    sprite_item.SpriteItem(is_box=True, box_has_border=True, box_color=(0,0,0), box_rect=main_menu_button.button_position, box_border=2),
-                    
-                    sprite_item.SpriteItem(sprite = quit_button.render, location = quit_button.button_position),
-                    
-                    sprite_item.SpriteItem(is_box=True, box_has_border=True, box_color=(0,0,0), box_rect=quit_button.button_position, box_border=2),
+                    sprite_item.SpriteItem(sprite = bg_img, location = (0,0)),
+                    sprite_item.SpriteItem(sprite = player_img, location = (SCREEN_WIDTH*2/3, SCREEN_HEIGHT/4)),
                     
                 ],
 
                  #    8
                 [
-                   sprite_item.SpriteItem(sprite = bg_img_2,is_background=True, location = (0,0)),
-                    sprite_item.SpriteItem(sprite =example_pause_background, location =  (SCREEN_WIDTH/4,SCREEN_HEIGHT/8)),
-                    sprite_item.SpriteItem(sprite=pause_title.render, location=pause_title.button_position),
-                    sprite_item.SpriteItem(is_box=True, box_has_border=True, box_color=(0,0,0), box_rect=pause_title.button_position, box_border=3),
-                    
-                    sprite_item.SpriteItem(sprite = resume_button.render, location = resume_button.button_position),
-                    
-                    sprite_item.SpriteItem(is_box=True, box_has_border=True, box_color=(0,0,0), box_rect=resume_button.button_position, box_border=2),
-                    
-                    sprite_item.SpriteItem(sprite = restart_button.render, location = restart_button.button_position),
-                    
-                    sprite_item.SpriteItem(is_box=True, box_has_border=True, box_color=(0,0,0), box_rect=restart_button.button_position, box_border=2),
-                    
-                    sprite_item.SpriteItem(sprite = main_menu_button.render, location = main_menu_button.button_position),
-                    
-                    sprite_item.SpriteItem(is_box=True, box_has_border=True, box_color=(0,0,0), box_rect=main_menu_button.button_position, box_border=2),
-                    
-                    sprite_item.SpriteItem(sprite = quit_button.render, location = quit_button.button_position),
-                    
-                    sprite_item.SpriteItem(is_box=True, box_has_border=True, box_color=(0,0,0), box_rect=quit_button.button_position, box_border=2),
+                   sprite_item.SpriteItem(sprite = bg_img, location = (0,0)),
+                    sprite_item.SpriteItem(sprite = player_img, location = (SCREEN_WIDTH*2/3, SCREEN_HEIGHT/4)),
                     
                 ],
 
                  #    9
                 [
-                   sprite_item.SpriteItem(sprite = bg_img_2, is_background=True, location = (0,0)),
-                    sprite_item.SpriteItem(sprite =example_pause_background, location =  (SCREEN_WIDTH/4,SCREEN_HEIGHT/8)),
-                    sprite_item.SpriteItem(sprite=pause_title.render, location=pause_title.button_position),
-                    sprite_item.SpriteItem(is_box=True, box_has_border=True, box_color=(0,0,0), box_rect=pause_title.button_position, box_border=3),
-                    
-                    sprite_item.SpriteItem(sprite = resume_button.render, location = resume_button.button_position),
-                    
-                    sprite_item.SpriteItem(is_box=True, box_has_border=True, box_color=(0,0,0), box_rect=resume_button.button_position, box_border=2),
-                    
-                    sprite_item.SpriteItem(sprite = restart_button.render, location = restart_button.button_position),
-                    
-                    sprite_item.SpriteItem(is_box=True, box_has_border=True, box_color=(0,0,0), box_rect=restart_button.button_position, box_border=2),
-                    
-                    sprite_item.SpriteItem(sprite = main_menu_button.render, location = main_menu_button.button_position),
-                    
-                    sprite_item.SpriteItem(is_box=True, box_has_border=True, box_color=(0,0,0), box_rect=main_menu_button.button_position, box_border=2),
-                    
-                    sprite_item.SpriteItem(sprite = quit_button.render, location = quit_button.button_position),
-                    
-                    sprite_item.SpriteItem(is_box=True, box_has_border=True, box_color=(0,0,0), box_rect=quit_button.button_position, box_border=2),
+                   sprite_item.SpriteItem(sprite = bg_img, location = (0,0)),
+                    sprite_item.SpriteItem(sprite = player_img, location = (SCREEN_WIDTH*2/3, SCREEN_HEIGHT/4)),
                     
                 ],
 
                 #    10
                 [
-                   sprite_item.SpriteItem(sprite = bg_img_2,is_background=True,  location = (0,0)),
-                    sprite_item.SpriteItem(sprite =example_pause_background, location =  (SCREEN_WIDTH/4,SCREEN_HEIGHT/8)),
-                    sprite_item.SpriteItem(sprite=pause_title.render, location=pause_title.button_position),
-                    sprite_item.SpriteItem(is_box=True, box_has_border=True, box_color=(0,0,0), box_rect=pause_title.button_position, box_border=3),
-                    
-                    sprite_item.SpriteItem(sprite = resume_button.render, location = resume_button.button_position),
-                    
-                    sprite_item.SpriteItem(is_box=True, box_has_border=True, box_color=(0,0,0), box_rect=resume_button.button_position, box_border=2),
-                    
-                    sprite_item.SpriteItem(sprite = restart_button.render, location = restart_button.button_position),
-                    
-                    sprite_item.SpriteItem(is_box=True, box_has_border=True, box_color=(0,0,0), box_rect=restart_button.button_position, box_border=2),
-                    
-                    sprite_item.SpriteItem(sprite = main_menu_button.render, location = main_menu_button.button_position),
-                    
-                    sprite_item.SpriteItem(is_box=True, box_has_border=True, box_color=(0,0,0), box_rect=main_menu_button.button_position, box_border=2),
-                    
-                    sprite_item.SpriteItem(sprite = quit_button.render, location = quit_button.button_position),
-                    
-                    sprite_item.SpriteItem(is_box=True, box_has_border=True, box_color=(0,0,0), box_rect=quit_button.button_position, box_border=2),
-                    
-                ],
-                # 11
-                [
-                    sprite_item.SpriteItem(sprite = bg_img_2,is_background=True,  location = (0,0)),
+                   sprite_item.SpriteItem(sprite = bg_img, location = (0,0)),
+                    sprite_item.SpriteItem(sprite = player_img, location = (SCREEN_WIDTH*2/3, SCREEN_HEIGHT/4)),
                     sprite_item.SpriteItem(sprite = complete_tutorial_button.render, location=complete_tutorial_button.button_position),
-                   
+                    
                 ],
 
             
@@ -437,6 +351,7 @@ def start():
             current_popup = curr_tutorial_info.current_popup
             current_sprites = curr_tutorial_info.current_sprites
 
+            
             for curr_sprite_item in current_sprites:
                 if curr_sprite_item.is_box == True:
                     # If the current sprite is a box
@@ -450,27 +365,21 @@ def start():
                 else:
                     # If the current sprite is not a box
                     screen.blit(curr_sprite_item.sprite, curr_sprite_item.location)
-                    if curr_sprite_item.is_background == True:
-                        # load tutorial box frame
-                        tutframe = pygame.image.load('assets/images/backgrounds/frame.png')
-                        tutframe.set_alpha(128)
-                        tutframe=pygame.transform.scale(tutframe,(381,360))
-                        screen.blit(tutframe,(current_popup.outline_position.x-46,current_popup.outline_position.y-70))
 
             pygame.draw.rect(screen,current_popup.outline_color,current_popup.outline_position)
-            
+
             screen.blit(current_popup.line1_render, current_popup.line1_position)
             screen.blit(current_popup.line2_render, current_popup.line2_position)
             screen.blit(current_popup.line3_render, current_popup.line3_position)
             screen.blit(current_popup.line4_render, current_popup.line4_position)
             screen.blit(current_popup.line5_render, current_popup.line5_position)
-            
+
             screen.blit(current_popup.number_render, current_popup.number_position)
 
             screen.blit(current_popup.button_render, current_popup.button_position)
 
             if (current_popup.show_hightlight_region == True):
-                pygame.draw.rect(screen,current_popup.highlight_region_color,current_popup.highlight_region_position.scale_by(1.4), 5)
+                pygame.draw.rect(screen,current_popup.highlight_region_color,current_popup.highlight_region_position, 5)
 
 
 
