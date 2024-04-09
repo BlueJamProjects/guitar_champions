@@ -105,7 +105,7 @@ def start():
             # 8
             tutorial_popup.TutorialPopup("For right handed users, put your left arm under the neck with your hand on the frets. Your right arm should be slung over the guitar ready to strike the strings.", top_padding= 150, left_padding= 100,),
             # 9
-            tutorial_popup.TutorialPopup("To play a note, press a finger on your left hand on a string just before a certain fret making sure the string touches the fret. Then, strike that string with your other hand. ", top_padding= 150, left_padding= 100,),
+            tutorial_popup.TutorialPopup("To play a note, press a finger on your left hand on a string just before a certain fret making sure the string beneath your finger touches the neck of the guitar. Then, pluck that string with your other hand. ", top_padding= 150, left_padding= 100,),
             # 10
             tutorial_popup.TutorialPopup("Congrats! You are now ready to move on to the playing Notes tutorial.", top_padding= 300, left_padding= 20,  trigger_effect_number=2),
 
@@ -236,6 +236,7 @@ def start():
                         restart_level = True
                         running = False
                     elif(main_menu_button.is_pressed() == True):
+                        restart_level = False
                         running = False
                     elif(quit_button.is_pressed() == True):
                         exit()

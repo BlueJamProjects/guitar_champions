@@ -20,7 +20,7 @@ import keras.backend as K
 from music21 import note as music21Note
 
 os.environ['CUDA_VISIBLE_DEVICS'] = '-1'
-
+ 
 import tensorflow as tf
 
 from pygame_aseprite_animation import *
@@ -176,19 +176,36 @@ def start():
 
     # This is the array with the song's note information
     song_notes = [
-        note.Note(text="0", midi=55, time_to_next_note=1, tab_line=3, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=0),
-        note.Note(text="2", midi=57, time_to_next_note=1, tab_line=3, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=2),
-        note.Note(text="1", midi=60, time_to_next_note=1, tab_line=2, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=4),
-        note.Note(text="0", midi=59, time_to_next_note=2.0, tab_line=2, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=5),
-        note.Note(text="3", midi=62, tab_line=2, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=10),
-        
-
-        note.Note(text="3", midi=67, tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=15),
-        note.Note(text="0", midi=64, tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=16),
-        note.Note(text="1", midi=60, tab_line=2, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=17),
-        note.Note(text="0", midi=59, tab_line=2, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=18),
+        note.Note(text="0", midi=64, time_to_next_note=1, tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=0),
+        note.Note(text="1", midi=65, time_to_next_note=1, tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=2),
+        note.Note(text="2", midi=66, time_to_next_note=1, tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=4),
+        note.Note(text="3", midi=67, time_to_next_note=2, tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=4),
        
-
+        note.Note(text="0", midi=59, time_to_next_note=1, tab_line=2, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=0),
+        note.Note(text="1", midi=60, time_to_next_note=1, tab_line=2, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=2),
+        note.Note(text="2", midi=61, time_to_next_note=1, tab_line=2, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=4),
+        note.Note(text="3", midi=62, time_to_next_note=2, tab_line=2, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=4),
+       
+        note.Note(text="0", midi=55, time_to_next_note=1, tab_line=3, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=0),
+        note.Note(text="1", midi=56, time_to_next_note=1, tab_line=3, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=2),
+        note.Note(text="2", midi=57, time_to_next_note=1, tab_line=3, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=4),
+        note.Note(text="3", midi=58, time_to_next_note=2, tab_line=3, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=4),
+       
+        note.Note(text="0", midi=50, time_to_next_note=1, tab_line=4, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=0),
+        note.Note(text="1", midi=51, time_to_next_note=1, tab_line=4, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=2),
+        note.Note(text="2", midi=52, time_to_next_note=1, tab_line=4, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=4),
+        note.Note(text="3", midi=53, time_to_next_note=2, tab_line=4, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=4),
+       
+        note.Note(text="0", midi=45, time_to_next_note=1, tab_line=5, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=0),
+        note.Note(text="1", midi=46, time_to_next_note=1, tab_line=5, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=2),
+        note.Note(text="2", midi=47, time_to_next_note=1, tab_line=5, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=4),
+        note.Note(text="3", midi=48, time_to_next_note=2, tab_line=5, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=4),
+       
+        note.Note(text="0", midi=40, time_to_next_note=1, tab_line=6, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=0),
+        note.Note(text="1", midi=41, time_to_next_note=1, tab_line=6, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=2),
+        note.Note(text="2", midi=42, time_to_next_note=1, tab_line=6, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=4),
+        note.Note(text="3", midi=43, time_to_next_note=2, tab_line=6, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=4),
+       
         ]
 
     complete_tutorial_button = text_button.TextButton(text=" Complete ", width= 96,height= 44, left_padding= SCREEN_WIDTH/2 - 50, top_padding= SCREEN_HEIGHT/2 - 80)
@@ -226,7 +243,7 @@ def start():
             #   14
               tutorial_popup.TutorialPopup("Practice as long as you need", left_padding=300, top_padding=400, trigger_effect_number=4,),
             #   15
-              tutorial_popup.TutorialPopup("Now you're ready to try out a song!", left_padding=10, top_padding=20,),
+              tutorial_popup.TutorialPopup("Now you're ready to try out a song!", left_padding=10, top_padding=20,trigger_effect_number=5),
             
             # END
             tutorial_popup.TutorialPopup("Press complete to finish the tutorial", top_padding= 220, left_padding= 20, trigger_effect_number=1,),
@@ -422,6 +439,7 @@ def start():
                         restart_level = True
                         running = False
                     elif(main_menu_button.is_pressed() == True):
+                        restart_level = False
                         running = False
                     elif(quit_button.is_pressed() == True):
                         exit()
@@ -483,6 +501,7 @@ def start():
                                         
             if (current_popup.trigger_effect_number == 5):
                 Notes = pygame.sprite.Group()
+                note_index = 0
                                         
             if (current_popup.trigger_effect_number == 3 or current_popup.trigger_effect_number == 4):
                 # This adds notes every second
@@ -491,8 +510,8 @@ def start():
                         frames_since_note = 0
 
                         if (current_popup.trigger_effect_number == 3):
-                            new_Note = note.Note(text="1", midi=41, time_to_next_note=2, tab_line=6, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=0)
-
+                            new_Note = note.Note(text="1", midi=41, time_to_next_note=2.0, tab_line=6, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=0)
+                            time_to_next_note = 4.0
                         if (current_popup.trigger_effect_number == 4):
                             # This ensures that this makes the note a deep copy
                             new_Note = note.Note(text=song_notes[note_index].text, midi=song_notes[note_index].midi, time_to_next_note=song_notes[note_index].time_to_next_note, tab_line=song_notes[note_index].tab_line, Screen_Width=song_notes[note_index].Screen_Width, Screen_Height=song_notes[note_index].Screen_Height, id=song_notes[note_index].id),

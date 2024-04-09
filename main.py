@@ -28,10 +28,10 @@ from pygame.locals import (
 
 
 # Import levels
-import levels.level1 as level1
-import levels.level2 as level2
+import levels.twinkle_little_star as level1
+import levels.level_happy_birthday as level2
 import levels.greensleeves as level3
-import levels.level_happy_birthday as level_happy_birthday
+
 
 
 import helpers.redraw_helper as redraw_helper
@@ -50,9 +50,15 @@ pygame.mixer.init()
 
 # Initialize pygame
 pygame.init()
+pygame.display.set_caption("Guitar Champions")
+
+Icon = pygame.image.load("assets/images/items/guitar.png")
+
+pygame.display.set_icon(Icon)
 
 # Initialize Pygame fonts
 pygame.font.init()
+
 
 # Create the screen object
 # The size is determined by the constant SCREEN_WIDTH and SCREEN_HEIGHT
@@ -64,7 +70,7 @@ screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 
 current_level = 0
 
-level_list = [("Happy Birthday", level_happy_birthday), ("Twinkle Little Star", level1), ("Mountains", level2), ("Greensleeves", level3)]
+level_list = [("Twinkle Little Star", level1),("Happy Birthday", level2),  ("Greensleeves", level3)]
 
 
 
