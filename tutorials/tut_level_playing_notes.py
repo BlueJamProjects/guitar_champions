@@ -20,7 +20,7 @@ import keras.backend as K
 from music21 import note as music21Note
 
 os.environ['CUDA_VISIBLE_DEVICS'] = '-1'
-
+ 
 import tensorflow as tf
 
 from pygame_aseprite_animation import *
@@ -243,7 +243,7 @@ def start():
             #   14
               tutorial_popup.TutorialPopup("Practice as long as you need", left_padding=300, top_padding=400, trigger_effect_number=4,),
             #   15
-              tutorial_popup.TutorialPopup("Now you're ready to try out a song!", left_padding=10, top_padding=20,),
+              tutorial_popup.TutorialPopup("Now you're ready to try out a song!", left_padding=10, top_padding=20,trigger_effect_number=5),
             
             # END
             tutorial_popup.TutorialPopup("Press complete to finish the tutorial", top_padding= 220, left_padding= 20, trigger_effect_number=1,),
@@ -501,6 +501,7 @@ def start():
                                         
             if (current_popup.trigger_effect_number == 5):
                 Notes = pygame.sprite.Group()
+                note_index = 0
                                         
             if (current_popup.trigger_effect_number == 3 or current_popup.trigger_effect_number == 4):
                 # This adds notes every second
