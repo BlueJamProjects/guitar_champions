@@ -22,7 +22,7 @@ from pygame.locals import (
 
 
 # Import levels
-import levels.level1 as level1
+import levels.twinkle_little_star as twinkle_little_star
 import levels.level2 as level2
 import levels.greensleeves as level3
 import tutorials.tutorials_main as tutorials_main
@@ -43,7 +43,7 @@ def start_level():
     print(current_level)
     match current_level:
         case 1:
-            level1.start()
+            twinkle_little_star.start()
 
         case 2:
             level2.start()
@@ -52,7 +52,7 @@ def start_level():
             level3.start()
             
         case _:
-            level1.start()
+            twinkle_little_star.start()
 
 
 
