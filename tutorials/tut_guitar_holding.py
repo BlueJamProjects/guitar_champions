@@ -114,24 +114,24 @@ def start():
          sprites_list = [
             # 1
               [
-                   sprite_item.SpriteItem(sprite = bg_img, location = (0,0)),
+                   sprite_item.SpriteItem(sprite = bg_img, location = (0,0), is_background=True),
                    
                    ],
 
                 # 2
               [ 
-                   sprite_item.SpriteItem(sprite = bg_img, location = (0,0)),
+                   sprite_item.SpriteItem(sprite = bg_img, location = (0,0), is_background=True),
 
                    ],
                     # 3
                    [
             
-                    sprite_item.SpriteItem(sprite = bg_img, location = (0,0)),
+                    sprite_item.SpriteItem(sprite = bg_img, location = (0,0), is_background=True),
                     sprite_item.SpriteItem(sprite = guitar_img, location = (SCREEN_WIDTH*2/3, SCREEN_HEIGHT/4)),
                    ],
                 #    4
                 [
-                    sprite_item.SpriteItem(sprite = bg_img, location = (0,0)),
+                    sprite_item.SpriteItem(sprite = bg_img, location = (0,0), is_background=True),
                     sprite_item.SpriteItem(sprite = guitar_img, location = (SCREEN_WIDTH*2/3, SCREEN_HEIGHT/4)),
                     sprite_item.SpriteItem(sprite = arrow_left_img, location = (SCREEN_WIDTH*2/3+83, SCREEN_HEIGHT/4+45)),
                    
@@ -139,7 +139,7 @@ def start():
 
                 #    5
                 [
-                    sprite_item.SpriteItem(sprite = bg_img, location = (0,0)),
+                    sprite_item.SpriteItem(sprite = bg_img, location = (0,0), is_background=True),
                     sprite_item.SpriteItem(sprite = guitar_img, location = (SCREEN_WIDTH*2/3, SCREEN_HEIGHT/4)),
                     sprite_item.SpriteItem(sprite = arrow_img, location = (SCREEN_WIDTH*2/3+54, SCREEN_HEIGHT/4+230)),
                     
@@ -147,7 +147,7 @@ def start():
 
                 #    6
                 [
-                    sprite_item.SpriteItem(sprite = bg_img, location = (0,0)),
+                    sprite_item.SpriteItem(sprite = bg_img, location = (0,0), is_background=True),
                     sprite_item.SpriteItem(sprite = guitar_img, location = (SCREEN_WIDTH*2/3, SCREEN_HEIGHT/4)),
                     sprite_item.SpriteItem(sprite = arrow_down_img, location = (SCREEN_WIDTH*2/3+54, SCREEN_HEIGHT/4-35)),
                     
@@ -155,28 +155,28 @@ def start():
 
                  #    7
                 [
-                    sprite_item.SpriteItem(sprite = bg_img, location = (0,0)),
+                    sprite_item.SpriteItem(sprite = bg_img, location = (0,0), is_background=True),
                     sprite_item.SpriteItem(sprite = player_img, location = (SCREEN_WIDTH*2/3, SCREEN_HEIGHT/4)),
                     
                 ],
 
                  #    8
                 [
-                   sprite_item.SpriteItem(sprite = bg_img, location = (0,0)),
+                   sprite_item.SpriteItem(sprite = bg_img, location = (0,0), is_background=True),
                     sprite_item.SpriteItem(sprite = player_img, location = (SCREEN_WIDTH*2/3, SCREEN_HEIGHT/4)),
                     
                 ],
 
                  #    9
                 [
-                   sprite_item.SpriteItem(sprite = bg_img, location = (0,0)),
+                   sprite_item.SpriteItem(sprite = bg_img, location = (0,0), is_background=True),
                     sprite_item.SpriteItem(sprite = player_img, location = (SCREEN_WIDTH*2/3, SCREEN_HEIGHT/4)),
                     
                 ],
 
                 #    10
                 [
-                   sprite_item.SpriteItem(sprite = bg_img, location = (0,0)),
+                   sprite_item.SpriteItem(sprite = bg_img, location = (0,0), is_background=True),
                     sprite_item.SpriteItem(sprite = player_img, location = (SCREEN_WIDTH*2/3, SCREEN_HEIGHT/4)),
                     sprite_item.SpriteItem(sprite = complete_tutorial_button.render, location=complete_tutorial_button.button_position),
                     
@@ -365,6 +365,12 @@ def start():
                 else:
                     # If the current sprite is not a box
                     screen.blit(curr_sprite_item.sprite, curr_sprite_item.location)
+                    if curr_sprite_item.is_background == True:
+                        # load tutorial box frame
+                        tutframe = pygame.image.load('assets/images/backgrounds/frame.png')
+                        tutframe.set_alpha(140)
+                        tutframe=pygame.transform.scale(tutframe,(381,360))
+                        screen.blit(tutframe,(current_popup.outline_position.x-46,current_popup.outline_position.y-70))
 
             pygame.draw.rect(screen,current_popup.outline_color,current_popup.outline_position)
 
@@ -375,8 +381,9 @@ def start():
             screen.blit(current_popup.line5_render, current_popup.line5_position)
 
             screen.blit(current_popup.number_render, current_popup.number_position)
-
+            pygame.draw.rect(screen,(209,129,0),current_popup.button_position)
             screen.blit(current_popup.button_render, current_popup.button_position)
+            pygame.draw.rect(screen,(255,255,255),current_popup.button_position, 2)
 
             if (current_popup.show_hightlight_region == True):
                 pygame.draw.rect(screen,current_popup.highlight_region_color,current_popup.highlight_region_position, 5)
