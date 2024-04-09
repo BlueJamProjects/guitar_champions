@@ -22,6 +22,11 @@ class Note(pygame.sprite.Sprite):
         # Initialize Pygame
         pygame.init()
 
+        self.tab_line = tab_line
+
+        self.Screen_Width = Screen_Width
+        self.Screen_Height = Screen_Height
+
         self.id=id
 
         self.midi = midi
@@ -94,6 +99,10 @@ class Note(pygame.sprite.Sprite):
     # This returns the current x location of the note
     def get_x_location(self):
         return self.rect.right
+    
+    # This sets the current x location of the note
+    def set_x_location(self, x_value=100):
+        self.rect.right = x_value
     
 
     

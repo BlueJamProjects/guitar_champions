@@ -80,7 +80,7 @@ metronome_butt = settings_menu.add.selector(
     )
 
 metronome_butt.add_draw_callback(draw_update_function_helper.draw_update_function)
-metronome_butt.translate(0,-90)
+metronome_butt.translate(0,0)
 
 volume_slider = settings_menu.add.range_slider('Volume', user_settings.volume, (0, 100), 1,
                                              rangeslider_id='range_slider',
@@ -92,15 +92,29 @@ volume_slider = settings_menu.add.range_slider('Volume', user_settings.volume, (
 
 volume_slider.add_draw_callback(draw_update_function_helper.draw_update_function)
 
-volume_slider.translate(0,-120)
+volume_slider.translate(0,0)
+
+
+
+microphone_amplitude_slider = settings_menu.add.range_slider('Microphone Amplitude', user_settings.microphone_amplitude, (1, 100), 1,
+                                             rangeslider_id='amplitude_range_slider',
+                                             value_format=lambda x: str(int(x)),
+                                             onchange=settings_helper.update_microphone_amplitude
+                                             )
+
+
+
+microphone_amplitude_slider.add_draw_callback(draw_update_function_helper.draw_update_function)
+
+microphone_amplitude_slider.translate(0, 0)
 
 backbutt=settings_menu.add.button('Back', pygame_menu.events.BACK, float=True,font_name=fonter)
 backbutt.add_draw_callback(draw_update_function_helper.draw_update_function)
-backbutt.translate(0,-20)
+backbutt.translate(0,80)
 widgets.append(backbutt)
 exbutt=settings_menu.add.button('Quit', pygame_menu.events.EXIT, float=True,font_name=fonter)
 exbutt.add_draw_callback(draw_update_function_helper.draw_update_function)
-exbutt.translate(0,70)
+exbutt.translate(0,170)
 widgets.append(exbutt)
 for widget in widgets:
     redraw_helper.redraw(widget,widget.get_decorator(),[255,187,68])
