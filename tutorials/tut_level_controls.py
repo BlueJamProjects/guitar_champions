@@ -454,6 +454,7 @@ def start():
                     if curr_sprite_item.is_background == True:
                         # load tutorial box frame
                         tutframe = pygame.image.load('assets/images/backgrounds/frame.png')
+                        tutframe.set_alpha(128)
                         tutframe=pygame.transform.scale(tutframe,(381,360))
                         screen.blit(tutframe,(current_popup.outline_position.x-46,current_popup.outline_position.y-70))
 
