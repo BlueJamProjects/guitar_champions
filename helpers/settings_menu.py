@@ -96,17 +96,17 @@ volume_slider.translate(0,-20)
 
 
 
-microphone_amplitude_slider = settings_menu.add.range_slider('Microphone Amplitude', user_settings.microphone_amplitude, (1, 100), 1,
-                                             rangeslider_id='amplitude_range_slider',
-                                             value_format=lambda x: str(int(x)),
-                                             onchange=settings_helper.update_microphone_amplitude
-                                             )
+# microphone_amplitude_slider = settings_menu.add.range_slider('Microphone Amplitude', user_settings.microphone_amplitude, (1, 100), 1,
+#                                              rangeslider_id='amplitude_range_slider',
+#                                              value_format=lambda x: str(int(x)),
+#                                              onchange=settings_helper.update_microphone_amplitude
+#                                              )
 
 
 
-microphone_amplitude_slider.add_draw_callback(draw_update_function_helper.draw_update_function)
+# microphone_amplitude_slider.add_draw_callback(draw_update_function_helper.draw_update_function)
 
-microphone_amplitude_slider.translate(0, -20)
+# microphone_amplitude_slider.translate(0, -20)
 
 backbutt=settings_menu.add.button('Back', pygame_menu.events.BACK, float=True,font_name=fonter)
 backbutt.add_draw_callback(draw_update_function_helper.draw_update_function)

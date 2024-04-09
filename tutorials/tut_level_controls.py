@@ -76,8 +76,12 @@ def start():
     example_pause_background.set_alpha(140)                
     example_pause_background.fill((239,159,20))  
 
+    settings_image = pygame.image.load('assets/images/backgrounds/settings_example.png')
+    settings_image = pygame.transform.scale(settings_image,(SCREEN_WIDTH,SCREEN_HEIGHT))
+
     complete_tutorial_button = text_button.TextButton(text=" Complete ", width= 96,height= 44, left_padding= SCREEN_WIDTH/2 - 50, top_padding= SCREEN_HEIGHT/2 - 80)
     
+
 
     curr_tutorial_info = tutorial_info.TutorialInfo(
          popup_list = [
@@ -101,8 +105,19 @@ def start():
             tutorial_popup.TutorialPopup("This is the main menu button which, as the name suggests, will take you back to the main menu", top_padding= 250, left_padding= 20, show_hightlight_region=True, highlight_region_position= main_menu_button.button_position),
             # 10
             tutorial_popup.TutorialPopup("This is quit button which will close the game", top_padding= 300, left_padding= 20,  show_hightlight_region=True, highlight_region_position= quit_button.button_position),
+            
             # 11
-            tutorial_popup.TutorialPopup("Press complete to finish the tutorial", top_padding= 220, left_padding= 20, trigger_effect_number=2, show_hightlight_region=True, highlight_region_position= complete_tutorial_button.button_position),
+            tutorial_popup.TutorialPopup("This is the settings menu you can access from main menu", top_padding= 150, left_padding= 20, ),
+            
+            # 12
+            tutorial_popup.TutorialPopup("This option will enable or disable the in-game metronome", top_padding= 300, left_padding= 20,  show_hightlight_region=True, highlight_region_position= pygame.Rect(210, 200, 360, 50)),
+            
+            # 13
+            tutorial_popup.TutorialPopup("This option will adjust the volume of the metronome", top_padding= 10, left_padding= 20,  show_hightlight_region=True, highlight_region_position= pygame.Rect(270, 300, 250, 70)),
+            
+            
+            # 14
+            tutorial_popup.TutorialPopup("You are now ready to move onto the how to hold a guitar tutorial", top_padding= 50, left_padding= 20, trigger_effect_number=2, show_hightlight_region=True, highlight_region_position= pygame.Rect(SCREEN_WIDTH/2 - 50 + 5, SCREEN_HEIGHT/2 - 80, 100, 50)),
 
 
               ],
@@ -262,6 +277,23 @@ def start():
                     
                 ],
                 # 11
+                [
+                    sprite_item.SpriteItem(sprite = settings_image,is_background=True,  location = (0,0)),
+                ],
+
+                # 12
+                [
+                    sprite_item.SpriteItem(sprite = settings_image,is_background=True,  location = (0,0)),
+                ],
+
+                # 13
+                [
+                    sprite_item.SpriteItem(sprite = settings_image,is_background=True,  location = (0,0)),
+                ],
+
+
+
+                # 14
                 [
                     sprite_item.SpriteItem(sprite = bg_img_2,is_background=True,  location = (0,0)),
                     sprite_item.SpriteItem(sprite = complete_tutorial_button.render, location=complete_tutorial_button.button_position),
