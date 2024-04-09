@@ -24,6 +24,7 @@ from pygame.locals import (
 # Import levels
 import levels.level1 as level1
 import levels.level2 as level2
+import levels.greensleeves as level3
 import tutorials.tutorials_main as tutorials_main
 
 
@@ -46,7 +47,10 @@ def start_level():
 
         case 2:
             level2.start()
-
+        
+        case 4:
+            level3.start()
+            
         case _:
             level1.start()
 
@@ -62,7 +66,7 @@ if __name__ == "__main__":
 
     
 
-    menu.add.selector('Level Select:', [('One', 1), ('Two', 2)], onchange=select_level)
+    menu.add.selector('Level Select:', [('One', 1), ('Two', 2), ('Three', 3)], onchange=select_level)
     menu.add.button('Play', start_level)
     menu.add.button('Tutorial', tutorials_main.tutorials_menu)
     menu.add.button('Quit', pygame_menu.events.EXIT)

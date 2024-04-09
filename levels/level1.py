@@ -79,7 +79,6 @@ def start():
     # Create the screen object
     # The size is determined by the constant SCREEN_WIDTH and SCREEN_HEIGHT
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
-    screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 
     # set aseprite file directory
     aseprite_file_directory = 'assets/animations/starTWINKLE.aseprite'
