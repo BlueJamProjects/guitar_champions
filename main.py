@@ -50,9 +50,15 @@ pygame.mixer.init()
 
 # Initialize pygame
 pygame.init()
+pygame.display.set_caption("Guitar Champions")
+
+Icon = pygame.image.load("assets/images/items/guitar.png")
+
+pygame.display.set_icon(Icon)
 
 # Initialize Pygame fonts
 pygame.font.init()
+
 
 # Create the screen object
 # The size is determined by the constant SCREEN_WIDTH and SCREEN_HEIGHT
