@@ -278,7 +278,7 @@ def start():
 
                     # Did the user click the window close button? If so, exit
                     elif event.type == QUIT:
-                        exit()
+                        os._exit(status=0)
 
                     # Here we check for hover events 
                     if event.type==pygame.MOUSEMOTION:
@@ -410,7 +410,7 @@ def start():
 
                     # Did the user click the window close button? If so, exit
                     elif event.type == QUIT:
-                        exit()
+                        os._exit(status=0)
 
                     # Here we check for hover events 
                     if event.type==pygame.MOUSEMOTION:
@@ -436,7 +436,7 @@ def start():
                             running = False
 
                         elif(quit_button.is_pressed() == True):
-                            exit()
+                            os._exit(status=0)
 
                 #checks if pausemenu has been rendered once before and if not, draws the transparent background
                 if(not pauserendered):
@@ -506,7 +506,7 @@ def start():
 
                     # Did the user click the window close button? If so, exit
                     elif event.type == QUIT:
-                        exit()
+                        os._exit(status=0)
 
 
                 for curr_note in Notes:

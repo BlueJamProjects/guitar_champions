@@ -1,5 +1,7 @@
 import pygame
 
+import os
+
 import helpers.settings_helper as settings_helper
 
 import helpers.tutorial_info as tutorial_info
@@ -335,7 +337,7 @@ def start():
 
                     # Did the user click the window close button? If so, exit
                     elif event.type == QUIT:
-                        exit()
+                        os._exit(status=0)
 
 
                  # Here we check for hover events 
@@ -357,7 +359,7 @@ def start():
                         restart_level = False
                         running = False
                     elif(quit_button.is_pressed() == True):
-                        exit()
+                        os._exit(status=0)
 
 
 
@@ -422,7 +424,7 @@ def start():
 
                             # Did the user click the window close button? If so, exit
                             elif event.type == QUIT:
-                                exit()
+                                os._exit(status=0)
 
                             # Here we check for hover events 
                             if event.type==pygame.MOUSEMOTION:

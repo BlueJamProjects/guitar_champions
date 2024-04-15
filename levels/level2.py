@@ -1,10 +1,13 @@
 # Import the pygame module
 import pygame
 
+
 # Import random for random numbers
 import random
 
 import sys
+
+import os
 
 
 # Import the menu library to more easily make menu selction
@@ -119,7 +122,7 @@ def start():
 
                 # Did the user click the window close button? If so, exit
                 elif event.type == QUIT:
-                    exit()
+                    os._exit(status=0)
             
                 # Here we check for hover events 
                 if event.type==pygame.MOUSEMOTION:
@@ -138,7 +141,7 @@ def start():
                         running = False
 
                     elif(quit_button.is_pressed() == True):
-                        exit()
+                        os._exit(status=0)
 
             # This visually updates the buttons on the pause screen
             screen.blit(resume_button.render, resume_button.button_position)
@@ -164,7 +167,7 @@ def start():
 
                 # Did the user click the window close button? If so, exit
                 elif event.type == QUIT:
-                    exit()
+                    os._exit(status=0)
 
 
                 # Should we add a new Note?
