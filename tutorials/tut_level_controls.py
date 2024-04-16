@@ -66,7 +66,7 @@ def start():
     # TODO make the custom sprites for the tutorial
     # START/////////
 
-    bg_img_2 = pygame.image.load('assets/images/backgrounds/forest.jpeg')
+    bg_img_2 = pygame.image.load('assets/images/backgrounds/glacier_night.jpeg')
     bg_img_2 = pygame.transform.scale(bg_img_2,(SCREEN_WIDTH,SCREEN_HEIGHT))
 
     example_button = text_button.TextButton(text=" example ", width= 96,height= 44, left_padding= SCREEN_WIDTH/2 - 50, top_padding= SCREEN_HEIGHT/2 - 80)
