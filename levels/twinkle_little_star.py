@@ -274,7 +274,7 @@ def start():
                     if event.type == KEYDOWN:
 
                         # Was it the Escape key? If so, stop the loop
-                        if event.key ==  or event.key == K_SPACE:
+                        if event.key == K_ESCAPE  or event.key == K_SPACE:
                             running = False
 
                     # Did the user click the window close button? If so, exit
