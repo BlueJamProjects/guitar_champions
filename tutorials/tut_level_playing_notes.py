@@ -46,6 +46,7 @@ from pygame.locals import (
     K_LEFT,
     KEYDOWN,
     QUIT,
+    K_SPACE,
 )
 
 # For keeping track of the last 3 played midi numbers
@@ -233,15 +234,15 @@ def start():
               tutorial_popup.TutorialPopup("While for this one, the number is 1 which means you hold down the string at the first fret and then pluck the string", left_padding=10, top_padding=250, show_hightlight_region=True, highlight_region_position=example_note7.rect),
             
             #   10
-              tutorial_popup.TutorialPopup("Now, let's practice playing this note. You'll press down your finger on the top string at the first fret and pluck the string. When it changes to green you've played it correctly.", left_padding=10, top_padding=20, show_hightlight_region=True, highlight_region_position=example_note8.rect, highlight_region_color=(0,0,0), trigger_effect_number=2,),
+              tutorial_popup.TutorialPopup("PLAY THIS NOTE! You'll press down your finger on the top string at the first fret and pluck the string. When it changes to green you've played it correctly.", left_padding=10, top_padding=20, show_hightlight_region=True, highlight_region_position=example_note8.rect, highlight_region_color=(0,0,0), trigger_effect_number=2,),
              #   11
               tutorial_popup.TutorialPopup("On the next screen you can practice playing notes as they come across the screen. Don't worry you can practice as long as you need. :)", left_padding=10, top_padding=20,),
             #   12
-              tutorial_popup.TutorialPopup("Practice as long as you need", left_padding=10, top_padding=20, trigger_effect_number=3,),
+              tutorial_popup.TutorialPopup("THIS IS PRACTICE! Don't worry about missing notes :)", left_padding=10, top_padding=20, trigger_effect_number=3,),
             #   13
               tutorial_popup.TutorialPopup("Now, on the next screen you can practice playing different notes as they come across the screen. Don't worry you can practice as long as you need. :)", left_padding=10, top_padding=20, trigger_effect_number=5),
             #   14
-              tutorial_popup.TutorialPopup("Practice as long as you need", left_padding=300, top_padding=400, trigger_effect_number=4,),
+              tutorial_popup.TutorialPopup("THIS IS PRACTICE! Don't worry about missing notes :)", left_padding=300, top_padding=400, trigger_effect_number=4,),
             #   15
               tutorial_popup.TutorialPopup("Now you're ready to try out a song!", left_padding=10, top_padding=20,trigger_effect_number=5),
             
@@ -414,13 +415,13 @@ def start():
                 if event.type == KEYDOWN:
 
                     # Was it the Escape key? If so, stop the loop
-                    if event.key == K_ESCAPE:
+                    if event.key == K_ESCAPE or event.key == K_SPACE:
                         paused = False
                         
 
                     # Did the user click the window close button? If so, exit
                     elif event.type == QUIT:
-                        exit()
+                        os._exit(status=0)
 
 
                  # Here we check for hover events 
@@ -442,7 +443,7 @@ def start():
                     elif(main_menu_button.is_pressed() == True):
                         running = False
                     elif(quit_button.is_pressed() == True):
-                        exit()
+                        os._exit(status=0)
 
 
 
@@ -576,7 +577,7 @@ def start():
                             if event.type == KEYDOWN:
 
                                 # Was it the Escape key? If so, stop the loop
-                                if event.key == K_ESCAPE:
+                                if event.key == K_ESCAPE or event.key == K_SPACE:
                                     paused = True
                                     pauserendered = False
                                     # print("paused the game")
@@ -615,7 +616,7 @@ def start():
 
                             # Did the user click the window close button? If so, exit
                             elif event.type == QUIT:
-                                exit()
+                                os._exit(status=0)
 
                             # Here we check for hover events 
                             if event.type==pygame.MOUSEMOTION:

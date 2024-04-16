@@ -38,6 +38,7 @@ from pygame.locals import (
     K_ESCAPE,
     KEYDOWN,
     QUIT,
+    K_SPACE
 )
 
 import partials.player.playing_player as playing_player
@@ -306,12 +307,12 @@ def start():
                     if event.type == KEYDOWN:
 
                         # Was it the Escape key? If so, stop the loop
-                        if event.key == K_ESCAPE:
+                        if event.key == K_ESCAPE or event.key == K_SPACE:
                             running = False
 
                     # Did the user click the window close button? If so, exit
                     elif event.type == QUIT:
-                        exit()
+                        os._exit(status=0)
 
                     # Here we check for hover events 
                     if event.type==pygame.MOUSEMOTION:
@@ -437,14 +438,14 @@ def start():
                     if event.type == KEYDOWN:
 
                         # Was it the Escape key? If so, stop the loop
-                        if event.key == K_ESCAPE:
+                        if event.key == K_ESCAPE or event.key == K_SPACE:
                             pygame.mixer.music.unpause()
                             paused = False
                             pauserendered=False
 
                     # Did the user click the window close button? If so, exit
                     elif event.type == QUIT:
-                        exit()
+                        os._exit(status=0)
 
                     # Here we check for hover events 
                     if event.type==pygame.MOUSEMOTION:
@@ -470,7 +471,7 @@ def start():
                             running = False
 
                         elif(quit_button.is_pressed() == True):
-                            exit()
+                            os._exit(status=0)
 
                 #checks if pausemenu has been rendered once before and if not, draws the transparent background
                 if(not pauserendered):
@@ -532,7 +533,7 @@ def start():
                     if event.type == KEYDOWN:
                         
                         # Was it the Escape key? If so, pause the loop
-                        if event.key == K_ESCAPE:
+                        if event.key == K_ESCAPE or event.key == K_SPACE:
                             paused = True
                             pauserendered=False
 
@@ -540,7 +541,7 @@ def start():
 
                     # Did the user click the window close button? If so, exit
                     elif event.type == QUIT:
-                        exit()
+                        os._exit(status=0)
 
 
                 for curr_note in Notes:

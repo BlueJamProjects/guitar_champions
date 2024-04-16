@@ -1,5 +1,7 @@
 import pygame
 
+import os
+
 import helpers.settings_helper as settings_helper
 
 import helpers.tutorial_info as tutorial_info
@@ -19,6 +21,7 @@ from pygame.locals import (
     K_LEFT,
     KEYDOWN,
     QUIT,
+    K_SPACE
 )
 
 def start():
@@ -329,13 +332,13 @@ def start():
                 if event.type == KEYDOWN:
 
                     # Was it the Escape key? If so, stop the loop
-                    if event.key == K_ESCAPE:
+                    if event.key == K_ESCAPE or event.key == K_SPACE:
                         paused = False
                         
 
                     # Did the user click the window close button? If so, exit
                     elif event.type == QUIT:
-                        exit()
+                        os._exit(status=0)
 
 
                  # Here we check for hover events 
@@ -357,7 +360,7 @@ def start():
                         restart_level = False
                         running = False
                     elif(quit_button.is_pressed() == True):
-                        exit()
+                        os._exit(status=0)
 
 
 
@@ -397,7 +400,7 @@ def start():
                             if event.type == KEYDOWN:
 
                                 # Was it the Escape key? If so, stop the loop
-                                if event.key == K_ESCAPE:
+                                if event.key == K_ESCAPE or event.key ==  K_SPACE:
                                     paused = True
                                     pauserendered = False
                                     print("paused the game")
@@ -422,7 +425,7 @@ def start():
 
                             # Did the user click the window close button? If so, exit
                             elif event.type == QUIT:
-                                exit()
+                                os._exit(status=0)
 
                             # Here we check for hover events 
                             if event.type==pygame.MOUSEMOTION:
