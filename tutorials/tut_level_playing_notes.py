@@ -112,7 +112,7 @@ def start():
     
     # TODO make the custom sprites for the tutorial
     # START/////////
-    bg_img = pygame.image.load('assets/images/backgrounds/glacier_night.jpeg')
+    bg_img = pygame.image.load('assets/images/backgrounds/forest.jpeg')
     bg_img = pygame.transform.scale(bg_img,(SCREEN_WIDTH,SCREEN_HEIGHT))
 
     #  the background image of the tabs
@@ -238,11 +238,11 @@ def start():
              #   11
               tutorial_popup.TutorialPopup("On the next screen you can practice playing notes as they come across the screen. Don't worry you can practice as long as you need. :)", left_padding=10, top_padding=20,),
             #   12
-              tutorial_popup.TutorialPopup("THIS IS PRACTICE! Don't worry about missing notes :)", left_padding=10, top_padding=20, trigger_effect_number=3,),
+              tutorial_popup.TutorialPopup("THIS IS PRACTICE! Don't worry about not hitting notes :)", left_padding=10, top_padding=20, trigger_effect_number=3,),
             #   13
               tutorial_popup.TutorialPopup("Now, on the next screen you can practice playing different notes as they come across the screen. Don't worry you can practice as long as you need. :)", left_padding=10, top_padding=20, trigger_effect_number=5),
             #   14
-              tutorial_popup.TutorialPopup("THIS IS PRACTICE! Don't worry about missing notes :)", left_padding=300, top_padding=400, trigger_effect_number=4,),
+              tutorial_popup.TutorialPopup("THIS IS PRACTICE! Don't worry about not hitting notes :)", left_padding=300, top_padding=400, trigger_effect_number=4,),
             #   15
               tutorial_popup.TutorialPopup("Now you're ready to try out a song!", left_padding=10, top_padding=20,trigger_effect_number=5),
             
