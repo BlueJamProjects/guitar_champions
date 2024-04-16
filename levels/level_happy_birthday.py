@@ -38,6 +38,7 @@ from pygame.locals import (
     K_ESCAPE,
     KEYDOWN,
     QUIT,
+    K_SPACE
 )
 
 import partials.player.playing_player as playing_player
@@ -252,7 +253,7 @@ def start():
                     if event.type == KEYDOWN:
 
                         # Was it the Escape key? If so, stop the loop
-                        if event.key == K_ESCAPE:
+                        if event.key == K_ESCAPE or event.key == K_SPACE:
                             running = False
 
                     # Did the user click the window close button? If so, exit
@@ -383,7 +384,7 @@ def start():
                     if event.type == KEYDOWN:
 
                         # Was it the Escape key? If so, stop the loop
-                        if event.key == K_ESCAPE:
+                        if event.key == K_ESCAPE or event.key == K_SPACE:
                             pygame.mixer.music.unpause()
                             paused = False
                             pauserendered=False
@@ -478,7 +479,7 @@ def start():
                     if event.type == KEYDOWN:
                         
                         # Was it the Escape key? If so, pause the loop
-                        if event.key == K_ESCAPE:
+                        if event.key == K_ESCAPE or event.key == K_SPACE:
                             paused = True
                             pauserendered=False
 

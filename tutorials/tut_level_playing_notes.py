@@ -46,6 +46,7 @@ from pygame.locals import (
     K_LEFT,
     KEYDOWN,
     QUIT,
+    K_SPACE,
 )
 
 # For keeping track of the last 3 played midi numbers
@@ -414,7 +415,7 @@ def start():
                 if event.type == KEYDOWN:
 
                     # Was it the Escape key? If so, stop the loop
-                    if event.key == K_ESCAPE:
+                    if event.key == K_ESCAPE or event.key == K_SPACE:
                         paused = False
                         
 
@@ -576,7 +577,7 @@ def start():
                             if event.type == KEYDOWN:
 
                                 # Was it the Escape key? If so, stop the loop
-                                if event.key == K_ESCAPE:
+                                if event.key == K_ESCAPE or event.key == K_SPACE:
                                     paused = True
                                     pauserendered = False
                                     # print("paused the game")
