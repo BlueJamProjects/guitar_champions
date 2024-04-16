@@ -99,7 +99,7 @@ def start():
             #   5
               tutorial_popup.TutorialPopup("Now, let's take a look at a common menu you'll see throughout the game", top_padding= 300, left_padding= 200,),
             #   6
-              tutorial_popup.TutorialPopup("This is the pause menu", top_padding= 150, left_padding= 20,),
+              tutorial_popup.TutorialPopup("This is the pause menu. You can access it on levels or tutorials by hitting the esc key or the space bar.", top_padding= 150, left_padding= 20,),
             #   7
               tutorial_popup.TutorialPopup("This is the resume button. It is used to unpause the current level", top_padding= 150, left_padding= 20, show_hightlight_region=True, highlight_region_position= resume_button.button_position),
             # 8
