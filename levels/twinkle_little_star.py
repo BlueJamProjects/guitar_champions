@@ -322,6 +322,7 @@ def start():
             plt.xticks(fontsize=20)
             plt.rc('font', **font)
             plt.savefig('assets/images/tempgraphs/graphy.png')
+            plt.clf()
             endplot = pygame.image.load('assets/images/tempgraphs/graphy.png')
             # create a font to select font and size
             score_font = pygame.font.Font('assets/font/BITSUMIS.ttf', 32)
