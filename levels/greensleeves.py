@@ -99,6 +99,9 @@ def start():
     # bird animations
     bird = Animation('assets/animations/birdFly.aseprite')
     animationmanager3 = AnimationManager([bird], screen)
+    # obelisk animations
+    obelisk = Animation('assets/animations/obelisk.aseprite')
+    animationmanager4 = AnimationManager([obelisk], screen)
 
     # Setup the clock for a decent framerate
     clock = pygame.time.Clock()
@@ -620,6 +623,7 @@ def start():
                 
                 animationmanager2.update_self(30, 390)
                 animationmanager3.update_self(100,275)
+                animationmanager4.update_self(500, 425)
         
                 # Flip everything to the display
                 pygame.display.flip()
