@@ -96,6 +96,9 @@ def start():
     animationmanager = AnimationManager([test_animation], screen)
     strumAnimation = Animation('assets/animations/rjgwgSTRUMMINGGUITAR1.aseprite')
     animationmanager2 = AnimationManager([strumAnimation], screen)
+    # bird animations
+    bird = Animation('assets/animations/birdFly.aseprite')
+    animationmanager3 = AnimationManager([bird], screen)
 
     # Setup the clock for a decent framerate
     clock = pygame.time.Clock()
@@ -616,6 +619,7 @@ def start():
                     screen.blit(entity.surf, entity.rect)
                 
                 animationmanager2.update_self(30, 390)
+                animationmanager3.update_self(100,275)
         
                 # Flip everything to the display
                 pygame.display.flip()
