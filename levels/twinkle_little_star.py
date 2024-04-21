@@ -121,8 +121,8 @@ def start():
 
     if user_settings.enable_metronome == True:
         # Load and play our background music
-        pygame.mixer.music.load("assets/sounds/background-music/metro-single-beat.wav")
-        # pygame.mixer.music.play(loops=-1)
+        pygame.mixer.music.load("assets/sounds/background-music/metro-34-60bpm.mp3")
+        pygame.mixer.music.play(loops=-1)
         pygame.mixer.music.set_volume(user_settings.volume / 100)
 
 
@@ -549,12 +549,7 @@ def start():
                                                 curr_note.set_missed_color()
                                     
 
-                # plays the metronome on beat
-                if frames_since_metronome >= ((clock.get_fps() )// 1) and (clock.get_fps() > 0.1):
-                    pygame.mixer.music.play(loops=0)
-                    frames_since_metronome = 0
-                else:
-                    frames_since_metronome = frames_since_metronome + 1
+                
 
                 # This adds notes every second
                 # This uses the current fps so that you are adding notes accurately
