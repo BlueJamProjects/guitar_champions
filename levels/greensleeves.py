@@ -700,7 +700,7 @@ def audio_callback(in_data, frame_count, time_info, status):
 
 def create_graph(index_array, accuracy_array, totnote):
     # This creates and saves the graph file using a subprocess so that it doesn't disrupt the window size
-    subprocess.run(["python", "-c", "import matplotlib.pyplot as plt; plt.plot( " + str(index_array) + ","+ str(accuracy_array)+ ", color='orange', linewidth=5); plt.ylim(0,100); plt.xlim(1," + str(totnote) + "); plt.title('Your overall Accuracy!'); font = {'weight' : 'bold','size'   : 22}; plt.yticks(fontsize=20); plt.xticks(fontsize=20); plt.rc('font', **font); plt.savefig('assets/images/tempgraphs/graphy.png'); plt.clf()"])
+    subprocess.run(["python3", "-c", "import matplotlib.pyplot as plt; plt.plot( " + str(index_array) + ","+ str(accuracy_array)+ ", color='orange', linewidth=5); plt.ylim(0,100); plt.xlim(1," + str(totnote) + "); plt.title('Your overall Accuracy!'); font = {'weight' : 'bold','size'   : 22}; plt.yticks(fontsize=20); plt.xticks(fontsize=20); plt.rc('font', **font); plt.savefig('assets/images/tempgraphs/graphy.png'); plt.clf()"])
    
 
     # This is the python code to create the graph
