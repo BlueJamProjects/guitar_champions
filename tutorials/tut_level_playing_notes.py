@@ -209,8 +209,6 @@ def start():
        
         ]
 
-    complete_tutorial_button = text_button.TextButton(text=" Complete ", width= 96,height= 44, left_padding= SCREEN_WIDTH/2 - 50, top_padding= SCREEN_HEIGHT/2 - 80)
-    
 
     curr_tutorial_info = tutorial_info.TutorialInfo(
          popup_list = [
@@ -243,11 +241,9 @@ def start():
               tutorial_popup.TutorialPopup("Now, on the next screen you can practice playing different notes as they come across the screen. Don't worry you can practice as long as you need. :)", left_padding=10, top_padding=20, trigger_effect_number=5),
             #   14
               tutorial_popup.TutorialPopup("THIS IS PRACTICE! Don't worry about not hitting notes :)", left_padding=300, top_padding=400, trigger_effect_number=4,),
-            #   15
-              tutorial_popup.TutorialPopup("Now you're ready to try out a song!", left_padding=10, top_padding=20,trigger_effect_number=5),
-            
+           
             # END
-            tutorial_popup.TutorialPopup("Press complete to finish the tutorial", top_padding= 220, left_padding= 20, trigger_effect_number=1,),
+            tutorial_popup.TutorialPopup("Now you're ready to try out a song!", top_padding= 220, left_padding= 20, trigger_effect_number=1, is_final_popup=True,),
 
 
               ],
@@ -371,20 +367,12 @@ def start():
                    
                    ],
 
-                   #     15
-                [
-                   sprite_item.SpriteItem(sprite = bg_img, location = (0,0), is_background=True),
-                   sprite_item.SpriteItem(sprite = tabs_image, location = (0,0)),
-                   sprite_item.SpriteItem(sprite = play_line_image, location = (0,0)),
-                  
-                   
-                   ],
+                
 
 
                    # END
               [
                    sprite_item.SpriteItem(sprite = bg_img, location = (0,0), is_background=True),
-                   sprite_item.SpriteItem(sprite= complete_tutorial_button.render, location=complete_tutorial_button.button_position)
                    ],
 
          ],
@@ -597,7 +585,12 @@ def start():
                                         # print("Trigger effect 1")
 
                                     # END/////////
-                                    curr_tutorial_info.next()
+                                    if (current_popup.is_final_popup == True):
+                                        # True if this is the final popup of the tutorial
+                                        running = False
+                                    else:
+                                    # go to the next tutorial
+                                        curr_tutorial_info.next()
                                     
 
                                 elif event.key == K_LEFT:
@@ -625,7 +618,7 @@ def start():
                                 # TODO Add the hover effects for this tutorials example buttons
                                 # START/////////
                                 
-                                complete_tutorial_button.on_hover()
+                               
                                 # END/////////
                                 
                         
@@ -643,7 +636,12 @@ def start():
                                         sprite_item.SpriteItem(sprite = tabs_image, location = (0,0)),
                                         sprite_item.SpriteItem(sprite = play_line_image, location = (0,0)), 
                                         ]
-                                    curr_tutorial_info.next()
+                                    if (current_popup.is_final_popup == True):
+                                        # True if this is the final popup of the tutorial
+                                        running = False
+                                    else:
+                                    # go to the next tutorial
+                                        curr_tutorial_info.next()
 
                                     # TODO Add custom next code here
                                     # START/////////
@@ -660,10 +658,7 @@ def start():
 
                                 
 
-                                if (current_popup.trigger_effect_number == 1):
-                                    if (complete_tutorial_button.is_pressed() == True):
-                                        running = False
-
+          
                                 
 
                                         
