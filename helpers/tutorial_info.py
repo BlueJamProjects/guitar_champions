@@ -1,3 +1,7 @@
+"""
+This file contains the TutorialInfo class
+"""
+
 import partials.tutorial_popup.tutorial_popup as tutorial_popup
 
 
