@@ -1,3 +1,7 @@
+"""
+Helper for settings menu.
+"""
+
 # Import the pygame module
 import pygame
 

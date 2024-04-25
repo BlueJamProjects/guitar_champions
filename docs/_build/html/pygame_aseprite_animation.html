@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>pygame_aseprite_animation module &mdash; Guitar-Champions 1.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=8d563738"></script>
+        <script src="_static/doctools.js?v=9a2dae69"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="setup module" href="setup.html" />
+    <link rel="prev" title="partials.player package" href="partials.player.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Guitar-Champions
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">guitar_champions</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="AudioTest.html">AudioTest module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chunks.html">chunks module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="headers.html">headers module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="helpers.html">helpers package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="levels.html">levels package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="main.html">main module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="partials.html">partials package</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">pygame_aseprite_animation module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#pygame_aseprite_animation.Animation"><code class="docutils literal notranslate"><span class="pre">Animation</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#pygame_aseprite_animation.Animation.draw_all_animation_frames"><code class="docutils literal notranslate"><span class="pre">Animation.draw_all_animation_frames()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pygame_aseprite_animation.Animation.draw_raw_image_data"><code class="docutils literal notranslate"><span class="pre">Animation.draw_raw_image_data()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pygame_aseprite_animation.Animation.draw_single_frame"><code class="docutils literal notranslate"><span class="pre">Animation.draw_single_frame()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pygame_aseprite_animation.Animation.parseFile"><code class="docutils literal notranslate"><span class="pre">Animation.parseFile()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#pygame_aseprite_animation.AnimationManager"><code class="docutils literal notranslate"><span class="pre">AnimationManager</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#pygame_aseprite_animation.AnimationManager.start_animation"><code class="docutils literal notranslate"><span class="pre">AnimationManager.start_animation()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pygame_aseprite_animation.AnimationManager.update_self"><code class="docutils literal notranslate"><span class="pre">AnimationManager.update_self()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="setup.html">setup module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorials.html">tutorials package</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Guitar-Champions</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">guitar_champions</a></li>
+      <li class="breadcrumb-item active">pygame_aseprite_animation module</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/pygame_aseprite_animation.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-pygame_aseprite_animation">
+<span id="pygame-aseprite-animation-module"></span><h1>pygame_aseprite_animation module<a class="headerlink" href="#module-pygame_aseprite_animation" title="Link to this heading"></a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="pygame_aseprite_animation.Animation">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pygame_aseprite_animation.</span></span><span class="sig-name descname"><span class="pre">Animation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">_filedir</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pygame_aseprite_animation.html#Animation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pygame_aseprite_animation.Animation" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A class that contains all of the animations and frame duration information
+TODO: Maybe add name property to assign to animations</p>
+<dl class="simple">
+<dt>Artibutes:</dt><dd><dl class="field-list simple">
+<dt class="field-odd">aseprite_file<span class="colon">:</span></dt>
+<dd class="field-odd"><p>the loaded in aseprite file. Shouldn’t have to use this file</p>
+</dd>
+<dt class="field-even">animation_frames<span class="colon">:</span></dt>
+<dd class="field-even"><p>a list of pygame.Surface() objects, each containing a single frames</p>
+</dd>
+<dt class="field-odd">frame_duration<span class="colon">:</span></dt>
+<dd class="field-odd"><p>a list of the duration each frame should be displayed. Index matches that of :animation_frame:</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="pygame_aseprite_animation.Animation.draw_all_animation_frames">
+<span class="sig-name descname"><span class="pre">draw_all_animation_frames</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pygame_aseprite_animation.html#Animation.draw_all_animation_frames"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pygame_aseprite_animation.Animation.draw_all_animation_frames" title="Link to this definition"></a></dt>
+<dd><p>Goes through .ase or .aseprite file and draws all of your frames</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>animation_frames which is a list of every individual frame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pygame_aseprite_animation.Animation.draw_raw_image_data">
+<span class="sig-name descname"><span class="pre">draw_raw_image_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cel</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">CelChunk</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">frame</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pygame_aseprite_animation.html#Animation.draw_raw_image_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pygame_aseprite_animation.Animation.draw_raw_image_data" title="Link to this definition"></a></dt>
+<dd><p>Actually reads the pixel data and draw it onto the surface() layer by layer</p>
+<dl class="field-list simple">
+<dt class="field-odd">Cel<span class="colon">:</span></dt>
+<dd class="field-odd"><p>CelChunk object from the raw aseprite file, handles by py_aseprite</p>
+</dd>
+<dt class="field-even">Frame<span class="colon">:</span></dt>
+<dd class="field-even"><p>the pygame.Surface() onto which the data will be drawn</p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>the pygame.Surface(), but with the layer drawn onto it</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pygame_aseprite_animation.Animation.draw_single_frame">
+<span class="sig-name descname"><span class="pre">draw_single_frame</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_frame</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pygame_aseprite_animation.html#Animation.draw_single_frame"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pygame_aseprite_animation.Animation.draw_single_frame" title="Link to this definition"></a></dt>
+<dd><p>Draws single frame onto an empty pygame.Surface</p>
+<dl class="field-list simple">
+<dt class="field-odd">Num_frame<span class="colon">:</span></dt>
+<dd class="field-odd"><p>index of the frame to be drawn</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>frame which is a pygame.Surface() of the same size as the aseprite file onto which the pixels are drawn</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pygame_aseprite_animation.Animation.parseFile">
+<span class="sig-name descname"><span class="pre">parseFile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filedir</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pygame_aseprite_animation.html#Animation.parseFile"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pygame_aseprite_animation.Animation.parseFile" title="Link to this definition"></a></dt>
+<dd><p>Uses py_aseprite to load the file</p>
+<dl class="field-list simple">
+<dt class="field-odd">Filedir<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Path to your .ase or .aseprite files</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Animation object containt your frames as a list of pygame.surface() objects</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="pygame_aseprite_animation.AnimationManager">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pygame_aseprite_animation.</span></span><span class="sig-name descname"><span class="pre">AnimationManager</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">_animation_list</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pygame_aseprite_animation.Animation" title="pygame_aseprite_animation.Animation"><span class="pre">Animation</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">_draw_surface</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Surface</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pygame_aseprite_animation.html#AnimationManager"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pygame_aseprite_animation.AnimationManager" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A class that actually handles the animation timing and drawing to the screen.
+It contains all the animations of an object and can switch between them.
+Automatically start on the first Animation in the list</p>
+<dl class="simple">
+<dt>Atributes:</dt><dd><dl class="field-list simple">
+<dt class="field-odd">animation_list<span class="colon">:</span></dt>
+<dd class="field-odd"><p>a list of all the animations for this instance</p>
+</dd>
+<dt class="field-even">draw_surface<span class="colon">:</span></dt>
+<dd class="field-even"><p>the surface onto which the frame needs to be drawn</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="pygame_aseprite_animation.AnimationManager.start_animation">
+<span class="sig-name descname"><span class="pre">start_animation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">_animation</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pygame_aseprite_animation.Animation" title="pygame_aseprite_animation.Animation"><span class="pre">Animation</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">_next_animation</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pygame_aseprite_animation.Animation" title="pygame_aseprite_animation.Animation"><span class="pre">Animation</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pygame_aseprite_animation.html#AnimationManager.start_animation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pygame_aseprite_animation.AnimationManager.start_animation" title="Link to this definition"></a></dt>
+<dd><p>Start a new animation to</p>
+<dl class="field-list simple">
+<dt class="field-odd">_animation<span class="colon">:</span></dt>
+<dd class="field-odd"><p>the animation you’d like to display</p>
+</dd>
+<dt class="field-even">_next_animation<span class="colon">:</span></dt>
+<dd class="field-even"><p>what animation to play after this one is finished. Loops if left empty.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pygame_aseprite_animation.AnimationManager.update_self">
+<span class="sig-name descname"><span class="pre">update_self</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">frame_x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">frame_y</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pygame_aseprite_animation.html#AnimationManager.update_self"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pygame_aseprite_animation.AnimationManager.update_self" title="Link to this definition"></a></dt>
+<dd><p>Called every frame. Checks if frame duration is finished and blits frame to your Surface</p>
+<dl class="field-list simple">
+<dt class="field-odd">Frame_x/y<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Pixel location where the frame need to be blit</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="partials.player.html" class="btn btn-neutral float-left" title="partials.player package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="setup.html" class="btn btn-neutral float-right" title="setup module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Ben Spence, Jonas Land, AJ Baudino, Hexin Hu, Tripper Wright.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>levels.level2 &mdash; Guitar-Champions 1.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=8d563738"></script>
+        <script src="../../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            Guitar-Champions
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">guitar_champions</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Guitar-Champions</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">levels.level2</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for levels.level2</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Import the pygame module</span>
+<span class="kn">import</span> <span class="nn">pygame</span>
+
+
+<span class="c1"># Import random for random numbers</span>
+<span class="kn">import</span> <span class="nn">random</span>
+
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="kn">import</span> <span class="nn">os</span>
+
+
+<span class="c1"># Import the menu library to more easily make menu selction</span>
+<span class="kn">import</span> <span class="nn">pygame_menu</span>
+
+<span class="c1"># Import pygame.locals for easier access to key coordinates</span>
+<span class="c1"># Updated to conform to flake8 and black standards</span>
+<span class="c1"># from pygame.locals import *</span>
+<span class="kn">from</span> <span class="nn">pygame.locals</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">RLEACCEL</span><span class="p">,</span>
+    <span class="n">K_LEFT</span><span class="p">,</span>
+    <span class="n">K_RIGHT</span><span class="p">,</span>
+    <span class="n">K_ESCAPE</span><span class="p">,</span>
+    <span class="n">KEYDOWN</span><span class="p">,</span>
+    <span class="n">QUIT</span><span class="p">,</span>
+    <span class="n">K_SPACE</span>
+<span class="p">)</span>
+<span class="c1"># width=pygame.display.get_surface().get_size()[1]/4, height=pygame.display.get_surface().get_size()[1]/16, left_padding = pygame.display.get_surface().get_size()[0]/2 - pygame.display.get_surface().get_size()[1]/8, top_padding=pygame.display.get_surface().get_size()[1]/2</span>
+<span class="kn">import</span> <span class="nn">partials.player.movable_player</span> <span class="k">as</span> <span class="nn">movable_player</span>
+<span class="kn">import</span> <span class="nn">partials.notes.note</span> <span class="k">as</span> <span class="nn">note</span>
+<span class="kn">import</span> <span class="nn">partials.buttons.text_button</span> <span class="k">as</span> <span class="nn">text_button</span>
+
+
+
+<div class="viewcode-block" id="start">
+<a class="viewcode-back" href="../../levels.html#levels.level2.start">[docs]</a>
+<span class="k">def</span> <span class="nf">start</span><span class="p">():</span>
+
+    <span class="c1"># Define constants for the screen width and height</span>
+    <span class="n">SCREEN_WIDTH</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">get_surface</span><span class="p">()</span><span class="o">.</span><span class="n">get_size</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">SCREEN_HEIGHT</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">get_surface</span><span class="p">()</span><span class="o">.</span><span class="n">get_size</span><span class="p">()[</span><span class="mi">1</span><span class="p">]</span>
+
+
+    <span class="c1"># Variable to keep our main loop running</span>
+    <span class="n">running</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="n">paused</span> <span class="o">=</span> <span class="kc">False</span>
+
+
+
+
+
+
+    <span class="c1"># Setup for sounds, defaults are good</span>
+    <span class="n">pygame</span><span class="o">.</span><span class="n">mixer</span><span class="o">.</span><span class="n">init</span><span class="p">()</span>
+
+    <span class="c1"># Initialize pygame</span>
+    <span class="n">pygame</span><span class="o">.</span><span class="n">init</span><span class="p">()</span>
+
+    <span class="c1"># Setup the clock for a decent framerate</span>
+    <span class="n">clock</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">time</span><span class="o">.</span><span class="n">Clock</span><span class="p">()</span>
+
+    
+
+
+
+    <span class="c1"># Create the screen object</span>
+    <span class="c1"># The size is determined by the constant SCREEN_WIDTH and SCREEN_HEIGHT</span>
+    <span class="n">screen</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">set_mode</span><span class="p">((</span><span class="n">SCREEN_WIDTH</span><span class="p">,</span> <span class="n">SCREEN_HEIGHT</span><span class="p">))</span>
+    <span class="n">bg_img</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;assets/images/backgrounds/greenmountains.png&#39;</span><span class="p">)</span>
+    <span class="n">bg_img</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">transform</span><span class="o">.</span><span class="n">scale</span><span class="p">(</span><span class="n">bg_img</span><span class="p">,(</span><span class="n">SCREEN_WIDTH</span><span class="p">,</span><span class="n">SCREEN_HEIGHT</span><span class="p">))</span>
+
+
+
+
+
+
+   
+    <span class="c1"># Create our &#39;player&#39;</span>
+    <span class="n">player</span> <span class="o">=</span> <span class="n">movable_player</span><span class="o">.</span><span class="n">Player</span><span class="p">()</span>
+
+
+
+    <span class="c1"># Create custom events for adding a Note</span>
+    <span class="n">ADDNote</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">USEREVENT</span> <span class="o">+</span> <span class="mi">2</span>
+    <span class="n">pygame</span><span class="o">.</span><span class="n">time</span><span class="o">.</span><span class="n">set_timer</span><span class="p">(</span><span class="n">ADDNote</span><span class="p">,</span> <span class="mi">2500</span><span class="p">)</span>
+    
+
+    <span class="c1"># Create groups to hold Note sprites, and all sprites</span>
+    <span class="c1"># - Notes is used for position updates</span>
+    <span class="c1"># - all_sprites isused for rendering</span>
+    <span class="n">Notes</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">sprite</span><span class="o">.</span><span class="n">Group</span><span class="p">()</span>
+    <span class="n">all_sprites</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">sprite</span><span class="o">.</span><span class="n">Group</span><span class="p">()</span>
+    <span class="n">all_sprites</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">player</span><span class="p">)</span>
+
+
+
+    <span class="c1"># Load and play our background music</span>
+    <span class="n">pygame</span><span class="o">.</span><span class="n">mixer</span><span class="o">.</span><span class="n">music</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;assets/sounds/background-music/smoke-on-water.mp3&quot;</span><span class="p">)</span>
+    <span class="n">pygame</span><span class="o">.</span><span class="n">mixer</span><span class="o">.</span><span class="n">music</span><span class="o">.</span><span class="n">play</span><span class="p">(</span><span class="n">loops</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+    
+    
+    <span class="c1"># These are the buttons for the pause menu</span>
+    <span class="n">resume_button</span> <span class="o">=</span> <span class="n">text_button</span><span class="o">.</span><span class="n">TextButton</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s2">&quot;Resume&quot;</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span> <span class="mi">100</span><span class="p">,</span><span class="n">height</span><span class="o">=</span> <span class="mi">50</span><span class="p">,</span> <span class="n">left_padding</span><span class="o">=</span> <span class="n">SCREEN_WIDTH</span><span class="o">/</span><span class="mi">2</span> <span class="o">-</span> <span class="mi">50</span><span class="p">,</span> <span class="n">top_padding</span><span class="o">=</span> <span class="n">SCREEN_HEIGHT</span><span class="o">/</span><span class="mi">2</span> <span class="o">-</span> <span class="mi">50</span><span class="p">)</span>
+    <span class="n">main_menu_button</span> <span class="o">=</span> <span class="n">text_button</span><span class="o">.</span><span class="n">TextButton</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s2">&quot;Main Menu&quot;</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span> <span class="mi">100</span><span class="p">,</span><span class="n">height</span><span class="o">=</span> <span class="mi">50</span><span class="p">,</span> <span class="n">left_padding</span><span class="o">=</span> <span class="n">SCREEN_WIDTH</span><span class="o">/</span><span class="mi">2</span> <span class="o">-</span> <span class="mi">50</span><span class="p">,</span> <span class="n">top_padding</span><span class="o">=</span> <span class="n">SCREEN_HEIGHT</span><span class="o">/</span><span class="mi">2</span> <span class="o">+</span><span class="mi">20</span><span class="p">)</span>
+    <span class="n">quit_button</span> <span class="o">=</span> <span class="n">text_button</span><span class="o">.</span><span class="n">TextButton</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s2">&quot;Quit&quot;</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span> <span class="mi">100</span><span class="p">,</span><span class="n">height</span><span class="o">=</span> <span class="mi">50</span><span class="p">,</span> <span class="n">left_padding</span><span class="o">=</span> <span class="n">SCREEN_WIDTH</span><span class="o">/</span><span class="mi">2</span> <span class="o">-</span> <span class="mi">50</span><span class="p">,</span> <span class="n">top_padding</span><span class="o">=</span> <span class="n">SCREEN_HEIGHT</span><span class="o">/</span><span class="mi">2</span> <span class="o">+</span> <span class="mi">90</span><span class="p">)</span>
+
+    <span class="c1"># This is the transparent background for the pause menu</span>
+    <span class="n">transparent_surface</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">Surface</span><span class="p">((</span><span class="n">SCREEN_WIDTH</span> <span class="o">-</span> <span class="mi">60</span><span class="p">,</span> <span class="n">SCREEN_HEIGHT</span> <span class="o">-</span> <span class="mi">60</span><span class="p">),</span> <span class="n">pygame</span><span class="o">.</span><span class="n">SRCALPHA</span><span class="p">)</span>
+    <span class="n">transparent_surface</span><span class="o">.</span><span class="n">fill</span><span class="p">((</span><span class="mi">255</span><span class="p">,</span><span class="mi">187</span><span class="p">,</span><span class="mi">68</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
+    <span class="n">pygame</span><span class="o">.</span><span class="n">Surface</span><span class="o">.</span><span class="n">set_alpha</span><span class="p">(</span><span class="n">transparent_surface</span><span class="p">,</span> <span class="mi">140</span><span class="p">)</span>
+
+    <span class="c1"># Our main loop</span>
+    <span class="k">while</span> <span class="n">running</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">paused</span> <span class="o">==</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="c1"># The control loop for when the game is paused</span>
+            <span class="n">pygame</span><span class="o">.</span><span class="n">mixer</span><span class="o">.</span><span class="n">music</span><span class="o">.</span><span class="n">pause</span><span class="p">()</span>
+            <span class="k">for</span> <span class="n">event</span> <span class="ow">in</span> <span class="n">pygame</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">get</span><span class="p">():</span>
+                <span class="c1"># Did the user hit a key?</span>
+                <span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">KEYDOWN</span><span class="p">:</span>
+                    <span class="c1"># Was it the Escape key? If so, stop the loop</span>
+                    <span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="n">key</span> <span class="o">==</span> <span class="n">K_ESCAPE</span> <span class="ow">or</span> <span class="n">event</span><span class="o">.</span><span class="n">key</span> <span class="o">==</span> <span class="n">K_SPACE</span><span class="p">:</span>
+                        <span class="c1"># running = False</span>
+                        <span class="n">pygame</span><span class="o">.</span><span class="n">mixer</span><span class="o">.</span><span class="n">music</span><span class="o">.</span><span class="n">unpause</span><span class="p">()</span>
+                        <span class="n">paused</span> <span class="o">=</span> <span class="kc">False</span>
+
+                <span class="c1"># Did the user click the window close button? If so, exit</span>
+                <span class="k">elif</span> <span class="n">event</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">QUIT</span><span class="p">:</span>
+                    <span class="n">os</span><span class="o">.</span><span class="n">_exit</span><span class="p">(</span><span class="n">status</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+            
+                <span class="c1"># Here we check for hover events </span>
+                <span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="n">type</span><span class="o">==</span><span class="n">pygame</span><span class="o">.</span><span class="n">MOUSEMOTION</span><span class="p">:</span>
+                    <span class="n">resume_button</span><span class="o">.</span><span class="n">on_hover</span><span class="p">()</span>
+                    <span class="n">main_menu_button</span><span class="o">.</span><span class="n">on_hover</span><span class="p">()</span>
+                    <span class="n">quit_button</span><span class="o">.</span><span class="n">on_hover</span><span class="p">()</span>
+                   
+                <span class="c1"># Here we check for clicks events </span>
+                <span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="n">type</span><span class="o">==</span><span class="n">pygame</span><span class="o">.</span><span class="n">MOUSEBUTTONDOWN</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="p">(</span><span class="n">resume_button</span><span class="o">.</span><span class="n">is_pressed</span><span class="p">()</span> <span class="o">==</span> <span class="kc">True</span><span class="p">):</span>
+                        <span class="n">paused</span> <span class="o">=</span> <span class="kc">False</span>
+                        <span class="n">pygame</span><span class="o">.</span><span class="n">mixer</span><span class="o">.</span><span class="n">music</span><span class="o">.</span><span class="n">unpause</span><span class="p">()</span>
+
+                    <span class="k">elif</span><span class="p">(</span><span class="n">main_menu_button</span><span class="o">.</span><span class="n">is_pressed</span><span class="p">()</span> <span class="o">==</span> <span class="kc">True</span><span class="p">):</span>
+                        <span class="n">restart_level</span> <span class="o">=</span> <span class="kc">False</span>
+                        <span class="n">running</span> <span class="o">=</span> <span class="kc">False</span>
+
+                    <span class="k">elif</span><span class="p">(</span><span class="n">quit_button</span><span class="o">.</span><span class="n">is_pressed</span><span class="p">()</span> <span class="o">==</span> <span class="kc">True</span><span class="p">):</span>
+                        <span class="n">os</span><span class="o">.</span><span class="n">_exit</span><span class="p">(</span><span class="n">status</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+            <span class="c1"># This visually updates the buttons on the pause screen</span>
+            <span class="n">screen</span><span class="o">.</span><span class="n">blit</span><span class="p">(</span><span class="n">resume_button</span><span class="o">.</span><span class="n">render</span><span class="p">,</span> <span class="n">resume_button</span><span class="o">.</span><span class="n">button_position</span><span class="p">)</span>
+            <span class="n">screen</span><span class="o">.</span><span class="n">blit</span><span class="p">(</span><span class="n">main_menu_button</span><span class="o">.</span><span class="n">render</span><span class="p">,</span> <span class="n">main_menu_button</span><span class="o">.</span><span class="n">button_position</span><span class="p">)</span>
+            <span class="n">screen</span><span class="o">.</span><span class="n">blit</span><span class="p">(</span><span class="n">quit_button</span><span class="o">.</span><span class="n">render</span><span class="p">,</span> <span class="n">quit_button</span><span class="o">.</span><span class="n">button_position</span><span class="p">)</span>
+
+            <span class="c1"># This is the transparent background for the pause screen</span>
+            <span class="n">screen</span><span class="o">.</span><span class="n">blit</span><span class="p">(</span><span class="n">transparent_surface</span><span class="p">,</span> <span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="mi">30</span><span class="p">))</span>
+
+            <span class="n">pygame</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
+            
+		
+    
+        <span class="k">else</span><span class="p">:</span>
+            
+            <span class="c1"># Look at every event in the queue</span>
+            <span class="k">for</span> <span class="n">event</span> <span class="ow">in</span> <span class="n">pygame</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">get</span><span class="p">():</span>
+                <span class="c1"># Did the user hit a key?</span>
+                <span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">KEYDOWN</span><span class="p">:</span>
+                    <span class="c1"># Was it the Escape key? If so, pause the loop</span>
+                    <span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="n">key</span> <span class="o">==</span> <span class="n">K_ESCAPE</span> <span class="ow">or</span> <span class="n">event</span><span class="o">.</span><span class="n">key</span> <span class="o">==</span> <span class="n">K_SPACE</span><span class="p">:</span>
+                        <span class="n">paused</span> <span class="o">=</span> <span class="kc">True</span>
+
+                <span class="c1"># Did the user click the window close button? If so, exit</span>
+                <span class="k">elif</span> <span class="n">event</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">QUIT</span><span class="p">:</span>
+                    <span class="n">os</span><span class="o">.</span><span class="n">_exit</span><span class="p">(</span><span class="n">status</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+
+                <span class="c1"># Should we add a new Note?</span>
+                <span class="k">elif</span> <span class="n">event</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">ADDNote</span><span class="p">:</span>
+                    <span class="c1"># Create the new Note, and add it to our sprite groups</span>
+                    <span class="n">new_Note</span> <span class="o">=</span> <span class="n">note</span><span class="o">.</span><span class="n">Note</span><span class="p">(</span><span class="n">asset_path</span><span class="o">=</span><span class="s2">&quot;assets/images/notes/C.png&quot;</span><span class="p">,</span><span class="n">Screen_Width</span><span class="o">=</span><span class="n">SCREEN_WIDTH</span><span class="p">,</span> <span class="n">Screen_Height</span><span class="o">=</span><span class="n">SCREEN_HEIGHT</span><span class="p">)</span>
+                    <span class="n">Notes</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">new_Note</span><span class="p">)</span>
+                    <span class="n">all_sprites</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">new_Note</span><span class="p">)</span>
+
+
+
+            <span class="c1"># Get the set of keys pressed and check for user input</span>
+            <span class="n">pressed_keys</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">key</span><span class="o">.</span><span class="n">get_pressed</span><span class="p">()</span>
+            <span class="n">player</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">pressed_keys</span><span class="p">)</span>
+
+
+
+
+            <span class="c1"># Update the position of our Notes</span>
+            <span class="n">Notes</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
+
+
+
+
+            <span class="c1"># Fill the screen with the background image</span>
+            <span class="n">screen</span><span class="o">.</span><span class="n">blit</span><span class="p">(</span><span class="n">bg_img</span><span class="p">,(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">))</span>
+            <span class="c1"># Draw all our sprites</span>
+            <span class="k">for</span> <span class="n">entity</span> <span class="ow">in</span> <span class="n">all_sprites</span><span class="p">:</span>
+                <span class="n">screen</span><span class="o">.</span><span class="n">blit</span><span class="p">(</span><span class="n">entity</span><span class="o">.</span><span class="n">surf</span><span class="p">,</span> <span class="n">entity</span><span class="o">.</span><span class="n">rect</span><span class="p">)</span>
+
+
+
+
+            <span class="c1"># Flip everything to the display</span>
+            <span class="n">pygame</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">flip</span><span class="p">()</span>
+            <span class="c1"># Ensure we maintain a 30 frames per second rate</span>
+            <span class="n">clock</span><span class="o">.</span><span class="n">tick</span><span class="p">(</span><span class="mi">30</span><span class="p">)</span>
+
+
+
+
+    <span class="c1"># At this point, we&#39;re done, so we can stop and quit the mixer</span>
+    <span class="n">pygame</span><span class="o">.</span><span class="n">mixer</span><span class="o">.</span><span class="n">music</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
+    <span class="n">pygame</span><span class="o">.</span><span class="n">mixer</span><span class="o">.</span><span class="n">quit</span><span class="p">()</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Ben Spence, Jonas Land, AJ Baudino, Hexin Hu, Tripper Wright.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
