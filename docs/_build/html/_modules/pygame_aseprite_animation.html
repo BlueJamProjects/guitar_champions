@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>pygame_aseprite_animation &mdash; Guitar-Champions 1.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=8d563738"></script>
+        <script src="../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Guitar-Champions
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../modules.html">guitar_champions</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Guitar-Champions</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Module code</a></li>
+      <li class="breadcrumb-item active">pygame_aseprite_animation</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for pygame_aseprite_animation</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">py_aseprite</span> <span class="kn">import</span> <span class="n">AsepriteFile</span>
+<span class="kn">from</span> <span class="nn">py_aseprite</span> <span class="kn">import</span> <span class="n">CelChunk</span>
+
+<span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">Enum</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">import</span> <span class="nn">pygame</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<div class="viewcode-block" id="Animation">
+<a class="viewcode-back" href="../pygame_aseprite_animation.html#pygame_aseprite_animation.Animation">[docs]</a>
+<span class="k">class</span> <span class="nc">Animation</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;A class that contains all of the animations and frame duration information</span>
+<span class="sd">    TODO: Maybe add name property to assign to animations</span>
+
+<span class="sd">    Artibutes:</span>
+<span class="sd">        :aseprite_file: the loaded in aseprite file. Shouldn&#39;t have to use this file\n</span>
+<span class="sd">        :animation_frames: a list of pygame.Surface() objects, each containing a single frames\n</span>
+<span class="sd">        :frame_duration: a list of the duration each frame should be displayed. Index matches that of :animation_frame:&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_filedir</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Instanciate a animation object</span>
+<span class="sd">        </span>
+<span class="sd">        :_filedir: Path to your .ase or .aseprite files\n</span>
+<span class="sd">        :return: Animation object containt your frames as a list of pygame.surface() objects &quot;&quot;&quot;</span>
+
+        <span class="c1"># load aseprite file</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">aseprite_file</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parseFile</span><span class="p">(</span><span class="n">_filedir</span><span class="p">)</span>
+        <span class="c1"># create precompiled list of surfaces for each frame</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">animation_frames</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">draw_all_animation_frames</span><span class="p">()</span>
+        <span class="c1"># Create list of frame duration for each frame</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">frame_duration</span> <span class="o">=</span> <span class="p">[</span><span class="n">frame</span><span class="o">.</span><span class="n">frame_duration</span> <span class="k">for</span> <span class="n">frame</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">aseprite_file</span><span class="o">.</span><span class="n">frames</span><span class="p">]</span>
+
+<div class="viewcode-block" id="Animation.parseFile">
+<a class="viewcode-back" href="../pygame_aseprite_animation.html#pygame_aseprite_animation.Animation.parseFile">[docs]</a>
+    <span class="k">def</span> <span class="nf">parseFile</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filedir</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Uses py_aseprite to load the file</span>
+<span class="sd">        </span>
+<span class="sd">        :filedir: Path to your .ase or .aseprite files\n </span>
+<span class="sd">        :return: Animation object containt your frames as a list of pygame.surface() objects &quot;&quot;&quot;</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filedir</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">AsepriteFile</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">())</span></div>
+
+
+<div class="viewcode-block" id="Animation.draw_all_animation_frames">
+<a class="viewcode-back" href="../pygame_aseprite_animation.html#pygame_aseprite_animation.Animation.draw_all_animation_frames">[docs]</a>
+    <span class="k">def</span> <span class="nf">draw_all_animation_frames</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Goes through .ase or .aseprite file and draws all of your frames</span>
+<span class="sd">        </span>
+<span class="sd">        :return: animation_frames which is a list of every individual frame&quot;&quot;&quot;</span>
+        <span class="n">animation_frames</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">frame_number</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">aseprite_file</span><span class="o">.</span><span class="n">header</span><span class="o">.</span><span class="n">num_frames</span><span class="p">):</span>
+                <span class="n">frame</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">draw_single_frame</span><span class="p">(</span><span class="n">frame_number</span><span class="p">)</span>
+                <span class="n">animation_frames</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">frame</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">animation_frames</span></div>
+
+
+<div class="viewcode-block" id="Animation.draw_single_frame">
+<a class="viewcode-back" href="../pygame_aseprite_animation.html#pygame_aseprite_animation.Animation.draw_single_frame">[docs]</a>
+    <span class="k">def</span> <span class="nf">draw_single_frame</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">num_frame</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Draws single frame onto an empty pygame.Surface</span>
+<span class="sd">        </span>
+<span class="sd">        :num_frame: index of the frame to be drawn\n</span>
+<span class="sd">        :return: frame which is a pygame.Surface() of the same size as the aseprite file onto which the pixels are drawn &quot;&quot;&quot;</span>
+        <span class="n">cel_slice</span> <span class="o">=</span> <span class="p">[</span><span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">aseprite_file</span><span class="o">.</span><span class="n">layers</span><span class="p">)</span>
+
+        <span class="c1">#read slices</span>
+        <span class="k">for</span> <span class="n">chunk</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">aseprite_file</span><span class="o">.</span><span class="n">frames</span><span class="p">[</span><span class="n">num_frame</span><span class="p">]</span><span class="o">.</span><span class="n">chunks</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">chunk</span><span class="p">,</span> <span class="n">CelChunk</span><span class="p">):</span>
+                <span class="n">cel_slice</span><span class="p">[</span><span class="n">chunk</span><span class="o">.</span><span class="n">layer_index</span><span class="p">]</span> <span class="o">=</span> <span class="n">chunk</span>
+
+        <span class="c1">#initialize frame surface</span>
+        <span class="n">frame</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">Surface</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">aseprite_file</span><span class="o">.</span><span class="n">header</span><span class="o">.</span><span class="n">width</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">aseprite_file</span><span class="o">.</span><span class="n">header</span><span class="o">.</span><span class="n">height</span><span class="p">),</span> <span class="n">pygame</span><span class="o">.</span><span class="n">SRCALPHA</span><span class="p">)</span>
+        <span class="n">frame</span><span class="o">.</span><span class="n">fill</span><span class="p">((</span><span class="mi">255</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">))</span>
+        <span class="c1"># draw layers on top of each other</span>
+        <span class="k">for</span> <span class="n">layer</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">aseprite_file</span><span class="o">.</span><span class="n">layer_tree</span><span class="p">:</span>
+            <span class="n">current_cel</span> <span class="o">=</span> <span class="n">cel_slice</span><span class="p">[</span><span class="n">layer</span><span class="o">.</span><span class="n">layer_index</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">current_cel</span><span class="p">:</span>
+                <span class="n">frame</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">draw_raw_image_data</span><span class="p">(</span><span class="n">current_cel</span><span class="p">,</span> <span class="n">frame</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">frame</span></div>
+
+
+<div class="viewcode-block" id="Animation.draw_raw_image_data">
+<a class="viewcode-back" href="../pygame_aseprite_animation.html#pygame_aseprite_animation.Animation.draw_raw_image_data">[docs]</a>
+    <span class="k">def</span> <span class="nf">draw_raw_image_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cel</span> <span class="p">:</span><span class="n">CelChunk</span><span class="p">,</span> <span class="n">frame</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Actually reads the pixel data and draw it onto the surface() layer by layer</span>
+<span class="sd">        </span>
+<span class="sd">        :cel: CelChunk object from the raw aseprite file, handles by py_aseprite\n</span>
+<span class="sd">        :frame: the pygame.Surface() onto which the data will be drawn\n</span>
+<span class="sd">        :return: the pygame.Surface(), but with the layer drawn onto it&quot;&quot;&quot;</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">cel</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">])</span>
+        <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">cel</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;height&#39;</span><span class="p">]):</span>
+            <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">cel</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;width&#39;</span><span class="p">]):</span>
+                <span class="n">base_offset</span> <span class="o">=</span> <span class="n">y</span> <span class="o">*</span> <span class="n">cel</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;width&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">x</span>
+                <span class="n">CHANNELRED</span>      <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">base_offset</span> <span class="o">*</span> <span class="mi">4</span><span class="p">]</span>
+                <span class="n">CHANNELGREEN</span>    <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">base_offset</span> <span class="o">*</span> <span class="mi">4</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span>
+                <span class="n">CHANNELBLUE</span>     <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">base_offset</span> <span class="o">*</span> <span class="mi">4</span> <span class="o">+</span> <span class="mi">2</span><span class="p">]</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">CHANNELRED</span> <span class="o">+</span> <span class="n">CHANNELGREEN</span> <span class="o">+</span> <span class="n">CHANNELBLUE</span> <span class="o">==</span> <span class="mi">0</span><span class="p">):</span>
+                    <span class="n">CHANNELALPHA</span> <span class="o">=</span> <span class="mi">0</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">CHANNELALPHA</span>    <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">base_offset</span> <span class="o">*</span> <span class="mi">4</span> <span class="o">+</span> <span class="mi">3</span><span class="p">]</span>
+                    <span class="n">frame</span><span class="o">.</span><span class="n">set_at</span><span class="p">((</span><span class="n">x</span> <span class="o">+</span> <span class="n">cel</span><span class="o">.</span><span class="n">x_pos</span><span class="p">,</span> <span class="n">y</span> <span class="o">+</span> <span class="n">cel</span><span class="o">.</span><span class="n">y_pos</span><span class="p">),</span> <span class="n">pygame</span><span class="o">.</span><span class="n">Color</span><span class="p">(</span><span class="n">CHANNELRED</span><span class="p">,</span> <span class="n">CHANNELGREEN</span><span class="p">,</span> <span class="n">CHANNELBLUE</span><span class="p">,</span> <span class="n">CHANNELALPHA</span><span class="p">))</span>
+                
+                
+        <span class="k">return</span> <span class="n">frame</span></div>
+</div>
+
+
+<div class="viewcode-block" id="AnimationManager">
+<a class="viewcode-back" href="../pygame_aseprite_animation.html#pygame_aseprite_animation.AnimationManager">[docs]</a>
+<span class="k">class</span> <span class="nc">AnimationManager</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;A class that actually handles the animation timing and drawing to the screen. </span>
+<span class="sd">    It contains all the animations of an object and can switch between them.</span>
+<span class="sd">    Automatically start on the first Animation in the list</span>
+
+<span class="sd">    Methods:</span>
+<span class="sd">        :start_animation: Call whenever you want to cancel the current animation and start a new one\n</span>
+<span class="sd">        :update_self: Called every frame, checks if animation counter has expired and updates if necessary. Also blits the frame to the screen\n</span>
+<span class="sd">    </span>
+<span class="sd">    Atributes:</span>
+<span class="sd">        :animation_list: a list of all the animations for this instance\n</span>
+<span class="sd">        :draw_surface: the surface onto which the frame needs to be drawn&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_animation_list</span> <span class="p">:</span><span class="n">Animation</span><span class="p">,</span> <span class="n">_draw_surface</span> <span class="p">:</span><span class="n">pygame</span><span class="o">.</span><span class="n">Surface</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Init</span>
+<span class="sd">        </span>
+<span class="sd">        :_animation_list: a list of Animation Objects \n</span>
+<span class="sd">        :_draw_frame: the pygame.Surface() onto which you&#39;d like to blit the frames&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">animation_list</span> <span class="o">=</span> <span class="n">_animation_list</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">draw_surface</span> <span class="o">=</span> <span class="n">_draw_surface</span>
+        <span class="c1"># Initialize animation to the 1st frame in the list</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">start_animation</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">animation_list</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+<div class="viewcode-block" id="AnimationManager.start_animation">
+<a class="viewcode-back" href="../pygame_aseprite_animation.html#pygame_aseprite_animation.AnimationManager.start_animation">[docs]</a>
+    <span class="k">def</span> <span class="nf">start_animation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_animation</span><span class="p">:</span><span class="n">Animation</span><span class="p">,</span> <span class="n">_next_animation</span><span class="p">:</span><span class="n">Animation</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Start a new animation to</span>
+<span class="sd">        </span>
+<span class="sd">        :_animation: the animation you&#39;d like to display</span>
+<span class="sd">        :_next_animation: what animation to play after this one is finished. Loops if left empty.&quot;&quot;&quot;</span>
+        <span class="c1"># Set the animation you&#39;d like to display</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">current_animation</span> <span class="o">=</span> <span class="n">_animation</span>
+        <span class="c1"># Animation to play after finishing. Animation loops if None.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">next_animation</span> <span class="o">=</span> <span class="n">_next_animation</span>
+        <span class="c1"># Set timing</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tstart</span> <span class="o">=</span>  <span class="nb">round</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tend</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tstart</span> <span class="o">+</span> <span class="n">_animation</span><span class="o">.</span><span class="n">frame_duration</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">framenum</span> <span class="o">=</span> <span class="mi">0</span></div>
+
+
+<div class="viewcode-block" id="AnimationManager.update_self">
+<a class="viewcode-back" href="../pygame_aseprite_animation.html#pygame_aseprite_animation.AnimationManager.update_self">[docs]</a>
+    <span class="k">def</span> <span class="nf">update_self</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">frame_x</span><span class="p">,</span> <span class="n">frame_y</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Called every frame. Checks if frame duration is finished and blits frame to your Surface</span>
+<span class="sd">        </span>
+<span class="sd">        :frame_x/y: Pixel location where the frame need to be blit&quot;&quot;&quot;</span>
+        <span class="c1"># Check if frame is finished. if so, set next frame</span>
+        <span class="k">if</span>  <span class="nb">round</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">)</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">tend</span><span class="p">:</span>
+            <span class="c1"># Check if animation is finished and set next animation if needed</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">framenum</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">current_animation</span><span class="o">.</span><span class="n">frame_duration</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">next_animation</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">current_animation</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">next_animation</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">framenum</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">framenum</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="c1"># reset timings</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">tstart</span> <span class="o">=</span>  <span class="nb">round</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">tend</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tstart</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_animation</span><span class="o">.</span><span class="n">frame_duration</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">framenum</span><span class="p">]</span>
+        
+        <span class="c1"># Blit frame</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">draw_surface</span><span class="o">.</span><span class="n">blit</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">current_animation</span><span class="o">.</span><span class="n">animation_frames</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">framenum</span><span class="p">],</span> <span class="p">(</span><span class="n">frame_x</span><span class="p">,</span> <span class="n">frame_y</span><span class="p">))</span></div>
+</div>
+
+        
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Ben Spence, Jonas Land, AJ Baudino, Hexin Hu, Tripper Wright.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

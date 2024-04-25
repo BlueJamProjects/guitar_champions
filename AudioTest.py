@@ -28,13 +28,6 @@ def butter_bandpass_filter(data, lowcut, highcut, sr, order=5):
    return y
 
 
-
-
-def test():
-   print("Hello")
-
-
-
 def midi_number_to_pitch(midi_number):
     n = note.Note()
     print(type(n))
