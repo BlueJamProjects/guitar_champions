@@ -1,5 +1,5 @@
 """
-Helper for settings menu.
+This file contains the code that defines the settings menu
 """
 
 # Import the pygame module
