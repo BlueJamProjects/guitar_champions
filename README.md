@@ -2,7 +2,7 @@
 482 Capstone project
 
 ## Dataset Installation
-Use the package manager [pip](https://pip.pypa.io/en/stable/) to install foobar.
+Use the package manager [pip](https://pip.pypa.io/en/stable/) to install the necessary modules.
 
 ```bash
 pip3 install librosa, music21, matplotlib, crepe, pygame, pygame_menu, pygame_aseprite_animation, pyaudio, keras, tensorflow

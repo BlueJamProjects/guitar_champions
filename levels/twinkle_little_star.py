@@ -116,6 +116,9 @@ def start():
     # it is used later for keeping the notes sending at a regular rate
     frames_since_note = 0
 
+    # Keeps track of the number of frames since the metronome was last played
+    frames_since_metronome = 0
+
     if user_settings.enable_metronome == True:
         # Load and play our background music
         pygame.mixer.music.load("assets/sounds/background-music/metro-34-60bpm.mp3")
@@ -546,11 +549,13 @@ def start():
                                                 curr_note.set_missed_color()
                                     
 
+                
 
                 # This adds notes every second
                 # This uses the current fps so that you are adding notes accurately
                 if frames_since_note >= ((clock.get_fps() * time_to_next_note )// 1) and (clock.get_fps() > 0.1):
                         frames_since_note = 0
+                        
 
                         # Create the new Note, and add it to our sprite groups
                         if note_index < (len(song_notes)):
@@ -674,7 +679,7 @@ def audio_callback(in_data, frame_count, time_info, status):
 
 def create_graph(index_array, accuracy_array, totnote):
     # This creates and saves the graph file using a subprocess so that it doesn't disrupt the window size
-    subprocess.run(["python", "-c", "import matplotlib.pyplot as plt; plt.plot( " + str(index_array) + ","+ str(accuracy_array)+ ", color='orange', linewidth=5); plt.ylim(0,100); plt.xlim(1," + str(totnote) + "); plt.title('Your overall Accuracy!'); font = {'weight' : 'bold','size'   : 22}; plt.yticks(fontsize=20); plt.xticks(fontsize=20); plt.rc('font', **font); plt.savefig('assets/images/tempgraphs/graphy.png'); plt.clf()"])
+    subprocess.run(["python3", "-c", "import matplotlib.pyplot as plt; plt.plot( " + str(index_array) + ","+ str(accuracy_array)+ ", color='orange', linewidth=5); plt.ylim(0,100); plt.xlim(1," + str(totnote) + "); plt.title('Your overall Accuracy!'); font = {'weight' : 'bold','size'   : 22}; plt.yticks(fontsize=20); plt.xticks(fontsize=20); plt.rc('font', **font); plt.savefig('assets/images/tempgraphs/graphy.png'); plt.clf()"])
    
 
     # This is the python code to create the graph

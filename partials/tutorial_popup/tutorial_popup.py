@@ -19,6 +19,7 @@ class TutorialPopup():
                       highlight_region_color=(255, 255, 255),
                       highlight_region_position = pygame.Rect(20, 20, 100, 100),
                       trigger_effect_number=0,
+                      is_final_popup=False,
 
                       ):
             super(TutorialPopup, self).__init__()
@@ -27,9 +28,13 @@ class TutorialPopup():
             # IMPORTANT
             # You should not change width and height to get the popup to display properly with the text
 
+
+            # this is True if this is a final popup
+            self.is_final_popup = is_final_popup
             
             # This is a number can be checked in the tutorial to see if an effect should be triggered when this button is moved away from
             self.trigger_effect_number = trigger_effect_number
+
         
 
             # creates the outline box (The box that surrounds the text) render elements
@@ -148,11 +153,19 @@ class TutorialPopup():
             self.button_current_color = button_color
             self.button_color = button_color
             self.button_hover_color = button_hover_color
+
             self.button_text = " Next"
+
 
             # Creates the button render elements
             self.button_font = pygame.font.Font("assets/font/Signatra.ttf",40)
             self.button_position = pygame.Rect(left_padding+ width/2 - 42, top_padding+height-40, 62, 44)
+
+            if self.is_final_popup == True:
+                self.button_text = "Complete"
+                self.button_position = pygame.Rect(left_padding+ width/2 - 62, top_padding+height-40, 105, 44)
+
+
             self.button_render = self.button_font.render(self.button_text, True, self.button_text_color, (209,129,0))
 
 

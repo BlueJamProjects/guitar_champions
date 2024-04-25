@@ -86,9 +86,7 @@ def start():
     settings_image = pygame.image.load('assets/images/backgrounds/settings_example.png')
     settings_image = pygame.transform.scale(settings_image,(SCREEN_WIDTH,SCREEN_HEIGHT))
 
-    complete_tutorial_button = text_button.TextButton(text=" Complete ", width= 96,height= 44, left_padding= SCREEN_WIDTH/2 - 50, top_padding= SCREEN_HEIGHT/2 - 80)
-    
-
+ 
 
     curr_tutorial_info = tutorial_info.TutorialInfo(
          popup_list = [
@@ -124,7 +122,7 @@ def start():
             
             
             # 14
-            tutorial_popup.TutorialPopup("You are now ready to move onto the how to hold a guitar tutorial", top_padding= 50, left_padding= 20, trigger_effect_number=2, show_hightlight_region=True, highlight_region_position= pygame.Rect(SCREEN_WIDTH/2 - 50 + 5, SCREEN_HEIGHT/2 - 80, 100, 50)),
+            tutorial_popup.TutorialPopup("You are now ready to move onto the how to hold a guitar tutorial", top_padding= 50, left_padding= 20, trigger_effect_number=2,is_final_popup=True,),
 
 
               ],
@@ -303,8 +301,7 @@ def start():
                 # 14
                 [
                     sprite_item.SpriteItem(sprite = bg_img_2,is_background=True,  location = (0,0)),
-                    sprite_item.SpriteItem(sprite = complete_tutorial_button.render, location=complete_tutorial_button.button_position),
-                   
+                    
                 ],
 
             
@@ -417,7 +414,12 @@ def start():
                                         print("Trigger effect 1")
 
                                     # END/////////
-                                    curr_tutorial_info.next()
+                                    if (current_popup.is_final_popup == True):
+                                        # True if this is the final popup of the tutorial
+                                        running = False
+                                    else:
+                                    # go to the next tutorial
+                                        curr_tutorial_info.next()
                                     
 
                                 elif event.key == K_LEFT:
@@ -438,7 +440,7 @@ def start():
                                 # TODO Add the hover effects for this tutorials example buttons
                                 # START/////////
                                 example_button2.on_hover()
-                                complete_tutorial_button.on_hover()
+                                
                                 # END/////////
                                 
                         
@@ -449,7 +451,13 @@ def start():
                                 # text_buttons should be pressed like this
                                 if (current_popup.button_is_pressed() == True):
                                     print("Current popup pressed")
-                                    curr_tutorial_info.next()
+
+                                    if (current_popup.is_final_popup == True):
+                                        # True if this is the final popup of the tutorial
+                                        running = False
+                                    else:
+                                    # go to the next tutorial
+                                        curr_tutorial_info.next()
 
                                     # TODO Add custom next code here
                                     # START/////////
@@ -468,9 +476,7 @@ def start():
                                     if (example_button2.is_pressed() == True):
                                         curr_tutorial_info.next()
 
-                                if (current_popup.trigger_effect_number == 2):
-                                    if (complete_tutorial_button.is_pressed() == True):
-                                        running = False
+                                
                                 # END/////////
 
 
