@@ -2,9 +2,33 @@ import partials.tutorial_popup.tutorial_popup as tutorial_popup
 
 
 class TutorialInfo(object):
+
     """
-    A class to store the prites for the screens for each tutorial
+    Represents information about a tutorial, including popups and sprites.
+
+    Args:
+        popup_list (list, optional): A list of TutorialPopup objects representing popups. Default is an empty list.
+        sprites_list (list, optional): A list of lists of SpriteItem objects representing sprite screens. Default is an empty list.
+
+    Attributes:
+        current_popup (TutorialPopup): The current popup being displayed.
+        current_sprites (list): The list of sprites currently displayed on the screen.
+        popup_index (int): The index of the current popup in the `popup_list`.
+        sprites_index (int): The index of the current sprites screen in the `sprites_list`.
+        popup_list (list): A list of TutorialPopup objects.
+        sprites_list (list): A list of lists of SpriteItem objects, each representing a screen of sprites.
+
+    Note:
+        `popup_list` and `sprites_list` should have the same number of elements or issues may arise.
+
+    Methods:
+        next(): Sets the current_popup and current_sprites to the next one in the list.
+            Prints a message if reaching the end of popups or sprites list.
+        
+        previous(): Sets the current_popup and current_sprites to the previous one in the list.
+            Prints a message if reaching the beginning of popups or sprites list.
     """
+   
     def __init__(self, popup_list = [], sprites_list = []):
 
         # IMPORTANT
@@ -35,7 +59,15 @@ class TutorialInfo(object):
 
     def next(self):
         """
-        Sets the current_popup and current_sprites to the next one in the list
+        Moves to the next popup and sprite screen in the respective lists.
+
+        Updates the current_popup and current_sprites attributes to the next elements in their respective lists.
+
+        If there are more popups to navigate, updates the popup index and sets the number of the current popup.
+
+        If there are more sprite screens to navigate, updates the sprites index.
+
+        If there are no more popups or sprite screens to navigate, prints a message indicating the end.
         """
 
         # If there are more popups to go you update the popup index and current popup then set the current popup's number
@@ -59,7 +91,13 @@ class TutorialInfo(object):
 
     def previous(self):
         """
-        Sets the current_popup and current_sprites to the previous one in the list
+        Sets the current_popup and current_sprites to the previous ones in their respective lists.
+
+        If there are previous popups or sprites screens available, updates the indices and sets the current ones accordingly.
+        If already at the beginning of either list, prints a message indicating so.
+
+        Returns:
+            None
         """
         # If there are more popups before to go back to you update the popup index and current popup then set the current popup's number    
         if self.popup_index > 0: 
