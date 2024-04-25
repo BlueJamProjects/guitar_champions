@@ -1,3 +1,10 @@
+""" Summary 
+This is the doc string of the Audio Tesing gile
+
+"""
+
+
+
 import pyaudio
 import librosa
 from scipy.signal import find_peaks
@@ -17,22 +24,21 @@ import tensorflow as tf
 
 # Define bandpass filter
 def butter_bandpass_filter(data, lowcut, highcut, sr, order=5):
+   """This is the function to apply a bandpass filter to the audio data.
+   
+    Args:
+        param1 (numpy.array): Convert the real sound to a numpy.array
+        param2 (Int): A value to adjust the filter
+        param3 (Int): A integer value tp adjust the hig-frequency filter
+
    """
-   Apply a bandpass filter to the audio data.
-   """
+   
    nyquist = 0.5 * sr
    low = lowcut / nyquist
    high = highcut / nyquist
    b, a = scipy.signal.butter(order, [low, high], btype='band')
    y = scipy.signal.lfilter(b, a, data)
    return y
-
-
-
-
-def test():
-   print("Hello")
-
 
 
 def midi_number_to_pitch(midi_number):
