@@ -7,6 +7,9 @@ from pygame.locals import (
     KEYDOWN,
     QUIT,
 )
+"""
+This file contains the Player class
+"""
 
 
 

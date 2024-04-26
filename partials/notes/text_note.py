@@ -15,6 +15,10 @@ from pygame.locals import (
     K_9,
 )
 
+
+"""
+This file contains the Note class
+"""
 class Note(pygame.sprite.Sprite):
     """
     A class representing a musical note in the game.

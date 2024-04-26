@@ -1,6 +1,10 @@
 # Import the pygame module
 import pygame
 
+"""
+This file contains the TitleCard class
+"""
+
 
 
 class Titlecard():

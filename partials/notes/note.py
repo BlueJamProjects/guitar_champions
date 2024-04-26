@@ -1,3 +1,7 @@
+"""
+This file contains the laternate Note class
+"""
+
 # Import the pygame module
 import pygame
 

@@ -9,6 +9,10 @@ from pygame.locals import (
 )
 
 
+"""
+This file contains the movable Player class
+"""
+
 
 class Player(pygame.sprite.Sprite):
         """
