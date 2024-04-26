@@ -46,6 +46,7 @@ from pygame.locals import (
     K_LEFT,
     KEYDOWN,
     QUIT,
+    K_SPACE,
 )
 
 # For keeping track of the last 3 played midi numbers
@@ -111,7 +112,7 @@ def start():
     
     # TODO make the custom sprites for the tutorial
     # START/////////
-    bg_img = pygame.image.load('assets/images/backgrounds/glacier_night.jpeg')
+    bg_img = pygame.image.load('assets/images/backgrounds/forest.jpeg')
     bg_img = pygame.transform.scale(bg_img,(SCREEN_WIDTH,SCREEN_HEIGHT))
 
     #  the background image of the tabs
@@ -208,8 +209,6 @@ def start():
        
         ]
 
-    complete_tutorial_button = text_button.TextButton(text=" Complete ", width= 96,height= 44, left_padding= SCREEN_WIDTH/2 - 50, top_padding= SCREEN_HEIGHT/2 - 80)
-    
 
     curr_tutorial_info = tutorial_info.TutorialInfo(
          popup_list = [
@@ -233,20 +232,18 @@ def start():
               tutorial_popup.TutorialPopup("While for this one, the number is 1 which means you hold down the string at the first fret and then pluck the string", left_padding=10, top_padding=250, show_hightlight_region=True, highlight_region_position=example_note7.rect),
             
             #   10
-              tutorial_popup.TutorialPopup("Now, let's practice playing this note. You'll press down your finger on the top string at the first fret and pluck the string. When it changes to green you've played it correctly.", left_padding=10, top_padding=20, show_hightlight_region=True, highlight_region_position=example_note8.rect, highlight_region_color=(0,0,0), trigger_effect_number=2,),
+              tutorial_popup.TutorialPopup("PLAY THIS NOTE! You'll press down your finger on the top string at the first fret and pluck the string. When it changes to green you've played it correctly.", left_padding=10, top_padding=20, show_hightlight_region=True, highlight_region_position=example_note8.rect, highlight_region_color=(0,0,0), trigger_effect_number=2,),
              #   11
               tutorial_popup.TutorialPopup("On the next screen you can practice playing notes as they come across the screen. Don't worry you can practice as long as you need. :)", left_padding=10, top_padding=20,),
             #   12
-              tutorial_popup.TutorialPopup("Practice as long as you need", left_padding=10, top_padding=20, trigger_effect_number=3,),
+              tutorial_popup.TutorialPopup("THIS IS PRACTICE! Don't worry about not hitting notes :)", left_padding=10, top_padding=20, trigger_effect_number=3,),
             #   13
               tutorial_popup.TutorialPopup("Now, on the next screen you can practice playing different notes as they come across the screen. Don't worry you can practice as long as you need. :)", left_padding=10, top_padding=20, trigger_effect_number=5),
             #   14
-              tutorial_popup.TutorialPopup("Practice as long as you need", left_padding=300, top_padding=400, trigger_effect_number=4,),
-            #   15
-              tutorial_popup.TutorialPopup("Now you're ready to try out a song!", left_padding=10, top_padding=20,trigger_effect_number=5),
-            
+              tutorial_popup.TutorialPopup("THIS IS PRACTICE! Don't worry about not hitting notes :)", left_padding=300, top_padding=400, trigger_effect_number=4,),
+           
             # END
-            tutorial_popup.TutorialPopup("Press complete to finish the tutorial", top_padding= 220, left_padding= 20, trigger_effect_number=1,),
+            tutorial_popup.TutorialPopup("Now you're ready to try out a song!", top_padding= 220, left_padding= 20, trigger_effect_number=1, is_final_popup=True,),
 
 
               ],
@@ -370,20 +367,12 @@ def start():
                    
                    ],
 
-                   #     15
-                [
-                   sprite_item.SpriteItem(sprite = bg_img, location = (0,0), is_background=True),
-                   sprite_item.SpriteItem(sprite = tabs_image, location = (0,0)),
-                   sprite_item.SpriteItem(sprite = play_line_image, location = (0,0)),
-                  
-                   
-                   ],
+                
 
 
                    # END
               [
                    sprite_item.SpriteItem(sprite = bg_img, location = (0,0), is_background=True),
-                   sprite_item.SpriteItem(sprite= complete_tutorial_button.render, location=complete_tutorial_button.button_position)
                    ],
 
          ],
@@ -414,13 +403,13 @@ def start():
                 if event.type == KEYDOWN:
 
                     # Was it the Escape key? If so, stop the loop
-                    if event.key == K_ESCAPE:
+                    if event.key == K_ESCAPE or event.key == K_SPACE:
                         paused = False
                         
 
                     # Did the user click the window close button? If so, exit
                     elif event.type == QUIT:
-                        exit()
+                        os._exit(status=0)
 
 
                  # Here we check for hover events 
@@ -436,13 +425,13 @@ def start():
                         paused = False
                         pygame.mixer.music.unpause()
                     elif(restart_button.is_pressed() == True):
+                        
                         restart_level = True
                         running = False
                     elif(main_menu_button.is_pressed() == True):
-                        restart_level = False
                         running = False
                     elif(quit_button.is_pressed() == True):
-                        exit()
+                        os._exit(status=0)
 
 
 
@@ -486,7 +475,7 @@ def start():
                                     
 
                                     if (example_note8.check_correct_note(main_midi_number_arr)):
-                                        print("Correct note was played")
+                                        # print("Correct note was played")
                                         played_example_note8 = True
 
 
@@ -517,8 +506,8 @@ def start():
                             new_Note = note.Note(text=song_notes[note_index].text, midi=song_notes[note_index].midi, time_to_next_note=song_notes[note_index].time_to_next_note, tab_line=song_notes[note_index].tab_line, Screen_Width=song_notes[note_index].Screen_Width, Screen_Height=song_notes[note_index].Screen_Height, id=song_notes[note_index].id),
         
                             time_to_next_note = song_notes[note_index].get_time_to_next_note()
-                            print("Current note index")
-                            print(note_index)
+                            # print("Current note index")
+                            # print(note_index)
                             if (note_index < len(song_notes)-1):
                                 note_index = note_index + 1
                             else:
@@ -526,7 +515,7 @@ def start():
 
 
                         Notes.add(new_Note)
-                        print("Added a new note")
+                        # print("Added a new note")
                         
                        
                 frames_since_note += 1
@@ -543,7 +532,7 @@ def start():
                         # print("MIDI Number: ",main_midi_number)
                         if curr_note.check_correct_note(main_midi_number_arr):
                             curr_note.was_played=True
-                            print("Correct note played")
+                            # print("Correct note played")
                             
                         
                     if (abs(PLAY_LINE_LOCATION - curr_note.get_x_location()) < 25) :
@@ -576,10 +565,10 @@ def start():
                             if event.type == KEYDOWN:
 
                                 # Was it the Escape key? If so, stop the loop
-                                if event.key == K_ESCAPE:
+                                if event.key == K_ESCAPE or event.key == K_SPACE:
                                     paused = True
                                     pauserendered = False
-                                    print("paused the game")
+                                    # print("paused the game")
 
                                 elif event.key == K_RIGHT:
                                     if (current_popup.trigger_effect_number == 3 or current_popup.trigger_effect_number == 4):
@@ -592,11 +581,16 @@ def start():
                                      
                                      # TODO Add custom next code here
                                     # START/////////
-                                    if current_popup.trigger_effect_number == 1:
-                                        print("Trigger effect 1")
+                                    # if current_popup.trigger_effect_number == 1:
+                                        # print("Trigger effect 1")
 
                                     # END/////////
-                                    curr_tutorial_info.next()
+                                    if (current_popup.is_final_popup == True):
+                                        # True if this is the final popup of the tutorial
+                                        running = False
+                                    else:
+                                    # go to the next tutorial
+                                        curr_tutorial_info.next()
                                     
 
                                 elif event.key == K_LEFT:
@@ -615,7 +609,7 @@ def start():
 
                             # Did the user click the window close button? If so, exit
                             elif event.type == QUIT:
-                                exit()
+                                os._exit(status=0)
 
                             # Here we check for hover events 
                             if event.type==pygame.MOUSEMOTION:
@@ -624,7 +618,7 @@ def start():
                                 # TODO Add the hover effects for this tutorials example buttons
                                 # START/////////
                                 
-                                complete_tutorial_button.on_hover()
+                               
                                 # END/////////
                                 
                         
@@ -634,7 +628,7 @@ def start():
 
                                 # text_buttons should be pressed like this
                                 if (current_popup.button_is_pressed() == True):
-                                    print("Current popup pressed")
+                                    # print("Current popup pressed")
                                     if (current_popup.trigger_effect_number == 3 or current_popup.trigger_effect_number == 4):
                                         Notes = pygame.sprite.Group()
                                         curr_tutorial_info.sprites_list[curr_tutorial_info.sprites_index] = [
@@ -642,13 +636,18 @@ def start():
                                         sprite_item.SpriteItem(sprite = tabs_image, location = (0,0)),
                                         sprite_item.SpriteItem(sprite = play_line_image, location = (0,0)), 
                                         ]
-                                    curr_tutorial_info.next()
+                                    if (current_popup.is_final_popup == True):
+                                        # True if this is the final popup of the tutorial
+                                        running = False
+                                    else:
+                                    # go to the next tutorial
+                                        curr_tutorial_info.next()
 
                                     # TODO Add custom next code here
                                     # START/////////
 
-                                    if current_popup.trigger_effect_number == 1:
-                                        print("Trigger effect 1")
+                                    # if current_popup.trigger_effect_number == 1:
+                                    #     print("Trigger effect 1")
 
                                     # END/////////
 
@@ -659,10 +658,7 @@ def start():
 
                                 
 
-                                if (current_popup.trigger_effect_number == 1):
-                                    if (complete_tutorial_button.is_pressed() == True):
-                                        running = False
-
+          
                                 
 
                                         
@@ -725,7 +721,8 @@ def start():
             clock.tick_busy_loop(30)
 
 
-
+    # print("Exiting")
+    # print(restart_level)
      # Stop Audio
     stream.stop_stream()
     stream.close()
@@ -740,7 +737,11 @@ def start():
 
     # If the level should be restarted the restart it
     if restart_level == True:
+        # print("Restart level was true")
         start()
+
+    # print("This happened")
+    # return
 
 
 

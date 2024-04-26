@@ -1,5 +1,7 @@
 import pygame
 
+import os
+
 import helpers.settings_helper as settings_helper
 
 import helpers.tutorial_info as tutorial_info
@@ -19,6 +21,7 @@ from pygame.locals import (
     K_LEFT,
     KEYDOWN,
     QUIT,
+    K_SPACE
 )
 
 def start():
@@ -83,8 +86,6 @@ def start():
     example_pause_background.set_alpha(140)                
     example_pause_background.fill((239,159,20))  
 
-    complete_tutorial_button = text_button.TextButton(text=" Complete ", width= 96,height= 44, left_padding= SCREEN_WIDTH/2 - 50, top_padding= SCREEN_HEIGHT/2 - 80)
-    
 
     curr_tutorial_info = tutorial_info.TutorialInfo(
          popup_list = [
@@ -107,7 +108,7 @@ def start():
             # 9
             tutorial_popup.TutorialPopup("To play a note, press a finger on your left hand on a string just before a certain fret making sure the string beneath your finger touches the neck of the guitar. Then, pluck that string with your other hand. ", top_padding= 150, left_padding= 100,),
             # 10
-            tutorial_popup.TutorialPopup("Congrats! You are now ready to move on to the playing Notes tutorial.", top_padding= 300, left_padding= 20,  trigger_effect_number=2),
+            tutorial_popup.TutorialPopup("Congrats! You are now ready to move on to the playing Notes tutorial.", top_padding= 300, left_padding= 20,  trigger_effect_number=2, is_final_popup=True,),
 
 
               ],
@@ -178,7 +179,6 @@ def start():
                 [
                    sprite_item.SpriteItem(sprite = bg_img, location = (0,0), is_background=True),
                     sprite_item.SpriteItem(sprite = player_img, location = (SCREEN_WIDTH*2/3, SCREEN_HEIGHT/4)),
-                    sprite_item.SpriteItem(sprite = complete_tutorial_button.render, location=complete_tutorial_button.button_position),
                     
                 ],
 
@@ -211,13 +211,13 @@ def start():
                 if event.type == KEYDOWN:
 
                     # Was it the Escape key? If so, stop the loop
-                    if event.key == K_ESCAPE:
+                    if event.key == K_ESCAPE or event.key == K_SPACE:
                         paused = False
                         
 
                     # Did the user click the window close button? If so, exit
                     elif event.type == QUIT:
-                        exit()
+                        os._exit(status=0)
 
 
                  # Here we check for hover events 
@@ -239,7 +239,7 @@ def start():
                         restart_level = False
                         running = False
                     elif(quit_button.is_pressed() == True):
-                        exit()
+                        os._exit(status=0)
 
 
 
@@ -279,7 +279,7 @@ def start():
                             if event.type == KEYDOWN:
 
                                 # Was it the Escape key? If so, stop the loop
-                                if event.key == K_ESCAPE:
+                                if event.key == K_ESCAPE or event.key == K_SPACE:
                                     paused = True
                                     pauserendered = False
                                     print("paused the game")
@@ -292,7 +292,12 @@ def start():
                                         print("Trigger effect 1")
 
                                     # END/////////
-                                    curr_tutorial_info.next()
+                                    if (current_popup.is_final_popup == True):
+                                        # True if this is the final popup of the tutorial
+                                        running = False
+                                    else:
+                                    # go to the next tutorial
+                                        curr_tutorial_info.next()
                                     
 
                                 elif event.key == K_LEFT:
@@ -304,7 +309,7 @@ def start():
 
                             # Did the user click the window close button? If so, exit
                             elif event.type == QUIT:
-                                exit()
+                                os._exit(status=0)
 
                             # Here we check for hover events 
                             if event.type==pygame.MOUSEMOTION:
@@ -313,7 +318,7 @@ def start():
                                 # TODO Add the hover effects for this tutorials example buttons
                                 # START/////////
                                 example_button2.on_hover()
-                                complete_tutorial_button.on_hover()
+                                
                                 # END/////////
                                 
                         
@@ -324,7 +329,12 @@ def start():
                                 # text_buttons should be pressed like this
                                 if (current_popup.button_is_pressed() == True):
                                     print("Current popup pressed")
-                                    curr_tutorial_info.next()
+                                    if (current_popup.is_final_popup == True):
+                                        # True if this is the final popup of the tutorial
+                                        running = False
+                                    else:
+                                    # go to the next tutorial
+                                        curr_tutorial_info.next()
 
                                     # TODO Add custom next code here
                                     # START/////////
@@ -343,9 +353,8 @@ def start():
                                     if (example_button2.is_pressed() == True):
                                         curr_tutorial_info.next()
 
-                                if (current_popup.trigger_effect_number == 2):
-                                    if (complete_tutorial_button.is_pressed() == True):
-                                        running = False
+                                
+                                    
                                 # END/////////
 
 

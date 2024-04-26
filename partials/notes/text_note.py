@@ -57,21 +57,22 @@ class Note(pygame.sprite.Sprite):
         FIRST_HEIGHT = 30
 
         # how far apart each tab line is 
-        TAB_OFFSET = 66
+        # Each line has specific OFFSET since we change the tabs_outline
+        TAB_OFFSET = 60
 
         # This will assign the note a y height based off what tab line it should be on
         if tab_line== 1:
-            starting_y = FIRST_HEIGHT
+            starting_y = FIRST_HEIGHT - 1
         elif tab_line== 2:
-            starting_y = FIRST_HEIGHT + TAB_OFFSET * 1
+            starting_y = FIRST_HEIGHT + 60 * 1
         elif tab_line== 3:
-            starting_y = FIRST_HEIGHT + TAB_OFFSET * 2
+            starting_y = FIRST_HEIGHT + 61 * 2
         elif tab_line== 4:
-            starting_y = FIRST_HEIGHT + TAB_OFFSET * 3
+            starting_y = FIRST_HEIGHT + 61 * 3
         elif tab_line== 5:
-            starting_y = FIRST_HEIGHT + TAB_OFFSET * 4
+            starting_y = FIRST_HEIGHT + 62 * 4
         elif tab_line== 6:
-            starting_y = FIRST_HEIGHT + TAB_OFFSET * 5
+            starting_y = FIRST_HEIGHT + 63 * 5
             
         # This will start it centered on the right tab line
         self.rect = self.surf.get_rect(
