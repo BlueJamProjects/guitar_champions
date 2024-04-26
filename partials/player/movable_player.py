@@ -11,7 +11,33 @@ from pygame.locals import (
 
 
 class Player(pygame.sprite.Sprite):
+        """
+    A class representing the player character.
+
+    Attributes:
+        surf (pygame.Surface): The player character's surface.
+        rect (pygame.Rect): The player character's rectangular area.
+        screen_height (int): The height of the game screen.
+        screen_width (int): The width of the game screen.
+
+    Methods:
+        __init__(self, asset_path="assets/images/characters/player/protaganist.png",
+            screen_height=800, screen_width=600, top_padding=340):
+            Initializes the Player object with the provided parameters.
+        
+        update(self, pressed_keys):
+            Updates the player's position based on the pressed keys and keeps the player on the screen.
+    """
         def __init__(self, asset_path="assets/images/characters/player/protaganist.png", screen_height=800, screen_width=600, top_padding=340):
+            """
+        Initializes the Player object with the provided parameters.
+
+        Args:
+            asset_path (str): The file path of the player character's image asset.
+            screen_height (int): The height of the game screen.
+            screen_width (int): The width of the game screen.
+            top_padding (int): The vertical offset to position the player character at the top of the screen.
+        """
             super(Player, self).__init__()
             self.surf = pygame.image.load(asset_path).convert()
             self.surf.set_colorkey((255, 255, 255), RLEACCEL)
@@ -24,6 +50,14 @@ class Player(pygame.sprite.Sprite):
 
         # Move the sprite based on keypresses
         def update(self, pressed_keys):
+            """
+        Updates the player's position based on the pressed keys and keeps the player on the screen.
+
+        Args:
+            pressed_keys (dict): A dictionary representing the state of keyboard keys, where
+                the keys are pygame key constants and the values are Boolean values indicating
+                whether the corresponding key is pressed.
+        """
             if pressed_keys[K_LEFT]:
                 self.rect.move_ip(-5, 0)
             if pressed_keys[K_RIGHT]:
