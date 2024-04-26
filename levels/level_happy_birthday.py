@@ -3,8 +3,11 @@ from pygame_aseprite_animation import *
 # Import the pygame module
 import os, pygame
 
+import subprocess
+
 # Import random for random numbers
 import random
+
 
 import sys
 import matplotlib.pyplot as plt
@@ -38,6 +41,7 @@ from pygame.locals import (
     K_ESCAPE,
     KEYDOWN,
     QUIT,
+    K_SPACE
 )
 
 import partials.player.playing_player as playing_player
@@ -68,6 +72,9 @@ def start():
     completed = False
     restart_level = False
     pauserendered=False
+
+    created_end_graph = False
+
 
 
     # Setup for sounds, defaults are good
@@ -226,9 +233,9 @@ def start():
         note.Note(text="1", midi=65, time_to_next_note=0.5, tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=21),
         
         note.Note(text="0", time_to_next_note=1, midi=64, tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=22),
-        note.Note(text="1", midi=60, tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=23),
+        note.Note(text="1", midi=60, tab_line=2, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=23),
         note.Note(text="3", midi=62, tab_line=2, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=24),
-        note.Note(text="1", midi=60, tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=25),
+        note.Note(text="1", midi=60, tab_line=2, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=25),
         ]
     
     # This keeps track of all the notes the player correctly hit
@@ -252,12 +259,12 @@ def start():
                     if event.type == KEYDOWN:
 
                         # Was it the Escape key? If so, stop the loop
-                        if event.key == K_ESCAPE:
+                        if event.key == K_ESCAPE or event.key == K_SPACE:
                             running = False
 
                     # Did the user click the window close button? If so, exit
                     elif event.type == QUIT:
-                        exit()
+                        os._exit(status=0)
 
                     # Here we check for hover events 
                     if event.type==pygame.MOUSEMOTION:
@@ -276,6 +283,7 @@ def start():
                             # this will exit the main loop, setting the condition to restart the level as true
                             restart_level = True
                             running = False
+                            created_end_graph = False
 
             # calculates the total of the notes that were correctly played
             total_score = len(correctly_played_notes)
@@ -290,18 +298,13 @@ def start():
                 totnote+=1
                 index_array.append(totnote)
                 accuracy_array.append(correcters/totnote*100)
-            plt.plot(index_array,accuracy_array, color='orange', linewidth=5)
-            plt.ylim(0,100)
-            plt.xlim(1,totnote)
-            plt.title('Your overall Accuracy!')
-            font = {
-                'weight' : 'bold',
-                'size'   : 22}
-            plt.yticks(fontsize=20)
-            plt.xticks(fontsize=20)
-            plt.rc('font', **font)
-            plt.savefig('assets/images/tempgraphs/graphy.png')
-            plt.clf()
+           
+            if (created_end_graph == False):
+                # You only create the graph if it hasn't already been created for this ending
+                create_graph(index_array, accuracy_array, totnote)
+                created_end_graph = True
+
+
             endplot = pygame.image.load('assets/images/tempgraphs/graphy.png')
             # create a font to select font and size
             score_font = pygame.font.Font('assets/font/BITSUMIS.ttf', 32)
@@ -359,7 +362,6 @@ def start():
             
             
 
-            os.remove('assets/images/tempgraphs/graphy.png')
             pygame.display.update()
             clock.tick_busy_loop(30)
 
@@ -383,14 +385,14 @@ def start():
                     if event.type == KEYDOWN:
 
                         # Was it the Escape key? If so, stop the loop
-                        if event.key == K_ESCAPE:
+                        if event.key == K_ESCAPE or event.key == K_SPACE:
                             pygame.mixer.music.unpause()
                             paused = False
                             pauserendered=False
 
                     # Did the user click the window close button? If so, exit
                     elif event.type == QUIT:
-                        exit()
+                        os._exit(status=0)
 
                     # Here we check for hover events 
                     if event.type==pygame.MOUSEMOTION:
@@ -410,13 +412,14 @@ def start():
                         elif(restart_button.is_pressed() == True):
                             restart_level = True
                             running = False
+                            created_end_graph = False
 
                         elif(main_menu_button.is_pressed() == True):
                             restart_level = False
                             running = False
 
                         elif(quit_button.is_pressed() == True):
-                            exit()
+                            os._exit(status=0)
 
                 #checks if pausemenu has been rendered once before and if not, draws the transparent background
                 if(not pauserendered):
@@ -478,7 +481,7 @@ def start():
                     if event.type == KEYDOWN:
                         
                         # Was it the Escape key? If so, pause the loop
-                        if event.key == K_ESCAPE:
+                        if event.key == K_ESCAPE or event.key == K_SPACE:
                             paused = True
                             pauserendered=False
 
@@ -486,7 +489,7 @@ def start():
 
                     # Did the user click the window close button? If so, exit
                     elif event.type == QUIT:
-                        exit()
+                        os._exit(status=0)
 
 
                 for curr_note in Notes:
@@ -634,3 +637,25 @@ def audio_callback(in_data, frame_count, time_info, status):
 
 
     return (in_data, pyaudio.paContinue)
+
+
+def create_graph(index_array, accuracy_array, totnote):
+    # This creates and saves the graph file using a subprocess so that it doesn't disrupt the window size
+    subprocess.run(["python3", "-c", "import matplotlib.pyplot as plt; plt.plot( " + str(index_array) + ","+ str(accuracy_array)+ ", color='orange', linewidth=5); plt.ylim(0,100); plt.xlim(1," + str(totnote) + "); plt.title('Your overall Accuracy!'); font = {'weight' : 'bold','size'   : 22}; plt.yticks(fontsize=20); plt.xticks(fontsize=20); plt.rc('font', **font); plt.savefig('assets/images/tempgraphs/graphy.png'); plt.clf()"])
+   
+
+    # This is the python code to create the graph
+
+    # plt.plot(index_array,accuracy_array, color='orange', linewidth=5)
+    # plt.ylim(0,100)
+    # plt.xlim(1,totnote)
+    # plt.title('Your overall Accuracy!')
+    
+    # font = {
+    #     'weight' : 'bold',
+    #     'size'   : 22}
+    # plt.yticks(fontsize=20)
+    # plt.xticks(fontsize=20)
+    # plt.rc('font', **font)
+    # plt.savefig('assets/images/tempgraphs/graphy.png')
+    # plt.clf()

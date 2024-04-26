@@ -3,6 +3,8 @@ from pygame_aseprite_animation import *
 # Import the pygame module
 import os, pygame
 
+import subprocess
+
 # Import random for random numbers
 import random
 
@@ -38,6 +40,7 @@ from pygame.locals import (
     K_ESCAPE,
     KEYDOWN,
     QUIT,
+    K_SPACE
 )
 
 import partials.player.playing_player as playing_player
@@ -68,6 +71,8 @@ def start():
     completed = False
     restart_level = False
     pauserendered=False
+
+    created_end_graph = False
 
 
     # Setup for sounds, defaults are good
@@ -110,6 +115,9 @@ def start():
     # this keeps track of how many frames have occured since the last note was sent out
     # it is used later for keeping the notes sending at a regular rate
     frames_since_note = 0
+
+    # Keeps track of the number of frames since the metronome was last played
+    frames_since_metronome = 0
 
     if user_settings.enable_metronome == True:
         # Load and play our background music
@@ -273,12 +281,12 @@ def start():
                     if event.type == KEYDOWN:
 
                         # Was it the Escape key? If so, stop the loop
-                        if event.key == K_ESCAPE:
+                        if event.key == K_ESCAPE  or event.key == K_SPACE:
                             running = False
 
                     # Did the user click the window close button? If so, exit
                     elif event.type == QUIT:
-                        exit()
+                        os._exit(status=0)
 
                     # Here we check for hover events 
                     if event.type==pygame.MOUSEMOTION:
@@ -297,7 +305,10 @@ def start():
                             # this will exit the main loop, setting the condition to restart the level as true
                             restart_level = True
                             running = False
+                            created_end_graph = False
 
+
+            
             # calculates the total of the notes that were correctly played
             total_score = len(correctly_played_notes)
             # create an array that stores accuracy percentage at each note
@@ -311,17 +322,13 @@ def start():
                 totnote+=1
                 index_array.append(totnote)
                 accuracy_array.append(correcters/totnote*100)
-            plt.plot(index_array,accuracy_array, color='orange', linewidth=5)
-            plt.ylim(0,100)
-            plt.xlim(1,totnote)
-            plt.title('Your overall Accuracy!')
-            font = {'family' : 'normal',
-                'weight' : 'bold',
-                'size'   : 22}
-            plt.yticks(fontsize=20)
-            plt.xticks(fontsize=20)
-            plt.rc('font', **font)
-            plt.savefig('assets/images/tempgraphs/graphy.png')
+
+            if (created_end_graph == False):
+                # You only create the graph if it hasn't already been created for this ending
+                create_graph(index_array, accuracy_array, totnote)
+                created_end_graph = True
+
+
             endplot = pygame.image.load('assets/images/tempgraphs/graphy.png')
             # create a font to select font and size
             score_font = pygame.font.Font('assets/font/BITSUMIS.ttf', 32)
@@ -356,6 +363,7 @@ def start():
 
             encouragement_font_render = score_font.render(encouragement_font_text, False, (255, 255, 255), (239,159,20))
 
+            # screen = pygame.display.set_mode((1200, 900))
 
             # displays the visual elements of the completed screen
             screen.blit(score_screen_background,(0,0))
@@ -379,7 +387,7 @@ def start():
             
             
 
-            os.remove('assets/images/tempgraphs/graphy.png')
+            
             pygame.display.update()
             clock.tick_busy_loop(30)
 
@@ -403,14 +411,14 @@ def start():
                     if event.type == KEYDOWN:
 
                         # Was it the Escape key? If so, stop the loop
-                        if event.key == K_ESCAPE:
+                        if event.key == K_ESCAPE or event.key == K_SPACE:
                             pygame.mixer.music.unpause()
                             paused = False
                             pauserendered=False
 
                     # Did the user click the window close button? If so, exit
                     elif event.type == QUIT:
-                        exit()
+                        os._exit(status=0)
 
                     # Here we check for hover events 
                     if event.type==pygame.MOUSEMOTION:
@@ -430,13 +438,15 @@ def start():
                         elif(restart_button.is_pressed() == True):
                             restart_level = True
                             running = False
+                            created_end_graph = False
 
                         elif(main_menu_button.is_pressed() == True):
                             restart_level = False
                             running = False
+                            
 
                         elif(quit_button.is_pressed() == True):
-                            exit()
+                            os._exit(status=0)
 
                 #checks if pausemenu has been rendered once before and if not, draws the transparent background
                 if(not pauserendered):
@@ -498,7 +508,7 @@ def start():
                     if event.type == KEYDOWN:
                         
                         # Was it the Escape key? If so, pause the loop
-                        if event.key == K_ESCAPE:
+                        if event.key == K_ESCAPE or event.key == K_SPACE:
                             paused = True
                             pauserendered=False
 
@@ -506,7 +516,7 @@ def start():
 
                     # Did the user click the window close button? If so, exit
                     elif event.type == QUIT:
-                        exit()
+                        os._exit(status=0)
 
 
                 for curr_note in Notes:
@@ -539,11 +549,13 @@ def start():
                                                 curr_note.set_missed_color()
                                     
 
+                
 
                 # This adds notes every second
                 # This uses the current fps so that you are adding notes accurately
                 if frames_since_note >= ((clock.get_fps() * time_to_next_note )// 1) and (clock.get_fps() > 0.1):
                         frames_since_note = 0
+                        
 
                         # Create the new Note, and add it to our sprite groups
                         if note_index < (len(song_notes)):
@@ -661,6 +673,31 @@ def audio_callback(in_data, frame_count, time_info, status):
 
 
     return (in_data, pyaudio.paContinue)
+
+
+
+
+def create_graph(index_array, accuracy_array, totnote):
+    # This creates and saves the graph file using a subprocess so that it doesn't disrupt the window size
+    subprocess.run(["python3", "-c", "import matplotlib.pyplot as plt; plt.plot( " + str(index_array) + ","+ str(accuracy_array)+ ", color='orange', linewidth=5); plt.ylim(0,100); plt.xlim(1," + str(totnote) + "); plt.title('Your overall Accuracy!'); font = {'weight' : 'bold','size'   : 22}; plt.yticks(fontsize=20); plt.xticks(fontsize=20); plt.rc('font', **font); plt.savefig('assets/images/tempgraphs/graphy.png'); plt.clf()"])
+   
+
+    # This is the python code to create the graph
+
+    # plt.plot(index_array,accuracy_array, color='orange', linewidth=5)
+    # plt.ylim(0,100)
+    # plt.xlim(1,totnote)
+    # plt.title('Your overall Accuracy!')
+    
+    # font = {
+    #     'weight' : 'bold',
+    #     'size'   : 22}
+    # plt.yticks(fontsize=20)
+    # plt.xticks(fontsize=20)
+    # plt.rc('font', **font)
+    # plt.savefig('assets/images/tempgraphs/graphy.png')
+    # plt.clf()
+
 
     
 

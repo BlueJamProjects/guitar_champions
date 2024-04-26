@@ -3,6 +3,8 @@ from pygame_aseprite_animation import *
 # Import the pygame module
 import os, pygame
 
+import subprocess
+
 # Import random for random numbers
 import random
 
@@ -38,6 +40,7 @@ from pygame.locals import (
     K_ESCAPE,
     KEYDOWN,
     QUIT,
+    K_SPACE
 )
 
 import partials.player.playing_player as playing_player
@@ -69,6 +72,9 @@ def start():
     restart_level = False
     pauserendered=False
 
+    created_end_graph = False
+
+
 
     # Setup for sounds, defaults are good
     pygame.mixer.init()
@@ -90,6 +96,12 @@ def start():
     animationmanager = AnimationManager([test_animation], screen)
     strumAnimation = Animation('assets/animations/rjgwgSTRUMMINGGUITAR1.aseprite')
     animationmanager2 = AnimationManager([strumAnimation], screen)
+    # bird animations
+    bird = Animation('assets/animations/birdFly.aseprite')
+    animationmanager3 = AnimationManager([bird], screen)
+    # obelisk animations
+    obelisk = Animation('assets/animations/obelisk.aseprite')
+    animationmanager4 = AnimationManager([obelisk], screen)
 
     # Setup the clock for a decent framerate
     clock = pygame.time.Clock()
@@ -100,7 +112,7 @@ def start():
 
     if user_settings.enable_metronome == True:
         # Load and play our background music
-        pygame.mixer.music.load("assets/sounds/background-music/metro-34-60bpm.mp3")
+        pygame.mixer.music.load("assets/sounds/background-music/metro-100bpm-6-8.mp3")
         pygame.mixer.music.play(loops=-1)
         pygame.mixer.music.set_volume(user_settings.volume / 100)
 
@@ -193,94 +205,95 @@ def start():
 
     # This is the array with the song's note information
     song_notes = [
-        note.Note(text="2", midi=57, time_to_next_note=0.6, tab_line=3, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=0),
+        note.Note(text="2", midi=57, time_to_next_note=0.45, tab_line=3, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=0),
  
-        note.Note(text="1", midi=60, time_to_next_note=1, tab_line=2, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=1),
+        note.Note(text="1", midi=60, time_to_next_note=1.2, tab_line=2, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=1),
         note.Note(text="3", midi=62, time_to_next_note=0.6, tab_line=2, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=2),
-        note.Note(text="0", midi=64, time_to_next_note=0.9, tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=3),
-        note.Note(text="2", midi=66, time_to_next_note=0.45, tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=4),
-        note.Note(text="0", midi=64, time_to_next_note=0.6, tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=5),
+        note.Note(text="0", midi=64, time_to_next_note=1.25, tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=3),
+        note.Note(text="2", midi=66, time_to_next_note=0.15, tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=4),
+        note.Note(text="0", midi=64, time_to_next_note=0.46, tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=5),
         
-        note.Note(text="3", midi=62, time_to_next_note=1, tab_line=2, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=6),
+        note.Note(text="3", midi=62, time_to_next_note=1.2, tab_line=2, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=6),
         note.Note(text="0", midi=59, time_to_next_note=0.6, tab_line=2, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=7),
-        note.Note(text="0", midi=55, time_to_next_note=0.9, tab_line=3, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=8),
-        note.Note(text="2", midi=57, time_to_next_note=0.45, tab_line=3, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=9),
-        note.Note(text="0", midi=59, time_to_next_note=0.6, tab_line=2, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=10),
+        note.Note(text="0", midi=55, time_to_next_note=1.2, tab_line=3, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=8),
+        note.Note(text="2", midi=57, time_to_next_note=0.3, tab_line=3, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=9),
+        note.Note(text="0", midi=59, time_to_next_note=0.3, tab_line=2, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=10),
         
-        note.Note(text="1", midi=60, time_to_next_note=1, tab_line=2, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=11),
+        note.Note(text="1", midi=60, time_to_next_note=1.25, tab_line=2, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=11),
         note.Note(text="2", midi=57, time_to_next_note=0.6, tab_line=3, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=13),
         note.Note(text="2", midi=57, time_to_next_note=0.9, tab_line=3, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=14),
-        note.Note(text="1", midi=56, time_to_next_note=0.45, tab_line=3, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=15),
-        note.Note(text="2", midi=57, time_to_next_note=0.6, tab_line=3, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=16),
+        note.Note(text="1", midi=56, time_to_next_note=0.15, tab_line=3, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=15),
+        note.Note(text="2", midi=57, time_to_next_note=0.9, tab_line=3, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=16),
         
-        note.Note(text="0", midi=59, time_to_next_note=1, tab_line=2, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=17),
+        note.Note(text="0", midi=59, time_to_next_note=1.2, tab_line=2, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=17),
         note.Note(text="1", midi=56, time_to_next_note=0.6, tab_line=3, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=18),
-        note.Note(text="2", midi=52, time_to_next_note=1, tab_line=4, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=19),
+        note.Note(text="2", midi=52, time_to_next_note=1.18, tab_line=4, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=19),
+        ##########################
         note.Note(text="2", midi=57, time_to_next_note=0.6, tab_line=3, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=20),
         
-        note.Note(text="1", midi=60, time_to_next_note=1, tab_line=2, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=21),
+        note.Note(text="1", midi=60, time_to_next_note=1.2, tab_line=2, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=21),
         note.Note(text="3", midi=62, time_to_next_note=0.6, tab_line=2, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=22),
-        note.Note(text="0", midi=64, time_to_next_note=0.9, tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=23),
-        note.Note(text="2", midi=66, time_to_next_note=0.45,tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=24),
-        note.Note(text="0", midi=64, time_to_next_note=0.6,tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=25),
+        note.Note(text="0", midi=64, time_to_next_note=1.2, tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=23),
+        note.Note(text="2", midi=66, time_to_next_note=0.3,tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=24),
+        note.Note(text="0", midi=64, time_to_next_note=0.3,tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=25),
 
-        note.Note(text="3", midi=62, time_to_next_note=1, tab_line=2, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=21),
+        note.Note(text="3", midi=62, time_to_next_note=1.2, tab_line=2, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=21),
         note.Note(text="0", midi=59, time_to_next_note=0.6, tab_line=2, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=22),
-        note.Note(text="0", midi=55, time_to_next_note=0.9, tab_line=3, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=23),
-        note.Note(text="2", midi=57, time_to_next_note=0.45,tab_line=3, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=24),
-        note.Note(text="0", midi=59, time_to_next_note=0.6,tab_line=2, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=25),
-
+        note.Note(text="0", midi=55, time_to_next_note=1.2, tab_line=3, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=23),
+        note.Note(text="2", midi=57, time_to_next_note=0.35,tab_line=3, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=24),
+        note.Note(text="0", midi=59, time_to_next_note=0.3,tab_line=2, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=25),
+##########################
         note.Note(text="1", midi=60, time_to_next_note=0.6, tab_line=2, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=21),
         note.Note(text="0", midi=59, time_to_next_note=0.6, tab_line=2, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=22),
         note.Note(text="2", midi=57, time_to_next_note=0.6, tab_line=3, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=23),
         note.Note(text="1", midi=56, time_to_next_note=0.6,tab_line=3, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=25),
-        note.Note(text="4", midi=54, time_to_next_note=0.45,tab_line=4, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=24),
+        note.Note(text="4", midi=54, time_to_next_note=0.6,tab_line=4, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=24),
         note.Note(text="1", midi=56, time_to_next_note=0.6,tab_line=3, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=25),
 
-        note.Note(text="2", midi=57, time_to_next_note=1.6, tab_line=3, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=21),
-        note.Note(text="2", midi=57, time_to_next_note=1.6, tab_line=3, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=22),
+        note.Note(text="2", midi=57, time_to_next_note=1.9, tab_line=3, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=21),
+        note.Note(text="2", midi=57, time_to_next_note=1.8, tab_line=3, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=22),
 
-        note.Note(text="3", midi=67, time_to_next_note=1.6, tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=21),
+        note.Note(text="3", midi=67, time_to_next_note=1.8, tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=21),
         note.Note(text="3", midi=67, time_to_next_note=0.9, tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=22),
-        note.Note(text="2", midi=66, time_to_next_note=0.45,tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=24),
-        note.Note(text="0", midi=64, time_to_next_note=0.6,tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=25),
+        note.Note(text="2", midi=66, time_to_next_note=0.3,tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=24),
+        note.Note(text="0", midi=64, time_to_next_note=0.65,tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=25),
         
-        note.Note(text="3", midi=62, time_to_next_note=1, tab_line=2, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=21),
-        note.Note(text="0", midi=59, time_to_next_note=0.6, tab_line=2, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=22),
-        note.Note(text="0", midi=55, time_to_next_note=0.9, tab_line=3, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=23),
-        note.Note(text="2", midi=57, time_to_next_note=0.45,tab_line=3, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=24),
-        note.Note(text="0", midi=59, time_to_next_note=0.6,tab_line=2, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=25),
-        
-        note.Note(text="1", midi=60, time_to_next_note=1, tab_line=2, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=21),
-        note.Note(text="2", midi=57, time_to_next_note=0.6, tab_line=3, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=22),
-        note.Note(text="2", midi=57, time_to_next_note=0.9, tab_line=3, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=23),
-        note.Note(text="1", midi=56, time_to_next_note=0.45,tab_line=3, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=24),
-        note.Note(text="2", midi=57, time_to_next_note=0.6,tab_line=3, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=25),
-
-        note.Note(text="0", midi=59, time_to_next_note=1, tab_line=2, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=21),
-        note.Note(text="1", midi=55, time_to_next_note=0.6, tab_line=3, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=22),
-        note.Note(text="2", midi=52, time_to_next_note=1.6, tab_line=4, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=23),
-
-        note.Note(text="3", midi=67, time_to_next_note=1.6, tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=21),
-        note.Note(text="3", midi=67, time_to_next_note=1.2, tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=22),
-        note.Note(text="2", midi=66, time_to_next_note=0.45, tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=23),
-        note.Note(text="0", midi=64, time_to_next_note=0.6,tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=24),
-
-        note.Note(text="3", midi=62, time_to_next_note=1, tab_line=2, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=21),
+        note.Note(text="3", midi=62, time_to_next_note=1.2, tab_line=2, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=21),
         note.Note(text="0", midi=59, time_to_next_note=0.6, tab_line=2, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=22),
         note.Note(text="0", midi=55, time_to_next_note=1.2, tab_line=3, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=23),
-        note.Note(text="2", midi=57, time_to_next_note=0.45,tab_line=3, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=24),
-        note.Note(text="0", midi=59, time_to_next_note=0.6,tab_line=2, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=25),
+        note.Note(text="2", midi=57, time_to_next_note=0.3,tab_line=3, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=24),
+        note.Note(text="0", midi=59, time_to_next_note=0.3,tab_line=2, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=25),
+        
+        note.Note(text="1", midi=60, time_to_next_note=1.2, tab_line=2, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=21),
+        note.Note(text="2", midi=57, time_to_next_note=0.6, tab_line=3, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=22),
+        note.Note(text="2", midi=57, time_to_next_note=0.9, tab_line=3, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=23),
+        note.Note(text="1", midi=56, time_to_next_note=0.15,tab_line=3, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=24),
+        note.Note(text="2", midi=57, time_to_next_note=0.9,tab_line=3, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=25),
+
+        note.Note(text="0", midi=59, time_to_next_note=1.2, tab_line=2, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=21),
+        note.Note(text="1", midi=55, time_to_next_note=0.6, tab_line=3, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=22),
+        note.Note(text="2", midi=52, time_to_next_note=1.8, tab_line=4, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=23),
+
+        note.Note(text="3", midi=67, time_to_next_note=1.8, tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=21),
+        note.Note(text="3", midi=67, time_to_next_note=0.9, tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=22),
+        note.Note(text="2", midi=66, time_to_next_note=0.3, tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=23),
+        note.Note(text="0", midi=64, time_to_next_note=0.6,tab_line=1, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=24),
+
+        note.Note(text="3", midi=62, time_to_next_note=1.2, tab_line=2, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=21),
+        note.Note(text="0", midi=59, time_to_next_note=0.6, tab_line=2, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=22),
+        note.Note(text="0", midi=55, time_to_next_note=1.2, tab_line=3, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=23),
+        note.Note(text="2", midi=57, time_to_next_note=0.3,tab_line=3, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=24),
+        note.Note(text="0", midi=59, time_to_next_note=0.4,tab_line=2, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=25),
     
         note.Note(text="1", midi=60, time_to_next_note=0.6, tab_line=2, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=21),
         note.Note(text="0", midi=59, time_to_next_note=0.6, tab_line=2, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=22),
         note.Note(text="2", midi=57, time_to_next_note=0.6, tab_line=3, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=23),
         note.Note(text="1", midi=56, time_to_next_note=0.6,tab_line=3, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=25),
         note.Note(text="4", midi=54, time_to_next_note=0.45,tab_line=4, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=24),
-        note.Note(text="1", midi=56, time_to_next_note=0.6,tab_line=3, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=25),
+        note.Note(text="1", midi=56, time_to_next_note=0.75,tab_line=3, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=25),
 
-        note.Note(text="2", midi=57, time_to_next_note=1.6, tab_line=3, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=21),
-        note.Note(text="2", midi=57, time_to_next_note=1.6, tab_line=3, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=22),
+        note.Note(text="2", midi=57, time_to_next_note=1.9, tab_line=3, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=21),
+        note.Note(text="2", midi=57, time_to_next_note=1.8, tab_line=3, Screen_Width=SCREEN_WIDTH, Screen_Height=SCREEN_HEIGHT, id=22),
          
         ]
     
@@ -305,12 +318,12 @@ def start():
                     if event.type == KEYDOWN:
 
                         # Was it the Escape key? If so, stop the loop
-                        if event.key == K_ESCAPE:
+                        if event.key == K_ESCAPE or event.key == K_SPACE:
                             running = False
 
                     # Did the user click the window close button? If so, exit
                     elif event.type == QUIT:
-                        exit()
+                        os._exit(status=0)
 
                     # Here we check for hover events 
                     if event.type==pygame.MOUSEMOTION:
@@ -329,6 +342,7 @@ def start():
                             # this will exit the main loop, setting the condition to restart the level as true
                             restart_level = True
                             running = False
+                            created_end_graph = False
 
             # calculates the total of the notes that were correctly played
             total_score = len(correctly_played_notes)
@@ -343,18 +357,12 @@ def start():
                 totnote+=1
                 index_array.append(totnote)
                 accuracy_array.append(correcters/totnote*100)
-            plt.plot(index_array,accuracy_array, color='orange', linewidth=5)
-            plt.ylim(0,100)
-            plt.xlim(1,totnote)
-            plt.title('Your overall Accuracy!')
-            font = {
-                'weight' : 'bold',
-                'size'   : 22}
-            plt.yticks(fontsize=20)
-            plt.xticks(fontsize=20)
-            plt.rc('font', **font)
-            plt.savefig('assets/images/tempgraphs/graphy.png')
-            plt.clf()
+            
+            if (created_end_graph == False):
+                # You only create the graph if it hasn't already been created for this ending
+                create_graph(index_array, accuracy_array, totnote)
+                created_end_graph = True
+
             endplot = pygame.image.load('assets/images/tempgraphs/graphy.png')
             # create a font to select font and size
             score_font = pygame.font.Font('assets/font/BITSUMIS.ttf', 32)
@@ -412,7 +420,6 @@ def start():
             
             
 
-            os.remove('assets/images/tempgraphs/graphy.png')
             pygame.display.update()
             clock.tick_busy_loop(30)
 
@@ -436,14 +443,14 @@ def start():
                     if event.type == KEYDOWN:
 
                         # Was it the Escape key? If so, stop the loop
-                        if event.key == K_ESCAPE:
+                        if event.key == K_ESCAPE or event.key == K_SPACE:
                             pygame.mixer.music.unpause()
                             paused = False
                             pauserendered=False
 
                     # Did the user click the window close button? If so, exit
                     elif event.type == QUIT:
-                        exit()
+                        os._exit(status=0)
 
                     # Here we check for hover events 
                     if event.type==pygame.MOUSEMOTION:
@@ -463,13 +470,14 @@ def start():
                         elif(restart_button.is_pressed() == True):
                             restart_level = True
                             running = False
+                            created_end_graph = False
 
                         elif(main_menu_button.is_pressed() == True):
                             restart_level = False
                             running = False
 
                         elif(quit_button.is_pressed() == True):
-                            exit()
+                            os._exit(status=0)
 
                 #checks if pausemenu has been rendered once before and if not, draws the transparent background
                 if(not pauserendered):
@@ -531,7 +539,7 @@ def start():
                     if event.type == KEYDOWN:
                         
                         # Was it the Escape key? If so, pause the loop
-                        if event.key == K_ESCAPE:
+                        if event.key == K_ESCAPE or event.key == K_SPACE:
                             paused = True
                             pauserendered=False
 
@@ -539,7 +547,7 @@ def start():
 
                     # Did the user click the window close button? If so, exit
                     elif event.type == QUIT:
-                        exit()
+                        os._exit(status=0)
 
 
                 for curr_note in Notes:
@@ -614,6 +622,8 @@ def start():
                     screen.blit(entity.surf, entity.rect)
                 
                 animationmanager2.update_self(30, 390)
+                animationmanager3.update_self(100,275)
+                animationmanager4.update_self(500, 425)
         
                 # Flip everything to the display
                 pygame.display.flip()
@@ -687,3 +697,24 @@ def audio_callback(in_data, frame_count, time_info, status):
 
     
 
+
+def create_graph(index_array, accuracy_array, totnote):
+    # This creates and saves the graph file using a subprocess so that it doesn't disrupt the window size
+    subprocess.run(["python3", "-c", "import matplotlib.pyplot as plt; plt.plot( " + str(index_array) + ","+ str(accuracy_array)+ ", color='orange', linewidth=5); plt.ylim(0,100); plt.xlim(1," + str(totnote) + "); plt.title('Your overall Accuracy!'); font = {'weight' : 'bold','size'   : 22}; plt.yticks(fontsize=20); plt.xticks(fontsize=20); plt.rc('font', **font); plt.savefig('assets/images/tempgraphs/graphy.png'); plt.clf()"])
+   
+
+    # This is the python code to create the graph
+
+    # plt.plot(index_array,accuracy_array, color='orange', linewidth=5)
+    # plt.ylim(0,100)
+    # plt.xlim(1,totnote)
+    # plt.title('Your overall Accuracy!')
+    
+    # font = {
+    #     'weight' : 'bold',
+    #     'size'   : 22}
+    # plt.yticks(fontsize=20)
+    # plt.xticks(fontsize=20)
+    # plt.rc('font', **font)
+    # plt.savefig('assets/images/tempgraphs/graphy.png')
+    # plt.clf()

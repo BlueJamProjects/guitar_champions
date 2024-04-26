@@ -1,10 +1,13 @@
 # Import the pygame module
 import pygame
 
+
 # Import random for random numbers
 import random
 
 import sys
+
+import os
 
 
 # Import the menu library to more easily make menu selction
@@ -20,6 +23,7 @@ from pygame.locals import (
     K_ESCAPE,
     KEYDOWN,
     QUIT,
+    K_SPACE
 )
 # width=pygame.display.get_surface().get_size()[1]/4, height=pygame.display.get_surface().get_size()[1]/16, left_padding = pygame.display.get_surface().get_size()[0]/2 - pygame.display.get_surface().get_size()[1]/8, top_padding=pygame.display.get_surface().get_size()[1]/2
 import partials.player.movable_player as movable_player
@@ -112,14 +116,14 @@ def start():
                 # Did the user hit a key?
                 if event.type == KEYDOWN:
                     # Was it the Escape key? If so, stop the loop
-                    if event.key == K_ESCAPE:
+                    if event.key == K_ESCAPE or event.key == K_SPACE:
                         # running = False
                         pygame.mixer.music.unpause()
                         paused = False
 
                 # Did the user click the window close button? If so, exit
                 elif event.type == QUIT:
-                    exit()
+                    os._exit(status=0)
             
                 # Here we check for hover events 
                 if event.type==pygame.MOUSEMOTION:
@@ -138,7 +142,7 @@ def start():
                         running = False
 
                     elif(quit_button.is_pressed() == True):
-                        exit()
+                        os._exit(status=0)
 
             # This visually updates the buttons on the pause screen
             screen.blit(resume_button.render, resume_button.button_position)
@@ -159,12 +163,12 @@ def start():
                 # Did the user hit a key?
                 if event.type == KEYDOWN:
                     # Was it the Escape key? If so, pause the loop
-                    if event.key == K_ESCAPE:
+                    if event.key == K_ESCAPE or event.key == K_SPACE:
                         paused = True
 
                 # Did the user click the window close button? If so, exit
                 elif event.type == QUIT:
-                    exit()
+                    os._exit(status=0)
 
 
                 # Should we add a new Note?
