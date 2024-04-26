@@ -1,12 +1,11 @@
-# Import the pygame module
+"""
+This is another test.
+"""
+
 import pygame
 
-# Import random for random numbers
 import random
 
-# from main import draw_update_function
-# 
-# Import the menu library to more easily make menu selction
 import pygame_menu
 
 import helpers.redraw_helper as redraw_helper

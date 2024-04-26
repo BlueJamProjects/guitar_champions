@@ -1,3 +1,7 @@
+"""
+This is level control stuff.
+"""
+
 import pygame
 
 import os
