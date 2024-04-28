@@ -82,11 +82,41 @@
 <span class="p">)</span>
 
 
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">This file contains the movable Player class</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
 
 <div class="viewcode-block" id="Player">
 <a class="viewcode-back" href="../../../partials.player.html#partials.player.movable_player.Player">[docs]</a>
 <span class="k">class</span> <span class="nc">Player</span><span class="p">(</span><span class="n">pygame</span><span class="o">.</span><span class="n">sprite</span><span class="o">.</span><span class="n">Sprite</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A class representing the player character.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        surf (pygame.Surface): The player character&#39;s surface.</span>
+<span class="sd">        rect (pygame.Rect): The player character&#39;s rectangular area.</span>
+<span class="sd">        screen_height (int): The height of the game screen.</span>
+<span class="sd">        screen_width (int): The width of the game screen.</span>
+
+<span class="sd">    Methods:</span>
+<span class="sd">        __init__(self, asset_path=&quot;assets/images/characters/player/protaganist.png&quot;,</span>
+<span class="sd">            screen_height=800, screen_width=600, top_padding=340):</span>
+<span class="sd">            Initializes the Player object with the provided parameters.</span>
+<span class="sd">        </span>
+<span class="sd">        update(self, pressed_keys):</span>
+<span class="sd">            Updates the player&#39;s position based on the pressed keys and keeps the player on the screen.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
         <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">asset_path</span><span class="o">=</span><span class="s2">&quot;assets/images/characters/player/protaganist.png&quot;</span><span class="p">,</span> <span class="n">screen_height</span><span class="o">=</span><span class="mi">800</span><span class="p">,</span> <span class="n">screen_width</span><span class="o">=</span><span class="mi">600</span><span class="p">,</span> <span class="n">top_padding</span><span class="o">=</span><span class="mi">340</span><span class="p">):</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initializes the Player object with the provided parameters.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            asset_path (str): The file path of the player character&#39;s image asset.</span>
+<span class="sd">            screen_height (int): The height of the game screen.</span>
+<span class="sd">            screen_width (int): The width of the game screen.</span>
+<span class="sd">            top_padding (int): The vertical offset to position the player character at the top of the screen.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
             <span class="nb">super</span><span class="p">(</span><span class="n">Player</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">surf</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">asset_path</span><span class="p">)</span><span class="o">.</span><span class="n">convert</span><span class="p">()</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">surf</span><span class="o">.</span><span class="n">set_colorkey</span><span class="p">((</span><span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">),</span> <span class="n">RLEACCEL</span><span class="p">)</span>
@@ -101,6 +131,14 @@
 <div class="viewcode-block" id="Player.update">
 <a class="viewcode-back" href="../../../partials.player.html#partials.player.movable_player.Player.update">[docs]</a>
         <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pressed_keys</span><span class="p">):</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Updates the player&#39;s position based on the pressed keys and keeps the player on the screen.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            pressed_keys (dict): A dictionary representing the state of keyboard keys, where</span>
+<span class="sd">                the keys are pygame key constants and the values are Boolean values indicating</span>
+<span class="sd">                whether the corresponding key is pressed.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
             <span class="k">if</span> <span class="n">pressed_keys</span><span class="p">[</span><span class="n">K_LEFT</span><span class="p">]:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">move_ip</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">pressed_keys</span><span class="p">[</span><span class="n">K_RIGHT</span><span class="p">]:</span>

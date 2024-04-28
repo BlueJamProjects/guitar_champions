@@ -106,16 +106,75 @@
 <dt class="sig sig-object py" id="partials.player.movable_player.Player">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">partials.player.movable_player.</span></span><span class="sig-name descname"><span class="pre">Player</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">asset_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'assets/images/characters/player/protaganist.png'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">screen_height</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">800</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">screen_width</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">600</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">top_padding</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">340</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/partials/player/movable_player.html#Player"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#partials.player.movable_player.Player" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Sprite</span></code></p>
+<p>A class representing the player character.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="partials.player.movable_player.Player.surf">
+<span class="sig-name descname"><span class="pre">surf</span></span><a class="headerlink" href="#partials.player.movable_player.Player.surf" title="Link to this definition"></a></dt>
+<dd><p>The player character’s surface.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>pygame.Surface</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="partials.player.movable_player.Player.rect">
+<span class="sig-name descname"><span class="pre">rect</span></span><a class="headerlink" href="#partials.player.movable_player.Player.rect" title="Link to this definition"></a></dt>
+<dd><p>The player character’s rectangular area.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>pygame.Rect</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="partials.player.movable_player.Player.screen_height">
+<span class="sig-name descname"><span class="pre">screen_height</span></span><a class="headerlink" href="#partials.player.movable_player.Player.screen_height" title="Link to this definition"></a></dt>
+<dd><p>The height of the game screen.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="partials.player.movable_player.Player.screen_width">
+<span class="sig-name descname"><span class="pre">screen_width</span></span><a class="headerlink" href="#partials.player.movable_player.Player.screen_width" title="Link to this definition"></a></dt>
+<dd><p>The width of the game screen.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">__init__(self,</span> <span class="pre">asset_path=&quot;assets/images/characters/player/protaganist.png&quot;,</span></span></dt>
+<dd><p>screen_height=800, screen_width=600, top_padding=340):
+Initializes the Player object with the provided parameters.</p>
+</dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="partials.player.movable_player.Player.update">
-<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pressed_keys</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/partials/player/movable_player.html#Player.update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#partials.player.movable_player.Player.update" title="Link to this definition"></a></dt>
-<dd><p>method to control sprite behavior</p>
-<p>Sprite.update(<a href="#id1"><span class="problematic" id="id2">*</span></a>args, <a href="#id3"><span class="problematic" id="id4">**</span></a>kwargs):</p>
-<p>The default implementation of this method does nothing; it’s just a
-convenient “hook” that you can override. This method is called by
-Group.update() with whatever arguments you give it.</p>
-<p>There is no need to use this method if not using the convenience
-method by the same name in the Group class.</p>
+<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pressed_keys</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/partials/player/movable_player.html#Player.update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#partials.player.movable_player.Player.update" title="Link to this definition"></a></dt>
+<dd><p>Updates the player’s position based on the pressed keys and keeps the player on the screen.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id0">
+<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pressed_keys</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/partials/player/movable_player.html#Player.update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id0" title="Link to this definition"></a></dt>
+<dd><p>Updates the player’s position based on the pressed keys and keeps the player on the screen.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>pressed_keys</strong> (<em>dict</em>) – A dictionary representing the state of keyboard keys, where
+the keys are pygame key constants and the values are Boolean values indicating
+whether the corresponding key is pressed.</p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
@@ -127,16 +186,78 @@ method by the same name in the Group class.</p>
 <dt class="sig sig-object py" id="partials.player.playing_player.Player">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">partials.player.playing_player.</span></span><span class="sig-name descname"><span class="pre">Player</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">asset_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'assets/images/characters/player/protaganist.png'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">screen_height</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">800</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">screen_width</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">600</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">top_padding</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">340</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/partials/player/playing_player.html#Player"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#partials.player.playing_player.Player" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Sprite</span></code></p>
+<p>A class representing the player character in the game.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>asset_path</strong> (<em>str</em>) – The path to the image asset for the player character. Default is “assets/images/characters/player/protaganist.png”.</p></li>
+<li><p><strong>screen_height</strong> (<em>int</em>) – The height of the game screen. Default is 800 pixels.</p></li>
+<li><p><strong>screen_width</strong> (<em>int</em>) – The width of the game screen. Default is 600 pixels.</p></li>
+<li><p><strong>top_padding</strong> (<em>int</em>) – The offset from the top of the screen to position the player character. Default is 340 pixels.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="partials.player.playing_player.Player.surf">
+<span class="sig-name descname"><span class="pre">surf</span></span><a class="headerlink" href="#partials.player.playing_player.Player.surf" title="Link to this definition"></a></dt>
+<dd><p>The surface representing the player character.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>pygame.Surface</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="partials.player.playing_player.Player.rect">
+<span class="sig-name descname"><span class="pre">rect</span></span><a class="headerlink" href="#partials.player.playing_player.Player.rect" title="Link to this definition"></a></dt>
+<dd><p>The rectangular area occupied by the player character.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>pygame.Rect</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="partials.player.playing_player.Player.screen_height">
+<span class="sig-name descname"><span class="pre">screen_height</span></span><a class="headerlink" href="#partials.player.playing_player.Player.screen_height" title="Link to this definition"></a></dt>
+<dd><p>The height of the game screen.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="partials.player.playing_player.Player.screen_width">
+<span class="sig-name descname"><span class="pre">screen_width</span></span><a class="headerlink" href="#partials.player.playing_player.Player.screen_width" title="Link to this definition"></a></dt>
+<dd><p>The width of the game screen.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The player character is initially positioned at the left side of the screen with an offset to appear on the ground.</p>
+</div>
 <dl class="py method">
 <dt class="sig sig-object py" id="partials.player.playing_player.Player.update">
 <span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pressed_keys</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/partials/player/playing_player.html#Player.update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#partials.player.playing_player.Player.update" title="Link to this definition"></a></dt>
-<dd><p>method to control sprite behavior</p>
-<p>Sprite.update(<a href="#id5"><span class="problematic" id="id6">*</span></a>args, <a href="#id7"><span class="problematic" id="id8">**</span></a>kwargs):</p>
-<p>The default implementation of this method does nothing; it’s just a
-convenient “hook” that you can override. This method is called by
-Group.update() with whatever arguments you give it.</p>
-<p>There is no need to use this method if not using the convenience
-method by the same name in the Group class.</p>
+<dd><p>Update the position of the player character based on keypresses.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>pressed_keys</strong> (<em>dict</em>) – A dictionary representing the keys currently pressed.</p>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The player character moves horizontally based on the arrow keys.</p>
+</div>
 </dd></dl>
 
 </dd></dl>

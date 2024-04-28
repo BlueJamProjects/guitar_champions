@@ -80,12 +80,32 @@
     <span class="n">KEYDOWN</span><span class="p">,</span>
     <span class="n">QUIT</span><span class="p">,</span>
 <span class="p">)</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">This file contains the Player class</span>
+<span class="sd">&quot;&quot;&quot;</span>
 
 
 
 <div class="viewcode-block" id="Player">
 <a class="viewcode-back" href="../../../partials.player.html#partials.player.playing_player.Player">[docs]</a>
 <span class="k">class</span> <span class="nc">Player</span><span class="p">(</span><span class="n">pygame</span><span class="o">.</span><span class="n">sprite</span><span class="o">.</span><span class="n">Sprite</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;A class representing the player character in the game.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        asset_path (str): The path to the image asset for the player character. Default is &quot;assets/images/characters/player/protaganist.png&quot;.</span>
+<span class="sd">        screen_height (int): The height of the game screen. Default is 800 pixels.</span>
+<span class="sd">        screen_width (int): The width of the game screen. Default is 600 pixels.</span>
+<span class="sd">        top_padding (int): The offset from the top of the screen to position the player character. Default is 340 pixels.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        surf (pygame.Surface): The surface representing the player character.</span>
+<span class="sd">        rect (pygame.Rect): The rectangular area occupied by the player character.</span>
+<span class="sd">        screen_height (int): The height of the game screen.</span>
+<span class="sd">        screen_width (int): The width of the game screen.</span>
+
+<span class="sd">    Note:</span>
+<span class="sd">        The player character is initially positioned at the left side of the screen with an offset to appear on the ground.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
         <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">asset_path</span><span class="o">=</span><span class="s2">&quot;assets/images/characters/player/protaganist.png&quot;</span><span class="p">,</span> <span class="n">screen_height</span><span class="o">=</span><span class="mi">800</span><span class="p">,</span> <span class="n">screen_width</span><span class="o">=</span><span class="mi">600</span><span class="p">,</span> <span class="n">top_padding</span><span class="o">=</span><span class="mi">340</span><span class="p">):</span>
             <span class="nb">super</span><span class="p">(</span><span class="n">Player</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">surf</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">asset_path</span><span class="p">)</span><span class="o">.</span><span class="n">convert</span><span class="p">()</span>
@@ -102,13 +122,17 @@
 <div class="viewcode-block" id="Player.update">
 <a class="viewcode-back" href="../../../partials.player.html#partials.player.playing_player.Player.update">[docs]</a>
         <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pressed_keys</span><span class="p">):</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;Update the position of the player character based on keypresses.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            pressed_keys (dict): A dictionary representing the keys currently pressed.</span>
+
+<span class="sd">        Note:</span>
+<span class="sd">            The player character moves horizontally based on the arrow keys.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
             <span class="k">pass</span></div>
 </div>
 
-            <span class="c1"># if pressed_keys[K_g]:</span>
-            <span class="c1">#     self.rect.move_ip(-5, 0)</span>
-            <span class="c1"># if pressed_keys[K_RIGHT]:</span>
-            <span class="c1">#     self.rect.move_ip(5, 0)</span>
 </pre></div>
 
            </div>
