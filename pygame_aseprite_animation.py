@@ -1,3 +1,9 @@
+"""
+This file controls all of our animation processes. It takes in our .aseprite files and parses them into bits and then creates an empty pygame surface
+for the animation to be drawn on for each bit. It then draws each chunk/layer onto the surface and this process is all done at load time. 
+"""
+
+
 from py_aseprite import AsepriteFile
 from py_aseprite import CelChunk
 
