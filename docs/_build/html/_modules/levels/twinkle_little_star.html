@@ -191,6 +191,9 @@
     <span class="c1"># it is used later for keeping the notes sending at a regular rate</span>
     <span class="n">frames_since_note</span> <span class="o">=</span> <span class="mi">0</span>
 
+    <span class="c1"># Keeps track of the number of frames since the metronome was last played</span>
+    <span class="n">frames_since_metronome</span> <span class="o">=</span> <span class="mi">0</span>
+
     <span class="k">if</span> <span class="n">user_settings</span><span class="o">.</span><span class="n">enable_metronome</span> <span class="o">==</span> <span class="kc">True</span><span class="p">:</span>
         <span class="c1"># Load and play our background music</span>
         <span class="n">pygame</span><span class="o">.</span><span class="n">mixer</span><span class="o">.</span><span class="n">music</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;assets/sounds/background-music/metro-34-60bpm.mp3&quot;</span><span class="p">)</span>
@@ -621,11 +624,13 @@
                                                 <span class="n">curr_note</span><span class="o">.</span><span class="n">set_missed_color</span><span class="p">()</span>
                                     
 
+                
 
                 <span class="c1"># This adds notes every second</span>
                 <span class="c1"># This uses the current fps so that you are adding notes accurately</span>
                 <span class="k">if</span> <span class="n">frames_since_note</span> <span class="o">&gt;=</span> <span class="p">((</span><span class="n">clock</span><span class="o">.</span><span class="n">get_fps</span><span class="p">()</span> <span class="o">*</span> <span class="n">time_to_next_note</span> <span class="p">)</span><span class="o">//</span> <span class="mi">1</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">clock</span><span class="o">.</span><span class="n">get_fps</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mf">0.1</span><span class="p">):</span>
                         <span class="n">frames_since_note</span> <span class="o">=</span> <span class="mi">0</span>
+                        
 
                         <span class="c1"># Create the new Note, and add it to our sprite groups</span>
                         <span class="k">if</span> <span class="n">note_index</span> <span class="o">&lt;</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">song_notes</span><span class="p">)):</span>
@@ -761,7 +766,7 @@
 <a class="viewcode-back" href="../../levels.html#levels.twinkle_little_star.create_graph">[docs]</a>
 <span class="k">def</span> <span class="nf">create_graph</span><span class="p">(</span><span class="n">index_array</span><span class="p">,</span> <span class="n">accuracy_array</span><span class="p">,</span> <span class="n">totnote</span><span class="p">):</span>
     <span class="c1"># This creates and saves the graph file using a subprocess so that it doesn&#39;t disrupt the window size</span>
-    <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">([</span><span class="s2">&quot;python&quot;</span><span class="p">,</span> <span class="s2">&quot;-c&quot;</span><span class="p">,</span> <span class="s2">&quot;import matplotlib.pyplot as plt; plt.plot( &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">index_array</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;,&quot;</span><span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">accuracy_array</span><span class="p">)</span><span class="o">+</span> <span class="s2">&quot;, color=&#39;orange&#39;, linewidth=5); plt.ylim(0,100); plt.xlim(1,&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">totnote</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;); plt.title(&#39;Your overall Accuracy!&#39;); font = {&#39;weight&#39; : &#39;bold&#39;,&#39;size&#39;   : 22}; plt.yticks(fontsize=20); plt.xticks(fontsize=20); plt.rc(&#39;font&#39;, **font); plt.savefig(&#39;assets/images/tempgraphs/graphy.png&#39;); plt.clf()&quot;</span><span class="p">])</span></div>
+    <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">([</span><span class="s2">&quot;python3&quot;</span><span class="p">,</span> <span class="s2">&quot;-c&quot;</span><span class="p">,</span> <span class="s2">&quot;import matplotlib.pyplot as plt; plt.plot( &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">index_array</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;,&quot;</span><span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">accuracy_array</span><span class="p">)</span><span class="o">+</span> <span class="s2">&quot;, color=&#39;orange&#39;, linewidth=5); plt.ylim(0,100); plt.xlim(1,&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">totnote</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;); plt.title(&#39;Your overall Accuracy!&#39;); font = {&#39;weight&#39; : &#39;bold&#39;,&#39;size&#39;   : 22}; plt.yticks(fontsize=20); plt.xticks(fontsize=20); plt.rc(&#39;font&#39;, **font); plt.savefig(&#39;assets/images/tempgraphs/graphy.png&#39;); plt.clf()&quot;</span><span class="p">])</span></div>
 
    
 

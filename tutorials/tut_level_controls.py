@@ -1,5 +1,5 @@
 """
-This is level control stuff.
+This file is for displaying and running through the "Controls" tutorial in the game.
 """
 
 import pygame
@@ -29,6 +29,15 @@ from pygame.locals import (
 )
 
 def start():
+    """
+    This is the main function of the tutorial. It sets the default state of the game to Running.
+
+    Args:
+        running (bool): boolean for determining if the tutorial is running.
+        paused (bool): boolean for determining if the tutorial is paused.
+        restart_level (bool): boolean for determining if the player wants to restart the tutorial.
+
+    """
 
     running = True
     paused = False

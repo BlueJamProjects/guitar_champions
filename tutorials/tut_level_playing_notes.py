@@ -1,5 +1,5 @@
 """
-This is a test.
+    This file is for displaying and running through the "Playing Notes" tutorial in the game..
 """
 
 import pygame
@@ -58,6 +58,15 @@ from pygame.locals import (
 main_midi_number_arr = [40, 40, 40]
 
 def start():
+    """
+    This is the main function of the tutorial. It sets the default state of the game to Running.
+
+    Args:
+        running (bool): boolean for determining if the tutorial is running.
+        paused (bool): boolean for determining if the tutorial is paused.
+        restart_level (bool): boolean for determining if the player wants to restart the tutorial.
+
+    """
 
     running = True
     paused = False
@@ -753,8 +762,25 @@ def start():
 # Define bandpass filter
 def butter_bandpass_filter(data, lowcut, highcut, sr, order=5):
     """
-    Apply a bandpass filter to the audio data.
+    Apply a Butterworth bandpass filter to a given data array.
+
+    This function constructs a Butterworth bandpass filter using the specified low and
+    high cutoff frequencies and filter order, then applies it to the input data array.
+    The function is suitable for filtering time-series data to retain only the
+    frequencies within the specified band.
+
+    Args:
+        data (array_like): Input signal data as a numeric array.
+        lowcut (float): The lower boundary of the frequency range to be retained in Hz.
+        highcut (float): The upper boundary of the frequency range to be retained in Hz.
+        sr (int): The sampling rate of the data in Hz.
+        order (int, optional): The order of the filter. Higher order means a steeper
+                               filter slope. Default is 5.
+
+    Returns:
+        array_like: The filtered signal data, same shape as input `data`.
     """
+    
     nyquist = 0.5 * sr
     low = lowcut / nyquist
     high = highcut / nyquist
@@ -763,11 +789,58 @@ def butter_bandpass_filter(data, lowcut, highcut, sr, order=5):
     return y
 
 def midi_number_to_pitch(midi_number):
+    """
+    Convert a MIDI number to its corresponding musical pitch notation including the octave.
+
+    This function uses the `music21` library to map MIDI note numbers to their
+    corresponding pitch names and octaves, such as C4, A5, etc.
+
+    Args:
+        midi_number (int): The MIDI number representing the musical note. MIDI numbers
+                           range from 0 (C-1) to 127 (G9), representing specific pitches.
+
+    Returns:
+        str: The musical pitch name with octave notation (e.g., C4, A5).
+    """
     n = music21Note.Note()
     n.pitch.midi = midi_number
     return n.pitch.nameWithOctave
 
 def audio_callback(in_data, frame_count, time_info, status):
+    """
+    Callback function for processing real-time audio input through PyAudio.
+
+    This function takes audio input data, applies a bandpass filter, and analyzes
+    the pitch using CREPE. It prints the detected pitch, frequency, confidence level,
+    and amplitude of the filtered audio.
+
+    Args:
+        in_data (array of bytes): Raw audio data in bytes array format, which
+                                  will be converted to float32 for processing.
+        frame_count (int): Number of frames in the input data. This is used to
+                           ensure the data block size remains consistent.
+        time_info (dict): Dictionary containing timing information including
+                          keys like 'current_time', 'input_buffer_adc_time', and
+                          'output_buffer_dac_time'.
+        status (int): Status flag that indicates if there are any errors or issues
+                      with the audio stream.
+
+    Returns:
+        tuple: A tuple containing the input data (as it was received) and a
+               PyAudio continuation flag (pyaudio.paContinue) indicating that
+               audio processing should continue.
+
+    Raises:
+        Exception: Catches and logs any exceptions raised during audio processing,
+                   particularly when predicting pitch or converting frequency to MIDI.
+
+    Notes:
+        This function should be used as part of a streaming setup with PyAudio where
+        real-time audio processing is required. It uses numpy for numerical operations,
+        CREPE for pitch detection, and librosa for frequency-to-MIDI conversion.
+    """
+
+
     audio_data = np.frombuffer(in_data, dtype=np.float32)
 
 

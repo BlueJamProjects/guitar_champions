@@ -71,14 +71,30 @@
            <div itemprop="articleBody">
              
   <h1>Source code for helpers.sprite_item</h1><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">pygame</span>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">This file contains the SpriteItem class</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">pygame</span>
 
 <div class="viewcode-block" id="SpriteItem">
 <a class="viewcode-back" href="../../helpers.html#helpers.sprite_item.SpriteItem">[docs]</a>
 <span class="k">class</span> <span class="nc">SpriteItem</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    A class to make specifying a sprite&#39;s object and it&#39;s location easier</span>
-<span class="sd">    Used in the tutorials for the sprites that are rendered on the screen</span>
+<span class="sd">    Represents a sprite object along with its rendering details.</span>
+
+<span class="sd">    This class simplifies the specification of a sprite&#39;s object and its rendering location.</span>
+<span class="sd">    It is particularly useful in tutorials for managing sprites rendered on the screen.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        sprite (pygame.Surface, optional): The surface representing the sprite. Default is a 100x100 surface.</span>
+<span class="sd">        location (tuple, optional): The coordinates (x, y) where the sprite should be rendered. Default is (0, 0).</span>
+<span class="sd">        is_box (bool, optional): Specifies if the sprite is a box. Default is False.</span>
+<span class="sd">        is_background (bool, optional): Specifies if the sprite is a background. Default is False.</span>
+<span class="sd">        box_has_border (bool, optional): Specifies if the box has a border. Default is False.</span>
+<span class="sd">        box_color (tuple, optional): The RGB color tuple representing the box color. Default is (0, 0, 0).</span>
+<span class="sd">        box_border (int, optional): The thickness of the box border. Default is 10.</span>
+<span class="sd">        box_rect (pygame.Rect, optional): The dimensions and location of the box. Default is pygame.Rect(100, 100, 100, 100).</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> 

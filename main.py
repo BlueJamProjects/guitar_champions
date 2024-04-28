@@ -86,6 +86,7 @@ if __name__ == "__main__":
     pygame.init()   
 
     surface = pygame.display.set_mode((800, 600))
+    
     mytheme = pygame_menu.themes.Theme( # transparent background
                 title_background_color=(255, 187, 68),
                 title_font_color=(255,255,255),

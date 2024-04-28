@@ -72,7 +72,10 @@
 <li class="toctree-l4"><a class="reference internal" href="#tutorials.tut_level_playing_notes.start"><code class="docutils literal notranslate"><span class="pre">start()</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#tutorials-tutorials-main-module">tutorials.tutorials_main module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-tutorials.tutorials_main">tutorials.tutorials_main module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#tutorials.tutorials_main.playing_notes_function"><code class="docutils literal notranslate"><span class="pre">playing_notes_function()</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="#module-tutorials">Module contents</a></li>
 </ul>
 </li>
@@ -112,47 +115,165 @@
 </section>
 <section id="module-tutorials.tut_guitar_holding">
 <span id="tutorials-tut-guitar-holding-module"></span><h2>tutorials.tut_guitar_holding module<a class="headerlink" href="#module-tutorials.tut_guitar_holding" title="Link to this heading"></a></h2>
+<p>This file is for displaying and running through the “How to Hold a Guitar” tutorial in the game.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="tutorials.tut_guitar_holding.start">
 <span class="sig-prename descclassname"><span class="pre">tutorials.tut_guitar_holding.</span></span><span class="sig-name descname"><span class="pre">start</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/tutorials/tut_guitar_holding.html#start"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tutorials.tut_guitar_holding.start" title="Link to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>This is the main function of the tutorial. It sets the default state of the game to Running.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>running</strong> (<em>bool</em>) – boolean for determining if the tutorial is running.</p></li>
+<li><p><strong>paused</strong> (<em>bool</em>) – boolean for determining if the tutorial is paused.</p></li>
+<li><p><strong>restart_level</strong> (<em>bool</em>) – boolean for determining if the player wants to restart the tutorial.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
 
 </section>
 <section id="module-tutorials.tut_level_controls">
 <span id="tutorials-tut-level-controls-module"></span><h2>tutorials.tut_level_controls module<a class="headerlink" href="#module-tutorials.tut_level_controls" title="Link to this heading"></a></h2>
+<p>This file is for displaying and running through the “Controls” tutorial in the game.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="tutorials.tut_level_controls.start">
 <span class="sig-prename descclassname"><span class="pre">tutorials.tut_level_controls.</span></span><span class="sig-name descname"><span class="pre">start</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/tutorials/tut_level_controls.html#start"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tutorials.tut_level_controls.start" title="Link to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>This is the main function of the tutorial. It sets the default state of the game to Running.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>running</strong> (<em>bool</em>) – boolean for determining if the tutorial is running.</p></li>
+<li><p><strong>paused</strong> (<em>bool</em>) – boolean for determining if the tutorial is paused.</p></li>
+<li><p><strong>restart_level</strong> (<em>bool</em>) – boolean for determining if the player wants to restart the tutorial.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
 
 </section>
 <section id="module-tutorials.tut_level_playing_notes">
 <span id="tutorials-tut-level-playing-notes-module"></span><h2>tutorials.tut_level_playing_notes module<a class="headerlink" href="#module-tutorials.tut_level_playing_notes" title="Link to this heading"></a></h2>
-<p>This is a test.</p>
+<p>This file is for displaying and running through the “Playing Notes” tutorial in the game..</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="tutorials.tut_level_playing_notes.audio_callback">
 <span class="sig-prename descclassname"><span class="pre">tutorials.tut_level_playing_notes.</span></span><span class="sig-name descname"><span class="pre">audio_callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">in_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">frame_count</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_info</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">status</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tutorials/tut_level_playing_notes.html#audio_callback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tutorials.tut_level_playing_notes.audio_callback" title="Link to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Callback function for processing real-time audio input through PyAudio.</p>
+<p>This function takes audio input data, applies a bandpass filter, and analyzes
+the pitch using CREPE. It prints the detected pitch, frequency, confidence level,
+and amplitude of the filtered audio.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>in_data</strong> (<em>array</em><em> of </em><em>bytes</em>) – Raw audio data in bytes array format, which
+will be converted to float32 for processing.</p></li>
+<li><p><strong>frame_count</strong> (<em>int</em>) – Number of frames in the input data. This is used to
+ensure the data block size remains consistent.</p></li>
+<li><p><strong>time_info</strong> (<em>dict</em>) – Dictionary containing timing information including
+keys like ‘current_time’, ‘input_buffer_adc_time’, and
+‘output_buffer_dac_time’.</p></li>
+<li><p><strong>status</strong> (<em>int</em>) – Status flag that indicates if there are any errors or issues
+with the audio stream.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>A tuple containing the input data (as it was received) and a</dt><dd><p>PyAudio continuation flag (pyaudio.paContinue) indicating that
+audio processing should continue.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>Exception</strong> – Catches and logs any exceptions raised during audio processing,
+    particularly when predicting pitch or converting frequency to MIDI.</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>This function should be used as part of a streaming setup with PyAudio where
+real-time audio processing is required. It uses numpy for numerical operations,
+CREPE for pitch detection, and librosa for frequency-to-MIDI conversion.</p>
+</dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="tutorials.tut_level_playing_notes.butter_bandpass_filter">
 <span class="sig-prename descclassname"><span class="pre">tutorials.tut_level_playing_notes.</span></span><span class="sig-name descname"><span class="pre">butter_bandpass_filter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lowcut</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">highcut</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">order</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tutorials/tut_level_playing_notes.html#butter_bandpass_filter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tutorials.tut_level_playing_notes.butter_bandpass_filter" title="Link to this definition"></a></dt>
-<dd><p>Apply a bandpass filter to the audio data.</p>
+<dd><p>Apply a Butterworth bandpass filter to a given data array.</p>
+<p>This function constructs a Butterworth bandpass filter using the specified low and
+high cutoff frequencies and filter order, then applies it to the input data array.
+The function is suitable for filtering time-series data to retain only the
+frequencies within the specified band.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<em>array_like</em>) – Input signal data as a numeric array.</p></li>
+<li><p><strong>lowcut</strong> (<em>float</em>) – The lower boundary of the frequency range to be retained in Hz.</p></li>
+<li><p><strong>highcut</strong> (<em>float</em>) – The upper boundary of the frequency range to be retained in Hz.</p></li>
+<li><p><strong>sr</strong> (<em>int</em>) – The sampling rate of the data in Hz.</p></li>
+<li><p><strong>order</strong> (<em>int</em><em>, </em><em>optional</em>) – The order of the filter. Higher order means a steeper
+filter slope. Default is 5.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The filtered signal data, same shape as input <cite>data</cite>.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>array_like</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="tutorials.tut_level_playing_notes.midi_number_to_pitch">
 <span class="sig-prename descclassname"><span class="pre">tutorials.tut_level_playing_notes.</span></span><span class="sig-name descname"><span class="pre">midi_number_to_pitch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">midi_number</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tutorials/tut_level_playing_notes.html#midi_number_to_pitch"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tutorials.tut_level_playing_notes.midi_number_to_pitch" title="Link to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Convert a MIDI number to its corresponding musical pitch notation including the octave.</p>
+<p>This function uses the <cite>music21</cite> library to map MIDI note numbers to their
+corresponding pitch names and octaves, such as C4, A5, etc.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>midi_number</strong> (<em>int</em>) – The MIDI number representing the musical note. MIDI numbers
+range from 0 (C-1) to 127 (G9), representing specific pitches.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The musical pitch name with octave notation (e.g., C4, A5).</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="tutorials.tut_level_playing_notes.start">
 <span class="sig-prename descclassname"><span class="pre">tutorials.tut_level_playing_notes.</span></span><span class="sig-name descname"><span class="pre">start</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/tutorials/tut_level_playing_notes.html#start"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tutorials.tut_level_playing_notes.start" title="Link to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>This is the main function of the tutorial. It sets the default state of the game to Running.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>running</strong> (<em>bool</em>) – boolean for determining if the tutorial is running.</p></li>
+<li><p><strong>paused</strong> (<em>bool</em>) – boolean for determining if the tutorial is paused.</p></li>
+<li><p><strong>restart_level</strong> (<em>bool</em>) – boolean for determining if the player wants to restart the tutorial.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
 
 </section>
-<section id="tutorials-tutorials-main-module">
-<h2>tutorials.tutorials_main module<a class="headerlink" href="#tutorials-tutorials-main-module" title="Link to this heading"></a></h2>
+<section id="module-tutorials.tutorials_main">
+<span id="tutorials-tutorials-main-module"></span><h2>tutorials.tutorials_main module<a class="headerlink" href="#module-tutorials.tutorials_main" title="Link to this heading"></a></h2>
+<p>This file sets up the menu for selecting tutorial modules after the user presses “Tutorials” from the main menu.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="tutorials.tutorials_main.playing_notes_function">
+<span class="sig-prename descclassname"><span class="pre">tutorials.tutorials_main.</span></span><span class="sig-name descname"><span class="pre">playing_notes_function</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/tutorials/tutorials_main.html#playing_notes_function"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tutorials.tutorials_main.playing_notes_function" title="Link to this definition"></a></dt>
+<dd><p>Toggle the state of playing notes and start or stop the tutorial level accordingly.</p>
+<p>This function checks the global boolean flag <cite>pressed_playing_notes</cite>. If the flag is False, it sets the flag
+to True and starts the tutorial level for playing notes. If the flag is already True, it sets the flag to False,
+effectively stopping the tutorial level. This function is typically used to control the start and stop actions
+of a tutorial level in a music-related application.</p>
+</dd></dl>
+
 </section>
 <section id="module-tutorials">
 <span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-tutorials" title="Link to this heading"></a></h2>
