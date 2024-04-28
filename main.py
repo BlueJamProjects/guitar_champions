@@ -67,7 +67,11 @@ level_list = [("Twinkle Little Star", level1),("Happy Birthday", level2),  ("Gre
 
 def select_level(name, index):
     """
-    Apply a bandpass filter to the audio data.
+    Change the current level when a different level is selected.
+
+    Args:
+        name (str): The name of the selected level.
+        index (int): The index of the selected level in the level list.
     """
     global current_level
     current_level = index
@@ -75,6 +79,9 @@ def select_level(name, index):
     pygame.display.flip()
 
 def start_level():
+    """
+    Start the selected level when the play button is clicked.
+    """
     level_list[current_level][1].start()
 
 
