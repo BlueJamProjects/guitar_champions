@@ -47,7 +47,13 @@
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="modules.html">guitar_champions</a><ul class="current">
-<li class="toctree-l2 current"><a class="current reference internal" href="#">AudioTest module</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">AudioTest module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#AudioTest.audio_callback"><code class="docutils literal notranslate"><span class="pre">audio_callback()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#AudioTest.butter_bandpass_filter"><code class="docutils literal notranslate"><span class="pre">butter_bandpass_filter()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#AudioTest.midi_number_to_pitch"><code class="docutils literal notranslate"><span class="pre">midi_number_to_pitch()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#AudioTest.stream_audio"><code class="docutils literal notranslate"><span class="pre">stream_audio()</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="chunks.html">chunks module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="headers.html">headers module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="helpers.html">helpers package</a></li>
@@ -86,8 +92,79 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="audiotest-module">
-<h1>AudioTest module<a class="headerlink" href="#audiotest-module" title="Link to this heading"></a></h1>
+  <section id="module-AudioTest">
+<span id="audiotest-module"></span><h1>AudioTest module<a class="headerlink" href="#module-AudioTest" title="Link to this heading"></a></h1>
+<p>Summary
+This is the doc string of the Audio Tesing file for applying the note detection algorithm
+in the program.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="AudioTest.audio_callback">
+<span class="sig-prename descclassname"><span class="pre">AudioTest.</span></span><span class="sig-name descname"><span class="pre">audio_callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">in_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">frame_count</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_info</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">status</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/AudioTest.html#audio_callback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#AudioTest.audio_callback" title="Link to this definition"></a></dt>
+<dd><p>Process the incoming stream audio and apply noise reduction and bandpass fiter for the pitch detection</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>in_data</strong> (<em>np.array</em>) – raw audio data</p></li>
+<li><p><strong>frame_count</strong> (<em>int</em>) – The counts of each frequency bin</p></li>
+<li><p><strong>time_info</strong> (<em>dict</em>) – dictionary</p></li>
+<li><p><strong>status</strong> (<em>int</em>) – PaCallbackFlags</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A tuple containing the modified audio data and a continuation flag.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="AudioTest.butter_bandpass_filter">
+<span class="sig-prename descclassname"><span class="pre">AudioTest.</span></span><span class="sig-name descname"><span class="pre">butter_bandpass_filter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lowcut</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">highcut</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">order</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/AudioTest.html#butter_bandpass_filter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#AudioTest.butter_bandpass_filter" title="Link to this definition"></a></dt>
+<dd><p>This is the function to apply a bandpass filter to the audio data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>param1</strong> (<em>numpy.array</em>) – Convert the real sound to a numpy.array</p></li>
+<li><p><strong>param2</strong> (<em>Int</em>) – A value to adjust the filter</p></li>
+<li><p><strong>param3</strong> (<em>Int</em>) – A integer value tp adjust the hig-frequency filter</p></li>
+<li><p><strong>param4</strong> (<em>Int</em>) – The sample rate of the audio</p></li>
+<li><p><strong>param5</strong> (<em>Int</em>) – The order of the filter</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>the filtered audio file</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>numpy.array</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="AudioTest.midi_number_to_pitch">
+<span class="sig-prename descclassname"><span class="pre">AudioTest.</span></span><span class="sig-name descname"><span class="pre">midi_number_to_pitch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">midi_number</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/AudioTest.html#midi_number_to_pitch"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#AudioTest.midi_number_to_pitch" title="Link to this definition"></a></dt>
+<dd><p>Convert a midi number to its corresponding pitch name</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>midi_number</strong> (<em>int</em>) – The mini number which need to convert to the pitch name</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>pitch name (such as C4, D5, etc.)</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>string</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="AudioTest.stream_audio">
+<span class="sig-prename descclassname"><span class="pre">AudioTest.</span></span><span class="sig-name descname"><span class="pre">stream_audio</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/AudioTest.html#stream_audio"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#AudioTest.stream_audio" title="Link to this definition"></a></dt>
+<dd><p>Main function to start audio streaming</p>
+</dd></dl>
+
 </section>
 
 

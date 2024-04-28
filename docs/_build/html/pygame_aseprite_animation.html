@@ -102,12 +102,13 @@
              
   <section id="module-pygame_aseprite_animation">
 <span id="pygame-aseprite-animation-module"></span><h1>pygame_aseprite_animation module<a class="headerlink" href="#module-pygame_aseprite_animation" title="Link to this heading"></a></h1>
+<p>This file controls all of our animation processes. It takes in our .aseprite files and parses them into bits and then creates an empty pygame surface
+for the animation to be drawn on for each bit. It then draws each chunk/layer onto the surface and this process is all done at load time.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="pygame_aseprite_animation.Animation">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pygame_aseprite_animation.</span></span><span class="sig-name descname"><span class="pre">Animation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">_filedir</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pygame_aseprite_animation.html#Animation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pygame_aseprite_animation.Animation" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<p>A class that contains all of the animations and frame duration information
-TODO: Maybe add name property to assign to animations</p>
+<p>A class that contains all of the animations and frame duration information</p>
 <dl class="simple">
 <dt>Artibutes:</dt><dd><dl class="field-list simple">
 <dt class="field-odd">aseprite_file<span class="colon">:</span></dt>
@@ -126,56 +127,33 @@ TODO: Maybe add name property to assign to animations</p>
 <dt class="sig sig-object py" id="pygame_aseprite_animation.Animation.draw_all_animation_frames">
 <span class="sig-name descname"><span class="pre">draw_all_animation_frames</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pygame_aseprite_animation.html#Animation.draw_all_animation_frames"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pygame_aseprite_animation.Animation.draw_all_animation_frames" title="Link to this definition"></a></dt>
 <dd><p>Goes through .ase or .aseprite file and draws all of your frames</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>animation_frames which is a list of every individual frame</p>
-</dd>
-</dl>
+<p>return: animation_frames which is a list of every individual frame</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pygame_aseprite_animation.Animation.draw_raw_image_data">
 <span class="sig-name descname"><span class="pre">draw_raw_image_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cel</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">CelChunk</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">frame</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pygame_aseprite_animation.html#Animation.draw_raw_image_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pygame_aseprite_animation.Animation.draw_raw_image_data" title="Link to this definition"></a></dt>
 <dd><p>Actually reads the pixel data and draw it onto the surface() layer by layer</p>
-<dl class="field-list simple">
-<dt class="field-odd">Cel<span class="colon">:</span></dt>
-<dd class="field-odd"><p>CelChunk object from the raw aseprite file, handles by py_aseprite</p>
-</dd>
-<dt class="field-even">Frame<span class="colon">:</span></dt>
-<dd class="field-even"><p>the pygame.Surface() onto which the data will be drawn</p>
-</dd>
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>the pygame.Surface(), but with the layer drawn onto it</p>
-</dd>
-</dl>
+<p>cel: CelChunk object from the raw aseprite file, handles by py_aseprite</p>
+<p>frame: the pygame.Surface() onto which the data will be drawn</p>
+<p>return: the pygame.Surface(), but with the layer drawn onto it</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pygame_aseprite_animation.Animation.draw_single_frame">
 <span class="sig-name descname"><span class="pre">draw_single_frame</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_frame</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pygame_aseprite_animation.html#Animation.draw_single_frame"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pygame_aseprite_animation.Animation.draw_single_frame" title="Link to this definition"></a></dt>
 <dd><p>Draws single frame onto an empty pygame.Surface</p>
-<dl class="field-list simple">
-<dt class="field-odd">Num_frame<span class="colon">:</span></dt>
-<dd class="field-odd"><p>index of the frame to be drawn</p>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>frame which is a pygame.Surface() of the same size as the aseprite file onto which the pixels are drawn</p>
-</dd>
-</dl>
+<p>num_frame: index of the frame to be drawn</p>
+<p>return: frame which is a pygame.Surface() of the same size as the aseprite file onto which the pixels are drawn</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pygame_aseprite_animation.Animation.parseFile">
 <span class="sig-name descname"><span class="pre">parseFile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filedir</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pygame_aseprite_animation.html#Animation.parseFile"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pygame_aseprite_animation.Animation.parseFile" title="Link to this definition"></a></dt>
 <dd><p>Uses py_aseprite to load the file</p>
-<dl class="field-list simple">
-<dt class="field-odd">Filedir<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Path to your .ase or .aseprite files</p>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Animation object containt your frames as a list of pygame.surface() objects</p>
-</dd>
-</dl>
+<p>Args:
+filedir: Path to your .ase or .aseprite files</p>
+<p>return: Animation object containt your frames as a list of pygame.surface() objects</p>
 </dd></dl>
 
 </dd></dl>
@@ -202,25 +180,15 @@ Automatically start on the first Animation in the list</p>
 <dt class="sig sig-object py" id="pygame_aseprite_animation.AnimationManager.start_animation">
 <span class="sig-name descname"><span class="pre">start_animation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">_animation</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pygame_aseprite_animation.Animation" title="pygame_aseprite_animation.Animation"><span class="pre">Animation</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">_next_animation</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pygame_aseprite_animation.Animation" title="pygame_aseprite_animation.Animation"><span class="pre">Animation</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pygame_aseprite_animation.html#AnimationManager.start_animation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pygame_aseprite_animation.AnimationManager.start_animation" title="Link to this definition"></a></dt>
 <dd><p>Start a new animation to</p>
-<dl class="field-list simple">
-<dt class="field-odd">_animation<span class="colon">:</span></dt>
-<dd class="field-odd"><p>the animation you’d like to display</p>
-</dd>
-<dt class="field-even">_next_animation<span class="colon">:</span></dt>
-<dd class="field-even"><p>what animation to play after this one is finished. Loops if left empty.</p>
-</dd>
-</dl>
+<p>_animation: the animation you’d like to display
+_next_animation: what animation to play after this one is finished. Loops if left empty.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pygame_aseprite_animation.AnimationManager.update_self">
 <span class="sig-name descname"><span class="pre">update_self</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">frame_x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">frame_y</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pygame_aseprite_animation.html#AnimationManager.update_self"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pygame_aseprite_animation.AnimationManager.update_self" title="Link to this definition"></a></dt>
 <dd><p>Called every frame. Checks if frame duration is finished and blits frame to your Surface</p>
-<dl class="field-list simple">
-<dt class="field-odd">Frame_x/y<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Pixel location where the frame need to be blit</p>
-</dd>
-</dl>
+<p>frame_x/y: Pixel location where the frame need to be blit</p>
 </dd></dl>
 
 </dd></dl>

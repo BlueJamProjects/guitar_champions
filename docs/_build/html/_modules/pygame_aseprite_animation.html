@@ -71,7 +71,13 @@
            <div itemprop="articleBody">
              
   <h1>Source code for pygame_aseprite_animation</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">py_aseprite</span> <span class="kn">import</span> <span class="n">AsepriteFile</span>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">This file controls all of our animation processes. It takes in our .aseprite files and parses them into bits and then creates an empty pygame surface</span>
+<span class="sd">for the animation to be drawn on for each bit. It then draws each chunk/layer onto the surface and this process is all done at load time. </span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+
+<span class="kn">from</span> <span class="nn">py_aseprite</span> <span class="kn">import</span> <span class="n">AsepriteFile</span>
 <span class="kn">from</span> <span class="nn">py_aseprite</span> <span class="kn">import</span> <span class="n">CelChunk</span>
 
 <span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">Enum</span>
@@ -83,18 +89,19 @@
 <a class="viewcode-back" href="../pygame_aseprite_animation.html#pygame_aseprite_animation.Animation">[docs]</a>
 <span class="k">class</span> <span class="nc">Animation</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;A class that contains all of the animations and frame duration information</span>
-<span class="sd">    TODO: Maybe add name property to assign to animations</span>
 
 <span class="sd">    Artibutes:</span>
 <span class="sd">        :aseprite_file: the loaded in aseprite file. Shouldn&#39;t have to use this file\n</span>
 <span class="sd">        :animation_frames: a list of pygame.Surface() objects, each containing a single frames\n</span>
-<span class="sd">        :frame_duration: a list of the duration each frame should be displayed. Index matches that of :animation_frame:&quot;&quot;&quot;</span>
+<span class="sd">        :frame_duration: a list of the duration each frame should be displayed. Index matches that of :animation_frame:</span>
+<span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_filedir</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Instanciate a animation object</span>
 <span class="sd">        </span>
 <span class="sd">        :_filedir: Path to your .ase or .aseprite files\n</span>
-<span class="sd">        :return: Animation object containt your frames as a list of pygame.surface() objects &quot;&quot;&quot;</span>
+<span class="sd">        :return: Animation object containt your frames as a list of pygame.surface() objects </span>
+<span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="c1"># load aseprite file</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">aseprite_file</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parseFile</span><span class="p">(</span><span class="n">_filedir</span><span class="p">)</span>
@@ -108,8 +115,11 @@
     <span class="k">def</span> <span class="nf">parseFile</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filedir</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Uses py_aseprite to load the file</span>
 <span class="sd">        </span>
-<span class="sd">        :filedir: Path to your .ase or .aseprite files\n </span>
-<span class="sd">        :return: Animation object containt your frames as a list of pygame.surface() objects &quot;&quot;&quot;</span>
+<span class="sd">        Args:</span>
+<span class="sd">        filedir: Path to your .ase or .aseprite files\n </span>
+<span class="sd">        return: Animation object containt your frames as a list of pygame.surface() objects </span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filedir</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">AsepriteFile</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">())</span></div>
 
@@ -119,7 +129,8 @@
     <span class="k">def</span> <span class="nf">draw_all_animation_frames</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Goes through .ase or .aseprite file and draws all of your frames</span>
 <span class="sd">        </span>
-<span class="sd">        :return: animation_frames which is a list of every individual frame&quot;&quot;&quot;</span>
+<span class="sd">        return: animation_frames which is a list of every individual frame</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">animation_frames</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">frame_number</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">aseprite_file</span><span class="o">.</span><span class="n">header</span><span class="o">.</span><span class="n">num_frames</span><span class="p">):</span>
                 <span class="n">frame</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">draw_single_frame</span><span class="p">(</span><span class="n">frame_number</span><span class="p">)</span>
@@ -133,8 +144,10 @@
     <span class="k">def</span> <span class="nf">draw_single_frame</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">num_frame</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Draws single frame onto an empty pygame.Surface</span>
 <span class="sd">        </span>
-<span class="sd">        :num_frame: index of the frame to be drawn\n</span>
-<span class="sd">        :return: frame which is a pygame.Surface() of the same size as the aseprite file onto which the pixels are drawn &quot;&quot;&quot;</span>
+<span class="sd">        num_frame: index of the frame to be drawn\n</span>
+<span class="sd">        return: frame which is a pygame.Surface() of the same size as the aseprite file onto which the pixels are drawn </span>
+<span class="sd">        </span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">cel_slice</span> <span class="o">=</span> <span class="p">[</span><span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">aseprite_file</span><span class="o">.</span><span class="n">layers</span><span class="p">)</span>
 
         <span class="c1">#read slices</span>
@@ -158,9 +171,10 @@
     <span class="k">def</span> <span class="nf">draw_raw_image_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cel</span> <span class="p">:</span><span class="n">CelChunk</span><span class="p">,</span> <span class="n">frame</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Actually reads the pixel data and draw it onto the surface() layer by layer</span>
 <span class="sd">        </span>
-<span class="sd">        :cel: CelChunk object from the raw aseprite file, handles by py_aseprite\n</span>
-<span class="sd">        :frame: the pygame.Surface() onto which the data will be drawn\n</span>
-<span class="sd">        :return: the pygame.Surface(), but with the layer drawn onto it&quot;&quot;&quot;</span>
+<span class="sd">        cel: CelChunk object from the raw aseprite file, handles by py_aseprite\n</span>
+<span class="sd">        frame: the pygame.Surface() onto which the data will be drawn\n</span>
+<span class="sd">        return: the pygame.Surface(), but with the layer drawn onto it</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">data</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">cel</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">])</span>
         <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">cel</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;height&#39;</span><span class="p">]):</span>
             <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">cel</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;width&#39;</span><span class="p">]):</span>
@@ -192,13 +206,15 @@
 <span class="sd">    </span>
 <span class="sd">    Atributes:</span>
 <span class="sd">        :animation_list: a list of all the animations for this instance\n</span>
-<span class="sd">        :draw_surface: the surface onto which the frame needs to be drawn&quot;&quot;&quot;</span>
+<span class="sd">        :draw_surface: the surface onto which the frame needs to be drawn</span>
+<span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_animation_list</span> <span class="p">:</span><span class="n">Animation</span><span class="p">,</span> <span class="n">_draw_surface</span> <span class="p">:</span><span class="n">pygame</span><span class="o">.</span><span class="n">Surface</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Init</span>
 <span class="sd">        </span>
-<span class="sd">        :_animation_list: a list of Animation Objects \n</span>
-<span class="sd">        :_draw_frame: the pygame.Surface() onto which you&#39;d like to blit the frames&quot;&quot;&quot;</span>
+<span class="sd">        _animation_list: a list of Animation Objects \n</span>
+<span class="sd">        _draw_frame: the pygame.Surface() onto which you&#39;d like to blit the frames</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">animation_list</span> <span class="o">=</span> <span class="n">_animation_list</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">draw_surface</span> <span class="o">=</span> <span class="n">_draw_surface</span>
         <span class="c1"># Initialize animation to the 1st frame in the list</span>
@@ -209,8 +225,9 @@
     <span class="k">def</span> <span class="nf">start_animation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_animation</span><span class="p">:</span><span class="n">Animation</span><span class="p">,</span> <span class="n">_next_animation</span><span class="p">:</span><span class="n">Animation</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Start a new animation to</span>
 <span class="sd">        </span>
-<span class="sd">        :_animation: the animation you&#39;d like to display</span>
-<span class="sd">        :_next_animation: what animation to play after this one is finished. Loops if left empty.&quot;&quot;&quot;</span>
+<span class="sd">        _animation: the animation you&#39;d like to display</span>
+<span class="sd">        _next_animation: what animation to play after this one is finished. Loops if left empty.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># Set the animation you&#39;d like to display</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">current_animation</span> <span class="o">=</span> <span class="n">_animation</span>
         <span class="c1"># Animation to play after finishing. Animation loops if None.</span>
@@ -226,7 +243,8 @@
     <span class="k">def</span> <span class="nf">update_self</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">frame_x</span><span class="p">,</span> <span class="n">frame_y</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Called every frame. Checks if frame duration is finished and blits frame to your Surface</span>
 <span class="sd">        </span>
-<span class="sd">        :frame_x/y: Pixel location where the frame need to be blit&quot;&quot;&quot;</span>
+<span class="sd">        frame_x/y: Pixel location where the frame need to be blit</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># Check if frame is finished. if so, set next frame</span>
         <span class="k">if</span>  <span class="nb">round</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">)</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">tend</span><span class="p">:</span>
             <span class="c1"># Check if animation is finished and set next animation if needed</span>
