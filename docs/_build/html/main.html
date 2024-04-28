@@ -52,7 +52,11 @@
 <li class="toctree-l2"><a class="reference internal" href="headers.html">headers module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="helpers.html">helpers package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="levels.html">levels package</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">main module</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">main module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#main.select_level"><code class="docutils literal notranslate"><span class="pre">select_level()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#main.start_level"><code class="docutils literal notranslate"><span class="pre">start_level()</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="partials.html">partials package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="pygame_aseprite_animation.html">pygame_aseprite_animation module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="setup.html">setup module</a></li>
@@ -86,8 +90,36 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="main-module">
-<h1>main module<a class="headerlink" href="#main-module" title="Link to this heading"></a></h1>
+  <section id="module-main">
+<span id="main-module"></span><h1>main module<a class="headerlink" href="#module-main" title="Link to this heading"></a></h1>
+<p>This is the main file where our program starts. It will begin our PyGame module and setup the main menu window with all necessary assets
+including level select, settings, and tutorials.</p>
+<p>Files Affected -
+main.py
+AudioTest.py
+tutorials_main.py
+setup.py
+settings_menu.py</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="main.select_level">
+<span class="sig-prename descclassname"><span class="pre">main.</span></span><span class="sig-name descname"><span class="pre">select_level</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">index</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/main.html#select_level"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#main.select_level" title="Link to this definition"></a></dt>
+<dd><p>Change the current level when a different level is selected.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>str</em>) – The name of the selected level.</p></li>
+<li><p><strong>index</strong> (<em>int</em>) – The index of the selected level in the level list.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="main.start_level">
+<span class="sig-prename descclassname"><span class="pre">main.</span></span><span class="sig-name descname"><span class="pre">start_level</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/main.html#start_level"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#main.start_level" title="Link to this definition"></a></dt>
+<dd><p>Start the selected level when the play button is clicked.</p>
+</dd></dl>
+
 </section>
 
 

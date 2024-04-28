@@ -72,7 +72,10 @@
 <li class="toctree-l4"><a class="reference internal" href="#tutorials.tut_level_playing_notes.start"><code class="docutils literal notranslate"><span class="pre">start()</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#tutorials-tutorials-main-module">tutorials.tutorials_main module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-tutorials.tutorials_main">tutorials.tutorials_main module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#tutorials.tutorials_main.playing_notes_function"><code class="docutils literal notranslate"><span class="pre">playing_notes_function()</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="#module-tutorials">Module contents</a></li>
 </ul>
 </li>
@@ -258,8 +261,19 @@ range from 0 (C-1) to 127 (G9), representing specific pitches.</p>
 </dd></dl>
 
 </section>
-<section id="tutorials-tutorials-main-module">
-<h2>tutorials.tutorials_main module<a class="headerlink" href="#tutorials-tutorials-main-module" title="Link to this heading"></a></h2>
+<section id="module-tutorials.tutorials_main">
+<span id="tutorials-tutorials-main-module"></span><h2>tutorials.tutorials_main module<a class="headerlink" href="#module-tutorials.tutorials_main" title="Link to this heading"></a></h2>
+<p>This file sets up the menu for selecting tutorial modules after the user presses “Tutorials” from the main menu.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="tutorials.tutorials_main.playing_notes_function">
+<span class="sig-prename descclassname"><span class="pre">tutorials.tutorials_main.</span></span><span class="sig-name descname"><span class="pre">playing_notes_function</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/tutorials/tutorials_main.html#playing_notes_function"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tutorials.tutorials_main.playing_notes_function" title="Link to this definition"></a></dt>
+<dd><p>Toggle the state of playing notes and start or stop the tutorial level accordingly.</p>
+<p>This function checks the global boolean flag <cite>pressed_playing_notes</cite>. If the flag is False, it sets the flag
+to True and starts the tutorial level for playing notes. If the flag is already True, it sets the flag to False,
+effectively stopping the tutorial level. This function is typically used to control the start and stop actions
+of a tutorial level in a music-related application.</p>
+</dd></dl>
+
 </section>
 <section id="module-tutorials">
 <span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-tutorials" title="Link to this heading"></a></h2>
