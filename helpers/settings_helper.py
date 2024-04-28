@@ -1,8 +1,27 @@
+"""
+This file contains:
+
+- The Settings object that is used for storing the settings in memory
+
+    The functions:
+    - get_settings
+    - update_enable_metronome
+    - update_volume
+    - update_microphone_amplitude
+
+"""
+
+
 import json
 
 class Settings(object):
     """
-    A class to store the current settings
+    A class to store the current settings.
+
+    Attributes:
+        volume (int): The volume level, ranging from 0 to 100.
+        enable_metronome (bool): Whether the metronome is enabled or not.
+        microphone_amplitude (float): The amplitude of the microphone, ranging from 0.0 to 1.0.
     """
     def __init__(self):
         self.volume = 100
@@ -14,7 +33,13 @@ class Settings(object):
 
 def get_settings():
     """
-    Gets the gamesettings.json data and returns it in a Settings object.
+    Retrieves game settings from 'gamesettings.json' and returns them as a Settings object.
+
+    Returns:
+        Settings: An object containing the game settings.
+
+    Raises:
+        IOError: If the file 'gamesettings.json' cannot be opened or read.
     """
 
 
@@ -78,8 +103,15 @@ def get_settings():
 
 def update_enable_metronome(name, new_enable_metronome):
     """
-    Updates the stored enable_metronome value in the gamesettings.json file
-    Takes in a (name, bool) to store the bool as the enable_metronome value
+    Update the stored enable_metronome value in the gamesettings.json file.
+
+    Args:
+        name (str): The name of the setting.
+        new_enable_metronome (bool): The new value to store for enable_metronome.
+
+    Raises:
+        ValueError: If an invalid value is passed for new_enable_metronome.
+
     """
 
     with open("settings/gamesettings.json", "r") as file:
@@ -110,8 +142,17 @@ def update_enable_metronome(name, new_enable_metronome):
 
 def update_volume(new_volume):
     """
-    Updates the stored volume value in the gamesettings.json file
-    Takes in an int with the int int <= 100 and >= 0 to be stored as the enable_metronome value
+    Updates the stored volume value in the gamesettings.json file.
+
+    Args:
+        new_volume (int): The new volume value to be stored. Should be an integer 
+        between 0 and 100, inclusive.
+
+    Raises:
+        ValueError: If the provided volume is not within the valid range (0-100).
+
+    Returns:
+        None
     """
 
 
@@ -144,8 +185,17 @@ def update_volume(new_volume):
 
 def update_microphone_amplitude(new_amplitude):
     """
-    Updates the stored microphone_amplitude value in the gamesettings.json file
-    Takes in an int with the int int <= 100 and >= 0 to be stored as the microphone_amplitude value
+    Update the stored microphone_amplitude value in the gamesettings.json file.
+
+    Parameters:
+        new_amplitude (int): The new value for the microphone amplitude. Must be an integer between 0 and 100 (inclusive).
+
+    Raises:
+        ValueError: If the provided new_amplitude is not within the valid range.
+
+    Note:
+        If the provided new_amplitude is outside the valid range, it will be corrected to the nearest valid value (0 or 100).
+
     """
     with open("settings/gamesettings.json", "r") as file:
         settings_data = json.load(file)
