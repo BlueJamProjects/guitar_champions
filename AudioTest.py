@@ -1,8 +1,8 @@
 """ Summary 
-This is the doc string of the Audio Tesing gile
+This is the doc string of the Audio Tesing file for applying the note detection algorithm 
+in the program.
 
 """
-
 
 
 import pyaudio
@@ -30,7 +30,10 @@ def butter_bandpass_filter(data, lowcut, highcut, sr, order=5):
         param1 (numpy.array): Convert the real sound to a numpy.array
         param2 (Int): A value to adjust the filter
         param3 (Int): A integer value tp adjust the hig-frequency filter
-
+        param4 (Int): The sample rate of the audio
+        param5 (Int): The order of the filter
+    Returns:
+        numpy.array: the filtered audio file 
    """
    
    nyquist = 0.5 * sr
@@ -42,6 +45,15 @@ def butter_bandpass_filter(data, lowcut, highcut, sr, order=5):
 
 
 def midi_number_to_pitch(midi_number):
+    """Convert a midi number to its corresponding pitch name
+     
+
+    Args:
+        midi_number (int): The mini number which need to convert to the pitch name
+
+    Returns:
+        string: pitch name (such as C4, D5, etc.)
+    """
     n = note.Note()
     print(type(n))
     n.pitch.midi = midi_number
@@ -49,6 +61,18 @@ def midi_number_to_pitch(midi_number):
 
 
 def audio_callback(in_data, frame_count, time_info, status):
+    """ Process the incoming stream audio and apply noise reduction and bandpass fiter for the pitch detection 
+
+    Args:
+        in_data (np.array): raw audio data
+        frame_count (int): The counts of each frequency bin
+        time_info (dict): dictionary
+        status (int): PaCallbackFlags
+        
+    Returns:
+        tuple: A tuple containing the modified audio data and a continuation flag.
+    """
+    
     audio_data = np.frombuffer(in_data, dtype=np.float32)
 
 
@@ -56,8 +80,6 @@ def audio_callback(in_data, frame_count, time_info, status):
 
    # Apply bandpass filter
     filtered_audio = butter_bandpass_filter(reduced_noise_audio, lowcut=80, highcut=7000, sr=44100)
-
-
 
 
     try:
@@ -85,6 +107,10 @@ def audio_callback(in_data, frame_count, time_info, status):
 
 # Main function to start audio streaming
 def stream_audio():
+    
+    """ Main function to start audio streaming
+    
+    """
     p = pyaudio.PyAudio()
 
 
@@ -98,12 +124,8 @@ def stream_audio():
                     stream_callback=audio_callback)
 
 
-
-
     print("Streaming and processing audio. Press Ctrl+C to stop.")
     stream.start_stream()
-
-
 
 
     try:
