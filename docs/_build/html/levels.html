@@ -125,26 +125,93 @@
 </section>
 <section id="module-levels.greensleeves">
 <span id="levels-greensleeves-module"></span><h2>levels.greensleeves module<a class="headerlink" href="#module-levels.greensleeves" title="Link to this heading"></a></h2>
+<p>This file controls our greensleeves level. It contains all information for this level to run including audio detection and filtering,
+notes to be played, animations for this level, background generation, pause menu, and main loop to keep the level running.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="levels.greensleeves.audio_callback">
 <span class="sig-prename descclassname"><span class="pre">levels.greensleeves.</span></span><span class="sig-name descname"><span class="pre">audio_callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">in_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">frame_count</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_info</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">status</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/levels/greensleeves.html#audio_callback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#levels.greensleeves.audio_callback" title="Link to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>A callback function for real-time audio processing, typically used with a PyAudio stream.</p>
+<p>This function is called by PyAudio whenever new audio data is available. It processes the audio data by applying a bandpass filter, analyzes it
+to extract pitch information, and then predicts the frequency, confidence, and amplitude. It also handles exceptions by catching them and printing an error message.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>in_data</strong> (<em>bytes</em>) – The buffer of audio data provided by PyAudio.</p></li>
+<li><p><strong>frame_count</strong> (<em>int</em>) – The number of frames in the buffer.</p></li>
+<li><p><strong>time_info</strong> (<em>dict</em>) – A dictionary containing timing information.</p></li>
+<li><p><strong>status</strong> (<em>int</em>) – Status flag indicating if there are any errors or special conditions.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A tuple containing the original audio data buffer and a flag indicating whether the stream should continue.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="levels.greensleeves.butter_bandpass_filter">
 <span class="sig-prename descclassname"><span class="pre">levels.greensleeves.</span></span><span class="sig-name descname"><span class="pre">butter_bandpass_filter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lowcut</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">highcut</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">order</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/levels/greensleeves.html#butter_bandpass_filter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#levels.greensleeves.butter_bandpass_filter" title="Link to this definition"></a></dt>
-<dd><p>Apply a bandpass filter to the audio data.</p>
+<dd><p>Apply a Butterworth bandpass filter to given one-dimensional data.</p>
+<p>This function uses a digital bandpass filter design to filter the provided data.
+The Butterworth filter is a type of signal processing filter designed to have a flat frequency response in the passband.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<em>array_like</em>) – The input signal to be filtered.</p></li>
+<li><p><strong>lowcut</strong> (<em>float</em>) – The lower frequency boundary of the passband (Hz).</p></li>
+<li><p><strong>highcut</strong> (<em>float</em>) – The upper frequency boundary of the passband (Hz).</p></li>
+<li><p><strong>sr</strong> (<em>int</em>) – The sampling rate of the data (Hz).</p></li>
+<li><p><strong>order</strong> (<em>int</em><em>, </em><em>optional</em>) – The order of the filter. Higher order means a sharper frequency cutoff,
+but the filter will also be slower to execute. The default is 5.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>y</strong> – The filtered output with the same shape as <cite>data</cite>.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ndarray</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="levels.greensleeves.create_graph">
 <span class="sig-prename descclassname"><span class="pre">levels.greensleeves.</span></span><span class="sig-name descname"><span class="pre">create_graph</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">index_array</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">accuracy_array</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">totnote</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/levels/greensleeves.html#create_graph"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#levels.greensleeves.create_graph" title="Link to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Creates a line graph representing accuracy over a range of indices and saves it as an image.</p>
+<p>This function uses a subprocess to run a Python script that generates a graph using matplotlib. This method ensures that the creation of the graph does not disrupt the GUI’s window size. The graph is saved to a predefined directory (<cite>assets/images/tempgraphs/</cite>) as <cite>graphy.png</cite>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>index_array</strong> (<em>list</em><em> of </em><em>int</em>) – A list of indices corresponding to some sequence of measurements or evaluations.</p></li>
+<li><p><strong>accuracy_array</strong> (<em>list</em><em> of </em><em>float</em>) – A list of accuracy measurements corresponding to the indices in <cite>index_array</cite>.</p></li>
+<li><p><strong>totnote</strong> (<em>int</em>) – The maximum value on the x-axis, representing the total number of observations.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="levels.greensleeves.midi_number_to_pitch">
 <span class="sig-prename descclassname"><span class="pre">levels.greensleeves.</span></span><span class="sig-name descname"><span class="pre">midi_number_to_pitch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">midi_number</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/levels/greensleeves.html#midi_number_to_pitch"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#levels.greensleeves.midi_number_to_pitch" title="Link to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Convert a MIDI note number to its corresponding pitch name with octave.</p>
+<p>This function utilizes the <cite>music21</cite> library to convert MIDI note numbers into human-readable
+pitch names, including the octave. The <cite>music21</cite> library’s <cite>Note</cite> object is used to handle the conversion.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>midi_number</strong> (<em>int</em>) – The MIDI number that represents a specific pitch. MIDI numbers range from 0 to 127,
+where 60 corresponds to Middle C (C4).</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The pitch name with octave, as a string. For example, a <cite>midi_number</cite> of 60 will return ‘C4’.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="levels.greensleeves.start">
@@ -162,26 +229,93 @@
 </section>
 <section id="module-levels.level_happy_birthday">
 <span id="levels-level-happy-birthday-module"></span><h2>levels.level_happy_birthday module<a class="headerlink" href="#module-levels.level_happy_birthday" title="Link to this heading"></a></h2>
+<p>This file controls our happy birthday level. It contains all information for this level to run including audio detection and filtering,
+notes to be played, animations for this level, background generation, pause menu, and main loop to keep the level running.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="levels.level_happy_birthday.audio_callback">
 <span class="sig-prename descclassname"><span class="pre">levels.level_happy_birthday.</span></span><span class="sig-name descname"><span class="pre">audio_callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">in_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">frame_count</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_info</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">status</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/levels/level_happy_birthday.html#audio_callback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#levels.level_happy_birthday.audio_callback" title="Link to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>A callback function for real-time audio processing, typically used with a PyAudio stream.</p>
+<p>This function is called by PyAudio whenever new audio data is available. It processes the audio data by applying a bandpass filter, analyzes it
+to extract pitch information, and then predicts the frequency, confidence, and amplitude. It also handles exceptions by catching them and printing an error message.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>in_data</strong> (<em>bytes</em>) – The buffer of audio data provided by PyAudio.</p></li>
+<li><p><strong>frame_count</strong> (<em>int</em>) – The number of frames in the buffer.</p></li>
+<li><p><strong>time_info</strong> (<em>dict</em>) – A dictionary containing timing information.</p></li>
+<li><p><strong>status</strong> (<em>int</em>) – Status flag indicating if there are any errors or special conditions.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A tuple containing the original audio data buffer and a flag indicating whether the stream should continue.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="levels.level_happy_birthday.butter_bandpass_filter">
 <span class="sig-prename descclassname"><span class="pre">levels.level_happy_birthday.</span></span><span class="sig-name descname"><span class="pre">butter_bandpass_filter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lowcut</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">highcut</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">order</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/levels/level_happy_birthday.html#butter_bandpass_filter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#levels.level_happy_birthday.butter_bandpass_filter" title="Link to this definition"></a></dt>
-<dd><p>Apply a bandpass filter to the audio data.</p>
+<dd><p>Apply a Butterworth bandpass filter to given one-dimensional data.</p>
+<p>This function uses a digital bandpass filter design to filter the provided data.
+The Butterworth filter is a type of signal processing filter designed to have a flat frequency response in the passband.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<em>array_like</em>) – The input signal to be filtered.</p></li>
+<li><p><strong>lowcut</strong> (<em>float</em>) – The lower frequency boundary of the passband (Hz).</p></li>
+<li><p><strong>highcut</strong> (<em>float</em>) – The upper frequency boundary of the passband (Hz).</p></li>
+<li><p><strong>sr</strong> (<em>int</em>) – The sampling rate of the data (Hz).</p></li>
+<li><p><strong>order</strong> (<em>int</em><em>, </em><em>optional</em>) – The order of the filter. Higher order means a sharper frequency cutoff,
+but the filter will also be slower to execute. The default is 5.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>y</strong> – The filtered output with the same shape as <cite>data</cite>.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ndarray</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="levels.level_happy_birthday.create_graph">
 <span class="sig-prename descclassname"><span class="pre">levels.level_happy_birthday.</span></span><span class="sig-name descname"><span class="pre">create_graph</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">index_array</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">accuracy_array</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">totnote</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/levels/level_happy_birthday.html#create_graph"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#levels.level_happy_birthday.create_graph" title="Link to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Creates a line graph representing accuracy over a range of indices and saves it as an image.</p>
+<p>This function uses a subprocess to run a Python script that generates a graph using matplotlib. This method ensures that the creation of the graph does not disrupt the GUI’s window size. The graph is saved to a predefined directory (<cite>assets/images/tempgraphs/</cite>) as <cite>graphy.png</cite>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>index_array</strong> (<em>list</em><em> of </em><em>int</em>) – A list of indices corresponding to some sequence of measurements or evaluations.</p></li>
+<li><p><strong>accuracy_array</strong> (<em>list</em><em> of </em><em>float</em>) – A list of accuracy measurements corresponding to the indices in <cite>index_array</cite>.</p></li>
+<li><p><strong>totnote</strong> (<em>int</em>) – The maximum value on the x-axis, representing the total number of observations.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="levels.level_happy_birthday.midi_number_to_pitch">
 <span class="sig-prename descclassname"><span class="pre">levels.level_happy_birthday.</span></span><span class="sig-name descname"><span class="pre">midi_number_to_pitch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">midi_number</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/levels/level_happy_birthday.html#midi_number_to_pitch"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#levels.level_happy_birthday.midi_number_to_pitch" title="Link to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Convert a MIDI note number to its corresponding pitch name with octave.</p>
+<p>This function utilizes the <cite>music21</cite> library to convert MIDI note numbers into human-readable
+pitch names, including the octave. The <cite>music21</cite> library’s <cite>Note</cite> object is used to handle the conversion.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>midi_number</strong> (<em>int</em>) – The MIDI number that represents a specific pitch. MIDI numbers range from 0 to 127,
+where 60 corresponds to Middle C (C4).</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The pitch name with octave, as a string. For example, a <cite>midi_number</cite> of 60 will return ‘C4’.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="levels.level_happy_birthday.start">
@@ -191,26 +325,93 @@
 </section>
 <section id="module-levels.twinkle_little_star">
 <span id="levels-twinkle-little-star-module"></span><h2>levels.twinkle_little_star module<a class="headerlink" href="#module-levels.twinkle_little_star" title="Link to this heading"></a></h2>
+<p>This file controls our twinkle little star level. It contains all information for this level to run including audio detection and filtering,
+notes to be played, animations for this level, background generation, pause menu, and main loop to keep the level running.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="levels.twinkle_little_star.audio_callback">
 <span class="sig-prename descclassname"><span class="pre">levels.twinkle_little_star.</span></span><span class="sig-name descname"><span class="pre">audio_callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">in_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">frame_count</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_info</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">status</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/levels/twinkle_little_star.html#audio_callback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#levels.twinkle_little_star.audio_callback" title="Link to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>A callback function for real-time audio processing, typically used with a PyAudio stream.</p>
+<p>This function is called by PyAudio whenever new audio data is available. It processes the audio data by applying a bandpass filter, analyzes it
+to extract pitch information, and then predicts the frequency, confidence, and amplitude. It also handles exceptions by catching them and printing an error message.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>in_data</strong> (<em>bytes</em>) – The buffer of audio data provided by PyAudio.</p></li>
+<li><p><strong>frame_count</strong> (<em>int</em>) – The number of frames in the buffer.</p></li>
+<li><p><strong>time_info</strong> (<em>dict</em>) – A dictionary containing timing information.</p></li>
+<li><p><strong>status</strong> (<em>int</em>) – Status flag indicating if there are any errors or special conditions.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A tuple containing the original audio data buffer and a flag indicating whether the stream should continue.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="levels.twinkle_little_star.butter_bandpass_filter">
 <span class="sig-prename descclassname"><span class="pre">levels.twinkle_little_star.</span></span><span class="sig-name descname"><span class="pre">butter_bandpass_filter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lowcut</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">highcut</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">order</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/levels/twinkle_little_star.html#butter_bandpass_filter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#levels.twinkle_little_star.butter_bandpass_filter" title="Link to this definition"></a></dt>
-<dd><p>Apply a bandpass filter to the audio data.</p>
+<dd><p>Apply a Butterworth bandpass filter to given one-dimensional data.</p>
+<p>This function uses a digital bandpass filter design to filter the provided data.
+The Butterworth filter is a type of signal processing filter designed to have a flat frequency response in the passband.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<em>array_like</em>) – The input signal to be filtered.</p></li>
+<li><p><strong>lowcut</strong> (<em>float</em>) – The lower frequency boundary of the passband (Hz).</p></li>
+<li><p><strong>highcut</strong> (<em>float</em>) – The upper frequency boundary of the passband (Hz).</p></li>
+<li><p><strong>sr</strong> (<em>int</em>) – The sampling rate of the data (Hz).</p></li>
+<li><p><strong>order</strong> (<em>int</em><em>, </em><em>optional</em>) – The order of the filter. Higher order means a sharper frequency cutoff,
+but the filter will also be slower to execute. The default is 5.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>y</strong> – The filtered output with the same shape as <cite>data</cite>.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ndarray</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="levels.twinkle_little_star.create_graph">
 <span class="sig-prename descclassname"><span class="pre">levels.twinkle_little_star.</span></span><span class="sig-name descname"><span class="pre">create_graph</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">index_array</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">accuracy_array</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">totnote</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/levels/twinkle_little_star.html#create_graph"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#levels.twinkle_little_star.create_graph" title="Link to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Creates a line graph representing accuracy over a range of indices and saves it as an image.</p>
+<p>This function uses a subprocess to run a Python script that generates a graph using matplotlib. This method ensures that the creation of the graph does not disrupt the GUI’s window size. The graph is saved to a predefined directory (<cite>assets/images/tempgraphs/</cite>) as <cite>graphy.png</cite>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>index_array</strong> (<em>list</em><em> of </em><em>int</em>) – A list of indices corresponding to some sequence of measurements or evaluations.</p></li>
+<li><p><strong>accuracy_array</strong> (<em>list</em><em> of </em><em>float</em>) – A list of accuracy measurements corresponding to the indices in <cite>index_array</cite>.</p></li>
+<li><p><strong>totnote</strong> (<em>int</em>) – The maximum value on the x-axis, representing the total number of observations.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="levels.twinkle_little_star.midi_number_to_pitch">
 <span class="sig-prename descclassname"><span class="pre">levels.twinkle_little_star.</span></span><span class="sig-name descname"><span class="pre">midi_number_to_pitch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">midi_number</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/levels/twinkle_little_star.html#midi_number_to_pitch"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#levels.twinkle_little_star.midi_number_to_pitch" title="Link to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Convert a MIDI note number to its corresponding pitch name with octave.</p>
+<p>This function utilizes the <cite>music21</cite> library to convert MIDI note numbers into human-readable
+pitch names, including the octave. The <cite>music21</cite> library’s <cite>Note</cite> object is used to handle the conversion.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>midi_number</strong> (<em>int</em>) – The MIDI number that represents a specific pitch. MIDI numbers range from 0 to 127,
+where 60 corresponds to Middle C (C4).</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The pitch name with octave, as a string. For example, a <cite>midi_number</cite> of 60 will return ‘C4’.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="levels.twinkle_little_star.start">

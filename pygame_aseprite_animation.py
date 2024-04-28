@@ -14,18 +14,19 @@ import time
 
 class Animation(object):
     """A class that contains all of the animations and frame duration information
-    TODO: Maybe add name property to assign to animations
 
     Artibutes:
         :aseprite_file: the loaded in aseprite file. Shouldn't have to use this file\n
         :animation_frames: a list of pygame.Surface() objects, each containing a single frames\n
-        :frame_duration: a list of the duration each frame should be displayed. Index matches that of :animation_frame:"""
+        :frame_duration: a list of the duration each frame should be displayed. Index matches that of :animation_frame:
+    """
 
     def __init__(self, _filedir):
         """Instanciate a animation object
         
         :_filedir: Path to your .ase or .aseprite files\n
-        :return: Animation object containt your frames as a list of pygame.surface() objects """
+        :return: Animation object containt your frames as a list of pygame.surface() objects 
+        """
 
         # load aseprite file
         self.aseprite_file = self.parseFile(_filedir)
@@ -37,15 +38,19 @@ class Animation(object):
     def parseFile(self, filedir):
         """Uses py_aseprite to load the file
         
-        :filedir: Path to your .ase or .aseprite files\n 
-        :return: Animation object containt your frames as a list of pygame.surface() objects """
+        Args:
+        filedir: Path to your .ase or .aseprite files\n 
+        return: Animation object containt your frames as a list of pygame.surface() objects 
+
+        """
         with open(filedir, 'rb') as f:
             return AsepriteFile(f.read())
 
     def draw_all_animation_frames(self):
         """Goes through .ase or .aseprite file and draws all of your frames
         
-        :return: animation_frames which is a list of every individual frame"""
+        return: animation_frames which is a list of every individual frame
+        """
         animation_frames = []
         for frame_number in range(self.aseprite_file.header.num_frames):
                 frame = self.draw_single_frame(frame_number)
@@ -56,8 +61,10 @@ class Animation(object):
     def draw_single_frame(self, num_frame):
         """Draws single frame onto an empty pygame.Surface
         
-        :num_frame: index of the frame to be drawn\n
-        :return: frame which is a pygame.Surface() of the same size as the aseprite file onto which the pixels are drawn """
+        num_frame: index of the frame to be drawn\n
+        return: frame which is a pygame.Surface() of the same size as the aseprite file onto which the pixels are drawn 
+        
+        """
         cel_slice = [None] * len(self.aseprite_file.layers)
 
         #read slices
@@ -78,9 +85,10 @@ class Animation(object):
     def draw_raw_image_data(self, cel :CelChunk, frame):
         """Actually reads the pixel data and draw it onto the surface() layer by layer
         
-        :cel: CelChunk object from the raw aseprite file, handles by py_aseprite\n
-        :frame: the pygame.Surface() onto which the data will be drawn\n
-        :return: the pygame.Surface(), but with the layer drawn onto it"""
+        cel: CelChunk object from the raw aseprite file, handles by py_aseprite\n
+        frame: the pygame.Surface() onto which the data will be drawn\n
+        return: the pygame.Surface(), but with the layer drawn onto it
+        """
         data = list(cel.data['data'])
         for y in range(cel.data['height']):
             for x in range(cel.data['width']):
@@ -108,13 +116,15 @@ class AnimationManager(object):
     
     Atributes:
         :animation_list: a list of all the animations for this instance\n
-        :draw_surface: the surface onto which the frame needs to be drawn"""
+        :draw_surface: the surface onto which the frame needs to be drawn
+    """
 
     def __init__(self, _animation_list :Animation, _draw_surface :pygame.Surface):
         """Init
         
-        :_animation_list: a list of Animation Objects \n
-        :_draw_frame: the pygame.Surface() onto which you'd like to blit the frames"""
+        _animation_list: a list of Animation Objects \n
+        _draw_frame: the pygame.Surface() onto which you'd like to blit the frames
+        """
         self.animation_list = _animation_list
         self.draw_surface = _draw_surface
         # Initialize animation to the 1st frame in the list
@@ -123,8 +133,9 @@ class AnimationManager(object):
     def start_animation(self, _animation:Animation, _next_animation:Animation = None):
         """Start a new animation to
         
-        :_animation: the animation you'd like to display
-        :_next_animation: what animation to play after this one is finished. Loops if left empty."""
+        _animation: the animation you'd like to display
+        _next_animation: what animation to play after this one is finished. Loops if left empty.
+        """
         # Set the animation you'd like to display
         self.current_animation = _animation
         # Animation to play after finishing. Animation loops if None.
@@ -137,7 +148,8 @@ class AnimationManager(object):
     def update_self(self, frame_x, frame_y):
         """Called every frame. Checks if frame duration is finished and blits frame to your Surface
         
-        :frame_x/y: Pixel location where the frame need to be blit"""
+        frame_x/y: Pixel location where the frame need to be blit
+        """
         # Check if frame is finished. if so, set next frame
         if  round(time.time() * 1000) > self.tend:
             # Check if animation is finished and set next animation if needed

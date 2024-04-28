@@ -71,7 +71,12 @@
            <div itemprop="articleBody">
              
   <h1>Source code for levels.twinkle_little_star</h1><div class="highlight"><pre>
-<span></span><span class="c1"># import pygame asprite package, download by typing &quot;pip3 install pygame_aseprite_animation&quot; into your terminal</span>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">This file controls our twinkle little star level. It contains all information for this level to run including audio detection and filtering, </span>
+<span class="sd">notes to be played, animations for this level, background generation, pause menu, and main loop to keep the level running.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="c1"># import pygame asprite package, download by typing &quot;pip3 install pygame_aseprite_animation&quot; into your terminal</span>
 <span class="kn">from</span> <span class="nn">pygame_aseprite_animation</span> <span class="kn">import</span> <span class="o">*</span>
 <span class="c1"># Import the pygame module</span>
 <span class="kn">import</span> <span class="nn">os</span><span class="o">,</span> <span class="nn">pygame</span>
@@ -708,8 +713,31 @@
 <a class="viewcode-back" href="../../levels.html#levels.twinkle_little_star.butter_bandpass_filter">[docs]</a>
 <span class="k">def</span> <span class="nf">butter_bandpass_filter</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">lowcut</span><span class="p">,</span> <span class="n">highcut</span><span class="p">,</span> <span class="n">sr</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="mi">5</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Apply a bandpass filter to the audio data.</span>
+<span class="sd">    Apply a Butterworth bandpass filter to given one-dimensional data.</span>
+
+<span class="sd">    This function uses a digital bandpass filter design to filter the provided data.</span>
+<span class="sd">    The Butterworth filter is a type of signal processing filter designed to have a flat frequency response in the passband.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    data : array_like</span>
+<span class="sd">        The input signal to be filtered.</span>
+<span class="sd">    lowcut : float</span>
+<span class="sd">        The lower frequency boundary of the passband (Hz).</span>
+<span class="sd">    highcut : float</span>
+<span class="sd">        The upper frequency boundary of the passband (Hz).</span>
+<span class="sd">    sr : int</span>
+<span class="sd">        The sampling rate of the data (Hz).</span>
+<span class="sd">    order : int, optional</span>
+<span class="sd">        The order of the filter. Higher order means a sharper frequency cutoff,</span>
+<span class="sd">        but the filter will also be slower to execute. The default is 5.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    y : ndarray</span>
+<span class="sd">        The filtered output with the same shape as `data`.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+
     <span class="n">nyquist</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">sr</span>
     <span class="n">low</span> <span class="o">=</span> <span class="n">lowcut</span> <span class="o">/</span> <span class="n">nyquist</span>
     <span class="n">high</span> <span class="o">=</span> <span class="n">highcut</span> <span class="o">/</span> <span class="n">nyquist</span>
@@ -721,6 +749,23 @@
 <div class="viewcode-block" id="midi_number_to_pitch">
 <a class="viewcode-back" href="../../levels.html#levels.twinkle_little_star.midi_number_to_pitch">[docs]</a>
 <span class="k">def</span> <span class="nf">midi_number_to_pitch</span><span class="p">(</span><span class="n">midi_number</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Convert a MIDI note number to its corresponding pitch name with octave.</span>
+
+<span class="sd">    This function utilizes the `music21` library to convert MIDI note numbers into human-readable</span>
+<span class="sd">    pitch names, including the octave. The `music21` library&#39;s `Note` object is used to handle the conversion.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    midi_number : int</span>
+<span class="sd">        The MIDI number that represents a specific pitch. MIDI numbers range from 0 to 127, </span>
+<span class="sd">        where 60 corresponds to Middle C (C4).</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    str</span>
+<span class="sd">        The pitch name with octave, as a string. For example, a `midi_number` of 60 will return &#39;C4&#39;.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">n</span> <span class="o">=</span> <span class="n">music21Note</span><span class="o">.</span><span class="n">Note</span><span class="p">()</span>
     <span class="n">n</span><span class="o">.</span><span class="n">pitch</span><span class="o">.</span><span class="n">midi</span> <span class="o">=</span> <span class="n">midi_number</span>
     <span class="k">return</span> <span class="n">n</span><span class="o">.</span><span class="n">pitch</span><span class="o">.</span><span class="n">nameWithOctave</span></div>
@@ -729,6 +774,29 @@
 <div class="viewcode-block" id="audio_callback">
 <a class="viewcode-back" href="../../levels.html#levels.twinkle_little_star.audio_callback">[docs]</a>
 <span class="k">def</span> <span class="nf">audio_callback</span><span class="p">(</span><span class="n">in_data</span><span class="p">,</span> <span class="n">frame_count</span><span class="p">,</span> <span class="n">time_info</span><span class="p">,</span> <span class="n">status</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A callback function for real-time audio processing, typically used with a PyAudio stream.</span>
+
+<span class="sd">    This function is called by PyAudio whenever new audio data is available. It processes the audio data by applying a bandpass filter, analyzes it </span>
+<span class="sd">    to extract pitch information, and then predicts the frequency, confidence, and amplitude. It also handles exceptions by catching them and printing an error message.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    in_data : bytes</span>
+<span class="sd">        The buffer of audio data provided by PyAudio.</span>
+<span class="sd">    frame_count : int</span>
+<span class="sd">        The number of frames in the buffer.</span>
+<span class="sd">    time_info : dict</span>
+<span class="sd">        A dictionary containing timing information.</span>
+<span class="sd">    status : int</span>
+<span class="sd">        Status flag indicating if there are any errors or special conditions.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    tuple</span>
+<span class="sd">        A tuple containing the original audio data buffer and a flag indicating whether the stream should continue.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
     <span class="n">audio_data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">frombuffer</span><span class="p">(</span><span class="n">in_data</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
 
 
@@ -765,6 +833,21 @@
 <div class="viewcode-block" id="create_graph">
 <a class="viewcode-back" href="../../levels.html#levels.twinkle_little_star.create_graph">[docs]</a>
 <span class="k">def</span> <span class="nf">create_graph</span><span class="p">(</span><span class="n">index_array</span><span class="p">,</span> <span class="n">accuracy_array</span><span class="p">,</span> <span class="n">totnote</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Creates a line graph representing accuracy over a range of indices and saves it as an image.</span>
+
+<span class="sd">    This function uses a subprocess to run a Python script that generates a graph using matplotlib. This method ensures that the creation of the graph does not disrupt the GUI&#39;s window size. The graph is saved to a predefined directory (`assets/images/tempgraphs/`) as `graphy.png`.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    index_array : list of int</span>
+<span class="sd">        A list of indices corresponding to some sequence of measurements or evaluations.</span>
+<span class="sd">    accuracy_array : list of float</span>
+<span class="sd">        A list of accuracy measurements corresponding to the indices in `index_array`.</span>
+<span class="sd">    totnote : int</span>
+<span class="sd">        The maximum value on the x-axis, representing the total number of observations.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
     <span class="c1"># This creates and saves the graph file using a subprocess so that it doesn&#39;t disrupt the window size</span>
     <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">([</span><span class="s2">&quot;python3&quot;</span><span class="p">,</span> <span class="s2">&quot;-c&quot;</span><span class="p">,</span> <span class="s2">&quot;import matplotlib.pyplot as plt; plt.plot( &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">index_array</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;,&quot;</span><span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">accuracy_array</span><span class="p">)</span><span class="o">+</span> <span class="s2">&quot;, color=&#39;orange&#39;, linewidth=5); plt.ylim(0,100); plt.xlim(1,&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">totnote</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;); plt.title(&#39;Your overall Accuracy!&#39;); font = {&#39;weight&#39; : &#39;bold&#39;,&#39;size&#39;   : 22}; plt.yticks(fontsize=20); plt.xticks(fontsize=20); plt.rc(&#39;font&#39;, **font); plt.savefig(&#39;assets/images/tempgraphs/graphy.png&#39;); plt.clf()&quot;</span><span class="p">])</span></div>
 
