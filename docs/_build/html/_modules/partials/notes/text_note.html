@@ -132,21 +132,22 @@
         <span class="n">FIRST_HEIGHT</span> <span class="o">=</span> <span class="mi">30</span>
 
         <span class="c1"># how far apart each tab line is </span>
-        <span class="n">TAB_OFFSET</span> <span class="o">=</span> <span class="mi">66</span>
+        <span class="c1"># Each line has specific OFFSET since we change the tabs_outline</span>
+        <span class="n">TAB_OFFSET</span> <span class="o">=</span> <span class="mi">60</span>
 
         <span class="c1"># This will assign the note a y height based off what tab line it should be on</span>
         <span class="k">if</span> <span class="n">tab_line</span><span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
-            <span class="n">starting_y</span> <span class="o">=</span> <span class="n">FIRST_HEIGHT</span>
+            <span class="n">starting_y</span> <span class="o">=</span> <span class="n">FIRST_HEIGHT</span> <span class="o">-</span> <span class="mi">1</span>
         <span class="k">elif</span> <span class="n">tab_line</span><span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
-            <span class="n">starting_y</span> <span class="o">=</span> <span class="n">FIRST_HEIGHT</span> <span class="o">+</span> <span class="n">TAB_OFFSET</span> <span class="o">*</span> <span class="mi">1</span>
+            <span class="n">starting_y</span> <span class="o">=</span> <span class="n">FIRST_HEIGHT</span> <span class="o">+</span> <span class="mi">60</span> <span class="o">*</span> <span class="mi">1</span>
         <span class="k">elif</span> <span class="n">tab_line</span><span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
-            <span class="n">starting_y</span> <span class="o">=</span> <span class="n">FIRST_HEIGHT</span> <span class="o">+</span> <span class="n">TAB_OFFSET</span> <span class="o">*</span> <span class="mi">2</span>
+            <span class="n">starting_y</span> <span class="o">=</span> <span class="n">FIRST_HEIGHT</span> <span class="o">+</span> <span class="mi">61</span> <span class="o">*</span> <span class="mi">2</span>
         <span class="k">elif</span> <span class="n">tab_line</span><span class="o">==</span> <span class="mi">4</span><span class="p">:</span>
-            <span class="n">starting_y</span> <span class="o">=</span> <span class="n">FIRST_HEIGHT</span> <span class="o">+</span> <span class="n">TAB_OFFSET</span> <span class="o">*</span> <span class="mi">3</span>
+            <span class="n">starting_y</span> <span class="o">=</span> <span class="n">FIRST_HEIGHT</span> <span class="o">+</span> <span class="mi">61</span> <span class="o">*</span> <span class="mi">3</span>
         <span class="k">elif</span> <span class="n">tab_line</span><span class="o">==</span> <span class="mi">5</span><span class="p">:</span>
-            <span class="n">starting_y</span> <span class="o">=</span> <span class="n">FIRST_HEIGHT</span> <span class="o">+</span> <span class="n">TAB_OFFSET</span> <span class="o">*</span> <span class="mi">4</span>
+            <span class="n">starting_y</span> <span class="o">=</span> <span class="n">FIRST_HEIGHT</span> <span class="o">+</span> <span class="mi">62</span> <span class="o">*</span> <span class="mi">4</span>
         <span class="k">elif</span> <span class="n">tab_line</span><span class="o">==</span> <span class="mi">6</span><span class="p">:</span>
-            <span class="n">starting_y</span> <span class="o">=</span> <span class="n">FIRST_HEIGHT</span> <span class="o">+</span> <span class="n">TAB_OFFSET</span> <span class="o">*</span> <span class="mi">5</span>
+            <span class="n">starting_y</span> <span class="o">=</span> <span class="n">FIRST_HEIGHT</span> <span class="o">+</span> <span class="mi">63</span> <span class="o">*</span> <span class="mi">5</span>
             
         <span class="c1"># This will start it centered on the right tab line</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">rect</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">surf</span><span class="o">.</span><span class="n">get_rect</span><span class="p">(</span>
