@@ -55,7 +55,6 @@ def midi_number_to_pitch(midi_number):
         string: pitch name (such as C4, D5, etc.)
     """
     n = note.Note()
-    print(type(n))
     n.pitch.midi = midi_number
     return n.pitch.nameWithOctave
 
