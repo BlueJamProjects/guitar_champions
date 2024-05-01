@@ -1,22 +1,22 @@
-# import pygame asprite package, download by typing "pip3 install pygame_aseprite_animation" into your terminal
+"""
+This is the main file where our program starts. It will begin our PyGame module and setup the main menu window with all necessary assets
+including level select, settings, and tutorials.
+
+Files Affected - 
+main.py
+AudioTest.py
+tutorials_main.py
+setup.py
+settings_menu.py
+"""
+
 from pygame_aseprite_animation import *
-# Import the pygame module
 import os, pygame
-
-# Import random for random numbers
 import random
-
-# Import math for oscillation
 import math
-
 import json
-
-# Import the menu library to more easily make menu selction
 import pygame_menu
 
-# Import pygame.locals for easier access to key coordinates
-# Updated to conform to flake8 and black standards
-# from pygame.locals import *
 from pygame.locals import (
     RLEACCEL,
     K_LEFT,
@@ -26,8 +26,6 @@ from pygame.locals import (
     QUIT,
 )
 
-
-# Import levels
 import levels.twinkle_little_star as level1
 import levels.level_happy_birthday as level2
 import levels.greensleeves as level3
@@ -39,16 +37,13 @@ import helpers.draw_update_function_helper as draw_update_function_helper
 import tutorials.tutorials_main as tutorials_main
 import helpers.settings_menu as settings_menu
 
-# Define constants for the screen width and height
 SCREEN_WIDTH = 800
 SCREEN_HEIGHT = 600
 
  
 
-# Setup for sounds, defaults are good
 pygame.mixer.init()
 
-# Initialize pygame
 pygame.init()
 pygame.display.set_caption("Guitar Champions")
 
@@ -56,12 +51,8 @@ Icon = pygame.image.load("assets/images/items/guitar.png")
 
 pygame.display.set_icon(Icon)
 
-# Initialize Pygame fonts
 pygame.font.init()
 
-
-# Create the screen object
-# The size is determined by the constant SCREEN_WIDTH and SCREEN_HEIGHT
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 
 
@@ -74,21 +65,23 @@ level_list = [("Twinkle Little Star", level1),("Happy Birthday", level2),  ("Gre
 
 
 
-
-
 def select_level(name, index):
-    # This updates current level to the index of the selected level
+    """
+    Change the current level when a different level is selected.
+
+    Args:
+        name (str): The name of the selected level.
+        index (int): The index of the selected level in the level list.
+    """
     global current_level
     current_level = index
 
-    # Flip everything to the display
     pygame.display.flip()
 
-
-        
-
 def start_level():
-    # This 
+    """
+    Start the selected level when the play button is clicked.
+    """
     level_list[current_level][1].start()
 
 
@@ -100,6 +93,7 @@ if __name__ == "__main__":
     pygame.init()   
 
     surface = pygame.display.set_mode((800, 600))
+    
     mytheme = pygame_menu.themes.Theme( # transparent background
                 title_background_color=(255, 187, 68),
                 title_font_color=(255,255,255),

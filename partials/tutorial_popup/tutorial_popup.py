@@ -1,9 +1,32 @@
 # Import the pygame module
 import pygame
 
+"""
+This file contains the TutorialPopup class
+"""
+
 
 
 class TutorialPopup():
+        """
+    A class representing our tutorial popup window in our Pygame application.
+
+    Attributes:
+        text (str): The text content of the popup.
+        width (int): The width of the popup window. Defaults to 290.
+        height (int): The height of the popup window. Defaults to 200.
+        left_padding (int): The left padding of the popup window. Defaults to 100.
+        top_padding (int): The top padding of the popup window. Defaults to 50.
+        button_color (tuple): The color of the popup button. Defaults to (239, 159, 20).
+        button_hover_color (tuple): The hover color of the popup button. Defaults to (209, 129, 0).
+        text_color (tuple): The color of the text in the popup. Defaults to (255, 255, 255).
+        background_color (tuple): The background color of the popup. Defaults to (239, 159, 20).
+        show_highlight_region (bool): Whether to show a highlighted region. Defaults to False.
+        highlight_region_color (tuple): The color of the highlighted region. Defaults to (255, 255, 255).
+        highlight_region_position (pygame.Rect): The position of the highlighted region. Defaults to pygame.Rect(20, 20, 100, 100).
+        trigger_effect_number (int): A number used to trigger effects. Defaults to 0.
+        is_final_popup (bool): Indicates if this is the final popup. Defaults to False.
+    """
         
         def __init__(self,
                       text, 
@@ -172,12 +195,29 @@ class TutorialPopup():
 
 
         def set_number(self, current_number, total):
+            """
+        Creates the render for the current popups number.
+
+        Args:
+            current_number (int): The current number to render.
+            total (int): The total number to render.
+
+        Returns:
+            None
+        """
             self.number_render = self.number_font.render(str(current_number) + "/" + str(total), True, self.text_color, self.background_color)
 
 
 
 
         def button_on_hover(self):
+            """Check whether the button is being hovered over and changes style accordingly.
+
+        This method should be placed in the control loop after if event.type == pygame.MOUSEMOTION.
+
+        Returns:
+            None
+        """
             # This funciton checks whether the button is being hovered over and changes style accordingly
             # This should be placed in the control loop after if event.type==pygame.MOUSEMOTION:
 
@@ -194,6 +234,12 @@ class TutorialPopup():
 
 
         def button_is_pressed(self):
+            """Checks whether the button is being pressed.
+
+        Returns:
+            bool: True if the button is pressed, False otherwise.
+        """
+            
             # This function checks whether the button is being pressed and returns True if so
             # This should be placed in the control loop after if event.type==pygame.MOUSEBUTTONDOWN:
 

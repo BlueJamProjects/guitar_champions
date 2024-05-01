@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>helpers.settings_helper &mdash; Guitar-Champions 1.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=8d563738"></script>
+        <script src="../../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            Guitar-Champions
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">guitar_champions</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Guitar-Champions</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">helpers.settings_helper</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for helpers.settings_helper</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">This file contains:</span>
+
+<span class="sd">- The Settings object that is used for storing the settings in memory</span>
+
+<span class="sd">    The functions:</span>
+<span class="sd">    - get_settings</span>
+<span class="sd">    - update_enable_metronome</span>
+<span class="sd">    - update_volume</span>
+<span class="sd">    - update_microphone_amplitude</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+
+
+<span class="kn">import</span> <span class="nn">json</span>
+
+<div class="viewcode-block" id="Settings">
+<a class="viewcode-back" href="../../helpers.html#helpers.settings_helper.Settings">[docs]</a>
+<span class="k">class</span> <span class="nc">Settings</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A class to store the current settings.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        volume (int): The volume level, ranging from 0 to 100.</span>
+<span class="sd">        enable_metronome (bool): Whether the metronome is enabled or not.</span>
+<span class="sd">        microphone_amplitude (float): The amplitude of the microphone, ranging from 0.0 to 1.0.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">volume</span> <span class="o">=</span> <span class="mi">100</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">enable_metronome</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">microphone_amplitude</span> <span class="o">=</span> <span class="mi">1</span></div>
+
+
+
+
+
+<div class="viewcode-block" id="get_settings">
+<a class="viewcode-back" href="../../helpers.html#helpers.settings_helper.get_settings">[docs]</a>
+<span class="k">def</span> <span class="nf">get_settings</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Retrieves game settings from &#39;gamesettings.json&#39; and returns them as a Settings object.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Settings: An object containing the game settings.</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">        IOError: If the file &#39;gamesettings.json&#39; cannot be opened or read.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;../settings/gamesettings.json&quot;</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+        <span class="n">settings_data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+
+    <span class="n">current_settings</span> <span class="o">=</span> <span class="n">Settings</span><span class="p">()</span>
+
+    <span class="c1"># Loops through all the keys from the data and assigns their settings value</span>
+    <span class="c1"># checks each for validity</span>
+    <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">settings_data</span><span class="p">:</span>
+
+        <span class="k">if</span> <span class="n">key</span> <span class="o">==</span> <span class="s2">&quot;volume&quot;</span><span class="p">:</span>
+
+            <span class="k">try</span><span class="p">:</span>
+                <span class="c1"># If the volume was in the valid range</span>
+                <span class="k">if</span> <span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">settings_data</span><span class="p">[</span><span class="n">key</span><span class="p">])</span> <span class="o">&lt;</span> <span class="mi">101</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">settings_data</span><span class="p">[</span><span class="n">key</span><span class="p">])</span> <span class="o">&gt;</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+                    <span class="n">current_settings</span><span class="o">.</span><span class="n">volume</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">settings_data</span><span class="p">[</span><span class="n">key</span><span class="p">])</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;ERROR - stored volume setting was not in valid range&quot;</span><span class="p">)</span>
+
+            <span class="c1"># If the stored value was not a string of an int</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;ERROR - could not process volume setting: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+
+        <span class="k">elif</span> <span class="n">key</span> <span class="o">==</span> <span class="s2">&quot;enable_metronome&quot;</span><span class="p">:</span>
+
+            <span class="k">try</span><span class="p">:</span>
+                <span class="c1"># If the enable metronome value was one of the valid values</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">settings_data</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">==</span> <span class="kc">False</span><span class="p">):</span>
+                    <span class="n">current_settings</span><span class="o">.</span><span class="n">enable_metronome</span> <span class="o">=</span> <span class="kc">False</span>
+                <span class="k">elif</span> <span class="p">(</span><span class="n">settings_data</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">==</span> <span class="kc">True</span><span class="p">):</span>
+                    <span class="n">current_settings</span><span class="o">.</span><span class="n">enable_metronome</span> <span class="o">=</span> <span class="kc">True</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;ERROR - stored enable_metronome setting was not valid&quot;</span><span class="p">)</span>
+
+            <span class="c1"># If the stored value was not a string of an int</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;ERROR - could not process enable_metronome setting: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="k">elif</span> <span class="n">key</span> <span class="o">==</span> <span class="s2">&quot;microphone_amplitude&quot;</span><span class="p">:</span>
+
+            <span class="k">try</span><span class="p">:</span>
+                <span class="c1"># If the volume was in the valid range</span>
+                <span class="k">if</span> <span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">settings_data</span><span class="p">[</span><span class="n">key</span><span class="p">])</span> <span class="o">&lt;</span> <span class="mi">101</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">settings_data</span><span class="p">[</span><span class="n">key</span><span class="p">])</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">):</span>
+                    <span class="n">current_settings</span><span class="o">.</span><span class="n">microphone_amplitude</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">settings_data</span><span class="p">[</span><span class="n">key</span><span class="p">])</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;ERROR - stored microphone_amplitude setting was not in valid range&quot;</span><span class="p">)</span>
+
+            <span class="c1"># If the stored value was not a string of an int</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;ERROR - could not process microphone_amplitude setting: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+
+
+    <span class="k">return</span> <span class="n">current_settings</span></div>
+
+
+
+
+
+<div class="viewcode-block" id="update_enable_metronome">
+<a class="viewcode-back" href="../../helpers.html#helpers.settings_helper.update_enable_metronome">[docs]</a>
+<span class="k">def</span> <span class="nf">update_enable_metronome</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">new_enable_metronome</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Update the stored enable_metronome value in the gamesettings.json file.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        name (str): The name of the setting.</span>
+<span class="sd">        new_enable_metronome (bool): The new value to store for enable_metronome.</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">        ValueError: If an invalid value is passed for new_enable_metronome.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;../settings/gamesettings.json&quot;</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+        <span class="n">settings_data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">new_enable_metronome</span> <span class="o">==</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="n">final_enable_metronome</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">elif</span> <span class="n">new_enable_metronome</span> <span class="o">==</span> <span class="kc">False</span><span class="p">:</span>
+            <span class="n">final_enable_metronome</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;WARNING - invalid value passed for enable_metronome, corrected to True&quot;</span><span class="p">)</span>
+            <span class="n">final_enable_metronome</span> <span class="o">=</span> <span class="kc">True</span>
+
+
+        <span class="c1"># Updates the value if no errors were thrown</span>
+        <span class="n">settings_data</span><span class="p">[</span><span class="s2">&quot;enable_metronome&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">final_enable_metronome</span>
+
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;../settings/gamesettings.json&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+            <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">settings_data</span><span class="p">,</span> <span class="n">file</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;ERROR updating value for enable_metronome: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;enable_metronome was not updated&quot;</span><span class="p">)</span></div>
+
+    
+   
+
+
+<div class="viewcode-block" id="update_volume">
+<a class="viewcode-back" href="../../helpers.html#helpers.settings_helper.update_volume">[docs]</a>
+<span class="k">def</span> <span class="nf">update_volume</span><span class="p">(</span><span class="n">new_volume</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Updates the stored volume value in the gamesettings.json file.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        new_volume (int): The new volume value to be stored. Should be an integer </span>
+<span class="sd">        between 0 and 100, inclusive.</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">        ValueError: If the provided volume is not within the valid range (0-100).</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        None</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;../settings/gamesettings.json&quot;</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+        <span class="n">settings_data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">new_volume</span> <span class="o">//</span> <span class="mi">1</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="mi">100</span> <span class="ow">and</span> <span class="p">(</span><span class="n">new_volume</span> <span class="o">//</span> <span class="mi">1</span> <span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">final_volume</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">new_volume</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="p">(</span><span class="n">new_volume</span> <span class="o">//</span> <span class="mi">1</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">100</span><span class="p">:</span>
+            <span class="n">final_volume</span> <span class="o">=</span> <span class="mi">100</span>
+        <span class="k">elif</span> <span class="p">(</span><span class="n">new_volume</span> <span class="o">//</span> <span class="mi">1</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">final_volume</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;WARNING - invalid value passed for volume, corrected to 100&quot;</span><span class="p">)</span>
+            <span class="n">final_volume</span> <span class="o">=</span> <span class="mi">100</span>
+
+        <span class="c1"># Updates the value if no errors were thrown</span>
+        <span class="n">settings_data</span><span class="p">[</span><span class="s2">&quot;volume&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">final_volume</span>
+
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;../settings/gamesettings.json&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+            <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">settings_data</span><span class="p">,</span> <span class="n">file</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;ERROR updating value for volume: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;volume was not updated&quot;</span><span class="p">)</span></div>
+
+
+
+
+
+<div class="viewcode-block" id="update_microphone_amplitude">
+<a class="viewcode-back" href="../../helpers.html#helpers.settings_helper.update_microphone_amplitude">[docs]</a>
+<span class="k">def</span> <span class="nf">update_microphone_amplitude</span><span class="p">(</span><span class="n">new_amplitude</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Update the stored microphone_amplitude value in the gamesettings.json file.</span>
+
+<span class="sd">    Parameters:</span>
+<span class="sd">        new_amplitude (int): The new value for the microphone amplitude. Must be an integer between 0 and 100 (inclusive).</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">        ValueError: If the provided new_amplitude is not within the valid range.</span>
+
+<span class="sd">    Note:</span>
+<span class="sd">        If the provided new_amplitude is outside the valid range, it will be corrected to the nearest valid value (0 or 100).</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;../settings/gamesettings.json&quot;</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+        <span class="n">settings_data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">new_amplitude</span> <span class="o">//</span> <span class="mi">1</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="mi">100</span> <span class="ow">and</span> <span class="p">(</span><span class="n">new_amplitude</span> <span class="o">//</span> <span class="mi">1</span> <span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">final_amplitude</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">new_amplitude</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="p">(</span><span class="n">new_amplitude</span> <span class="o">//</span> <span class="mi">1</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">100</span><span class="p">:</span>
+            <span class="n">final_amplitude</span> <span class="o">=</span> <span class="mi">100</span>
+        <span class="k">elif</span> <span class="p">(</span><span class="n">new_amplitude</span> <span class="o">//</span> <span class="mi">1</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">final_amplitude</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;WARNING - invalid value passed for microphone_amplitude, corrected to 100&quot;</span><span class="p">)</span>
+            <span class="n">final_amplitude</span> <span class="o">=</span> <span class="mi">100</span>
+        <span class="c1"># Updates the value if no errors were thrown</span>
+        <span class="n">settings_data</span><span class="p">[</span><span class="s2">&quot;microphone_amplitude&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">final_amplitude</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;../settings/gamesettings.json&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+            <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">settings_data</span><span class="p">,</span> <span class="n">file</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;ERROR updating value for microphone_amplitude: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;microphone_amplitude was not updated&quot;</span><span class="p">)</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Ben Spence, Jonas Land, AJ Baudino, Hexin Hu, Tripper Wright.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

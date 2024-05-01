@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>partials.notes.text_note &mdash; Guitar-Champions 1.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../_static/documentation_options.js?v=8d563738"></script>
+        <script src="../../../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            Guitar-Champions
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">guitar_champions</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Guitar-Champions</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">partials.notes.text_note</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for partials.notes.text_note</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">pygame</span>
+<span class="kn">import</span> <span class="nn">random</span>
+
+<span class="kn">from</span> <span class="nn">pygame.locals</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">K_o</span><span class="p">,</span>
+    <span class="n">K_0</span><span class="p">,</span>
+    <span class="n">K_1</span><span class="p">,</span>
+    <span class="n">K_2</span><span class="p">,</span>
+    <span class="n">K_3</span><span class="p">,</span>
+    <span class="n">K_4</span><span class="p">,</span>
+    <span class="n">K_5</span><span class="p">,</span>
+    <span class="n">K_6</span><span class="p">,</span>
+    <span class="n">K_7</span><span class="p">,</span>
+    <span class="n">K_8</span><span class="p">,</span>
+    <span class="n">K_9</span><span class="p">,</span>
+<span class="p">)</span>
+
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">This file contains the Note class</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="Note">
+<a class="viewcode-back" href="../../../partials.notes.html#partials.notes.text_note.Note">[docs]</a>
+<span class="k">class</span> <span class="nc">Note</span><span class="p">(</span><span class="n">pygame</span><span class="o">.</span><span class="n">sprite</span><span class="o">.</span><span class="n">Sprite</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A class representing a musical note in the game.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        midi (int): The MIDI value of the note.</span>
+<span class="sd">        text (str): The text representation of the note.</span>
+<span class="sd">        tab_line (int): The tab line on which the note is placed.</span>
+<span class="sd">        time_to_next_note (float): The time (in beats) until the next note.</span>
+<span class="sd">        font_size (int): The size of the font for rendering the note.</span>
+<span class="sd">        font_color (tuple): The RGB color tuple for the font.</span>
+<span class="sd">        font_name (str): The name of the font used for rendering.</span>
+<span class="sd">        Screen_Width (int): The width of the game screen.</span>
+<span class="sd">        Screen_Height (int): The height of the game screen.</span>
+<span class="sd">        id (int): The unique identifier for the note.</span>
+<span class="sd">        was_played (bool): Indicates if the note has been played.</span>
+<span class="sd">        is_active (bool): Indicates if the note is currently active.</span>
+
+<span class="sd">    Methods:</span>
+<span class="sd">        update(): Move the note based on a constant speed and remove it when it passes the left edge of the screen.</span>
+<span class="sd">        get_x_location(): Get the current x-coordinate of the note.</span>
+<span class="sd">        set_x_location(x_value): Set the current x-coordinate of the note.</span>
+<span class="sd">        check_correct_note(predicted_midi_arr): Check if the note matches any of the predicted MIDI values.</span>
+<span class="sd">        get_time_to_next_note(): Get the time until the next note.</span>
+<span class="sd">        set_active_color(): Set the color of the note to indicate it is active.</span>
+<span class="sd">        get_is_active(): Check if the note is active.</span>
+<span class="sd">        set_missed_color(): Set the color of the note to indicate it was missed.</span>
+<span class="sd">        set_played_color(): Set the color of the note to indicate it was played correctly.</span>
+<span class="sd">        get_was_played(): Check if the note was played.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">midi</span><span class="o">=</span><span class="mi">40</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;O&quot;</span><span class="p">,</span> <span class="n">tab_line</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">time_to_next_note</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">font_size</span><span class="o">=</span><span class="mi">70</span><span class="p">,</span> <span class="n">font_color</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="n">font_name</span><span class="o">=</span><span class="s1">&#39;freesansbold.ttf&#39;</span><span class="p">,</span> <span class="n">Screen_Width</span><span class="o">=</span><span class="mi">800</span><span class="p">,</span> <span class="n">Screen_Height</span><span class="o">=</span><span class="mi">600</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">Note</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+
+        <span class="c1"># Initialize Pygame</span>
+        <span class="n">pygame</span><span class="o">.</span><span class="n">init</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">tab_line</span> <span class="o">=</span> <span class="n">tab_line</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">Screen_Width</span> <span class="o">=</span> <span class="n">Screen_Width</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Screen_Height</span> <span class="o">=</span> <span class="n">Screen_Height</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="o">=</span><span class="nb">id</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">midi</span> <span class="o">=</span> <span class="n">midi</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">was_played</span> <span class="o">=</span> <span class="kc">False</span>
+
+
+         <span class="c1"># this is a multiplier that is used to figure out how many beats later the next note should come</span>
+        <span class="c1"># after each note is created this is dynamically updated by calling a function on that note</span>
+        <span class="c1"># 1.0 means that the next note plays one beat later, 2.0 is 2 beats later while 0.5 would be half a beat later</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">time_to_next_note</span> <span class="o">=</span> <span class="n">time_to_next_note</span>
+
+        <span class="c1"># Set up font </span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">font</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">font</span><span class="o">.</span><span class="n">SysFont</span><span class="p">(</span><span class="n">font_name</span><span class="p">,</span> <span class="n">font_size</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">text</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">font_color</span> <span class="o">=</span> <span class="n">font_color</span>
+
+        <span class="c1"># Render text onto the surface</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">surf</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">font</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">text</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">font_color</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">is_active</span> <span class="o">=</span> <span class="kc">False</span>
+
+
+        <span class="c1"># the y value the note should start from</span>
+        <span class="n">starting_y</span> <span class="o">=</span> <span class="mi">0</span>
+
+        <span class="c1"># the y value the first tab line starts from</span>
+        <span class="n">FIRST_HEIGHT</span> <span class="o">=</span> <span class="mi">30</span>
+
+        <span class="c1"># how far apart each tab line is </span>
+        <span class="c1"># Each line has specific OFFSET since we change the tabs_outline</span>
+        <span class="n">TAB_OFFSET</span> <span class="o">=</span> <span class="mi">60</span>
+
+        <span class="c1"># This will assign the note a y height based off what tab line it should be on</span>
+        <span class="k">if</span> <span class="n">tab_line</span><span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">starting_y</span> <span class="o">=</span> <span class="n">FIRST_HEIGHT</span> <span class="o">-</span> <span class="mi">1</span>
+        <span class="k">elif</span> <span class="n">tab_line</span><span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="n">starting_y</span> <span class="o">=</span> <span class="n">FIRST_HEIGHT</span> <span class="o">+</span> <span class="mi">60</span> <span class="o">*</span> <span class="mi">1</span>
+        <span class="k">elif</span> <span class="n">tab_line</span><span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+            <span class="n">starting_y</span> <span class="o">=</span> <span class="n">FIRST_HEIGHT</span> <span class="o">+</span> <span class="mi">61</span> <span class="o">*</span> <span class="mi">2</span>
+        <span class="k">elif</span> <span class="n">tab_line</span><span class="o">==</span> <span class="mi">4</span><span class="p">:</span>
+            <span class="n">starting_y</span> <span class="o">=</span> <span class="n">FIRST_HEIGHT</span> <span class="o">+</span> <span class="mi">61</span> <span class="o">*</span> <span class="mi">3</span>
+        <span class="k">elif</span> <span class="n">tab_line</span><span class="o">==</span> <span class="mi">5</span><span class="p">:</span>
+            <span class="n">starting_y</span> <span class="o">=</span> <span class="n">FIRST_HEIGHT</span> <span class="o">+</span> <span class="mi">62</span> <span class="o">*</span> <span class="mi">4</span>
+        <span class="k">elif</span> <span class="n">tab_line</span><span class="o">==</span> <span class="mi">6</span><span class="p">:</span>
+            <span class="n">starting_y</span> <span class="o">=</span> <span class="n">FIRST_HEIGHT</span> <span class="o">+</span> <span class="mi">63</span> <span class="o">*</span> <span class="mi">5</span>
+            
+        <span class="c1"># This will start it centered on the right tab line</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rect</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">surf</span><span class="o">.</span><span class="n">get_rect</span><span class="p">(</span>
+            <span class="n">center</span><span class="o">=</span><span class="p">(</span>
+                <span class="n">Screen_Width</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="c1"># I added this offset of 10 to make it match up with the metronome time</span>
+                <span class="n">starting_y</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
+
+    <span class="c1"># Move the Note based on a constant speed</span>
+    <span class="c1"># The move number (the -5.666666) was determined with the following :</span>
+        <span class="c1"># Screen distance to the play line / 90 frames</span>
+        <span class="c1"># the 90 frames are so that it takes 3 seconds</span>
+        <span class="c1"># the 3 seconds were chosen as the song will start on the 4th metronome beat</span>
+        <span class="c1"># this gives the player time to get ready</span>
+        <span class="c1"># IMPORTANT if you change these numbers please update this comment</span>
+
+    <span class="c1"># Remove it when it passes the left edge of the screen</span>
+<div class="viewcode-block" id="Note.update">
+<a class="viewcode-back" href="../../../partials.notes.html#partials.notes.text_note.Note.update">[docs]</a>
+    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Move the note based on a constant speed and remove it when it passes the left edge of the screen.&quot;&quot;&quot;</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">move_ip</span><span class="p">(</span><span class="o">-</span><span class="mf">5.666666</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">right</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">kill</span><span class="p">()</span></div>
+
+
+
+    <span class="c1"># This returns the current x location of the note</span>
+<div class="viewcode-block" id="Note.get_x_location">
+<a class="viewcode-back" href="../../../partials.notes.html#partials.notes.text_note.Note.get_x_location">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_x_location</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns the current x-coordinate of the note.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">right</span></div>
+
+    
+    <span class="c1"># This sets the current x location of the note</span>
+<div class="viewcode-block" id="Note.set_x_location">
+<a class="viewcode-back" href="../../../partials.notes.html#partials.notes.text_note.Note.set_x_location">[docs]</a>
+    <span class="k">def</span> <span class="nf">set_x_location</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x_value</span><span class="o">=</span><span class="mi">100</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set the x-location of the object.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            x_value (int, optional): The x-coordinate value to set for the object&#39;s location.</span>
+<span class="sd">                                     Defaults to 100.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">right</span> <span class="o">=</span> <span class="n">x_value</span></div>
+
+    
+
+    
+<div class="viewcode-block" id="Note.check_correct_note">
+<a class="viewcode-back" href="../../../partials.notes.html#partials.notes.text_note.Note.check_correct_note">[docs]</a>
+    <span class="k">def</span> <span class="nf">check_correct_note</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">predicted_midi_arr</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Checks if the given MIDI note matches the predicted MIDI notes.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            predicted_midi_arr (list of int): List of predicted MIDI notes to compare against.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: True if the note was played correctly, False otherwise.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">was_played</span> <span class="o">==</span> <span class="kc">False</span><span class="p">:</span>
+
+            <span class="k">for</span> <span class="n">note</span> <span class="ow">in</span> <span class="n">predicted_midi_arr</span><span class="p">:</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">midi</span> <span class="o">==</span> <span class="n">note</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">was_played</span> <span class="o">=</span> <span class="kc">True</span>
+                    <span class="k">return</span> <span class="kc">True</span>
+            
+            <span class="k">return</span> <span class="kc">False</span></div>
+
+
+    <span class="c1"># returns the time to the next note</span>
+<div class="viewcode-block" id="Note.get_time_to_next_note">
+<a class="viewcode-back" href="../../../partials.notes.html#partials.notes.text_note.Note.get_time_to_next_note">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_time_to_next_note</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieves the time to the next note.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            int: The time to the next note.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">time_to_next_note</span></div>
+
+    
+
+    <span class="c1"># sets the note to be active </span>
+<div class="viewcode-block" id="Note.set_active_color">
+<a class="viewcode-back" href="../../../partials.notes.html#partials.notes.text_note.Note.set_active_color">[docs]</a>
+    <span class="k">def</span> <span class="nf">set_active_color</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Set the active color for the text.</span>
+
+<span class="sd">        Sets the `is_active` attribute to True, updates the `font_color` </span>
+<span class="sd">        attribute to the active color (0,0,255), and re-renders the text </span>
+<span class="sd">        surface using the updated font color.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            self: The class instance.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">is_active</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">font_color</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">255</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">surf</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">font</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">text</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">font_color</span><span class="p">)</span></div>
+
+
+
+    <span class="c1"># returns true if the if the note is active and false otherwise  </span>
+<div class="viewcode-block" id="Note.get_is_active">
+<a class="viewcode-back" href="../../../partials.notes.html#partials.notes.text_note.Note.get_is_active">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_is_active</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieves the &#39;is_active&#39; attribute value.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: The value of the &#39;is_active&#39; attribute.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span>  <span class="bp">self</span><span class="o">.</span><span class="n">is_active</span></div>
+
+    
+
+    <span class="c1"># sets the color to show that the user didn&#39;t hit the right note</span>
+<div class="viewcode-block" id="Note.set_missed_color">
+<a class="viewcode-back" href="../../../partials.notes.html#partials.notes.text_note.Note.set_missed_color">[docs]</a>
+    <span class="k">def</span> <span class="nf">set_missed_color</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Sets the font color to red (255, 0, 0) and updates the rendering surface.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">font_color</span> <span class="o">=</span> <span class="p">(</span><span class="mi">255</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">surf</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">font</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">text</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">font_color</span><span class="p">)</span></div>
+
+
+    <span class="c1"># sets the color to show that the user did hit the right note</span>
+<div class="viewcode-block" id="Note.set_played_color">
+<a class="viewcode-back" href="../../../partials.notes.html#partials.notes.text_note.Note.set_played_color">[docs]</a>
+    <span class="k">def</span> <span class="nf">set_played_color</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Sets the font color to green (RGB: 0, 255, 0) and updates the rendered surface accordingly.</span>
+
+<span class="sd">        This method modifies the `font_color` attribute of the object to represent green color and updates </span>
+<span class="sd">        the `surf` attribute by rendering the text with the updated font color.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            self: The object instance.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">font_color</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">255</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">surf</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">font</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">text</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">font_color</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Note.get_was_played">
+<a class="viewcode-back" href="../../../partials.notes.html#partials.notes.text_note.Note.get_was_played">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_was_played</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get the status of whether something was played.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: True if something was played, False otherwise.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">was_played</span></div>
+</div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Ben Spence, Jonas Land, AJ Baudino, Hexin Hu, Tripper Wright.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
