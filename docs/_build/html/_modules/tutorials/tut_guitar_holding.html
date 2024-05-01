@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>tutorials.tut_guitar_holding &mdash; Guitar-Champions 1.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=8d563738"></script>
+        <script src="../../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            Guitar-Champions
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">guitar_champions</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Guitar-Champions</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">tutorials.tut_guitar_holding</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for tutorials.tut_guitar_holding</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This file is for displaying and running through the &quot;How to Hold a Guitar&quot; tutorial in the game.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">pygame</span>
+
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="kn">import</span> <span class="nn">helpers.settings_helper</span> <span class="k">as</span> <span class="nn">settings_helper</span>
+
+<span class="kn">import</span> <span class="nn">helpers.tutorial_info</span> <span class="k">as</span> <span class="nn">tutorial_info</span>
+
+<span class="kn">import</span> <span class="nn">partials.buttons.text_button</span> <span class="k">as</span> <span class="nn">text_button</span>
+
+<span class="kn">import</span> <span class="nn">partials.titlecard.title_card</span> <span class="k">as</span> <span class="nn">title_card</span>
+
+<span class="kn">import</span> <span class="nn">partials.tutorial_popup.tutorial_popup</span> <span class="k">as</span> <span class="nn">tutorial_popup</span>
+
+<span class="kn">import</span> <span class="nn">helpers.sprite_item</span> <span class="k">as</span> <span class="nn">sprite_item</span>
+
+<span class="kn">from</span> <span class="nn">pygame.locals</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">RLEACCEL</span><span class="p">,</span>
+    <span class="n">K_ESCAPE</span><span class="p">,</span>
+    <span class="n">K_RIGHT</span><span class="p">,</span>
+    <span class="n">K_LEFT</span><span class="p">,</span>
+    <span class="n">KEYDOWN</span><span class="p">,</span>
+    <span class="n">QUIT</span><span class="p">,</span>
+    <span class="n">K_SPACE</span>
+<span class="p">)</span>
+
+<div class="viewcode-block" id="start">
+<a class="viewcode-back" href="../../tutorials.html#tutorials.tut_guitar_holding.start">[docs]</a>
+<span class="k">def</span> <span class="nf">start</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This is the main function of the tutorial. It sets the default state of the game to Running.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        running (bool): boolean for determining if the tutorial is running.</span>
+<span class="sd">        paused (bool): boolean for determining if the tutorial is paused.</span>
+<span class="sd">        restart_level (bool): boolean for determining if the player wants to restart the tutorial.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">running</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="n">paused</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">restart_level</span> <span class="o">=</span> <span class="kc">False</span>
+
+    <span class="n">pauserendered</span> <span class="o">=</span> <span class="kc">False</span>
+
+    <span class="n">user_settings</span> <span class="o">=</span> <span class="n">settings_helper</span><span class="o">.</span><span class="n">get_settings</span><span class="p">()</span>
+
+    <span class="c1"># Define constants for the screen width and height</span>
+    <span class="n">SCREEN_WIDTH</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">get_surface</span><span class="p">()</span><span class="o">.</span><span class="n">get_size</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">SCREEN_HEIGHT</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">get_surface</span><span class="p">()</span><span class="o">.</span><span class="n">get_size</span><span class="p">()[</span><span class="mi">1</span><span class="p">]</span>
+
+
+    <span class="c1"># Setup for sounds, defaults are good</span>
+    <span class="n">pygame</span><span class="o">.</span><span class="n">mixer</span><span class="o">.</span><span class="n">init</span><span class="p">()</span>
+
+    <span class="c1"># Initialize pygame</span>
+    <span class="n">pygame</span><span class="o">.</span><span class="n">init</span><span class="p">()</span>
+
+    <span class="c1"># Setup the clock for a decent framerate</span>
+    <span class="n">clock</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">time</span><span class="o">.</span><span class="n">Clock</span><span class="p">()</span>
+
+    <span class="c1"># Create the screen object</span>
+    <span class="c1"># The size is determined by the constant SCREEN_WIDTH and SCREEN_HEIGHT</span>
+    <span class="n">screen</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">set_mode</span><span class="p">((</span><span class="n">SCREEN_WIDTH</span><span class="p">,</span> <span class="n">SCREEN_HEIGHT</span><span class="p">))</span>
+
+
+    <span class="n">pause_title</span> <span class="o">=</span> <span class="n">title_card</span><span class="o">.</span><span class="n">Titlecard</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s2">&quot;   Paused   &quot;</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span> <span class="mi">350</span><span class="p">,</span><span class="n">height</span><span class="o">=</span> <span class="mi">59</span><span class="p">,</span> <span class="n">left_padding</span><span class="o">=</span> <span class="n">SCREEN_WIDTH</span><span class="o">/</span><span class="mi">2</span> <span class="o">-</span> <span class="mi">175</span><span class="p">,</span> <span class="n">top_padding</span><span class="o">=</span> <span class="n">SCREEN_HEIGHT</span><span class="o">/</span><span class="mi">2</span> <span class="o">-</span> <span class="mi">180</span><span class="p">)</span>
+    
+
+    <span class="c1"># These are the buttons for the pause menu</span>
+    <span class="n">resume_button</span> <span class="o">=</span> <span class="n">text_button</span><span class="o">.</span><span class="n">TextButton</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s2">&quot; Resume &quot;</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span> <span class="mi">96</span><span class="p">,</span><span class="n">height</span><span class="o">=</span> <span class="mi">44</span><span class="p">,</span> <span class="n">left_padding</span><span class="o">=</span> <span class="n">SCREEN_WIDTH</span><span class="o">/</span><span class="mi">2</span> <span class="o">-</span> <span class="mi">50</span><span class="p">,</span> <span class="n">top_padding</span><span class="o">=</span> <span class="n">SCREEN_HEIGHT</span><span class="o">/</span><span class="mi">2</span> <span class="o">-</span> <span class="mi">80</span><span class="p">)</span>
+    <span class="n">restart_button</span> <span class="o">=</span> <span class="n">text_button</span><span class="o">.</span><span class="n">TextButton</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s2">&quot; Restart &quot;</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span> <span class="mi">94</span><span class="p">,</span><span class="n">height</span><span class="o">=</span> <span class="mi">44</span><span class="p">,</span> <span class="n">left_padding</span><span class="o">=</span> <span class="n">SCREEN_WIDTH</span><span class="o">/</span><span class="mi">2</span> <span class="o">-</span> <span class="mi">48</span><span class="p">,</span> <span class="n">top_padding</span><span class="o">=</span> <span class="n">SCREEN_HEIGHT</span><span class="o">/</span><span class="mi">2</span> <span class="o">-</span> <span class="mi">10</span><span class="p">)</span>
+    <span class="n">main_menu_button</span> <span class="o">=</span> <span class="n">text_button</span><span class="o">.</span><span class="n">TextButton</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s2">&quot; Main Menu &quot;</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span> <span class="mi">128</span><span class="p">,</span><span class="n">height</span><span class="o">=</span> <span class="mi">44</span><span class="p">,</span> <span class="n">left_padding</span><span class="o">=</span> <span class="n">SCREEN_WIDTH</span><span class="o">/</span><span class="mi">2</span> <span class="o">-</span> <span class="mi">62</span><span class="p">,</span> <span class="n">top_padding</span><span class="o">=</span> <span class="n">SCREEN_HEIGHT</span><span class="o">/</span><span class="mi">2</span> <span class="o">+</span><span class="mi">60</span><span class="p">)</span>
+    <span class="n">quit_button</span> <span class="o">=</span> <span class="n">text_button</span><span class="o">.</span><span class="n">TextButton</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s2">&quot; Quit &quot;</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span> <span class="mi">60</span><span class="p">,</span><span class="n">height</span><span class="o">=</span> <span class="mi">44</span><span class="p">,</span> <span class="n">left_padding</span><span class="o">=</span> <span class="n">SCREEN_WIDTH</span><span class="o">/</span><span class="mi">2</span> <span class="o">-</span><span class="mi">30</span><span class="p">,</span> <span class="n">top_padding</span><span class="o">=</span> <span class="n">SCREEN_HEIGHT</span><span class="o">/</span><span class="mi">2</span> <span class="o">+</span> <span class="mi">120</span><span class="p">)</span>
+
+    
+    <span class="c1"># TODO make the custom sprites for the tutorial</span>
+    <span class="c1"># START/////////</span>
+    <span class="n">bg_img</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;assets/images/backgrounds/glacier_night.jpeg&#39;</span><span class="p">)</span>
+    <span class="n">bg_img</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">transform</span><span class="o">.</span><span class="n">scale</span><span class="p">(</span><span class="n">bg_img</span><span class="p">,(</span><span class="n">SCREEN_WIDTH</span><span class="p">,</span><span class="n">SCREEN_HEIGHT</span><span class="p">))</span>
+
+    <span class="n">guitar_img</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;assets/images/items/Pixel-Guitar.png&#39;</span><span class="p">)</span>
+
+    <span class="n">arrow_img</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;assets/images/items/Arrow.png&#39;</span><span class="p">)</span>
+    <span class="n">arrow_left_img</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">transform</span><span class="o">.</span><span class="n">rotate</span><span class="p">(</span><span class="n">arrow_img</span><span class="p">,</span> <span class="mi">90</span><span class="p">)</span>
+    <span class="n">arrow_down_img</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">transform</span><span class="o">.</span><span class="n">rotate</span><span class="p">(</span><span class="n">arrow_img</span><span class="p">,</span> <span class="mi">180</span><span class="p">)</span>
+
+    <span class="n">player_img</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;assets/images/characters/npcs/pixel-art-happy-guitar-player.png&#39;</span><span class="p">)</span>
+
+    <span class="n">example_button</span> <span class="o">=</span> <span class="n">text_button</span><span class="o">.</span><span class="n">TextButton</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s2">&quot; example &quot;</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span> <span class="mi">96</span><span class="p">,</span><span class="n">height</span><span class="o">=</span> <span class="mi">44</span><span class="p">,</span> <span class="n">left_padding</span><span class="o">=</span> <span class="n">SCREEN_WIDTH</span><span class="o">/</span><span class="mi">2</span> <span class="o">-</span> <span class="mi">50</span><span class="p">,</span> <span class="n">top_padding</span><span class="o">=</span> <span class="n">SCREEN_HEIGHT</span><span class="o">/</span><span class="mi">2</span> <span class="o">-</span> <span class="mi">80</span><span class="p">)</span>
+    
+    <span class="n">example_button2</span> <span class="o">=</span> <span class="n">text_button</span><span class="o">.</span><span class="n">TextButton</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s2">&quot; example &quot;</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span> <span class="mi">96</span><span class="p">,</span><span class="n">height</span><span class="o">=</span> <span class="mi">44</span><span class="p">,</span> <span class="n">left_padding</span><span class="o">=</span> <span class="n">SCREEN_WIDTH</span><span class="o">/</span><span class="mi">2</span> <span class="o">-</span> <span class="mi">50</span><span class="p">,</span> <span class="n">top_padding</span><span class="o">=</span> <span class="n">SCREEN_HEIGHT</span><span class="o">/</span><span class="mi">2</span> <span class="o">-</span> <span class="mi">80</span><span class="p">)</span>
+    
+
+
+    <span class="n">example_pause_background</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">Surface</span><span class="p">((</span><span class="n">SCREEN_WIDTH</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="o">*</span><span class="n">SCREEN_HEIGHT</span><span class="o">/</span><span class="mi">4</span><span class="p">))</span> 
+    <span class="n">example_pause_background</span><span class="o">.</span><span class="n">set_alpha</span><span class="p">(</span><span class="mi">140</span><span class="p">)</span>                
+    <span class="n">example_pause_background</span><span class="o">.</span><span class="n">fill</span><span class="p">((</span><span class="mi">239</span><span class="p">,</span><span class="mi">159</span><span class="p">,</span><span class="mi">20</span><span class="p">))</span>  
+
+
+    <span class="n">curr_tutorial_info</span> <span class="o">=</span> <span class="n">tutorial_info</span><span class="o">.</span><span class="n">TutorialInfo</span><span class="p">(</span>
+         <span class="n">popup_list</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="c1">#   1</span>
+              <span class="n">tutorial_popup</span><span class="o">.</span><span class="n">TutorialPopup</span><span class="p">(</span><span class="s2">&quot;Welcome to the How to hold a Guitar tutorial. Press the next button on screen or the right arrowkey on your keyboard to go to the next screen&quot;</span><span class="p">,</span> <span class="n">top_padding</span><span class="o">=</span> <span class="mi">150</span><span class="p">,</span> <span class="n">left_padding</span><span class="o">=</span> <span class="mi">100</span><span class="p">),</span>
+            <span class="c1">#  2</span>
+              <span class="n">tutorial_popup</span><span class="o">.</span><span class="n">TutorialPopup</span><span class="p">(</span><span class="s2">&quot;If you want to go back then press the left arrow key on your keyboard&quot;</span><span class="p">,</span> <span class="n">top_padding</span><span class="o">=</span> <span class="mi">150</span><span class="p">,</span> <span class="n">left_padding</span><span class="o">=</span> <span class="mi">100</span><span class="p">),</span>
+            <span class="c1">#   3</span>
+              <span class="n">tutorial_popup</span><span class="o">.</span><span class="n">TutorialPopup</span><span class="p">(</span><span class="s2">&quot;This is an acoustic guitar with a number of frets and strings on it&quot;</span><span class="p">,</span> <span class="n">top_padding</span><span class="o">=</span> <span class="mi">150</span><span class="p">,</span> <span class="n">left_padding</span><span class="o">=</span> <span class="mi">100</span><span class="p">,),</span>
+            <span class="c1">#   4</span>
+              <span class="n">tutorial_popup</span><span class="o">.</span><span class="n">TutorialPopup</span><span class="p">(</span><span class="s2">&quot;The tabs on the neck of the guitar are called Frets.&quot;</span><span class="p">,</span> <span class="n">top_padding</span><span class="o">=</span> <span class="mi">150</span><span class="p">,</span> <span class="n">left_padding</span><span class="o">=</span> <span class="mi">100</span><span class="p">,</span> <span class="p">),</span>
+            <span class="c1">#   5</span>
+              <span class="n">tutorial_popup</span><span class="o">.</span><span class="n">TutorialPopup</span><span class="p">(</span><span class="s2">&quot;You should see 6 strings on the guitar ordered from thick to thin strings. Thick strings play the lower notes while thin string play higher notes.&quot;</span><span class="p">,</span> <span class="n">top_padding</span><span class="o">=</span> <span class="mi">150</span><span class="p">,</span> <span class="n">left_padding</span><span class="o">=</span> <span class="mi">100</span><span class="p">,),</span>
+            <span class="c1">#   6</span>
+              <span class="n">tutorial_popup</span><span class="o">.</span><span class="n">TutorialPopup</span><span class="p">(</span><span class="s2">&quot;Tune your guitar using the pegs at the top of the neck. You can use a guitar tuner or there are multiple tuning apps online to help tune acoustic guitars.&quot;</span><span class="p">,</span> <span class="n">top_padding</span><span class="o">=</span> <span class="mi">150</span><span class="p">,</span> <span class="n">left_padding</span><span class="o">=</span> <span class="mi">100</span><span class="p">,),</span>
+            <span class="c1">#   7</span>
+              <span class="n">tutorial_popup</span><span class="o">.</span><span class="n">TutorialPopup</span><span class="p">(</span><span class="s2">&quot;Now, lean your guitar over in a comfortable position. &quot;</span><span class="p">,</span> <span class="n">top_padding</span><span class="o">=</span> <span class="mi">150</span><span class="p">,</span> <span class="n">left_padding</span><span class="o">=</span> <span class="mi">100</span><span class="p">,),</span>
+            <span class="c1"># 8</span>
+            <span class="n">tutorial_popup</span><span class="o">.</span><span class="n">TutorialPopup</span><span class="p">(</span><span class="s2">&quot;For right handed users, put your left arm under the neck with your hand on the frets. Your right arm should be slung over the guitar ready to strike the strings.&quot;</span><span class="p">,</span> <span class="n">top_padding</span><span class="o">=</span> <span class="mi">150</span><span class="p">,</span> <span class="n">left_padding</span><span class="o">=</span> <span class="mi">100</span><span class="p">,),</span>
+            <span class="c1"># 9</span>
+            <span class="n">tutorial_popup</span><span class="o">.</span><span class="n">TutorialPopup</span><span class="p">(</span><span class="s2">&quot;To play a note, press a finger on your left hand on a string just before a certain fret making sure the string beneath your finger touches the neck of the guitar. Then, pluck that string with your other hand. &quot;</span><span class="p">,</span> <span class="n">top_padding</span><span class="o">=</span> <span class="mi">150</span><span class="p">,</span> <span class="n">left_padding</span><span class="o">=</span> <span class="mi">100</span><span class="p">,),</span>
+            <span class="c1"># 10</span>
+            <span class="n">tutorial_popup</span><span class="o">.</span><span class="n">TutorialPopup</span><span class="p">(</span><span class="s2">&quot;Congrats! You are now ready to move on to the playing Notes tutorial.&quot;</span><span class="p">,</span> <span class="n">top_padding</span><span class="o">=</span> <span class="mi">300</span><span class="p">,</span> <span class="n">left_padding</span><span class="o">=</span> <span class="mi">20</span><span class="p">,</span>  <span class="n">trigger_effect_number</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">is_final_popup</span><span class="o">=</span><span class="kc">True</span><span class="p">,),</span>
+
+
+              <span class="p">],</span>
+         <span class="n">sprites_list</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="c1"># 1</span>
+              <span class="p">[</span>
+                   <span class="n">sprite_item</span><span class="o">.</span><span class="n">SpriteItem</span><span class="p">(</span><span class="n">sprite</span> <span class="o">=</span> <span class="n">bg_img</span><span class="p">,</span> <span class="n">location</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">),</span> <span class="n">is_background</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
+                   
+                   <span class="p">],</span>
+
+                <span class="c1"># 2</span>
+              <span class="p">[</span> 
+                   <span class="n">sprite_item</span><span class="o">.</span><span class="n">SpriteItem</span><span class="p">(</span><span class="n">sprite</span> <span class="o">=</span> <span class="n">bg_img</span><span class="p">,</span> <span class="n">location</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">),</span> <span class="n">is_background</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
+
+                   <span class="p">],</span>
+                    <span class="c1"># 3</span>
+                   <span class="p">[</span>
+            
+                    <span class="n">sprite_item</span><span class="o">.</span><span class="n">SpriteItem</span><span class="p">(</span><span class="n">sprite</span> <span class="o">=</span> <span class="n">bg_img</span><span class="p">,</span> <span class="n">location</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">),</span> <span class="n">is_background</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
+                    <span class="n">sprite_item</span><span class="o">.</span><span class="n">SpriteItem</span><span class="p">(</span><span class="n">sprite</span> <span class="o">=</span> <span class="n">guitar_img</span><span class="p">,</span> <span class="n">location</span> <span class="o">=</span> <span class="p">(</span><span class="n">SCREEN_WIDTH</span><span class="o">*</span><span class="mi">2</span><span class="o">/</span><span class="mi">3</span><span class="p">,</span> <span class="n">SCREEN_HEIGHT</span><span class="o">/</span><span class="mi">4</span><span class="p">)),</span>
+                   <span class="p">],</span>
+                <span class="c1">#    4</span>
+                <span class="p">[</span>
+                    <span class="n">sprite_item</span><span class="o">.</span><span class="n">SpriteItem</span><span class="p">(</span><span class="n">sprite</span> <span class="o">=</span> <span class="n">bg_img</span><span class="p">,</span> <span class="n">location</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">),</span> <span class="n">is_background</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
+                    <span class="n">sprite_item</span><span class="o">.</span><span class="n">SpriteItem</span><span class="p">(</span><span class="n">sprite</span> <span class="o">=</span> <span class="n">guitar_img</span><span class="p">,</span> <span class="n">location</span> <span class="o">=</span> <span class="p">(</span><span class="n">SCREEN_WIDTH</span><span class="o">*</span><span class="mi">2</span><span class="o">/</span><span class="mi">3</span><span class="p">,</span> <span class="n">SCREEN_HEIGHT</span><span class="o">/</span><span class="mi">4</span><span class="p">)),</span>
+                    <span class="n">sprite_item</span><span class="o">.</span><span class="n">SpriteItem</span><span class="p">(</span><span class="n">sprite</span> <span class="o">=</span> <span class="n">arrow_left_img</span><span class="p">,</span> <span class="n">location</span> <span class="o">=</span> <span class="p">(</span><span class="n">SCREEN_WIDTH</span><span class="o">*</span><span class="mi">2</span><span class="o">/</span><span class="mi">3</span><span class="o">+</span><span class="mi">83</span><span class="p">,</span> <span class="n">SCREEN_HEIGHT</span><span class="o">/</span><span class="mi">4</span><span class="o">+</span><span class="mi">45</span><span class="p">)),</span>
+                   
+                <span class="p">],</span>
+
+                <span class="c1">#    5</span>
+                <span class="p">[</span>
+                    <span class="n">sprite_item</span><span class="o">.</span><span class="n">SpriteItem</span><span class="p">(</span><span class="n">sprite</span> <span class="o">=</span> <span class="n">bg_img</span><span class="p">,</span> <span class="n">location</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">),</span> <span class="n">is_background</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
+                    <span class="n">sprite_item</span><span class="o">.</span><span class="n">SpriteItem</span><span class="p">(</span><span class="n">sprite</span> <span class="o">=</span> <span class="n">guitar_img</span><span class="p">,</span> <span class="n">location</span> <span class="o">=</span> <span class="p">(</span><span class="n">SCREEN_WIDTH</span><span class="o">*</span><span class="mi">2</span><span class="o">/</span><span class="mi">3</span><span class="p">,</span> <span class="n">SCREEN_HEIGHT</span><span class="o">/</span><span class="mi">4</span><span class="p">)),</span>
+                    <span class="n">sprite_item</span><span class="o">.</span><span class="n">SpriteItem</span><span class="p">(</span><span class="n">sprite</span> <span class="o">=</span> <span class="n">arrow_img</span><span class="p">,</span> <span class="n">location</span> <span class="o">=</span> <span class="p">(</span><span class="n">SCREEN_WIDTH</span><span class="o">*</span><span class="mi">2</span><span class="o">/</span><span class="mi">3</span><span class="o">+</span><span class="mi">54</span><span class="p">,</span> <span class="n">SCREEN_HEIGHT</span><span class="o">/</span><span class="mi">4</span><span class="o">+</span><span class="mi">230</span><span class="p">)),</span>
+                    
+                <span class="p">],</span>
+
+                <span class="c1">#    6</span>
+                <span class="p">[</span>
+                    <span class="n">sprite_item</span><span class="o">.</span><span class="n">SpriteItem</span><span class="p">(</span><span class="n">sprite</span> <span class="o">=</span> <span class="n">bg_img</span><span class="p">,</span> <span class="n">location</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">),</span> <span class="n">is_background</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
+                    <span class="n">sprite_item</span><span class="o">.</span><span class="n">SpriteItem</span><span class="p">(</span><span class="n">sprite</span> <span class="o">=</span> <span class="n">guitar_img</span><span class="p">,</span> <span class="n">location</span> <span class="o">=</span> <span class="p">(</span><span class="n">SCREEN_WIDTH</span><span class="o">*</span><span class="mi">2</span><span class="o">/</span><span class="mi">3</span><span class="p">,</span> <span class="n">SCREEN_HEIGHT</span><span class="o">/</span><span class="mi">4</span><span class="p">)),</span>
+                    <span class="n">sprite_item</span><span class="o">.</span><span class="n">SpriteItem</span><span class="p">(</span><span class="n">sprite</span> <span class="o">=</span> <span class="n">arrow_down_img</span><span class="p">,</span> <span class="n">location</span> <span class="o">=</span> <span class="p">(</span><span class="n">SCREEN_WIDTH</span><span class="o">*</span><span class="mi">2</span><span class="o">/</span><span class="mi">3</span><span class="o">+</span><span class="mi">54</span><span class="p">,</span> <span class="n">SCREEN_HEIGHT</span><span class="o">/</span><span class="mi">4</span><span class="o">-</span><span class="mi">35</span><span class="p">)),</span>
+                    
+                <span class="p">],</span>
+
+                 <span class="c1">#    7</span>
+                <span class="p">[</span>
+                    <span class="n">sprite_item</span><span class="o">.</span><span class="n">SpriteItem</span><span class="p">(</span><span class="n">sprite</span> <span class="o">=</span> <span class="n">bg_img</span><span class="p">,</span> <span class="n">location</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">),</span> <span class="n">is_background</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
+                    <span class="n">sprite_item</span><span class="o">.</span><span class="n">SpriteItem</span><span class="p">(</span><span class="n">sprite</span> <span class="o">=</span> <span class="n">player_img</span><span class="p">,</span> <span class="n">location</span> <span class="o">=</span> <span class="p">(</span><span class="n">SCREEN_WIDTH</span><span class="o">*</span><span class="mi">2</span><span class="o">/</span><span class="mi">3</span><span class="p">,</span> <span class="n">SCREEN_HEIGHT</span><span class="o">/</span><span class="mi">4</span><span class="p">)),</span>
+                    
+                <span class="p">],</span>
+
+                 <span class="c1">#    8</span>
+                <span class="p">[</span>
+                   <span class="n">sprite_item</span><span class="o">.</span><span class="n">SpriteItem</span><span class="p">(</span><span class="n">sprite</span> <span class="o">=</span> <span class="n">bg_img</span><span class="p">,</span> <span class="n">location</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">),</span> <span class="n">is_background</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
+                    <span class="n">sprite_item</span><span class="o">.</span><span class="n">SpriteItem</span><span class="p">(</span><span class="n">sprite</span> <span class="o">=</span> <span class="n">player_img</span><span class="p">,</span> <span class="n">location</span> <span class="o">=</span> <span class="p">(</span><span class="n">SCREEN_WIDTH</span><span class="o">*</span><span class="mi">2</span><span class="o">/</span><span class="mi">3</span><span class="p">,</span> <span class="n">SCREEN_HEIGHT</span><span class="o">/</span><span class="mi">4</span><span class="p">)),</span>
+                    
+                <span class="p">],</span>
+
+                 <span class="c1">#    9</span>
+                <span class="p">[</span>
+                   <span class="n">sprite_item</span><span class="o">.</span><span class="n">SpriteItem</span><span class="p">(</span><span class="n">sprite</span> <span class="o">=</span> <span class="n">bg_img</span><span class="p">,</span> <span class="n">location</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">),</span> <span class="n">is_background</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
+                    <span class="n">sprite_item</span><span class="o">.</span><span class="n">SpriteItem</span><span class="p">(</span><span class="n">sprite</span> <span class="o">=</span> <span class="n">player_img</span><span class="p">,</span> <span class="n">location</span> <span class="o">=</span> <span class="p">(</span><span class="n">SCREEN_WIDTH</span><span class="o">*</span><span class="mi">2</span><span class="o">/</span><span class="mi">3</span><span class="p">,</span> <span class="n">SCREEN_HEIGHT</span><span class="o">/</span><span class="mi">4</span><span class="p">)),</span>
+                    
+                <span class="p">],</span>
+
+                <span class="c1">#    10</span>
+                <span class="p">[</span>
+                   <span class="n">sprite_item</span><span class="o">.</span><span class="n">SpriteItem</span><span class="p">(</span><span class="n">sprite</span> <span class="o">=</span> <span class="n">bg_img</span><span class="p">,</span> <span class="n">location</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">),</span> <span class="n">is_background</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
+                    <span class="n">sprite_item</span><span class="o">.</span><span class="n">SpriteItem</span><span class="p">(</span><span class="n">sprite</span> <span class="o">=</span> <span class="n">player_img</span><span class="p">,</span> <span class="n">location</span> <span class="o">=</span> <span class="p">(</span><span class="n">SCREEN_WIDTH</span><span class="o">*</span><span class="mi">2</span><span class="o">/</span><span class="mi">3</span><span class="p">,</span> <span class="n">SCREEN_HEIGHT</span><span class="o">/</span><span class="mi">4</span><span class="p">)),</span>
+                    
+                <span class="p">],</span>
+
+            
+         <span class="p">],</span>
+    <span class="p">)</span>
+
+
+    <span class="c1"># END/////////</span>
+
+    <span class="n">current_popup</span> <span class="o">=</span> <span class="n">curr_tutorial_info</span><span class="o">.</span><span class="n">current_popup</span>
+
+   
+    <span class="n">current_sprites</span> <span class="o">=</span> <span class="n">curr_tutorial_info</span><span class="o">.</span><span class="n">current_sprites</span>
+
+    
+    
+    
+
+
+    <span class="c1"># The main loop</span>
+    <span class="k">while</span> <span class="n">running</span><span class="p">:</span>
+
+        <span class="c1"># PAUSED LOOP</span>
+        <span class="k">if</span> <span class="n">paused</span> <span class="o">==</span> <span class="kc">True</span><span class="p">:</span>
+              
+            <span class="k">for</span> <span class="n">event</span> <span class="ow">in</span> <span class="n">pygame</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">get</span><span class="p">():</span>
+
+                <span class="c1"># Did the user hit a key?</span>
+                <span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">KEYDOWN</span><span class="p">:</span>
+
+                    <span class="c1"># Was it the Escape key? If so, stop the loop</span>
+                    <span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="n">key</span> <span class="o">==</span> <span class="n">K_ESCAPE</span> <span class="ow">or</span> <span class="n">event</span><span class="o">.</span><span class="n">key</span> <span class="o">==</span> <span class="n">K_SPACE</span><span class="p">:</span>
+                        <span class="n">paused</span> <span class="o">=</span> <span class="kc">False</span>
+                        
+
+                    <span class="c1"># Did the user click the window close button? If so, exit</span>
+                    <span class="k">elif</span> <span class="n">event</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">QUIT</span><span class="p">:</span>
+                        <span class="n">os</span><span class="o">.</span><span class="n">_exit</span><span class="p">(</span><span class="n">status</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+
+                 <span class="c1"># Here we check for hover events </span>
+                <span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="n">type</span><span class="o">==</span><span class="n">pygame</span><span class="o">.</span><span class="n">MOUSEMOTION</span><span class="p">:</span>
+                    <span class="n">resume_button</span><span class="o">.</span><span class="n">on_hover</span><span class="p">()</span>
+                    <span class="n">restart_button</span><span class="o">.</span><span class="n">on_hover</span><span class="p">()</span>
+                    <span class="n">main_menu_button</span><span class="o">.</span><span class="n">on_hover</span><span class="p">()</span>
+                    <span class="n">quit_button</span><span class="o">.</span><span class="n">on_hover</span><span class="p">()</span>
+                <span class="c1"># Here we check for clicks events </span>
+                <span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="n">type</span><span class="o">==</span><span class="n">pygame</span><span class="o">.</span><span class="n">MOUSEBUTTONDOWN</span><span class="p">:</span>
+                    <span class="c1"># text_buttons should be pressed like this</span>
+                    <span class="k">if</span> <span class="p">(</span><span class="n">resume_button</span><span class="o">.</span><span class="n">is_pressed</span><span class="p">()</span> <span class="o">==</span> <span class="kc">True</span><span class="p">):</span>
+                        <span class="n">paused</span> <span class="o">=</span> <span class="kc">False</span>
+                        <span class="n">pygame</span><span class="o">.</span><span class="n">mixer</span><span class="o">.</span><span class="n">music</span><span class="o">.</span><span class="n">unpause</span><span class="p">()</span>
+                    <span class="k">elif</span><span class="p">(</span><span class="n">restart_button</span><span class="o">.</span><span class="n">is_pressed</span><span class="p">()</span> <span class="o">==</span> <span class="kc">True</span><span class="p">):</span>
+                        <span class="n">restart_level</span> <span class="o">=</span> <span class="kc">True</span>
+                        <span class="n">running</span> <span class="o">=</span> <span class="kc">False</span>
+                    <span class="k">elif</span><span class="p">(</span><span class="n">main_menu_button</span><span class="o">.</span><span class="n">is_pressed</span><span class="p">()</span> <span class="o">==</span> <span class="kc">True</span><span class="p">):</span>
+                        <span class="n">restart_level</span> <span class="o">=</span> <span class="kc">False</span>
+                        <span class="n">running</span> <span class="o">=</span> <span class="kc">False</span>
+                    <span class="k">elif</span><span class="p">(</span><span class="n">quit_button</span><span class="o">.</span><span class="n">is_pressed</span><span class="p">()</span> <span class="o">==</span> <span class="kc">True</span><span class="p">):</span>
+                        <span class="n">os</span><span class="o">.</span><span class="n">_exit</span><span class="p">(</span><span class="n">status</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+
+
+            <span class="k">if</span><span class="p">(</span><span class="ow">not</span> <span class="n">pauserendered</span><span class="p">):</span>
+                    <span class="n">s</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">Surface</span><span class="p">((</span><span class="n">SCREEN_WIDTH</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="o">*</span><span class="n">SCREEN_HEIGHT</span><span class="o">/</span><span class="mi">4</span><span class="p">))</span> 
+                    <span class="n">s</span><span class="o">.</span><span class="n">set_alpha</span><span class="p">(</span><span class="mi">140</span><span class="p">)</span>                
+                    <span class="n">s</span><span class="o">.</span><span class="n">fill</span><span class="p">((</span><span class="mi">239</span><span class="p">,</span><span class="mi">159</span><span class="p">,</span><span class="mi">20</span><span class="p">))</span>           
+                    <span class="n">screen</span><span class="o">.</span><span class="n">blit</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="p">(</span><span class="n">SCREEN_WIDTH</span><span class="o">/</span><span class="mi">4</span><span class="p">,</span><span class="n">SCREEN_HEIGHT</span><span class="o">/</span><span class="mi">8</span><span class="p">))</span>
+                    <span class="n">pauserendered</span><span class="o">=</span><span class="kc">True</span>
+
+            <span class="c1">#border around entire pause menu</span>
+            <span class="n">pygame</span><span class="o">.</span><span class="n">draw</span><span class="o">.</span><span class="n">rect</span><span class="p">(</span><span class="n">screen</span><span class="p">,(</span><span class="mi">255</span><span class="p">,</span><span class="mi">255</span><span class="p">,</span><span class="mi">255</span><span class="p">),</span><span class="n">pygame</span><span class="o">.</span><span class="n">Rect</span><span class="p">(</span><span class="n">SCREEN_WIDTH</span><span class="o">/</span><span class="mi">4</span><span class="p">,</span><span class="n">SCREEN_HEIGHT</span><span class="o">/</span><span class="mi">8</span><span class="p">,</span><span class="n">SCREEN_WIDTH</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="o">*</span><span class="n">SCREEN_HEIGHT</span><span class="o">/</span><span class="mi">4</span><span class="p">),</span><span class="mi">5</span><span class="p">)</span>  
+            <span class="c1"># This visually updates the buttons on the pause screen and draws borders around them on render</span>
+            <span class="n">screen</span><span class="o">.</span><span class="n">blit</span><span class="p">(</span><span class="n">pause_title</span><span class="o">.</span><span class="n">render</span><span class="p">,</span> <span class="n">pause_title</span><span class="o">.</span><span class="n">button_position</span><span class="p">)</span>  
+            <span class="n">pygame</span><span class="o">.</span><span class="n">draw</span><span class="o">.</span><span class="n">rect</span><span class="p">(</span><span class="n">screen</span><span class="p">,(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">),</span><span class="n">pause_title</span><span class="o">.</span><span class="n">button_position</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>  
+            <span class="n">screen</span><span class="o">.</span><span class="n">blit</span><span class="p">(</span><span class="n">resume_button</span><span class="o">.</span><span class="n">render</span><span class="p">,</span> <span class="n">resume_button</span><span class="o">.</span><span class="n">button_position</span><span class="p">)</span>
+            <span class="n">pygame</span><span class="o">.</span><span class="n">draw</span><span class="o">.</span><span class="n">rect</span><span class="p">(</span><span class="n">screen</span><span class="p">,(</span><span class="mi">255</span><span class="p">,</span><span class="mi">255</span><span class="p">,</span><span class="mi">255</span><span class="p">),</span><span class="n">resume_button</span><span class="o">.</span><span class="n">button_position</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+            <span class="n">screen</span><span class="o">.</span><span class="n">blit</span><span class="p">(</span><span class="n">restart_button</span><span class="o">.</span><span class="n">render</span><span class="p">,</span> <span class="n">restart_button</span><span class="o">.</span><span class="n">button_position</span><span class="p">)</span>
+            <span class="n">pygame</span><span class="o">.</span><span class="n">draw</span><span class="o">.</span><span class="n">rect</span><span class="p">(</span><span class="n">screen</span><span class="p">,(</span><span class="mi">255</span><span class="p">,</span><span class="mi">255</span><span class="p">,</span><span class="mi">255</span><span class="p">),</span><span class="n">restart_button</span><span class="o">.</span><span class="n">button_position</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+            <span class="n">screen</span><span class="o">.</span><span class="n">blit</span><span class="p">(</span><span class="n">main_menu_button</span><span class="o">.</span><span class="n">render</span><span class="p">,</span> <span class="n">main_menu_button</span><span class="o">.</span><span class="n">button_position</span><span class="p">)</span>
+            <span class="n">pygame</span><span class="o">.</span><span class="n">draw</span><span class="o">.</span><span class="n">rect</span><span class="p">(</span><span class="n">screen</span><span class="p">,(</span><span class="mi">255</span><span class="p">,</span><span class="mi">255</span><span class="p">,</span><span class="mi">255</span><span class="p">),</span><span class="n">main_menu_button</span><span class="o">.</span><span class="n">button_position</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+            
+            <span class="n">screen</span><span class="o">.</span><span class="n">blit</span><span class="p">(</span><span class="n">quit_button</span><span class="o">.</span><span class="n">render</span><span class="p">,</span> <span class="n">quit_button</span><span class="o">.</span><span class="n">button_position</span><span class="p">)</span>
+            <span class="n">pygame</span><span class="o">.</span><span class="n">draw</span><span class="o">.</span><span class="n">rect</span><span class="p">(</span><span class="n">screen</span><span class="p">,(</span><span class="mi">255</span><span class="p">,</span><span class="mi">255</span><span class="p">,</span><span class="mi">255</span><span class="p">),</span><span class="n">quit_button</span><span class="o">.</span><span class="n">button_position</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+
+            <span class="n">pygame</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
+            <span class="n">clock</span><span class="o">.</span><span class="n">tick_busy_loop</span><span class="p">(</span><span class="mi">30</span><span class="p">)</span>
+        
+
+        <span class="c1"># NON-PAUSED LOOP</span>
+
+        <span class="k">else</span><span class="p">:</span>
+
+            <span class="k">for</span> <span class="n">event</span> <span class="ow">in</span> <span class="n">pygame</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">get</span><span class="p">():</span>
+
+                            <span class="c1"># Did the user hit a key?</span>
+                            <span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">KEYDOWN</span><span class="p">:</span>
+
+                                <span class="c1"># Was it the Escape key? If so, stop the loop</span>
+                                <span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="n">key</span> <span class="o">==</span> <span class="n">K_ESCAPE</span> <span class="ow">or</span> <span class="n">event</span><span class="o">.</span><span class="n">key</span> <span class="o">==</span> <span class="n">K_SPACE</span><span class="p">:</span>
+                                    <span class="n">paused</span> <span class="o">=</span> <span class="kc">True</span>
+                                    <span class="n">pauserendered</span> <span class="o">=</span> <span class="kc">False</span>
+                                    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;paused the game&quot;</span><span class="p">)</span>
+
+                                <span class="k">elif</span> <span class="n">event</span><span class="o">.</span><span class="n">key</span> <span class="o">==</span> <span class="n">K_RIGHT</span><span class="p">:</span>
+                                     
+                                     <span class="c1"># TODO Add custom next code here</span>
+                                    <span class="c1"># START/////////</span>
+                                    <span class="k">if</span> <span class="n">current_popup</span><span class="o">.</span><span class="n">trigger_effect_number</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                                        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Trigger effect 1&quot;</span><span class="p">)</span>
+
+                                    <span class="c1"># END/////////</span>
+                                    <span class="k">if</span> <span class="p">(</span><span class="n">current_popup</span><span class="o">.</span><span class="n">is_final_popup</span> <span class="o">==</span> <span class="kc">True</span><span class="p">):</span>
+                                        <span class="c1"># True if this is the final popup of the tutorial</span>
+                                        <span class="n">running</span> <span class="o">=</span> <span class="kc">False</span>
+                                    <span class="k">else</span><span class="p">:</span>
+                                    <span class="c1"># go to the next tutorial</span>
+                                        <span class="n">curr_tutorial_info</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
+                                    
+
+                                <span class="k">elif</span> <span class="n">event</span><span class="o">.</span><span class="n">key</span> <span class="o">==</span> <span class="n">K_LEFT</span><span class="p">:</span>
+                                    <span class="c1"># TODO Add custom previous code here</span>
+                                    <span class="c1"># START/////////</span>
+
+                                    <span class="c1"># END/////////</span>
+                                    <span class="n">curr_tutorial_info</span><span class="o">.</span><span class="n">previous</span><span class="p">()</span>
+
+                            <span class="c1"># Did the user click the window close button? If so, exit</span>
+                            <span class="k">elif</span> <span class="n">event</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">QUIT</span><span class="p">:</span>
+                                <span class="n">os</span><span class="o">.</span><span class="n">_exit</span><span class="p">(</span><span class="n">status</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+                            <span class="c1"># Here we check for hover events </span>
+                            <span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="n">type</span><span class="o">==</span><span class="n">pygame</span><span class="o">.</span><span class="n">MOUSEMOTION</span><span class="p">:</span>
+                                <span class="n">current_popup</span><span class="o">.</span><span class="n">button_on_hover</span><span class="p">()</span>
+
+                                <span class="c1"># TODO Add the hover effects for this tutorials example buttons</span>
+                                <span class="c1"># START/////////</span>
+                                <span class="n">example_button2</span><span class="o">.</span><span class="n">on_hover</span><span class="p">()</span>
+                                
+                                <span class="c1"># END/////////</span>
+                                
+                        
+
+                            <span class="c1"># Here we check for clicks events </span>
+                            <span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="n">type</span><span class="o">==</span><span class="n">pygame</span><span class="o">.</span><span class="n">MOUSEBUTTONDOWN</span><span class="p">:</span>
+
+                                <span class="c1"># text_buttons should be pressed like this</span>
+                                <span class="k">if</span> <span class="p">(</span><span class="n">current_popup</span><span class="o">.</span><span class="n">button_is_pressed</span><span class="p">()</span> <span class="o">==</span> <span class="kc">True</span><span class="p">):</span>
+                                    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Current popup pressed&quot;</span><span class="p">)</span>
+                                    <span class="k">if</span> <span class="p">(</span><span class="n">current_popup</span><span class="o">.</span><span class="n">is_final_popup</span> <span class="o">==</span> <span class="kc">True</span><span class="p">):</span>
+                                        <span class="c1"># True if this is the final popup of the tutorial</span>
+                                        <span class="n">running</span> <span class="o">=</span> <span class="kc">False</span>
+                                    <span class="k">else</span><span class="p">:</span>
+                                    <span class="c1"># go to the next tutorial</span>
+                                        <span class="n">curr_tutorial_info</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
+
+                                    <span class="c1"># TODO Add custom next code here</span>
+                                    <span class="c1"># START/////////</span>
+
+                                    <span class="k">if</span> <span class="n">current_popup</span><span class="o">.</span><span class="n">trigger_effect_number</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                                        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Trigger effect 1&quot;</span><span class="p">)</span>
+
+                                    <span class="c1"># END/////////</span>
+
+
+                                 <span class="c1"># TODO Add the click effects for this tutorials example buttons</span>
+                                    <span class="c1"># START/////////</span>
+                                        <span class="c1"># you should make certain you&#39;re on the correct screen before allowing the button to be pressed</span>
+
+                                <span class="k">if</span> <span class="p">(</span><span class="n">current_popup</span><span class="o">.</span><span class="n">trigger_effect_number</span> <span class="o">==</span> <span class="mi">1</span><span class="p">):</span>
+                                    <span class="k">if</span> <span class="p">(</span><span class="n">example_button2</span><span class="o">.</span><span class="n">is_pressed</span><span class="p">()</span> <span class="o">==</span> <span class="kc">True</span><span class="p">):</span>
+                                        <span class="n">curr_tutorial_info</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
+
+                                
+                                    
+                                <span class="c1"># END/////////</span>
+
+
+            <span class="n">current_popup</span> <span class="o">=</span> <span class="n">curr_tutorial_info</span><span class="o">.</span><span class="n">current_popup</span>
+            <span class="n">current_sprites</span> <span class="o">=</span> <span class="n">curr_tutorial_info</span><span class="o">.</span><span class="n">current_sprites</span>
+
+            
+            <span class="k">for</span> <span class="n">curr_sprite_item</span> <span class="ow">in</span> <span class="n">current_sprites</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">curr_sprite_item</span><span class="o">.</span><span class="n">is_box</span> <span class="o">==</span> <span class="kc">True</span><span class="p">:</span>
+                    <span class="c1"># If the current sprite is a box</span>
+
+                    <span class="k">if</span> <span class="n">curr_sprite_item</span><span class="o">.</span><span class="n">box_has_border</span> <span class="o">==</span> <span class="kc">True</span><span class="p">:</span>
+                        <span class="c1">#  If the box does have a border</span>
+                        <span class="n">pygame</span><span class="o">.</span><span class="n">draw</span><span class="o">.</span><span class="n">rect</span><span class="p">(</span><span class="n">screen</span><span class="p">,</span><span class="n">curr_sprite_item</span><span class="o">.</span><span class="n">box_color</span><span class="p">,</span><span class="n">curr_sprite_item</span><span class="o">.</span><span class="n">box_rect</span><span class="p">,</span> <span class="n">curr_sprite_item</span><span class="o">.</span><span class="n">box_border</span><span class="p">)</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="c1"># If the box has no border</span>
+                        <span class="n">pygame</span><span class="o">.</span><span class="n">draw</span><span class="o">.</span><span class="n">rect</span><span class="p">(</span><span class="n">screen</span><span class="p">,</span><span class="n">curr_sprite_item</span><span class="o">.</span><span class="n">box_color</span><span class="p">,</span><span class="n">curr_sprite_item</span><span class="o">.</span><span class="n">box_rect</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="c1"># If the current sprite is not a box</span>
+                    <span class="n">screen</span><span class="o">.</span><span class="n">blit</span><span class="p">(</span><span class="n">curr_sprite_item</span><span class="o">.</span><span class="n">sprite</span><span class="p">,</span> <span class="n">curr_sprite_item</span><span class="o">.</span><span class="n">location</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="n">curr_sprite_item</span><span class="o">.</span><span class="n">is_background</span> <span class="o">==</span> <span class="kc">True</span><span class="p">:</span>
+                        <span class="c1"># load tutorial box frame</span>
+                        <span class="n">tutframe</span> <span class="o">=</span> <span class="n">pygame</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;assets/images/backgrounds/frame.png&#39;</span><span class="p">)</span>
+                        <span class="n">tutframe</span><span class="o">.</span><span class="n">set_alpha</span><span class="p">(</span><span class="mi">140</span><span class="p">)</span>
+                        <span class="n">tutframe</span><span class="o">=</span><span class="n">pygame</span><span class="o">.</span><span class="n">transform</span><span class="o">.</span><span class="n">scale</span><span class="p">(</span><span class="n">tutframe</span><span class="p">,(</span><span class="mi">381</span><span class="p">,</span><span class="mi">360</span><span class="p">))</span>
+                        <span class="n">screen</span><span class="o">.</span><span class="n">blit</span><span class="p">(</span><span class="n">tutframe</span><span class="p">,(</span><span class="n">current_popup</span><span class="o">.</span><span class="n">outline_position</span><span class="o">.</span><span class="n">x</span><span class="o">-</span><span class="mi">46</span><span class="p">,</span><span class="n">current_popup</span><span class="o">.</span><span class="n">outline_position</span><span class="o">.</span><span class="n">y</span><span class="o">-</span><span class="mi">70</span><span class="p">))</span>
+
+            <span class="n">pygame</span><span class="o">.</span><span class="n">draw</span><span class="o">.</span><span class="n">rect</span><span class="p">(</span><span class="n">screen</span><span class="p">,</span><span class="n">current_popup</span><span class="o">.</span><span class="n">outline_color</span><span class="p">,</span><span class="n">current_popup</span><span class="o">.</span><span class="n">outline_position</span><span class="p">)</span>
+
+            <span class="n">screen</span><span class="o">.</span><span class="n">blit</span><span class="p">(</span><span class="n">current_popup</span><span class="o">.</span><span class="n">line1_render</span><span class="p">,</span> <span class="n">current_popup</span><span class="o">.</span><span class="n">line1_position</span><span class="p">)</span>
+            <span class="n">screen</span><span class="o">.</span><span class="n">blit</span><span class="p">(</span><span class="n">current_popup</span><span class="o">.</span><span class="n">line2_render</span><span class="p">,</span> <span class="n">current_popup</span><span class="o">.</span><span class="n">line2_position</span><span class="p">)</span>
+            <span class="n">screen</span><span class="o">.</span><span class="n">blit</span><span class="p">(</span><span class="n">current_popup</span><span class="o">.</span><span class="n">line3_render</span><span class="p">,</span> <span class="n">current_popup</span><span class="o">.</span><span class="n">line3_position</span><span class="p">)</span>
+            <span class="n">screen</span><span class="o">.</span><span class="n">blit</span><span class="p">(</span><span class="n">current_popup</span><span class="o">.</span><span class="n">line4_render</span><span class="p">,</span> <span class="n">current_popup</span><span class="o">.</span><span class="n">line4_position</span><span class="p">)</span>
+            <span class="n">screen</span><span class="o">.</span><span class="n">blit</span><span class="p">(</span><span class="n">current_popup</span><span class="o">.</span><span class="n">line5_render</span><span class="p">,</span> <span class="n">current_popup</span><span class="o">.</span><span class="n">line5_position</span><span class="p">)</span>
+
+            <span class="n">screen</span><span class="o">.</span><span class="n">blit</span><span class="p">(</span><span class="n">current_popup</span><span class="o">.</span><span class="n">number_render</span><span class="p">,</span> <span class="n">current_popup</span><span class="o">.</span><span class="n">number_position</span><span class="p">)</span>
+            <span class="n">pygame</span><span class="o">.</span><span class="n">draw</span><span class="o">.</span><span class="n">rect</span><span class="p">(</span><span class="n">screen</span><span class="p">,(</span><span class="mi">209</span><span class="p">,</span><span class="mi">129</span><span class="p">,</span><span class="mi">0</span><span class="p">),</span><span class="n">current_popup</span><span class="o">.</span><span class="n">button_position</span><span class="p">)</span>
+            <span class="n">screen</span><span class="o">.</span><span class="n">blit</span><span class="p">(</span><span class="n">current_popup</span><span class="o">.</span><span class="n">button_render</span><span class="p">,</span> <span class="n">current_popup</span><span class="o">.</span><span class="n">button_position</span><span class="p">)</span>
+            <span class="n">pygame</span><span class="o">.</span><span class="n">draw</span><span class="o">.</span><span class="n">rect</span><span class="p">(</span><span class="n">screen</span><span class="p">,(</span><span class="mi">255</span><span class="p">,</span><span class="mi">255</span><span class="p">,</span><span class="mi">255</span><span class="p">),</span><span class="n">current_popup</span><span class="o">.</span><span class="n">button_position</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="p">(</span><span class="n">current_popup</span><span class="o">.</span><span class="n">show_hightlight_region</span> <span class="o">==</span> <span class="kc">True</span><span class="p">):</span>
+                <span class="n">pygame</span><span class="o">.</span><span class="n">draw</span><span class="o">.</span><span class="n">rect</span><span class="p">(</span><span class="n">screen</span><span class="p">,</span><span class="n">current_popup</span><span class="o">.</span><span class="n">highlight_region_color</span><span class="p">,</span><span class="n">current_popup</span><span class="o">.</span><span class="n">highlight_region_position</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+
+
+
+            <span class="n">pygame</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
+            <span class="n">clock</span><span class="o">.</span><span class="n">tick_busy_loop</span><span class="p">(</span><span class="mi">30</span><span class="p">)</span>
+
+
+
+
+
+    <span class="c1"># At this point, we&#39;re done, so we can stop and quit the mixer</span>
+    <span class="n">pygame</span><span class="o">.</span><span class="n">mixer</span><span class="o">.</span><span class="n">music</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
+    <span class="n">pygame</span><span class="o">.</span><span class="n">mixer</span><span class="o">.</span><span class="n">quit</span><span class="p">()</span>
+    
+
+    <span class="c1"># If the level should be restarted the restart it</span>
+    <span class="k">if</span> <span class="n">restart_level</span> <span class="o">==</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="n">start</span><span class="p">()</span></div>
+
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Ben Spence, Jonas Land, AJ Baudino, Hexin Hu, Tripper Wright.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

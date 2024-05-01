@@ -1,8 +1,26 @@
+"""
+This file contains the draw_update_function function
+"""
+
+
 import pygame
 
 import helpers.redraw_helper as redraw_helper
 
 def draw_update_function(widget, menu):
+        """
+        Draws and updates the appearance of a widget based on its state.
+
+        Args:
+            widget (Widget): The widget to be drawn and updated.
+            menu (Menu): The menu containing the widget.
+
+        Returns:
+            None
+
+        Raises:
+            None
+        """
         color=[0,0,0]
         widget.set_margin(0,50)
         if (widget.is_selected()):

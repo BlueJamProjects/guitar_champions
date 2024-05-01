@@ -1,12 +1,11 @@
-# Import the pygame module
+"""
+This file sets up the menu for selecting tutorial modules after the user presses "Tutorials" from the main menu.
+"""
+
 import pygame
 
-# Import random for random numbers
 import random
 
-# from main import draw_update_function
-# 
-# Import the menu library to more easily make menu selction
 import pygame_menu
 
 import helpers.redraw_helper as redraw_helper
@@ -32,6 +31,14 @@ pressed_playing_notes = False
 
 
 def playing_notes_function():
+    """
+    Toggle the state of playing notes and start or stop the tutorial level accordingly.
+
+    This function checks the global boolean flag `pressed_playing_notes`. If the flag is False, it sets the flag
+    to True and starts the tutorial level for playing notes. If the flag is already True, it sets the flag to False,
+    effectively stopping the tutorial level. This function is typically used to control the start and stop actions
+    of a tutorial level in a music-related application.
+    """
     global pressed_playing_notes
     if pressed_playing_notes == False:
         pressed_playing_notes = True

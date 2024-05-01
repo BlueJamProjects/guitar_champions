@@ -1,3 +1,8 @@
+"""
+This file controls our greensleeves level. It contains all information for this level to run including audio detection and filtering, 
+notes to be played, animations for this level, background generation, pause menu, and main loop to keep the level running.
+"""
+
 # import pygame asprite package, download by typing "pip3 install pygame_aseprite_animation" into your terminal
 from pygame_aseprite_animation import *
 # Import the pygame module
@@ -649,10 +654,34 @@ def start():
 
 
 # Define bandpass filter
+# min and max frequency
 def butter_bandpass_filter(data, lowcut, highcut, sr, order=5):
     """
-    Apply a bandpass filter to the audio data.
+    Apply a Butterworth bandpass filter to given one-dimensional data.
+
+    This function uses a digital bandpass filter design to filter the provided data.
+    The Butterworth filter is a type of signal processing filter designed to have a flat frequency response in the passband.
+
+    Parameters
+    ----------
+    data : array_like
+        The input signal to be filtered.
+    lowcut : float
+        The lower frequency boundary of the passband (Hz).
+    highcut : float
+        The upper frequency boundary of the passband (Hz).
+    sr : int
+        The sampling rate of the data (Hz).
+    order : int, optional
+        The order of the filter. Higher order means a sharper frequency cutoff,
+        but the filter will also be slower to execute. The default is 5.
+
+    Returns
+    -------
+    y : ndarray
+        The filtered output with the same shape as `data`.
     """
+
     nyquist = 0.5 * sr
     low = lowcut / nyquist
     high = highcut / nyquist
@@ -660,12 +689,54 @@ def butter_bandpass_filter(data, lowcut, highcut, sr, order=5):
     y = scipy.signal.lfilter(b, a, data)
     return y
 
+# data passed in to pitch
 def midi_number_to_pitch(midi_number):
+    """
+    Convert a MIDI note number to its corresponding pitch name with octave.
+
+    This function utilizes the `music21` library to convert MIDI note numbers into human-readable
+    pitch names, including the octave. The `music21` library's `Note` object is used to handle the conversion.
+
+    Parameters
+    ----------
+    midi_number : int
+        The MIDI number that represents a specific pitch. MIDI numbers range from 0 to 127, 
+        where 60 corresponds to Middle C (C4).
+
+    Returns
+    -------
+    str
+        The pitch name with octave, as a string. For example, a `midi_number` of 60 will return 'C4'.
+    """
     n = music21Note.Note()
     n.pitch.midi = midi_number
     return n.pitch.nameWithOctave
 
+# takes in data and puts through filter and returns the same data to continue live audio feedbacl
 def audio_callback(in_data, frame_count, time_info, status):
+    """
+    A callback function for real-time audio processing, typically used with a PyAudio stream.
+
+    This function is called by PyAudio whenever new audio data is available. It processes the audio data by applying a bandpass filter, analyzes it 
+    to extract pitch information, and then predicts the frequency, confidence, and amplitude. It also handles exceptions by catching them and printing an error message.
+
+    Parameters
+    ----------
+    in_data : bytes
+        The buffer of audio data provided by PyAudio.
+    frame_count : int
+        The number of frames in the buffer.
+    time_info : dict
+        A dictionary containing timing information.
+    status : int
+        Status flag indicating if there are any errors or special conditions.
+
+    Returns
+    -------
+    tuple
+        A tuple containing the original audio data buffer and a flag indicating whether the stream should continue.
+    """
+
     audio_data = np.frombuffer(in_data, dtype=np.float32)
 
 
@@ -699,6 +770,20 @@ def audio_callback(in_data, frame_count, time_info, status):
 
 
 def create_graph(index_array, accuracy_array, totnote):
+    """
+    Creates a line graph representing accuracy over a range of indices and saves it as an image.
+
+    This function uses a subprocess to run a Python script that generates a graph using matplotlib. This method ensures that the creation of the graph does not disrupt the GUI's window size. The graph is saved to a predefined directory (`assets/images/tempgraphs/`) as `graphy.png`.
+
+    Parameters
+    ----------
+    index_array : list of int
+        A list of indices corresponding to some sequence of measurements or evaluations.
+    accuracy_array : list of float
+        A list of accuracy measurements corresponding to the indices in `index_array`.
+    totnote : int
+        The maximum value on the x-axis, representing the total number of observations.
+    """
     # This creates and saves the graph file using a subprocess so that it doesn't disrupt the window size
     subprocess.run(["python3", "-c", "import matplotlib.pyplot as plt; plt.plot( " + str(index_array) + ","+ str(accuracy_array)+ ", color='orange', linewidth=5); plt.ylim(0,100); plt.xlim(1," + str(totnote) + "); plt.title('Your overall Accuracy!'); font = {'weight' : 'bold','size'   : 22}; plt.yticks(fontsize=20); plt.xticks(fontsize=20); plt.rc('font', **font); plt.savefig('assets/images/tempgraphs/graphy.png'); plt.clf()"])
    

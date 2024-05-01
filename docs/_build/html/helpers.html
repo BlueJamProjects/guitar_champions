@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>helpers package &mdash; Guitar-Champions 1.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=8d563738"></script>
+        <script src="_static/doctools.js?v=9a2dae69"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="levels package" href="levels.html" />
+    <link rel="prev" title="headers module" href="headers.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Guitar-Champions
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">guitar_champions</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="AudioTest.html">AudioTest module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chunks.html">chunks module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="headers.html">headers module</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">helpers package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-helpers.draw_update_function_helper">helpers.draw_update_function_helper module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#helpers.draw_update_function_helper.draw_update_function"><code class="docutils literal notranslate"><span class="pre">draw_update_function()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-helpers.redraw_helper">helpers.redraw_helper module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#helpers.redraw_helper.redraw"><code class="docutils literal notranslate"><span class="pre">redraw()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-helpers.settings_helper">helpers.settings_helper module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#helpers.settings_helper.Settings"><code class="docutils literal notranslate"><span class="pre">Settings</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#helpers.settings_helper.get_settings"><code class="docutils literal notranslate"><span class="pre">get_settings()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#helpers.settings_helper.update_enable_metronome"><code class="docutils literal notranslate"><span class="pre">update_enable_metronome()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#helpers.settings_helper.update_microphone_amplitude"><code class="docutils literal notranslate"><span class="pre">update_microphone_amplitude()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#helpers.settings_helper.update_volume"><code class="docutils literal notranslate"><span class="pre">update_volume()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-helpers.settings_menu">helpers.settings_menu module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-helpers.sprite_item">helpers.sprite_item module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#helpers.sprite_item.SpriteItem"><code class="docutils literal notranslate"><span class="pre">SpriteItem</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-helpers.tutorial_info">helpers.tutorial_info module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#helpers.tutorial_info.TutorialInfo"><code class="docutils literal notranslate"><span class="pre">TutorialInfo</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-helpers">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="levels.html">levels package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="main.html">main module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="partials.html">partials package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pygame_aseprite_animation.html">pygame_aseprite_animation module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="setup.html">setup module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorials.html">tutorials package</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Guitar-Champions</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">guitar_champions</a></li>
+      <li class="breadcrumb-item active">helpers package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/helpers.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="helpers-package">
+<h1>helpers package<a class="headerlink" href="#helpers-package" title="Link to this heading"></a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
+</section>
+<section id="module-helpers.draw_update_function_helper">
+<span id="helpers-draw-update-function-helper-module"></span><h2>helpers.draw_update_function_helper module<a class="headerlink" href="#module-helpers.draw_update_function_helper" title="Link to this heading"></a></h2>
+<p>This file contains the draw_update_function function</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="helpers.draw_update_function_helper.draw_update_function">
+<span class="sig-prename descclassname"><span class="pre">helpers.draw_update_function_helper.</span></span><span class="sig-name descname"><span class="pre">draw_update_function</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">widget</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">menu</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/helpers/draw_update_function_helper.html#draw_update_function"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#helpers.draw_update_function_helper.draw_update_function" title="Link to this definition"></a></dt>
+<dd><p>Draws and updates the appearance of a widget based on its state.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>widget</strong> (<em>Widget</em>) – The widget to be drawn and updated.</p></li>
+<li><p><strong>menu</strong> (<em>Menu</em>) – The menu containing the widget.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>None</strong> – </p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-helpers.redraw_helper">
+<span id="helpers-redraw-helper-module"></span><h2>helpers.redraw_helper module<a class="headerlink" href="#module-helpers.redraw_helper" title="Link to this heading"></a></h2>
+<p>This file contains the redraw function</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="helpers.redraw_helper.redraw">
+<span class="sig-prename descclassname"><span class="pre">helpers.redraw_helper.</span></span><span class="sig-name descname"><span class="pre">redraw</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">widget</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">decos</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/helpers/redraw_helper.html#redraw"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#helpers.redraw_helper.redraw" title="Link to this definition"></a></dt>
+<dd><p>Redraws the widget with decorations.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>widget</strong> – The widget to be redrawn.</p></li>
+<li><p><strong>decos</strong> – The widget’s decorator which can be found with widget.get_decorator()</p></li>
+<li><p><strong>color</strong> – The color of the widget and decorations.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-helpers.settings_helper">
+<span id="helpers-settings-helper-module"></span><h2>helpers.settings_helper module<a class="headerlink" href="#module-helpers.settings_helper" title="Link to this heading"></a></h2>
+<p>This file contains:</p>
+<ul>
+<li><p>The Settings object that is used for storing the settings in memory</p>
+<blockquote>
+<div><p>The functions:
+- get_settings
+- update_enable_metronome
+- update_volume
+- update_microphone_amplitude</p>
+</div></blockquote>
+</li>
+</ul>
+<dl class="py class">
+<dt class="sig sig-object py" id="helpers.settings_helper.Settings">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">helpers.settings_helper.</span></span><span class="sig-name descname"><span class="pre">Settings</span></span><a class="reference internal" href="_modules/helpers/settings_helper.html#Settings"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#helpers.settings_helper.Settings" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A class to store the current settings.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="helpers.settings_helper.Settings.volume">
+<span class="sig-name descname"><span class="pre">volume</span></span><a class="headerlink" href="#helpers.settings_helper.Settings.volume" title="Link to this definition"></a></dt>
+<dd><p>The volume level, ranging from 0 to 100.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="helpers.settings_helper.Settings.enable_metronome">
+<span class="sig-name descname"><span class="pre">enable_metronome</span></span><a class="headerlink" href="#helpers.settings_helper.Settings.enable_metronome" title="Link to this definition"></a></dt>
+<dd><p>Whether the metronome is enabled or not.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="helpers.settings_helper.Settings.microphone_amplitude">
+<span class="sig-name descname"><span class="pre">microphone_amplitude</span></span><a class="headerlink" href="#helpers.settings_helper.Settings.microphone_amplitude" title="Link to this definition"></a></dt>
+<dd><p>The amplitude of the microphone, ranging from 0.0 to 1.0.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="helpers.settings_helper.get_settings">
+<span class="sig-prename descclassname"><span class="pre">helpers.settings_helper.</span></span><span class="sig-name descname"><span class="pre">get_settings</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/helpers/settings_helper.html#get_settings"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#helpers.settings_helper.get_settings" title="Link to this definition"></a></dt>
+<dd><p>Retrieves game settings from ‘gamesettings.json’ and returns them as a Settings object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>An object containing the game settings.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#helpers.settings_helper.Settings" title="helpers.settings_helper.Settings">Settings</a></p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>IOError</strong> – If the file ‘gamesettings.json’ cannot be opened or read.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="helpers.settings_helper.update_enable_metronome">
+<span class="sig-prename descclassname"><span class="pre">helpers.settings_helper.</span></span><span class="sig-name descname"><span class="pre">update_enable_metronome</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">new_enable_metronome</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/helpers/settings_helper.html#update_enable_metronome"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#helpers.settings_helper.update_enable_metronome" title="Link to this definition"></a></dt>
+<dd><p>Update the stored enable_metronome value in the gamesettings.json file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>str</em>) – The name of the setting.</p></li>
+<li><p><strong>new_enable_metronome</strong> (<em>bool</em>) – The new value to store for enable_metronome.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If an invalid value is passed for new_enable_metronome.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="helpers.settings_helper.update_microphone_amplitude">
+<span class="sig-prename descclassname"><span class="pre">helpers.settings_helper.</span></span><span class="sig-name descname"><span class="pre">update_microphone_amplitude</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">new_amplitude</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/helpers/settings_helper.html#update_microphone_amplitude"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#helpers.settings_helper.update_microphone_amplitude" title="Link to this definition"></a></dt>
+<dd><p>Update the stored microphone_amplitude value in the gamesettings.json file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>new_amplitude</strong> (<em>int</em>) – The new value for the microphone amplitude. Must be an integer between 0 and 100 (inclusive).</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If the provided new_amplitude is not within the valid range.</p>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If the provided new_amplitude is outside the valid range, it will be corrected to the nearest valid value (0 or 100).</p>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="helpers.settings_helper.update_volume">
+<span class="sig-prename descclassname"><span class="pre">helpers.settings_helper.</span></span><span class="sig-name descname"><span class="pre">update_volume</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">new_volume</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/helpers/settings_helper.html#update_volume"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#helpers.settings_helper.update_volume" title="Link to this definition"></a></dt>
+<dd><p>Updates the stored volume value in the gamesettings.json file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>new_volume</strong> (<em>int</em>) – The new volume value to be stored. Should be an integer</p></li>
+<li><p><strong>100</strong> (<em>between 0 and</em>)</p></li>
+<li><p><strong>inclusive.</strong></p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If the provided volume is not within the valid range (0-100).</p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-helpers.settings_menu">
+<span id="helpers-settings-menu-module"></span><h2>helpers.settings_menu module<a class="headerlink" href="#module-helpers.settings_menu" title="Link to this heading"></a></h2>
+<p>This file contains the code that defines the settings menu</p>
+</section>
+<section id="module-helpers.sprite_item">
+<span id="helpers-sprite-item-module"></span><h2>helpers.sprite_item module<a class="headerlink" href="#module-helpers.sprite_item" title="Link to this heading"></a></h2>
+<p>This file contains the SpriteItem class</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="helpers.sprite_item.SpriteItem">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">helpers.sprite_item.</span></span><span class="sig-name descname"><span class="pre">SpriteItem</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sprite=&lt;Surface(100x100x32</span> <span class="pre">SW)&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">location=(0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">0)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_box=False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_background=False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">box_has_border=False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">box_color=(0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">0)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">box_border=10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">box_rect=&lt;rect(100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">100)&gt;</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/helpers/sprite_item.html#SpriteItem"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#helpers.sprite_item.SpriteItem" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Represents a sprite object along with its rendering details.</p>
+<p>This class simplifies the specification of a sprite’s object and its rendering location.
+It is particularly useful in tutorials for managing sprites rendered on the screen.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sprite</strong> (<em>pygame.Surface</em><em>, </em><em>optional</em>) – The surface representing the sprite. Default is a 100x100 surface.</p></li>
+<li><p><strong>location</strong> (<em>tuple</em><em>, </em><em>optional</em>) – The coordinates (x, y) where the sprite should be rendered. Default is (0, 0).</p></li>
+<li><p><strong>is_box</strong> (<em>bool</em><em>, </em><em>optional</em>) – Specifies if the sprite is a box. Default is False.</p></li>
+<li><p><strong>is_background</strong> (<em>bool</em><em>, </em><em>optional</em>) – Specifies if the sprite is a background. Default is False.</p></li>
+<li><p><strong>box_has_border</strong> (<em>bool</em><em>, </em><em>optional</em>) – Specifies if the box has a border. Default is False.</p></li>
+<li><p><strong>box_color</strong> (<em>tuple</em><em>, </em><em>optional</em>) – The RGB color tuple representing the box color. Default is (0, 0, 0).</p></li>
+<li><p><strong>box_border</strong> (<em>int</em><em>, </em><em>optional</em>) – The thickness of the box border. Default is 10.</p></li>
+<li><p><strong>box_rect</strong> (<em>pygame.Rect</em><em>, </em><em>optional</em>) – The dimensions and location of the box. Default is pygame.Rect(100, 100, 100, 100).</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-helpers.tutorial_info">
+<span id="helpers-tutorial-info-module"></span><h2>helpers.tutorial_info module<a class="headerlink" href="#module-helpers.tutorial_info" title="Link to this heading"></a></h2>
+<p>This file contains the TutorialInfo class</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="helpers.tutorial_info.TutorialInfo">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">helpers.tutorial_info.</span></span><span class="sig-name descname"><span class="pre">TutorialInfo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">popup_list</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sprites_list</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/helpers/tutorial_info.html#TutorialInfo"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#helpers.tutorial_info.TutorialInfo" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Represents information about a tutorial, including popups and sprites.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>popup_list</strong> (<em>list</em><em>, </em><em>optional</em>) – A list of TutorialPopup objects representing popups. Default is an empty list.</p></li>
+<li><p><strong>sprites_list</strong> (<em>list</em><em>, </em><em>optional</em>) – A list of lists of SpriteItem objects representing sprite screens. Default is an empty list.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="helpers.tutorial_info.TutorialInfo.current_popup">
+<span class="sig-name descname"><span class="pre">current_popup</span></span><a class="headerlink" href="#helpers.tutorial_info.TutorialInfo.current_popup" title="Link to this definition"></a></dt>
+<dd><p>The current popup being displayed.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>TutorialPopup</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="helpers.tutorial_info.TutorialInfo.current_sprites">
+<span class="sig-name descname"><span class="pre">current_sprites</span></span><a class="headerlink" href="#helpers.tutorial_info.TutorialInfo.current_sprites" title="Link to this definition"></a></dt>
+<dd><p>The list of sprites currently displayed on the screen.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="helpers.tutorial_info.TutorialInfo.popup_index">
+<span class="sig-name descname"><span class="pre">popup_index</span></span><a class="headerlink" href="#helpers.tutorial_info.TutorialInfo.popup_index" title="Link to this definition"></a></dt>
+<dd><p>The index of the current popup in the <cite>popup_list</cite>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="helpers.tutorial_info.TutorialInfo.sprites_index">
+<span class="sig-name descname"><span class="pre">sprites_index</span></span><a class="headerlink" href="#helpers.tutorial_info.TutorialInfo.sprites_index" title="Link to this definition"></a></dt>
+<dd><p>The index of the current sprites screen in the <cite>sprites_list</cite>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="helpers.tutorial_info.TutorialInfo.popup_list">
+<span class="sig-name descname"><span class="pre">popup_list</span></span><a class="headerlink" href="#helpers.tutorial_info.TutorialInfo.popup_list" title="Link to this definition"></a></dt>
+<dd><p>A list of TutorialPopup objects.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="helpers.tutorial_info.TutorialInfo.sprites_list">
+<span class="sig-name descname"><span class="pre">sprites_list</span></span><a class="headerlink" href="#helpers.tutorial_info.TutorialInfo.sprites_list" title="Link to this definition"></a></dt>
+<dd><p>A list of lists of SpriteItem objects, each representing a screen of sprites.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><cite>popup_list</cite> and <cite>sprites_list</cite> should have the same number of elements or issues may arise.</p>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="helpers.tutorial_info.TutorialInfo.next">
+<span class="sig-name descname"><span class="pre">next</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/helpers/tutorial_info.html#TutorialInfo.next"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#helpers.tutorial_info.TutorialInfo.next" title="Link to this definition"></a></dt>
+<dd><p>Sets the current_popup and current_sprites to the next one in the list.
+Prints a message if reaching the end of popups or sprites list.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="helpers.tutorial_info.TutorialInfo.previous">
+<span class="sig-name descname"><span class="pre">previous</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/helpers/tutorial_info.html#TutorialInfo.previous"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#helpers.tutorial_info.TutorialInfo.previous" title="Link to this definition"></a></dt>
+<dd><p>Sets the current_popup and current_sprites to the previous one in the list.
+Prints a message if reaching the beginning of popups or sprites list.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id0">
+<span class="sig-name descname"><span class="pre">next</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/helpers/tutorial_info.html#TutorialInfo.next"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id0" title="Link to this definition"></a></dt>
+<dd><p>Moves to the next popup and sprite screen in the respective lists.</p>
+<p>Updates the current_popup and current_sprites attributes to the next elements in their respective lists.</p>
+<p>If there are more popups to navigate, updates the popup index and sets the number of the current popup.</p>
+<p>If there are more sprite screens to navigate, updates the sprites index.</p>
+<p>If there are no more popups or sprite screens to navigate, prints a message indicating the end.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="id1">
+<span class="sig-name descname"><span class="pre">previous</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/helpers/tutorial_info.html#TutorialInfo.previous"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id1" title="Link to this definition"></a></dt>
+<dd><p>Sets the current_popup and current_sprites to the previous ones in their respective lists.</p>
+<p>If there are previous popups or sprites screens available, updates the indices and sets the current ones accordingly.
+If already at the beginning of either list, prints a message indicating so.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-helpers">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-helpers" title="Link to this heading"></a></h2>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="headers.html" class="btn btn-neutral float-left" title="headers module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="levels.html" class="btn btn-neutral float-right" title="levels package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Ben Spence, Jonas Land, AJ Baudino, Hexin Hu, Tripper Wright.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
